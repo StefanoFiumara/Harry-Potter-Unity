@@ -28,5 +28,6 @@ public class Lesson : GenericCard {
         }
 
         //iTween Animations here
+        // x: -160, y = 6, z = 15 + number of cards this column?
     }
 }

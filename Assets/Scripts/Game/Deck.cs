@@ -6,6 +6,8 @@ public class Deck : MonoBehaviour {
 
     public List<Transform> Cards;
 
+    public Hand _Hand;
+
     public float DeckShuffleTweenTime = 0.5f;
 
 	// Use this for initialization
@@ -29,7 +31,17 @@ public class Deck : MonoBehaviour {
 
     public void OnMouseUp()
     {
-        GLOBAL.MainPlayer.DrawCard();
+        DrawCard();
+    }
+
+    private void DrawCard()
+    {
+        if (GLOBAL.MainPlayer.ActionsAvailable <= 0) return;
+        Transform card = TakeTopCard();
+        _Hand.Add(card);
+        card.parent = _Hand.transform;
+
+        GLOBAL.MainPlayer.ActionsAvailable--;
     }
 
 
