@@ -195,7 +195,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  Type: 1
+  CardType: 0
+  _Player: {fileID: 0}
+  LessonType: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

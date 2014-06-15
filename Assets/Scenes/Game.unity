@@ -176,6 +176,7 @@ MonoBehaviour:
   - {fileID: 400000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
   - {fileID: 400000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
   _Hand: {fileID: 866037081}
+  _Player: {fileID: 1925117256}
   DeckShuffleTweenTime: .800000012
 --- !u!65 &485762061
 BoxCollider:
@@ -228,7 +229,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f67bb9cf7dde2409094a5a197e3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _Player: {fileID: 1925117256}
   DrawCardTweenTime: .5
+  Cards: []
 --- !u!1 &1083298368
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,6 +524,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Cards: []
+  _Player: {fileID: 1925117256}
 --- !u!4 &2002146217
 Transform:
   m_ObjectHideFlags: 0

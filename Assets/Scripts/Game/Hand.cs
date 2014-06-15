@@ -7,9 +7,11 @@ public class Hand : MonoBehaviour {
 
     public const int SPACING = 25;
 
+    public Player _Player;
+
     public float DrawCardTweenTime;
 
-    private List<Transform> Cards;
+    public List<Transform> Cards;
 
 	// Use this for initialization
 	void Start () {
@@ -30,21 +32,23 @@ public class Hand : MonoBehaviour {
 
         iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                    "position", point1,
-                                                   "easetype", iTween.EaseType.easeOutExpo
+                                                   "easetype", iTween.EaseType.easeOutExpo,
+                                                   "islocal", true
                                                    ));
 
         iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                    "position", point2,
                                                    "delay", DrawCardTweenTime + 0.25f,
-                                                   "easetype", iTween.EaseType.easeInOutSine
+                                                   "easetype", iTween.EaseType.easeInOutSine,
+                                                   "islocal", true,
+                                                   "oncomplete", "SwitchState",
+                                                   "oncompletetarget", card.gameObject,
+                                                   "oncompleteparams", CardStates.IN_HAND
                                                    ));
 
         iTween.RotateTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                      "y", 0f,
-                                                     "easetype", iTween.EaseType.easeInOutSine,
-                                                     "oncomplete", "SwitchState",
-                                                     "oncompletetarget", card.gameObject,
-                                                     "oncompleteparams", CardStates.IN_HAND
+                                                     "easetype", iTween.EaseType.easeInOutSine
                                                      ));
     }
 

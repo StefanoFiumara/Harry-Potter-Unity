@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using LessonTypes = Lesson.LessonTypes;
 using CardStates = GenericCard.CardStates;
+using CardTypes = GenericCard.CardTypes;
 
 public class Player : MonoBehaviour {
 
@@ -19,9 +20,6 @@ public class Player : MonoBehaviour {
 
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);
-
-        //Register with the GLOBAL class
-        GLOBAL.MainPlayer = this;
 	}
 	
     public void OnGUI()

@@ -7,6 +7,7 @@ public class Deck : MonoBehaviour {
     public List<Transform> Cards;
 
     public Hand _Hand;
+    public Player _Player;
 
     public float DeckShuffleTweenTime = 0.5f;
 
@@ -14,9 +15,13 @@ public class Deck : MonoBehaviour {
 	public void Start () {
         for (int i = 0; i < Cards.Count; i++)
         {
-            Cards[i] = (Transform)Instantiate(Cards[i], transform.position + Vector3.back * -16f, Quaternion.Euler(new Vector3(0f, 180f, 0f)));
+            Cards[i] = (Transform)Instantiate(Cards[i], transform.position + Vector3.back * -16f, Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z)));
             Cards[i].parent = transform;
             Cards[i].position += i * Vector3.back * 0.2f;
+            
+            //Give the card a reference to the player so that it knows who it belongs to.
+            GenericCard cardInfo = Cards[i].GetComponent<GenericCard>();
+            cardInfo._Player = _Player;
         }
 
        // Shuffle();
@@ -36,12 +41,12 @@ public class Deck : MonoBehaviour {
 
     private void DrawCard()
     {
-        if (GLOBAL.MainPlayer.ActionsAvailable <= 0) return;
+        if (_Player.ActionsAvailable <= 0) return;
         Transform card = TakeTopCard();
         _Hand.Add(card);
         card.parent = _Hand.transform;
 
-        GLOBAL.MainPlayer.ActionsAvailable--;
+        _Player.ActionsAvailable--;
     }
 
 

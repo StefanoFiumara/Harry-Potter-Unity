@@ -8,26 +8,25 @@ public class Lesson : GenericCard {
         CREATURES, CHARMS, TRANSFIGURATION, POTIONS, QUIDDITCH
     }
 
-    public LessonTypes Type;
+    public LessonTypes LessonType;
 
     public void OnMouseUp()
     {
         if (State != CardStates.IN_HAND) return;
 
-        if (GLOBAL.MainPlayer.ActionsAvailable > 0)
+        if (_Player.ActionsAvailable > 0)
         {
-            if (!GLOBAL.MainPlayer.LessonTypesInPlay.Contains(Type))
+            if (!_Player.LessonTypesInPlay.Contains(LessonType))
             {
-                GLOBAL.MainPlayer.LessonTypesInPlay.Add(Type);
+                _Player.LessonTypesInPlay.Add(LessonType);
             }
 
-            GLOBAL.MainPlayer.LessonsInPlay++;
-            GLOBAL.MainPlayer.ActionsAvailable--;
+            _Player.LessonsInPlay++;
+            _Player.ActionsAvailable--;
 
             State = CardStates.IN_PLAY;
-        }
 
-        //iTween Animations here
-        // x: -160, y = 6, z = 15 + number of cards this column?
+            _Player._InPlay.Add(transform, CardType);
+        }
     }
 }
