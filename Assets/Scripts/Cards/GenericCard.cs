@@ -20,6 +20,7 @@ public class GenericCard : MonoBehaviour {
     public Player _Player;
 
     protected bool Zoomed;
+    protected readonly float TweenTime = 0.5f;
 
     public void Start()
     {
@@ -33,8 +34,8 @@ public class GenericCard : MonoBehaviour {
 
         if (!Zoomed)
         {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", 3, "y", 3, "time", 0.5f));
-            iTween.MoveTo(gameObject, iTween.Hash("y", -95f, "time", 0.5f, "islocal", true));
+            iTween.ScaleTo(gameObject, iTween.Hash("x", 3, "y", 3, "time", TweenTime));
+            iTween.MoveTo(gameObject, iTween.Hash("y", -95f, "time", TweenTime, "islocal", true));
             Zoomed = true;
         }
     }
@@ -45,8 +46,8 @@ public class GenericCard : MonoBehaviour {
 
         if (Zoomed)
         {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "time", 0.5f));
-            iTween.MoveTo(gameObject, iTween.Hash("y", -160f, "time", 0.5f, "islocal", true));
+            iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "time", TweenTime));
+            iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y, "time", TweenTime, "islocal", true));
             Zoomed = false;
         }
     }
