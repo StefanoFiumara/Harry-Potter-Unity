@@ -21,6 +21,7 @@ public class GenericCard : MonoBehaviour {
 
     protected bool Zoomed;
     protected readonly float TweenTime = 0.5f;
+    protected readonly float ZoomScaleValue = 3f;
 
     public void Start()
     {
@@ -34,8 +35,8 @@ public class GenericCard : MonoBehaviour {
 
         if (!Zoomed)
         {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", 3, "y", 3, "time", TweenTime));
-            iTween.MoveTo(gameObject, iTween.Hash("y", -95f, "time", TweenTime, "islocal", true));
+            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScaleValue, "y", ZoomScaleValue, "time", TweenTime));
+            iTween.MoveTo(gameObject, iTween.Hash("y", -92f, "time", TweenTime, "islocal", true));
             Zoomed = true;
         }
     }
