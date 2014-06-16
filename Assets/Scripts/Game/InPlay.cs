@@ -9,7 +9,6 @@ public class InPlay : MonoBehaviour {
 
     public Player _Player;
 
-    // Use this for initialization
     void Start()
     {
         Cards = new List<Transform>();
