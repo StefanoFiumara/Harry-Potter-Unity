@@ -442,7 +442,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1313987344}
-  m_LocalRotation: {x: .408217937, y: -.234569728, z: .109381661, w: .875426114}
+  m_LocalRotation: {x: -.0391700268, y: -.33254835, z: .194271743, w: .922028124}
   m_LocalPosition: {x: -17.1318359, y: 6.29239655, z: -285.932465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -481,7 +481,7 @@ MonoBehaviour:
   StartingCharacter: {fileID: 0}
   LessonsInPlay: 0
   LessonTypesInPlay: 
-  ActionsAvailable: 2
+  ActionsAvailable: 99
 --- !u!4 &1925117257
 Transform:
   m_ObjectHideFlags: 0
@@ -526,6 +526,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards: []
   _Player: {fileID: 1925117256}
+  InPlayTweenTime: .5
 --- !u!4 &2002146217
 Transform:
   m_ObjectHideFlags: 0
