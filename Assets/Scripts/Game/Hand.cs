@@ -25,6 +25,11 @@ public class Hand : MonoBehaviour {
 
     }
 
+    public void Remove(Transform card)
+    {
+        Cards.Remove(card);
+        //TODO: Adjust Hand after card removal
+    }
     private void AnimateCardToHand(Transform card)
     {
         Vector3 point1 = new Vector3(-77f, 4f, -220f);

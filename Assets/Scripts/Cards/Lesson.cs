@@ -21,12 +21,13 @@ public class Lesson : GenericCard {
                 _Player.LessonTypesInPlay.Add(LessonType);
             }
 
+            _Player._Hand.Remove(transform);
+            _Player._InPlay.Add(transform, CardType);
+
             _Player.LessonsInPlay++;
             _Player.ActionsAvailable--;
 
             State = CardStates.IN_PLAY;
-
-            _Player._InPlay.Add(transform, CardType);
         }
     }
 }
