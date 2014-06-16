@@ -11,12 +11,8 @@ public class InPlay : MonoBehaviour {
 
     public Player _Player;
 
-    private const float LESSON_X_OFFSET = -160f;
-    private const float LESSON_Y_OFFSET = 6f;
-    private const float LESSON_Z_OFFSET = 15f;
-
-    private const float LESSON_X_SPACING = 80f;
-    private const float LESSON_Y_SPACING = 15f;
+    private static readonly Vector3 LESSON_POSITION_OFFSET = new Vector3(-160f, 6f, 15f);
+    private static readonly Vector2 LESSON_SPACING = new Vector2(80f, 15f);
 
     public float InPlayTweenTime;
 
@@ -40,14 +36,14 @@ public class InPlay : MonoBehaviour {
 
     private void AnimateLessonToBoard(Transform card)
     {
-        Vector3 pos = new Vector3(LESSON_X_OFFSET, LESSON_Y_OFFSET, LESSON_Z_OFFSET);
+        Vector3 cardPosition = LESSON_POSITION_OFFSET;
 
-        pos.x += (_Player.LessonsInPlay % 3) * LESSON_X_SPACING;
-        pos.y -= (int)(_Player.LessonsInPlay / 3) * LESSON_Y_SPACING;
-        pos.z -= (int)(_Player.LessonsInPlay / 3);
+        cardPosition.x += (_Player.LessonsInPlay % 3) * LESSON_SPACING.x;
+        cardPosition.y -= (int)(_Player.LessonsInPlay / 3) * LESSON_SPACING.y;
+        cardPosition.z -= (int)(_Player.LessonsInPlay / 3);
 
         iTween.MoveTo(card.gameObject, iTween.Hash("time", InPlayTweenTime,
-                                                   "position", pos,
+                                                   "position", cardPosition,
                                                    "easetype", iTween.EaseType.easeInOutSine,
                                                    "islocal", true
                                                    ));

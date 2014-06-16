@@ -4,17 +4,18 @@ using System.Collections.Generic;
 using CardStates = GenericCard.CardStates;
 
 public class Hand : MonoBehaviour {
-
-    public const int SPACING = 25;
-
     public Player _Player;
 
     public float DrawCardTweenTime;
 
     public List<Transform> Cards;
 
+    private static readonly Vector3 HAND_PREVIEW_POSITION = new Vector3(-77f, 4f, -220f);
+    private static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-200f, -160f, 16f);
+    private static readonly float SPACING = 25f;
+
 	// Use this for initialization
-	void Start () {
+	public void Start () {
         Cards = new List<Transform>();
 	}
 
@@ -29,20 +30,23 @@ public class Hand : MonoBehaviour {
     {
         Cards.Remove(card);
         //TODO: Adjust Hand after card removal
+        //AdjustHandSpacing();
     }
     private void AnimateCardToHand(Transform card)
     {
-        Vector3 point1 = new Vector3(-77f, 4f, -220f);
-        Vector3 point2 = new Vector3(-200f + Cards.Count * Hand.SPACING, -160f, 16f - Cards.Count);
+        Vector3 cardPosition = HAND_CARDS_OFFSET;
+
+        cardPosition.x += Cards.Count * Hand.SPACING;
+        cardPosition.z -= Cards.Count;
 
         iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
-                                                   "position", point1,
+                                                   "position", HAND_PREVIEW_POSITION,
                                                    "easetype", iTween.EaseType.easeOutExpo,
                                                    "islocal", true
                                                    ));
 
         iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
-                                                   "position", point2,
+                                                   "position", cardPosition,
                                                    "delay", DrawCardTweenTime + 0.25f,
                                                    "easetype", iTween.EaseType.easeInOutSine,
                                                    "islocal", true,
