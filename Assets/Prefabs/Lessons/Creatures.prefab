@@ -181,7 +181,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 50, y: 70, z: .200000003}
+  m_Size: {x: 30, y: 70, z: .200000003}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -195,7 +195,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  Type: 0
+  CardType: 0
+  _Player: {fileID: 0}
+  LessonType: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
