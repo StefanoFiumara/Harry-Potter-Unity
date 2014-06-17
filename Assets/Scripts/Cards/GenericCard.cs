@@ -20,7 +20,7 @@ public class GenericCard : MonoBehaviour {
     public Player _Player;
 
     protected bool Zoomed;
-    protected readonly float TweenTime = 0.5f;
+    protected readonly float TweenTime = 0.25f;
     protected readonly float ZoomScaleValue = 3f;
 
     public void Start()
