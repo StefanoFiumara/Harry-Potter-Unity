@@ -46,7 +46,7 @@ public class Deck : MonoBehaviour {
         _Hand.Add(card);
         card.parent = _Hand.transform;
 
-        _Player.ActionsAvailable--;
+        _Player.ActionsAvailable--; //TODO: Refactor to _Player.UseAction()
     }
 
 
