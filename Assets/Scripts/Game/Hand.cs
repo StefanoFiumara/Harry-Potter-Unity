@@ -11,8 +11,8 @@ public class Hand : MonoBehaviour {
     public List<Transform> Cards;
 
     public static readonly Vector3 HAND_PREVIEW_POSITION = new Vector3(-77f, 4f, -220f);
-    public static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-200f, -160f, 16f);
-    public static readonly float SPACING = 25f;
+    public static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-200f, -155f, 0f);
+    public static readonly float SPACING = 55f;
 
 	// Use this for initialization
 	public void Start () {
@@ -21,17 +21,37 @@ public class Hand : MonoBehaviour {
 
     public void Add(Transform card)
     {
-        Cards.Add(card);
         AnimateCardToHand(card);
-
+        Cards.Add(card);
+        //TODO: Shink Hand.SPACING when hand contains too many cards
     }
 
     public void Remove(Transform card)
     {
         Cards.Remove(card);
-        //TODO: Adjust Hand after card removal
-        //AdjustHandSpacing();
+        AdjustHandSpacing();
     }
+
+    private void AdjustHandSpacing()
+    {
+        Vector3 cardPosition;
+
+        for (int i = 0; i < Cards.Count; i++)
+        {
+            cardPosition = HAND_CARDS_OFFSET;
+            cardPosition.x += i * Hand.SPACING;
+            cardPosition.z -= i;
+            iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", DrawCardTweenTime,
+                                                           "position", cardPosition,
+                                                           "easetype", iTween.EaseType.easeInOutSine,
+                                                           "islocal", true,
+                                                           "oncomplete", "SwitchState",
+                                                           "oncompletetarget", Cards[i].gameObject,
+                                                           "oncompleteparams", CardStates.IN_HAND
+                                                           ));
+        }
+    }
+
     private void AnimateCardToHand(Transform card)
     {
         Vector3 cardPosition = HAND_CARDS_OFFSET;
