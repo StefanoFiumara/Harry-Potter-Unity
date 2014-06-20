@@ -16,7 +16,7 @@ public class Player : MonoBehaviour {
     public int LessonsInPlay = 0;
     public List<LessonTypes> LessonTypesInPlay;
 
-    public int ActionsAvailable = 2;
+    public int ActionsAvailable = 3;
 
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);
