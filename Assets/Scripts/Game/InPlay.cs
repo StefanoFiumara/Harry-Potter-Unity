@@ -12,7 +12,7 @@ public class InPlay : MonoBehaviour {
     public Player _Player;
 
     private static readonly Vector3 LESSON_POSITION_OFFSET = new Vector3(-160f, 6f, 15f);
-    private static readonly Vector2 LESSON_SPACING = new Vector2(80f, 15f);
+    private static readonly Vector2 LESSON_SPACING = new Vector2(85f, 15f);
 
     public float InPlayTweenTime;
 
