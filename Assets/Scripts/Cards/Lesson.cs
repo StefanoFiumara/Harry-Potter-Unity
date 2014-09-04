@@ -30,4 +30,13 @@ public class Lesson : GenericCard {
             State = CardStates.IN_PLAY;
         }
     }
+
+    public override void BeforeTurnAction()
+    {
+        
+    }
+    public override void AfterTurnAction()
+    {
+        
+    }
 }

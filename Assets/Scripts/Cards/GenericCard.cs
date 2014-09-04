@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class GenericCard : MonoBehaviour {
+public abstract class GenericCard : MonoBehaviour {
 
     public enum CardStates
     {
@@ -12,6 +12,10 @@ public class GenericCard : MonoBehaviour {
     public enum CardTypes
     {
         LESSON, CREATURE, SPELL, ITEM, LOCATION, MATCH, ADVENTURE, CHARACTER
+    }
+    public enum CostTypes
+    {
+        CARE_OF_MAGICAL_CREATURES, CHARMS, TRANSFIGURATION, POTIONS, QUIDDITCH
     }
 
     public CardStates State;
@@ -26,6 +30,7 @@ public class GenericCard : MonoBehaviour {
     public void Start()
     {
         Zoomed = false;
+        Debug.Log("GenericCard Start");
     }
 
     public void OnMouseEnter()
@@ -57,4 +62,7 @@ public class GenericCard : MonoBehaviour {
     {
         State = newState;
     }
+
+    public abstract void BeforeTurnAction();
+    public abstract void AfterTurnAction();
 }
