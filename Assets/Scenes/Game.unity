@@ -117,12 +117,12 @@ MonoBehaviour:
   Cards:
   - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
   - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
@@ -439,9 +439,10 @@ MonoBehaviour:
   _Deck: {fileID: 485762060}
   _InPlay: {fileID: 2002146216}
   StartingCharacter: {fileID: 0}
-  LessonsInPlay: 0
+  nLessonsInPlay: 0
   LessonTypesInPlay: 
   ActionsAvailable: 99
+  nCreaturesInPlay: 0
 --- !u!4 &1925117257
 Transform:
   m_ObjectHideFlags: 0
