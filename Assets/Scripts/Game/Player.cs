@@ -13,10 +13,12 @@ public class Player : MonoBehaviour {
 
     public Transform StartingCharacter; //Set by main menu? GameObject?
 
-    public int LessonsInPlay = 0;
+    public int nLessonsInPlay = 0;
     public List<LessonTypes> LessonTypesInPlay;
 
     public int ActionsAvailable = 2;
+
+    public int nCreaturesInPlay;
 
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);
