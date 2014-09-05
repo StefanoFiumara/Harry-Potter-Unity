@@ -24,9 +24,11 @@ public class Player : MonoBehaviour {
 	
     public void OnGUI()
     {
-        if (GUI.Button(new Rect(10, 10, 300, 150), "Shuffle"))
+        if (GUI.Button(new Rect(10, 10, 200, 75), "Shuffle"))
         {
             _Deck.Shuffle();
         }
     }
+
+
 }
