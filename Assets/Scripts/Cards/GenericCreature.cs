@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using LessonTypes = Lesson.LessonTypes;
 
-public class Creature : GenericCard {
+public class GenericCreature : GenericCard {
 
 	// Use this for initialization
 
-    public CostTypes CostType;
+    public LessonTypes CostType;
 
     public int CostAmount;
 
@@ -15,8 +16,24 @@ public class Creature : GenericCard {
 	public new void Start ()
     {
         base.Start();
-        Debug.Log("Creature Start");
 	}
+
+    public void OnMouseUp()
+    {
+        if (State != CardStates.IN_HAND) return;
+
+        if (_Player.ActionsAvailable > 0)
+        {
+            if(_Player.LessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
+            {
+                _Player._Hand.Remove(transform);
+                _Player._InPlay.Add(transform, CardType);
+
+
+                State = CardStates.IN_PLAY;
+            }
+        }
+    }
 
     public override void BeforeTurnAction()
     {
