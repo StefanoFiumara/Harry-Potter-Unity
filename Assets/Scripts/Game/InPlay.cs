@@ -31,7 +31,15 @@ public class InPlay : MonoBehaviour {
             case CardTypes.LESSON:
                 AnimateLessonToBoard(card);
                 break;
+            case CardTypes.CREATURE:
+                AnimateCreatureToBoard(card);
+                break;
         }
+    }
+
+    private void AnimateCreatureToBoard(Transform card)
+    {
+        throw new System.NotImplementedException();
     }
 
     private void AnimateLessonToBoard(Transform card)
