@@ -30,7 +30,6 @@ public abstract class GenericCard : MonoBehaviour {
     public void Start()
     {
         Zoomed = false;
-        Debug.Log("GenericCard Start");
     }
 
     public void OnMouseEnter()
