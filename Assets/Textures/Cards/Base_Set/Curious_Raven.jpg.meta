@@ -1,6 +1,8 @@
 fileFormatVersion: 2
 guid: f4f5ff88b2324c0408a9406f3914535a
 TextureImporter:
+  fileIDToRecycleName:
+    21300000: Curious_Raven
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -24,9 +26,9 @@ TextureImporter:
   maxTextureSize: 1024
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 1
     mipBias: -1
-    wrapMode: -1
+    wrapMode: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
