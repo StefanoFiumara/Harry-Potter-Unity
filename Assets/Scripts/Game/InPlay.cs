@@ -48,18 +48,7 @@ public class InPlay : MonoBehaviour {
         cardPosition.y -= (int)(_Player.nCreaturesInPlay / 3) * CREATURE_SPACING.y;
         cardPosition.z -= (int)(_Player.nCreaturesInPlay / 3);
 
-        iTween.MoveTo(card.gameObject, iTween.Hash("time", InPlayTweenTime,
-                                                   "position", cardPosition,
-                                                   "easetype", iTween.EaseType.easeInOutSine,
-                                                   "islocal", true
-                                                   ));
-
-        iTween.RotateTo(card.gameObject, iTween.Hash("time", InPlayTweenTime,
-                                                     "z", 270f,
-                                                     "easetype", iTween.EaseType.easeInOutSine
-                                                     ));
-
-        iTween.ScaleTo(card.gameObject, iTween.Hash("x", 1, "y", 1, "time", InPlayTweenTime));
+        TweenCardToPosition(card, cardPosition);
     }
 
     private void AnimateLessonToBoard(Transform card)
@@ -70,6 +59,11 @@ public class InPlay : MonoBehaviour {
         cardPosition.y -= (int)(_Player.nLessonsInPlay / 3) * LESSON_SPACING.y;
         cardPosition.z -= (int)(_Player.nLessonsInPlay / 3);
 
+        TweenCardToPosition(card, cardPosition);
+    }
+
+    private void TweenCardToPosition(Transform card, Vector3 cardPosition)
+    {
         iTween.MoveTo(card.gameObject, iTween.Hash("time", InPlayTweenTime,
                                                    "position", cardPosition,
                                                    "easetype", iTween.EaseType.easeInOutSine,
