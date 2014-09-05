@@ -24,11 +24,12 @@ public class GenericCreature : GenericCard {
 
         if (_Player.ActionsAvailable > 0)
         {
-            if(_Player.LessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
+            if(_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
             {
                 _Player._Hand.Remove(transform);
                 _Player._InPlay.Add(transform, CardType);
 
+                _Player.nCreaturesInPlay++;
 
                 State = CardStates.IN_PLAY;
             }
