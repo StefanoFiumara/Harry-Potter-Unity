@@ -29,6 +29,8 @@ public class Deck : MonoBehaviour {
 	
     public Transform TakeTopCard()
     {
+        if (Cards.Count == 0) return null;
+
         Transform card = Cards[Cards.Count - 1];
         Cards.RemoveAt(Cards.Count - 1);
         return card;
@@ -36,7 +38,7 @@ public class Deck : MonoBehaviour {
 
     public void OnMouseUp()
     {
-        DrawCard();
+        if(Cards.Count > 0) DrawCard();
     }
 
     private void DrawCard()
