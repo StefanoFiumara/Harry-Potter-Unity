@@ -9,7 +9,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 400000}
   - 65: {fileID: 6500000}
-  - 114: {fileID: 11400000}
   m_Layer: 0
   m_Name: Template
   m_TagString: Untagged
@@ -103,7 +102,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: eb1923db1cee89548ac04f14b6796299, type: 2}
+  - {fileID: 2100000, guid: 7ad99725be92f094c934282281b626cc, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -183,24 +182,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 30, y: 70, z: .200000003}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &11400000
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc1957cf7fba8544a92144e06e1d409a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  State: 0
-  CardType: 1
-  _Player: {fileID: 0}
-  CostType: 0
-  CostAmount: 3
-  DamagePerTurn: 1
-  Health: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
