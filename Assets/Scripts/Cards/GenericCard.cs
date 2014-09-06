@@ -23,12 +23,22 @@ public abstract class GenericCard : MonoBehaviour {
 
     public Player _Player;
 
+    //Not sure if we'll ever need to access this in the subclasses, private for now.
+    private readonly Vector2 ColliderSize = new Vector2(35f, 70f);
+
     protected bool Zoomed;
-    protected readonly float TweenTime = 0.25f;
+    protected readonly float ZoomTweenTime = 0.1f;
     protected readonly float ZoomScaleValue = 3f;
 
     public void Start()
     {
+        //Add the collider through code instead of through unity so that if it ever changes, we won't need to edit every prefab.
+        var col = gameObject.AddComponent<BoxCollider>();
+        col.isTrigger = true;
+        col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
+        
+        Debug.Log(gameObject.collider.bounds.size);
+
         Zoomed = false;
     }
 
@@ -39,8 +49,8 @@ public abstract class GenericCard : MonoBehaviour {
 
         if (!Zoomed)
         {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScaleValue, "y", ZoomScaleValue, "time", TweenTime));
-            iTween.MoveTo(gameObject, iTween.Hash("y", -92f, "time", TweenTime, "islocal", true));
+            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScaleValue, "y", ZoomScaleValue, "time", ZoomTweenTime));
+            iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y + 60f, "time", ZoomTweenTime, "islocal", true));
             Zoomed = true;
         }
     }
@@ -51,8 +61,8 @@ public abstract class GenericCard : MonoBehaviour {
 
         if (Zoomed)
         {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "time", TweenTime));
-            iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y, "time", TweenTime, "islocal", true));
+            iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "time", ZoomTweenTime));
+            iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y, "time", ZoomTweenTime, "islocal", true));
             Zoomed = false;
         }
     }
