@@ -33,12 +33,13 @@ public abstract class GenericCard : MonoBehaviour {
     public void Start()
     {
         //Add the collider through code instead of through unity so that if it ever changes, we won't need to edit every prefab.
-        var col = gameObject.AddComponent<BoxCollider>();
-        col.isTrigger = true;
-        col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
-        
-        Debug.Log(gameObject.collider.bounds.size);
-
+        if(gameObject.collider == null)
+        {
+            var col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+            col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
+        }
+            
         Zoomed = false;
     }
 
