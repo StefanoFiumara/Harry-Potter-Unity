@@ -28,7 +28,8 @@ public abstract class GenericCard : MonoBehaviour {
 
     protected bool Zoomed;
     protected readonly float ZoomTweenTime = 0.1f;
-    protected readonly float ZoomScaleValue = 3f;
+    protected readonly float ZoomScale_Hand = 2.5f;
+    protected readonly float ZoomScale_InPlay = 2.25f;
 
     public void Start()
     {
@@ -45,12 +46,32 @@ public abstract class GenericCard : MonoBehaviour {
 
     public void OnMouseEnter()
     {
-        // TODO: Implement separate zoom when card is IN_PLAY
-        if (State != CardStates.IN_HAND) return;
+        switch (State)
+        {
+            case CardStates.IN_HAND:
+                ZoomInHand();
+                break;
+            case CardStates.IN_PLAY:
+                ZoomInPlay();
+                break;
+        }
+        
+    }
 
+    private void ZoomInPlay()
+    {
         if (!Zoomed)
         {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScaleValue, "y", ZoomScaleValue, "time", ZoomTweenTime));
+            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScale_InPlay, "y", ZoomScale_InPlay, "time", ZoomTweenTime));
+            Zoomed = true;
+        }
+    }
+
+    private void ZoomInHand()
+    {
+        if (!Zoomed)
+        {
+            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScale_Hand, "y", ZoomScale_Hand, "time", ZoomTweenTime));
             iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y + 60f, "time", ZoomTweenTime, "islocal", true));
             Zoomed = true;
         }
@@ -58,12 +79,15 @@ public abstract class GenericCard : MonoBehaviour {
 
     public void OnMouseExit()
     {
-        if (State != CardStates.IN_HAND) return;
-
         if (Zoomed)
         {
             iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "time", ZoomTweenTime));
-            iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y, "time", ZoomTweenTime, "islocal", true));
+
+            if (State == CardStates.IN_HAND)
+            {
+                iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y, "time", ZoomTweenTime, "islocal", true));
+            }
+
             Zoomed = false;
         }
     }
