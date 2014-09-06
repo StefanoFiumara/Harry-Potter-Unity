@@ -117,6 +117,7 @@ MonoBehaviour:
   Cards:
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
@@ -126,13 +127,12 @@ MonoBehaviour:
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   _Hand: {fileID: 866037081}
