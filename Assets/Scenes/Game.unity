@@ -74,6 +74,56 @@ NavMeshSettings:
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
   m_NavMesh: {fileID: 0}
+--- !u!1 &226967737
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 226967739}
+  - 114: {fileID: 226967738}
+  m_Layer: 0
+  m_Name: Player 2
+  m_TagString: Player
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &226967738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 226967737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c074680bb62d40478aeeb9f600f4575, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Hand: {fileID: 589322087}
+  _Deck: {fileID: 1528567323}
+  _InPlay: {fileID: 1759829299}
+  StartingCharacter: {fileID: 0}
+  nLessonsInPlay: 0
+  LessonTypesInPlay: 
+  ActionsAvailable: 99
+  nCreaturesInPlay: 0
+--- !u!4 &226967739
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 226967737}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: -4.37113883e-08}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1528567324}
+  - {fileID: 589322088}
+  - {fileID: 1759829300}
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
 --- !u!1 &485762058
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,17 +170,17 @@ MonoBehaviour:
   - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
   - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
   - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
   - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
   - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
@@ -150,6 +200,48 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 50, y: 70, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &589322086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 589322088}
+  - 114: {fileID: 589322087}
+  m_Layer: 0
+  m_Name: Hand
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &589322087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 589322086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05f67bb9cf7dde2409094a5a197e3e79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _Player: {fileID: 226967738}
+  DrawCardTweenTime: .5
+  Cards: []
+--- !u!4 &589322088
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 589322086}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 226967739}
+  m_RootOrder: 1
 --- !u!1 &866037079
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,6 +500,124 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!1 &1528567321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1528567324}
+  - 114: {fileID: 1528567323}
+  - 65: {fileID: 1528567322}
+  m_Layer: 0
+  m_Name: Deck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!65 &1528567322
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1528567321}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 50, y: 70, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1528567323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1528567321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a92bfb2b4c86b3c45a95e25879b7a8b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards:
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400004, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  _Hand: {fileID: 589322087}
+  _Player: {fileID: 226967738}
+  DeckShuffleTweenTime: .800000012
+--- !u!4 &1528567324
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1528567321}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -355, y: -124, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 226967739}
+  m_RootOrder: 0
+--- !u!1 &1759829298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1759829300}
+  - 114: {fileID: 1759829299}
+  m_Layer: 0
+  m_Name: In Play
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1759829299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1759829298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards: []
+  _Player: {fileID: 226967738}
+  InPlayTweenTime: .5
+--- !u!4 &1759829300
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1759829298}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 226967739}
+  m_RootOrder: 2
 --- !u!1 &1925117255
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +628,7 @@ GameObject:
   - 4: {fileID: 1925117257}
   - 114: {fileID: 1925117256}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player 1
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
