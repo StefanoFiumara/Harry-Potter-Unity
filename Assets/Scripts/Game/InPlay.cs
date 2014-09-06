@@ -72,7 +72,8 @@ public class InPlay : MonoBehaviour {
 
         iTween.RotateTo(card.gameObject, iTween.Hash("time", InPlayTweenTime,
                                                      "z", 270f,
-                                                     "easetype", iTween.EaseType.easeInOutSine
+                                                     "easetype", iTween.EaseType.easeInOutSine,
+                                                     "islocal", true
                                                      ));
 
         iTween.ScaleTo(card.gameObject, iTween.Hash("x", 1, "y", 1, "time", InPlayTweenTime));
