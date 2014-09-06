@@ -10,8 +10,8 @@ public class Hand : MonoBehaviour {
 
     public List<Transform> Cards;
 
-    public static readonly Vector3 HAND_PREVIEW_POSITION = new Vector3(-77f, 4f, -220f);
-    public static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-200f, -155f, 0f);
+    public static readonly Vector3 HAND_PREVIEW_POSITION = new Vector3(-80f, -13f, -336f);
+    public static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-240f, -200f, 0f);
     public static readonly float SPACING = 55f;
 
 	// Use this for initialization
