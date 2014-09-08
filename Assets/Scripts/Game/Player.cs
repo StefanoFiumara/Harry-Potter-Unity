@@ -23,7 +23,13 @@ public class Player : MonoBehaviour {
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);
 	}
-	
+
+    public bool UseAction()
+    {
+        //TODO: also check for next turn here?
+        return ActionsAvailable-- > 0;
+    }
+
     public void OnGUI()
     {
         if (GUI.Button(new Rect(10, 10, 200, 75), "Shuffle"))

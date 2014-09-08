@@ -43,12 +43,12 @@ public class Deck : MonoBehaviour {
 
     private void DrawCard()
     {
-        if (_Player.ActionsAvailable <= 0) return;
-        Transform card = TakeTopCard();
-        _Hand.Add(card);
-        card.parent = _Hand.transform;
-
-        _Player.ActionsAvailable--; //TODO: Refactor to _Player.UseAction()
+        if (_Player.UseAction())
+        {
+            Transform card = TakeTopCard();
+            _Hand.Add(card);
+            card.parent = _Hand.transform;   
+        }
     }
 
 

@@ -14,7 +14,7 @@ public class Lesson : GenericCard {
     {
         if (State != CardStates.IN_HAND) return;
 
-        if (_Player.ActionsAvailable > 0)
+        if (_Player.UseAction())
         {
             if (!_Player.LessonTypesInPlay.Contains(LessonType))
             {
@@ -25,7 +25,6 @@ public class Lesson : GenericCard {
             _Player._InPlay.Add(transform, CardType);
 
             _Player.nLessonsInPlay++;
-            _Player.ActionsAvailable--;
 
             State = CardStates.IN_PLAY;
         }

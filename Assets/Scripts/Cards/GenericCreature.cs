@@ -22,7 +22,7 @@ public class GenericCreature : GenericCard {
     {
         if (State != CardStates.IN_HAND) return;
 
-        if (_Player.ActionsAvailable > 0)
+        if (_Player.UseAction())
         {
             if(_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
             {
