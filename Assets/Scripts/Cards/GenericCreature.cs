@@ -36,6 +36,12 @@ public class GenericCreature : GenericCard {
         }
     }
 
+    public void BattlecryAction()
+    {
+        //Stub to override
+    }
+
+
     public override void BeforeTurnAction()
     {
 
