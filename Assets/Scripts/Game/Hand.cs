@@ -36,12 +36,16 @@ public class Hand : MonoBehaviour {
     private void AdjustHandSpacing()
     {
         Vector3 cardPosition;
-
+        
+        float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
+        
         for (int i = 0; i < Cards.Count; i++)
         {
             cardPosition = HAND_CARDS_OFFSET;
-            cardPosition.x += i * Hand.SPACING;
+
+            cardPosition.x += i * Hand.SPACING * shrinkFactor;
             cardPosition.z -= i;
+
             iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                            "position", cardPosition,
                                                            "easetype", iTween.EaseType.easeInOutSine,
@@ -57,7 +61,9 @@ public class Hand : MonoBehaviour {
     {
         Vector3 cardPosition = HAND_CARDS_OFFSET;
 
-        cardPosition.x += Cards.Count * Hand.SPACING;
+        float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
+
+        cardPosition.x += Cards.Count * Hand.SPACING * shrinkFactor;
         cardPosition.z -= Cards.Count;
 
         iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
