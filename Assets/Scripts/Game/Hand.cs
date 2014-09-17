@@ -24,7 +24,6 @@ public class Hand : MonoBehaviour {
         AnimateCardToHand(card);
         AdjustHandSpacing();
         Cards.Add(card);
-        //TODO: Shink Hand.SPACING when hand contains too many cards
     }
 
     public void Remove(Transform card)
