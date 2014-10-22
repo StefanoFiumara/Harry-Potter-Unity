@@ -10,6 +10,7 @@ public class Player : MonoBehaviour {
     public Hand _Hand;
     public Deck _Deck;
     public InPlay _InPlay;
+    public Player _OppositePlayer;
 
     public Transform StartingCharacter; //Set by main menu? GameObject?
 
