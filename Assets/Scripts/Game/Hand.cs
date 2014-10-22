@@ -19,9 +19,9 @@ public class Hand : MonoBehaviour {
         Cards = new List<Transform>();
 	}
 
-    public void Add(Transform card)
+    public void Add(Transform card, bool reveal = true)
     {
-        AnimateCardToHand(card);
+        AnimateCardToHand(card, reveal);
         AdjustHandSpacing();
         Cards.Add(card);
     }
@@ -56,7 +56,7 @@ public class Hand : MonoBehaviour {
         }
     }
 
-    private void AnimateCardToHand(Transform card)
+    private void AnimateCardToHand(Transform card, bool reveal = true)
     {
         Vector3 cardPosition = HAND_CARDS_OFFSET;
 
@@ -81,10 +81,13 @@ public class Hand : MonoBehaviour {
                                                    "oncompleteparams", CardStates.IN_HAND
                                                    ));
 
-        iTween.RotateTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
-                                                     "y", 0f,
-                                                     "easetype", iTween.EaseType.easeInOutSine
-                                                     ));
+        if (reveal)
+        {
+            iTween.RotateTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
+                                                         "y", 0f,
+                                                         "easetype", iTween.EaseType.easeInOutSine
+                                                         ));
+        }
     }
 
     public int NumberOfCards()
