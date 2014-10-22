@@ -9,14 +9,21 @@ public class Deck : MonoBehaviour {
     public Hand _Hand;
     public Player _Player;
 
+    private readonly Vector2 DECK_POSITION_OFFSET = new Vector2(-355f, -124f);
+
     public float DeckShuffleTweenTime = 0.5f;
 
 	// Use this for initialization
 	public void Start () {
+        //instantiate cards into scene
+        Vector3 cardPos = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
         for (int i = 0; i < Cards.Count; i++)
         {
-            Cards[i] = (Transform)Instantiate(Cards[i], transform.position + Vector3.back * -16f, Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z)));
+          //  Cards[i] = (Transform)Instantiate(Cards[i], cardPos + Vector3.back * -16f, Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z)));
+            Cards[i] = (Transform)Instantiate(Cards[i]);
             Cards[i].parent = transform;
+            Cards[i].localPosition = cardPos + Vector3.back * -16f;
+            Cards[i].rotation = Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z));
             Cards[i].position += i * Vector3.back * 0.2f;
             
             //Give the card a reference to the player so that it knows who it belongs to.
@@ -24,6 +31,14 @@ public class Deck : MonoBehaviour {
             cardInfo._Player = _Player;
         }
 
+        //Set the collider to the proper position
+        if (gameObject.collider == null)
+        {
+            var col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+            col.size = new Vector3(50f, 70f, 1f);
+            col.center = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
+        }
        // Shuffle();
 	}
 	
