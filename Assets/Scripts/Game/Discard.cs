@@ -8,8 +8,7 @@ public class Discard : MonoBehaviour {
     private List<Transform> Cards;
     public Player _Player; //not sure if needed just yet
 
-    private readonly Vector2 DISCARD_POSITION_OFFSET = new Vector2(-355f, -124); //to be determined
-    private readonly Vector2 DISCARD_SPACING = new Vector2(0, 0); //to be determined
+    private readonly Vector2 DISCARD_POSITION_OFFSET = new Vector2(-355f, -204); //to be determined
 
     
 	// Use this for initialization
@@ -17,10 +16,14 @@ public class Discard : MonoBehaviour {
 	    Cards = new List<Transform>();
 	}
 
-    public void Add(Transform card) //don't need to worry about type here, since they all go to the same place.
+    //TODO: Test this function
+    public void Add(Transform card) 
     {
         Cards.Add(card);
-
-
+        Vector3 cardPos = new Vector3(DISCARD_POSITION_OFFSET.x, DISCARD_POSITION_OFFSET.y, -16f);
+        cardPos.z +=  Cards.Count * 0.2f;
+        Helper.TweenCardToPosition(card, cardPos, 0.5f, false); 
     }
+
+    //TODO: OnMouseUp: View cards in pile
 }
