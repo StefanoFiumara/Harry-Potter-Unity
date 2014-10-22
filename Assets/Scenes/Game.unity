@@ -104,6 +104,7 @@ MonoBehaviour:
   _Hand: {fileID: 589322087}
   _Deck: {fileID: 1528567323}
   _InPlay: {fileID: 1759829299}
+  _OppositePlayer: {fileID: 0}
   StartingCharacter: {fileID: 0}
   nLessonsInPlay: 0
   LessonTypesInPlay: 
@@ -133,7 +134,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 485762059}
   - 114: {fileID: 485762060}
-  - 65: {fileID: 485762061}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -148,7 +148,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 485762058}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -355, y: -124, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1925117257}
@@ -228,18 +228,6 @@ MonoBehaviour:
   _Hand: {fileID: 866037081}
   _Player: {fileID: 1925117256}
   DeckShuffleTweenTime: .800000012
---- !u!65 &485762061
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 485762058}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 50, y: 70, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &589322086
 GameObject:
   m_ObjectHideFlags: 0
@@ -476,7 +464,7 @@ Transform:
   m_LocalScale: {x: 587.5, y: 851, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
 --- !u!1 &1313987344
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +537,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1528567324}
   - 114: {fileID: 1528567323}
-  - 65: {fileID: 1528567322}
   m_Layer: 0
   m_Name: Deck
   m_TagString: Untagged
@@ -557,18 +544,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &1528567322
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1528567321}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 50, y: 70, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1528567323
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,7 +626,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1528567321}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -355, y: -124, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 226967739}
@@ -728,6 +703,7 @@ MonoBehaviour:
   _Hand: {fileID: 866037081}
   _Deck: {fileID: 485762060}
   _InPlay: {fileID: 2002146216}
+  _OppositePlayer: {fileID: 0}
   StartingCharacter: {fileID: 0}
   nLessonsInPlay: 0
   LessonTypesInPlay: 
@@ -747,7 +723,7 @@ Transform:
   - {fileID: 866037080}
   - {fileID: 2002146217}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1 &2002146215
 GameObject:
   m_ObjectHideFlags: 0
