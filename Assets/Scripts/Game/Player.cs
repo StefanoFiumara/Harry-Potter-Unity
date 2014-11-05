@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
     public Deck _Deck;
     public InPlay _InPlay;
     public Player _OppositePlayer;
+    public Discard _Discard;
 
     public Transform StartingCharacter; //Set by main menu? GameObject?
 
@@ -31,13 +32,18 @@ public class Player : MonoBehaviour {
         return ActionsAvailable-- > 0;
     }
 
-    public void OnGUI()
+    public void TakeDamage(int amount)
     {
-        if (GUI.Button(new Rect(10, 10, 200, 75), "Shuffle"))
-        {
-            _Deck.Shuffle();
-        }
-    }
+        if (amount <= 0) return;
 
+        
+        for (int i = 0; i < amount; i++)
+        {
+            Transform card = _Deck.TakeTopCard();
+            _Discard.Add(card);
+        }
+
+
+    }
 
 }
