@@ -48,7 +48,7 @@ public class InPlay : MonoBehaviour {
         cardPosition.y -= (int)(_Player.nCreaturesInPlay / 3) * CREATURE_SPACING.y;
         cardPosition.z -= (int)(_Player.nCreaturesInPlay / 3);
 
-        Helper.TweenCardToPosition(card, cardPosition, InPlayTweenTime);
+        Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_PLAY, InPlayTweenTime);
     }
 
     private void AnimateLessonToBoard(Transform card)
@@ -59,6 +59,6 @@ public class InPlay : MonoBehaviour {
         cardPosition.y -= (int)(_Player.nLessonsInPlay / 3) * LESSON_SPACING.y;
         cardPosition.z -= (int)(_Player.nLessonsInPlay / 3);
 
-        Helper.TweenCardToPosition(card, cardPosition, InPlayTweenTime);
+        Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_PLAY, InPlayTweenTime);
     }
 }
