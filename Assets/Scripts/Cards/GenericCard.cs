@@ -6,7 +6,7 @@ public abstract class GenericCard : MonoBehaviour {
 
     public enum CardStates
     {
-        IN_DECK, IN_HAND, IN_PLAY
+        IN_DECK, IN_HAND, IN_PLAY, DISCARDED
     }
 
     public enum CardTypes
