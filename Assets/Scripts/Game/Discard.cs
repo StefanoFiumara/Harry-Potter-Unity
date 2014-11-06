@@ -44,5 +44,5 @@ public class Discard : MonoBehaviour {
         }
     }
 
-    //TODO: OnMouseUp: View cards in pile
+    //TODO: OnMouseUp: View cards in discard pile
 }
