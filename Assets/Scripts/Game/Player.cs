@@ -29,6 +29,7 @@ public class Player : MonoBehaviour {
     public bool UseAction()
     {
         //TODO: also check for next turn here?
+        //TODO: Clamp ActionsAvailable to 0-99
         return ActionsAvailable-- > 0;
     }
 
