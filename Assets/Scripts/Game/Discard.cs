@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Discard : MonoBehaviour {
 
-    private List<Transform> Cards;
+    private List<GenericCard> Cards;
     public Player _Player; //not sure if needed just yet
 
-    private readonly Vector2 DISCARD_POSITION_OFFSET = new Vector2(-355f, -30f); //to be determined
+    private readonly Vector2 DISCARD_POSITION_OFFSET = new Vector2(-355f, -30f);
 
 	public void Start () {
-	    Cards = new List<Transform>();
+	    Cards = new List<GenericCard>();
 
         if (gameObject.collider == null)
         {
@@ -21,17 +22,26 @@ public class Discard : MonoBehaviour {
         }
 	}
 
-    public void Add(Transform card, float tweenDelay = 0f) 
+    public void Add(GenericCard card, float tweenDelay = 0f) 
     {
         Cards.Add(card);
-        card.parent = transform;
+        card.transform.parent = transform;
 
         Vector3 cardPos = new Vector3(DISCARD_POSITION_OFFSET.x, DISCARD_POSITION_OFFSET.y, 16f);
         cardPos.z -=  Cards.Count * 0.2f;
 
-        Helper.TweenCardToPosition(card, cardPos, GenericCard.CardStates.DISCARDED, tweenDelay);
+        Helper.TweenCardToPosition(card.transform, cardPos, GenericCard.CardStates.DISCARDED, tweenDelay);
 
-        //TODO: Check rotation if being discarded from InPlay
+        //Check if a card is being discarded from the board and call the appropriate Action method.
+        var cardInfo = card.GetComponent<GenericCard>() as PersistentCard;
+        if (cardInfo != null)
+        {
+            if (card.State == GenericCard.CardStates.IN_PLAY)
+            {
+                cardInfo.OnExitInPlayAction();
+                //TODO: Rotate back to vertical position
+            }
+        }
     }
 
     //TODO: OnMouseUp: View cards in pile

@@ -9,7 +9,7 @@ using CardTypes = GenericCard.CardTypes;
 
 public class InPlay : MonoBehaviour {
 
-    public List<Transform> Cards;
+    public List<GenericCard> Cards;
 
     public Player _Player;
 
@@ -23,21 +23,21 @@ public class InPlay : MonoBehaviour {
 
     public void Start()
     {
-        Cards = new List<Transform>();
+        Cards = new List<GenericCard>();
     }
 
-    public void Add(Transform card, CardTypes CardType)
+    public void Add(GenericCard card)
     {
         Cards.Add(card);
-        card.parent = transform;
+        card.transform.parent = transform;
 
-        switch (CardType)
+        switch (card.CardType)
         {
             case CardTypes.LESSON:
-                AnimateLessonToBoard(card);
+                AnimateLessonToBoard(card.transform);
                 break;
             case CardTypes.CREATURE:
-                AnimateCreatureToBoard(card);
+                AnimateCreatureToBoard(card.transform);
                 break;
         }
 

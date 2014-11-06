@@ -16,8 +16,8 @@ public class Lesson : GenericCard, PersistentCard {
 
         if (_Player.UseAction())
         {
-            _Player._Hand.Remove(transform);
-            _Player._InPlay.Add(transform, CardType);            
+            _Player._Hand.Remove(this);
+            _Player._InPlay.Add(this);            
         }
     }
 
@@ -37,6 +37,7 @@ public class Lesson : GenericCard, PersistentCard {
     {
         _Player.nLessonsInPlay--;
         State = CardStates.DISCARDED;
+        //TODO: Check LessonTypesInPlay and update if needed
     }
 
     //Lesson Cards don't implement these methods

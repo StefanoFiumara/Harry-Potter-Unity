@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Deck : MonoBehaviour {
 
-    public List<Transform> Cards;
+    public List<GenericCard> Cards;
 
     public Hand _Hand;
     public Player _Player;
@@ -19,11 +19,11 @@ public class Deck : MonoBehaviour {
         Vector3 cardPos = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
         for (int i = 0; i < Cards.Count; i++)
         {
-            Cards[i] = (Transform)Instantiate(Cards[i]);
-            Cards[i].parent = transform;
-            Cards[i].localPosition = cardPos + Vector3.back * -16f;
-            Cards[i].rotation = Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z));
-            Cards[i].position += i * Vector3.back * 0.2f;
+            Cards[i] = (GenericCard)Instantiate(Cards[i]);
+            Cards[i].transform.parent = transform;
+            Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
+            Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z));
+            Cards[i].transform.position += i * Vector3.back * 0.2f;
             
             //Give the card a reference to the player so that it knows who it belongs to.
             GenericCard cardInfo = Cards[i].GetComponent<GenericCard>();
@@ -40,11 +40,14 @@ public class Deck : MonoBehaviour {
         }
 	}
 	
-    public Transform TakeTopCard()
+    public GenericCard TakeTopCard()
     {
-        if (Cards.Count == 0) return null;
+        if (Cards.Count <= 0)
+        {
+            return null;
+        }
 
-        Transform card = Cards[Cards.Count - 1];
+        GenericCard card = Cards[Cards.Count - 1];
         Cards.RemoveAt(Cards.Count - 1);
         return card;
     }
@@ -58,9 +61,9 @@ public class Deck : MonoBehaviour {
     {
         if (_Player.UseAction())
         {
-            Transform card = TakeTopCard();
+            GenericCard card = TakeTopCard();
             _Hand.Add(card);
-            card.parent = _Hand.transform;   
+            card.transform.parent = _Hand.transform;   
         }
     }
 
@@ -72,14 +75,14 @@ public class Deck : MonoBehaviour {
         {
             int random = Random.Range(i, Cards.Count);
 
-            Transform temp = Cards[i];
+            GenericCard temp = Cards[i];
             Cards[i] = Cards[random];
             Cards[random] = temp;
 
             float newZ = (transform.position.z + 16f) - i * 0.2f;
-            
-            Vector3 point1 = new Vector3(Cards[i].position.x, Cards[i].position.y + 80, Cards[i].position.z);
-            Vector3 point2 = new Vector3(Cards[i].position.x, Cards[i].position.y, newZ);
+
+            Vector3 point1 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y + 80, Cards[i].transform.position.z);
+            Vector3 point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
 
             iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", DeckShuffleTweenTime, 
                                                            "path", new Vector3[] {point1, point2}, 

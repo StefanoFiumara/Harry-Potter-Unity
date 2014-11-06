@@ -26,8 +26,8 @@ public class GenericCreature : GenericCard, PersistentCard {
         {
             if(_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
             {
-                _Player._Hand.Remove(transform);
-                _Player._InPlay.Add(transform, CardType);
+                _Player._Hand.Remove(this);
+                _Player._InPlay.Add(this);
             }
         }
     }
@@ -44,6 +44,9 @@ public class GenericCreature : GenericCard, PersistentCard {
     public void OnExitInPlayAction()
     {
         //TODO: Subtract from player's damage per turn
+        _Player.nCreaturesInPlay--;
+
+        State = CardStates.DISCARDED;
     }
 
     //Generic Creatures don't do anything special on these actions

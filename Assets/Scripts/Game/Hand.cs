@@ -8,7 +8,7 @@ public class Hand : MonoBehaviour {
 
     public float DrawCardTweenTime;
 
-    public List<Transform> Cards;
+    public List<GenericCard> Cards;
 
     public static readonly Vector3 HAND_PREVIEW_POSITION = new Vector3(-80f, -13f, -336f);
     public static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-240f, -200f, 0f);
@@ -16,17 +16,17 @@ public class Hand : MonoBehaviour {
 
 	// Use this for initialization
 	public void Start () {
-        Cards = new List<Transform>();
+        Cards = new List<GenericCard>();
 	}
 
-    public void Add(Transform card, bool reveal = true)
+    public void Add(GenericCard card, bool reveal = true)
     {
-        AnimateCardToHand(card, reveal);
+        AnimateCardToHand(card.transform, reveal);
         AdjustHandSpacing();
         Cards.Add(card);
     }
 
-    public void Remove(Transform card)
+    public void Remove(GenericCard card)
     {
         Cards.Remove(card);
         AdjustHandSpacing();
@@ -45,7 +45,7 @@ public class Hand : MonoBehaviour {
             cardPosition.x += i * Hand.SPACING * shrinkFactor;
             cardPosition.z -= i;
 
-            Helper.TweenCardToPosition(Cards[i], cardPosition, CardStates.IN_HAND);
+            Helper.TweenCardToPosition(Cards[i].transform, cardPosition, CardStates.IN_HAND);
         }
     }
 
