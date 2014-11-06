@@ -7,6 +7,8 @@ public abstract class GenericSpell : GenericCard {
     public LessonTypes CostType;
     public int CostAmount;
 
+    public static readonly Vector2 SPELL_OFFSET = new Vector3(0f, 0f, -300f);
+
     public new void Start()
     {
         base.Start();
@@ -23,9 +25,27 @@ public abstract class GenericSpell : GenericCard {
                 _Player._Hand.Remove(transform);
                 //tween here
                 //TODO: need a special tween for spell cards.
-                OnPlayAction();
+                //OnPlayAction();
+                TweenToPosition();
             }
         }
+    }
+
+    private void TweenToPosition()
+    {
+        //TODO: Rotate if it's being played by the opponent
+        iTween.MoveTo(gameObject, iTween.Hash("time", 0.5f,
+                                              "position", SPELL_OFFSET,
+                                              "easetype", iTween.EaseType.easeInOutSine,
+                                              "oncomplete", "PlayAndDiscard",
+                                              "oncompletetarget", gameObject
+                                                   ));
+    }
+
+    protected void PlayAndDiscard()
+    {
+        OnPlayAction();
+        _Player._Discard.Add(transform, 0.5f);
     }
 
     public abstract void OnPlayAction();
