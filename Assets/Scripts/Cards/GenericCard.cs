@@ -24,7 +24,7 @@ public abstract class GenericCard : MonoBehaviour {
     public Player _Player;
 
     //Not sure if we'll ever need to access this in the subclasses, private for now.
-    private readonly Vector2 ColliderSize = new Vector2(35f, 70f);
+    private readonly Vector2 ColliderSize = new Vector2(50f, 70f);
 
     protected bool Zoomed;
     protected readonly float ZoomTweenTime = 0.1f;
@@ -43,21 +43,7 @@ public abstract class GenericCard : MonoBehaviour {
             
         Zoomed = false;
     }
-
-    public void OnMouseEnter()
-    {
-        switch (State)
-        {
-            case CardStates.IN_HAND:
-                ZoomInHand();
-                break;
-            case CardStates.IN_PLAY:
-                ZoomInPlay();
-                break;
-        }
-        
-    }
-
+    
     private void ZoomInPlay()
     {
         if (!Zoomed)
@@ -77,6 +63,24 @@ public abstract class GenericCard : MonoBehaviour {
         }
     }
 
+    //TODO: Implement separate zoom
+    /*
+    public void OnMouseEnter()
+    {
+        switch (State)
+        {
+            case CardStates.IN_HAND:
+                ZoomInHand();
+                break;
+            case CardStates.IN_PLAY:
+                ZoomInPlay();
+                break;
+        }
+        
+    }
+    */
+
+    /*
     public void OnMouseExit()
     {
         if (Zoomed)
@@ -91,7 +95,7 @@ public abstract class GenericCard : MonoBehaviour {
             Zoomed = false;
         }
     }
-
+    */
     public void SwitchState(CardStates newState)
     {
         State = newState;
