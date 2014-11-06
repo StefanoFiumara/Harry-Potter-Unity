@@ -106,7 +106,4 @@ public abstract class GenericCard : MonoBehaviour {
     {
         State = newState;
     }
-
-    public abstract void BeforeTurnAction();
-    public abstract void AfterTurnAction();
 }
