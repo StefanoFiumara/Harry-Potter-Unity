@@ -28,9 +28,17 @@ public class Player : MonoBehaviour {
 
     public bool UseAction()
     {
-        //TODO: also check for next turn here?
-        //TODO: Clamp ActionsAvailable to 0-99
-        return ActionsAvailable-- > 0;
+        ActionsAvailable--;
+
+        if (ActionsAvailable <= 0)
+        {
+            //TODO: Next turn should happen here
+            ActionsAvailable = 0;
+            //_OppositePlayer.ActionsAvailable += 2;
+            //Global.CurrentTurn = _OppositePlayer; // ????
+        }
+
+        return ActionsAvailable > 0;
     }
 
     public void TakeDamage(int amount)
