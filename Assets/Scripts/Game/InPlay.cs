@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using LessonTypes = Lesson.LessonTypes;
 using CardStates = GenericCard.CardStates;
 using CardTypes = GenericCard.CardTypes;
+
 
 public class InPlay : MonoBehaviour {
 
@@ -37,6 +39,18 @@ public class InPlay : MonoBehaviour {
             case CardTypes.CREATURE:
                 AnimateCreatureToBoard(card);
                 break;
+        }
+
+        var cardInfo = card.GetComponent<GenericCard>() as PersistentCard;
+
+        //Should never be null, but we can't be too careful!
+        if (cardInfo != null)
+        {
+            cardInfo.OnEnterInPlayAction();
+        }
+        else
+        {
+            throw new Exception("non-persistent card added to InPlay board, This should never Happen!");
         }
     }
 
