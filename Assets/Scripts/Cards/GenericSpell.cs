@@ -23,43 +23,28 @@ public abstract class GenericSpell : GenericCard {
             if (_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
             {
                 _Player._Hand.Remove(transform);
-                //tween here
-                //TODO: need a special tween for spell cards.
-                //OnPlayAction();
-                TweenToPosition();
+                PlaySpell();
             }
         }
     }
 
-    protected void TweenToPosition()
+    protected void PlaySpell()
     {
         //TODO: Rotate if it's being played by the opponent
         iTween.MoveTo(gameObject, iTween.Hash("time", 0.5f,
                                               "position", SPELL_OFFSET,
                                               "easetype", iTween.EaseType.easeInOutSine,
-                                              "oncomplete", "PlayAndDiscard",
+                                              "oncomplete", "ExecuteActionAndDiscard",
                                               "islocal", true,
                                               "oncompletetarget", gameObject
                                                    ));
     }
 
-    protected void PlayAndDiscard()
+    protected void ExecuteActionAndDiscard()
     {
-        Debug.Log("Tween Finished");
         OnPlayAction();
-        _Player._Discard.Add(transform, 0.5f);
+        _Player._Discard.Add(transform, 1f);
     }
 
     public abstract void OnPlayAction();
-
-
-    public override void BeforeTurnAction()
-    {
-
-    }
-
-    public override void AfterTurnAction()
-    {
-
-    }
 }
