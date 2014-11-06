@@ -23,9 +23,10 @@ public abstract class GenericCard : MonoBehaviour {
 
     protected Player _Player;
 
-    //Not sure if we'll ever need to access this in the subclasses, private for now.
-    private readonly Vector2 ColliderSize = new Vector2(50f, 70f);
+    private readonly Vector2 COLLIDER_SIZE = new Vector2(50f, 70f);
 
+
+    //Old zoom tweening constants, remove when new system is in place
     protected bool Zoomed;
     protected readonly float ZoomTweenTime = 0.1f;
     protected readonly float ZoomScale_Hand = 2.5f;
@@ -38,7 +39,7 @@ public abstract class GenericCard : MonoBehaviour {
         {
             var col = gameObject.AddComponent<BoxCollider>();
             col.isTrigger = true;
-            col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
+            col.size = new Vector3(COLLIDER_SIZE.x, COLLIDER_SIZE.y, 0.2f);
         }
             
         Zoomed = false;
@@ -67,6 +68,12 @@ public abstract class GenericCard : MonoBehaviour {
             iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y + 60f, "time", ZoomTweenTime, "islocal", true));
             Zoomed = true;
         }
+    }
+
+    //Only used in tween callbacks
+    public void SwitchState(CardStates newState)
+    {
+        State = newState;
     }
 
     //TODO: Implement separate zoom
@@ -102,8 +109,4 @@ public abstract class GenericCard : MonoBehaviour {
         }
     }
     */
-    public void SwitchState(CardStates newState)
-    {
-        State = newState;
-    }
 }
