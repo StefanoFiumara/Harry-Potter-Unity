@@ -2,7 +2,7 @@
 using System.Collections;
 using LessonTypes = Lesson.LessonTypes;
 
-public class GenericCreature : GenericCard {
+public class GenericCreature : GenericCard, PersistentCard {
 
 	// Use this for initialization
 
@@ -28,29 +28,27 @@ public class GenericCreature : GenericCard {
             {
                 _Player._Hand.Remove(transform);
                 _Player._InPlay.Add(transform, CardType);
-
-                _Player.nCreaturesInPlay++;
-
-                State = CardStates.IN_PLAY;
             }
         }
     }
 
-    public void BattlecryAction()
+    public void OnEnterInPlayAction()
     {
-        //Stub to override
+        _Player.nCreaturesInPlay++;
+
+        State = CardStates.IN_PLAY;
+
+        //TODO: Add to player's damage per turn
     }
 
-
-    public override void BeforeTurnAction()
+    public void OnExitInPlayAction()
     {
-
+        //TODO: Subtract from player's damage per turn
     }
 
-    public override void AfterTurnAction()
-    {
-
-    }
-
-
+    //Generic Creatures don't do anything special on these actions
+    public void OnInPlayBeforeTurnAction() { }
+    public void OnInPlayAfterTurnAction() { }
+    public void OnSelectedAction() { }
+  
 }

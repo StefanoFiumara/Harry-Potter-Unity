@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Lesson : GenericCard {
+public class Lesson : GenericCard, PersistentCard {
 
     public enum LessonTypes
     {
@@ -16,26 +16,31 @@ public class Lesson : GenericCard {
 
         if (_Player.UseAction())
         {
-            if (!_Player.LessonTypesInPlay.Contains(LessonType))
-            {
-                _Player.LessonTypesInPlay.Add(LessonType);
-            }
-
             _Player._Hand.Remove(transform);
-            _Player._InPlay.Add(transform, CardType);
-
-            _Player.nLessonsInPlay++;
-
-            State = CardStates.IN_PLAY;
+            _Player._InPlay.Add(transform, CardType);            
         }
     }
 
-    public override void BeforeTurnAction()
+    public void OnEnterInPlayAction()
     {
+        if (!_Player.LessonTypesInPlay.Contains(LessonType))
+        {
+            _Player.LessonTypesInPlay.Add(LessonType);
+        }
         
+        _Player.nLessonsInPlay++;
+
+        State = CardStates.IN_PLAY;
     }
-    public override void AfterTurnAction()
+
+    public void OnExitInPlayAction()
     {
-        
+        _Player.nLessonsInPlay--;
+        State = CardStates.DISCARDED;
     }
+
+    //Lesson Cards don't implement these methods
+    public void OnInPlayBeforeTurnAction() { }
+    public void OnInPlayAfterTurnAction() { }
+    public void OnSelectedAction() { }
 }
