@@ -37,7 +37,7 @@ public class Lesson : GenericCard, PersistentCard {
     {
         _Player.nLessonsInPlay--;
         State = CardStates.DISCARDED;
-        //TODO: Check LessonTypesInPlay and update if needed
+        _Player.UpdateLessonTypesInPlay();
     }
 
     //Lesson Cards don't implement these methods
