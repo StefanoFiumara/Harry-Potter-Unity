@@ -45,12 +45,17 @@ public class Player : MonoBehaviour {
     {
         if (amount <= 0) return;
 
-        
         for (int i = 0; i < amount; i++)
         {
-            Transform card = _Deck.TakeTopCard();
+            GenericCard card = _Deck.TakeTopCard();
 
-            
+            if (card == null)
+            {
+                //TODO: Show game over message here.
+                Debug.Log("Game Over");
+                break;
+            }
+
             iTween.MoveBy(card.gameObject, iTween.Hash("time", 0.5f,
                                                         "z", 20f,
                                                         "easetype", iTween.EaseType.easeInOutSine,
@@ -64,8 +69,22 @@ public class Player : MonoBehaviour {
                                                         ));
             _Discard.Add(card, 0.3f + i * 0.3f);
         }
+    }
 
+    //TODO: Test this function
+    public void UpdateLessonTypesInPlay()
+    {
+        LessonTypesInPlay = new List<LessonTypes>();
 
+        var lessons = _InPlay.Cards.FindAll(card => card is Lesson);
+
+        foreach (Lesson card in lessons)
+        {
+            if (!LessonTypesInPlay.Contains(card.LessonType))
+            {
+                LessonTypesInPlay.Add(card.LessonType);
+            }
+        }
     }
 
 }
