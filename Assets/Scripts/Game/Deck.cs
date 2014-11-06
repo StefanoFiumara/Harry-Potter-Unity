@@ -19,7 +19,6 @@ public class Deck : MonoBehaviour {
         Vector3 cardPos = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
         for (int i = 0; i < Cards.Count; i++)
         {
-          //  Cards[i] = (Transform)Instantiate(Cards[i], cardPos + Vector3.back * -16f, Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z)));
             Cards[i] = (Transform)Instantiate(Cards[i]);
             Cards[i].parent = transform;
             Cards[i].localPosition = cardPos + Vector3.back * -16f;
@@ -39,7 +38,6 @@ public class Deck : MonoBehaviour {
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
         }
-       // Shuffle();
 	}
 	
     public Transform TakeTopCard()
@@ -69,6 +67,7 @@ public class Deck : MonoBehaviour {
 
     public void Shuffle()
     {
+        //TODO: Switch to Fisher-Yates shuffle
         for (int i = 0; i < Cards.Count; i++)
         {
             int random = Random.Range(i, Cards.Count);
