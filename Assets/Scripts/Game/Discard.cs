@@ -21,7 +21,6 @@ public class Discard : MonoBehaviour {
         }
 	}
 
-    //TODO: Test this function
     public void Add(Transform card, float tweenDelay = 0f) 
     {
         Cards.Add(card);
