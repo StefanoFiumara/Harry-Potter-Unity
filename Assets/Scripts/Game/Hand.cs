@@ -45,18 +45,11 @@ public class Hand : MonoBehaviour {
             cardPosition.x += i * Hand.SPACING * shrinkFactor;
             cardPosition.z -= i;
 
-            iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", DrawCardTweenTime,
-                                                           "position", cardPosition,
-                                                           "easetype", iTween.EaseType.easeInOutSine,
-                                                           "islocal", true,
-                                                           "oncomplete", "SwitchState",
-                                                           "oncompletetarget", Cards[i].gameObject,
-                                                           "oncompleteparams", CardStates.IN_HAND
-                                                           ));
+            Helper.TweenCardToPosition(Cards[i].transform, cardPosition, CardStates.IN_HAND, 0f, DrawCardTweenTime, false);
         }
     }
 
-    private void AnimateCardToHand(Transform card, bool reveal = true)
+    private void AnimateCardToHand(Transform card, bool flip = true, bool preview = true)
     {
         Vector3 cardPosition = HAND_CARDS_OFFSET;
 
@@ -65,12 +58,19 @@ public class Hand : MonoBehaviour {
         cardPosition.x += Cards.Count * Hand.SPACING * shrinkFactor;
         cardPosition.z -= Cards.Count;
 
+        /*
         iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                    "position", HAND_PREVIEW_POSITION,
                                                    "easetype", iTween.EaseType.easeOutExpo,
                                                    "islocal", true
                                                    ));
+        */
+        if (preview)
+        {
+            Helper.TweenCardToPosition(card.transform, HAND_PREVIEW_POSITION, card.GetComponent<GenericCard>().State, 0f, DrawCardTweenTime, false);
+        }
 
+        /*
         iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                    "position", cardPosition,
                                                    "delay", DrawCardTweenTime + 0.25f,
@@ -80,8 +80,11 @@ public class Hand : MonoBehaviour {
                                                    "oncompletetarget", card.gameObject,
                                                    "oncompleteparams", CardStates.IN_HAND
                                                    ));
+         * */
 
-        if (reveal)
+        Helper.TweenCardToPosition(card.transform, cardPosition, CardStates.IN_HAND, DrawCardTweenTime + 0.25f, DrawCardTweenTime, false);
+
+        if (flip)
         {
             iTween.RotateTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                          "y", 0f,
