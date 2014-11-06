@@ -4,12 +4,16 @@ using CardStates = GenericCard.CardStates;
 
 public class Helper {
 
-    public static void TweenCardToPosition(Transform card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenTime = 0.5f, bool rotate = true)
+    public static void TweenCardToPosition(Transform card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenDelay = 0f, float tweenTime = 0.5f, bool rotate = true)
     {
         iTween.MoveTo(card.gameObject, iTween.Hash("time", tweenTime,
                                                    "position", cardPosition,
                                                    "easetype", iTween.EaseType.easeInOutSine,
-                                                   "islocal", true
+                                                   "islocal", true,
+                                                   "delay", tweenDelay,
+                                                   "oncomplete", "SwitchState",
+                                                   "oncompletetarget", card.gameObject,
+                                                   "oncompleteparams", stateAfterAnimation
                                                    ));
 
         if (rotate)
