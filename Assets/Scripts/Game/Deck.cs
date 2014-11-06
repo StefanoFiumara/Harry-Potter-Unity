@@ -27,7 +27,7 @@ public class Deck : MonoBehaviour {
             
             //Give the card a reference to the player so that it knows who it belongs to.
             GenericCard cardInfo = Cards[i].GetComponent<GenericCard>();
-            cardInfo._Player = _Player;
+            cardInfo.SetPlayer(_Player);
         }
 
         //Set the collider to the proper position

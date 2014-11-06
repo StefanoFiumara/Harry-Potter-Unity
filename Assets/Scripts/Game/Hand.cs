@@ -45,7 +45,7 @@ public class Hand : MonoBehaviour {
             cardPosition.x += i * Hand.SPACING * shrinkFactor;
             cardPosition.z -= i;
 
-            Helper.TweenCardToPosition(Cards[i].transform, cardPosition, CardStates.IN_HAND, 0f, DrawCardTweenTime, false);
+            Helper.TweenCardToPosition(Cards[i], cardPosition, CardStates.IN_HAND);
         }
     }
 
@@ -67,7 +67,7 @@ public class Hand : MonoBehaviour {
         */
         if (preview)
         {
-            Helper.TweenCardToPosition(card.transform, HAND_PREVIEW_POSITION, card.GetComponent<GenericCard>().State, 0f, DrawCardTweenTime, false);
+            Helper.TweenCardToPosition(card, HAND_PREVIEW_POSITION, card.GetComponent<GenericCard>().State, 0f, iTween.EaseType.easeOutExpo);
         }
 
         /*
@@ -82,7 +82,7 @@ public class Hand : MonoBehaviour {
                                                    ));
          * */
 
-        Helper.TweenCardToPosition(card.transform, cardPosition, CardStates.IN_HAND, DrawCardTweenTime + 0.25f, DrawCardTweenTime, false);
+        Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_HAND, DrawCardTweenTime + 0.25f);
 
         if (flip)
         {

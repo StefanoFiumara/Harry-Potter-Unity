@@ -21,7 +21,7 @@ public abstract class GenericCard : MonoBehaviour {
     public CardStates State;
     public CardTypes CardType;
 
-    public Player _Player;
+    protected Player _Player;
 
     //Not sure if we'll ever need to access this in the subclasses, private for now.
     private readonly Vector2 ColliderSize = new Vector2(50f, 70f);
@@ -43,7 +43,13 @@ public abstract class GenericCard : MonoBehaviour {
             
         Zoomed = false;
     }
-    
+
+    public void SetPlayer(Player p)
+    {
+        _Player = p;
+    }
+
+    //Might not need this
     private void ZoomInPlay()
     {
         if (!Zoomed)

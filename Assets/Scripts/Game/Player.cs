@@ -41,7 +41,20 @@ public class Player : MonoBehaviour {
         for (int i = 0; i < amount; i++)
         {
             Transform card = _Deck.TakeTopCard();
-            _Discard.Add(card);
+
+            
+            iTween.MoveBy(card.gameObject, iTween.Hash("time", 0.5f,
+                                                        "z", 20f,
+                                                        "easetype", iTween.EaseType.easeInOutSine,
+                                                        "delay", i * 0.3f
+                                                        ));
+
+            iTween.RotateTo(card.gameObject, iTween.Hash("time", 0.2f,
+                                                        "y", 0f,
+                                                        "easetype", iTween.EaseType.easeInOutSine,
+                                                        "delay", i * 0.3f + 0.4f
+                                                        ));
+            _Discard.Add(card, 0.3f + i * 0.3f);
         }
 
 

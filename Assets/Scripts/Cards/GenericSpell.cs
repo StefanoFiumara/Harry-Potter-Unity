@@ -7,7 +7,7 @@ public abstract class GenericSpell : GenericCard {
     public LessonTypes CostType;
     public int CostAmount;
 
-    public static readonly Vector2 SPELL_OFFSET = new Vector3(0f, 0f, -300f);
+    public static readonly Vector3 SPELL_OFFSET = new Vector3(0f, 0f, -300f);
 
     public new void Start()
     {
@@ -31,22 +31,35 @@ public abstract class GenericSpell : GenericCard {
         }
     }
 
-    private void TweenToPosition()
+    protected void TweenToPosition()
     {
         //TODO: Rotate if it's being played by the opponent
         iTween.MoveTo(gameObject, iTween.Hash("time", 0.5f,
                                               "position", SPELL_OFFSET,
                                               "easetype", iTween.EaseType.easeInOutSine,
                                               "oncomplete", "PlayAndDiscard",
+                                              "islocal", true,
                                               "oncompletetarget", gameObject
                                                    ));
     }
 
     protected void PlayAndDiscard()
     {
+        Debug.Log("Tween Finished");
         OnPlayAction();
         _Player._Discard.Add(transform, 0.5f);
     }
 
     public abstract void OnPlayAction();
+
+
+    public override void BeforeTurnAction()
+    {
+
+    }
+
+    public override void AfterTurnAction()
+    {
+
+    }
 }
