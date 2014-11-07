@@ -67,6 +67,7 @@ public abstract class GenericCard : MonoBehaviour {
 
     private void ShowPreview()
     {
+        gameObject.layer = 9; //switch to preview layer
         if (State != CardStates.IN_DECK && State != CardStates.DISCARDED)
         {
             if (iTween.Count(gameObject) == 0)
@@ -81,8 +82,9 @@ public abstract class GenericCard : MonoBehaviour {
         }
     }
     
-    private static void HidePreview()
+    private void HidePreview()
     {
+        gameObject.layer = 0; //switch to default layer
         Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
     }
     

@@ -169,6 +169,7 @@ MonoBehaviour:
   LessonTypesInPlay: 
   ActionsAvailable: 99
   nCreaturesInPlay: 0
+  DamagePerTurn: 0
 --- !u!4 &226967739
 Transform:
   m_ObjectHideFlags: 0
@@ -774,6 +775,7 @@ MonoBehaviour:
   LessonTypesInPlay: 
   ActionsAvailable: 99
   nCreaturesInPlay: 0
+  DamagePerTurn: 0
 --- !u!4 &1925117257
 Transform:
   m_ObjectHideFlags: 0
