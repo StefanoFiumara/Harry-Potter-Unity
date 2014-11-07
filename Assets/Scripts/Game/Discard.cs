@@ -30,18 +30,14 @@ public class Discard : MonoBehaviour {
         Vector3 cardPos = new Vector3(DISCARD_POSITION_OFFSET.x, DISCARD_POSITION_OFFSET.y, 16f);
         cardPos.z -=  Cards.Count * 0.2f;
 
-        Helper.TweenCardToPosition(card.transform, cardPos, GenericCard.CardStates.DISCARDED, tweenDelay);
-
         //Check if a card is being discarded from the board and call the appropriate Action method.
-        var cardInfo = card.GetComponent<GenericCard>() as PersistentCard;
-        if (cardInfo != null)
+        if (card.State == GenericCard.CardStates.IN_PLAY)
         {
-            if (card.State == GenericCard.CardStates.IN_PLAY)
-            {
-                cardInfo.OnExitInPlayAction();
-                //TODO: Rotate back to vertical position
-            }
+            (card as PersistentCard).OnExitInPlayAction();
+            Helper.RotateCard(card.transform);
         }
+
+        Helper.TweenCardToPosition(card.transform, cardPos, GenericCard.CardStates.DISCARDED, tweenDelay);
     }
 
     //TODO: OnMouseUp: View cards in discard pile
