@@ -50,44 +50,38 @@ public abstract class GenericCard : MonoBehaviour {
         _Player = p;
     }
 
-    //Might not need this
-    private void ZoomInPlay()
-    {
-        if (!Zoomed)
-        {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScale_InPlay, "y", ZoomScale_InPlay, "time", ZoomTweenTime));
-            Zoomed = true;
-        }
-    }
-
-    private void ZoomInHand()
-    {
-        if (!Zoomed)
-        {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", ZoomScale_Hand, "y", ZoomScale_Hand, "time", ZoomTweenTime));
-            iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y + 60f, "time", ZoomTweenTime, "islocal", true));
-            Zoomed = true;
-        }
-    }
-
-    //Only used in tween callbacks
     public void SwitchState(CardStates newState)
     {
         State = newState;
     }
 
-    //TODO: Implement separate zoom
-    
     public void OnMouseOver()
+    {
+        ShowPreview();
+    }
+
+    public void OnMouseExit()
+    {
+        HidePreview();
+    }
+
+    private void ShowPreview()
     {
         if (State != CardStates.IN_DECK && State != CardStates.DISCARDED)
         {
-            Helper.PreviewCamera.transform.rotation = transform.rotation;
-            Helper.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
+            if (iTween.Count(gameObject) == 0)
+            {
+                Helper.PreviewCamera.transform.rotation = transform.rotation;
+                Helper.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
+            }
+            else
+            {
+                HidePreview();
+            }
         }
     }
     
-    public void OnMouseExit()
+    private static void HidePreview()
     {
         Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
     }
