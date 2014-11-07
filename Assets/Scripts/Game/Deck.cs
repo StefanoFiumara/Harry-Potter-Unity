@@ -70,10 +70,9 @@ public class Deck : MonoBehaviour {
 
     public void Shuffle()
     {
-        //TODO: Switch to Fisher-Yates shuffle
-        for (int i = 0; i < Cards.Count; i++)
+        for (int i = Cards.Count-1; i >= 0; i--)
         {
-            int random = Random.Range(i, Cards.Count);
+            int random = Random.Range(0, i);
 
             GenericCard temp = Cards[i];
             Cards[i] = Cards[random];
