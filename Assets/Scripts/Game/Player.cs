@@ -21,6 +21,7 @@ public class Player : MonoBehaviour {
     public int ActionsAvailable = 2;
 
     public int nCreaturesInPlay;
+    public int DamagePerTurn;
 
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);

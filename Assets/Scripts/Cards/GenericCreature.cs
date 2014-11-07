@@ -35,16 +35,15 @@ public class GenericCreature : GenericCard, PersistentCard {
     public void OnEnterInPlayAction()
     {
         _Player.nCreaturesInPlay++;
+        _Player.DamagePerTurn += DamagePerTurn;
 
         State = CardStates.IN_PLAY;
-
-        //TODO: Add to player's damage per turn
     }
 
     public void OnExitInPlayAction()
     {
-        //TODO: Subtract from player's damage per turn
         _Player.nCreaturesInPlay--;
+        _Player.DamagePerTurn -= DamagePerTurn;
 
         State = CardStates.DISCARDED;
     }
