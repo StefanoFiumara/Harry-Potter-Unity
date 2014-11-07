@@ -4,6 +4,9 @@ using CardStates = GenericCard.CardStates;
 
 public class Helper {
 
+    public static Camera PreviewCamera;
+    public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
+
     public static void TweenCardToPosition(Transform card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenDelay = 0f, iTween.EaseType easeType = iTween.EaseType.easeInOutSine)
     {
         iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.5f,

@@ -77,36 +77,19 @@ public abstract class GenericCard : MonoBehaviour {
     }
 
     //TODO: Implement separate zoom
-    /*
-    public void OnMouseEnter()
+    
+    public void OnMouseOver()
     {
-        switch (State)
+        if (State != CardStates.IN_DECK && State != CardStates.DISCARDED)
         {
-            case CardStates.IN_HAND:
-                ZoomInHand();
-                break;
-            case CardStates.IN_PLAY:
-                ZoomInPlay();
-                break;
+            Helper.PreviewCamera.transform.rotation = transform.rotation;
+            Helper.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
         }
-        
     }
-    */
-
-    /*
+    
     public void OnMouseExit()
     {
-        if (Zoomed)
-        {
-            iTween.ScaleTo(gameObject, iTween.Hash("x", 1, "y", 1, "time", ZoomTweenTime));
-
-            if (State == CardStates.IN_HAND)
-            {
-                iTween.MoveTo(gameObject, iTween.Hash("y", Hand.HAND_CARDS_OFFSET.y, "time", ZoomTweenTime, "islocal", true));
-            }
-
-            Zoomed = false;
-        }
+        Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
     }
-    */
+    
 }
