@@ -582,7 +582,7 @@ Camera:
     y: .550000012
     width: .200000003
     height: .449999988
-  near clip plane: .300000012
+  near clip plane: 0
   far clip plane: 100
   field of view: 60
   orthographic: 1
@@ -590,7 +590,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 512
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0

@@ -13,11 +13,6 @@ public class GenericCreature : GenericCard, PersistentCard {
     public int DamagePerTurn;
     public int Health;
 
-	public new void Start ()
-    {
-        base.Start();
-	}
-
     public void OnMouseUp()
     {
         if (State != CardStates.IN_HAND) return;

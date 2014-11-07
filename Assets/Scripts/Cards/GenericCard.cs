@@ -25,12 +25,10 @@ public abstract class GenericCard : MonoBehaviour {
 
     private readonly Vector2 COLLIDER_SIZE = new Vector2(50f, 70f);
 
+    public const int PREVIEW_LAYER = 9;
+    public const int CARD_LAYER = 10;
 
-    //Old zoom tweening constants, remove when new system is in place
-    protected bool Zoomed;
-    protected readonly float ZoomTweenTime = 0.1f;
-    protected readonly float ZoomScale_Hand = 2.5f;
-    protected readonly float ZoomScale_InPlay = 2.25f;
+    private GameObject FrontPlane;
 
     public void Start()
     {
@@ -41,8 +39,8 @@ public abstract class GenericCard : MonoBehaviour {
             col.isTrigger = true;
             col.size = new Vector3(COLLIDER_SIZE.x, COLLIDER_SIZE.y, 0.2f);
         }
-            
-        Zoomed = false;
+
+        FrontPlane = transform.FindChild("Front").gameObject;
     }
 
     public void SetPlayer(Player p)
@@ -67,9 +65,7 @@ public abstract class GenericCard : MonoBehaviour {
 
     private void ShowPreview()
     {
-        //TODO: Fix layer-based preview
-
-        gameObject.layer = 9; //switch to preview layer
+        FrontPlane.layer = PREVIEW_LAYER;
         if (State != CardStates.IN_DECK && State != CardStates.DISCARDED)
         {
             if (iTween.Count(gameObject) == 0)
@@ -86,7 +82,7 @@ public abstract class GenericCard : MonoBehaviour {
     
     private void HidePreview()
     {
-        gameObject.layer = 0; //switch to default layer
+        FrontPlane.layer = CARD_LAYER;
         Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
     }
     

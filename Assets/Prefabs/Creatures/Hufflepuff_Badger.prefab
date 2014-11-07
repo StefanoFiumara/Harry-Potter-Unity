@@ -11,7 +11,7 @@ GameObject:
   - 33: {fileID: 3300000}
   - 64: {fileID: 6400000}
   - 23: {fileID: 2300000}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ GameObject:
   - 33: {fileID: 3300002}
   - 64: {fileID: 6400002}
   - 23: {fileID: 2300002}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400004}
   - 114: {fileID: 11400000}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Hufflepuff_Badger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,7 +183,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   State: 0
   CardType: 1
-  _Player: {fileID: 0}
   CostType: 0
   CostAmount: 3
   DamagePerTurn: 1

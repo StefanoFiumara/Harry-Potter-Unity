@@ -24,10 +24,9 @@ public class Deck : MonoBehaviour {
             Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
             Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z));
             Cards[i].transform.position += i * Vector3.back * 0.2f;
-            
-            //Give the card a reference to the player so that it knows who it belongs to.
-            GenericCard cardInfo = Cards[i].GetComponent<GenericCard>();
-            cardInfo.SetPlayer(_Player);
+
+            Cards[i].gameObject.layer = GenericCard.CARD_LAYER;
+            Cards[i].SetPlayer(_Player);
         }
 
         //Set the collider to the proper position
