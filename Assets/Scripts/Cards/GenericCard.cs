@@ -67,6 +67,8 @@ public abstract class GenericCard : MonoBehaviour {
 
     private void ShowPreview()
     {
+        //TODO: Fix layer-based preview
+
         gameObject.layer = 9; //switch to preview layer
         if (State != CardStates.IN_DECK && State != CardStates.DISCARDED)
         {
