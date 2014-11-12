@@ -72,7 +72,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-    //TODO: Test this function
     public void UpdateLessonTypesInPlay()
     {
         LessonTypesInPlay = new List<LessonTypes>();

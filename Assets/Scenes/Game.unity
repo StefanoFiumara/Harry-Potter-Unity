@@ -83,7 +83,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 222928293}
   - 114: {fileID: 222928294}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Deck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,20 +115,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards:
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: 9e3cdb6092f258a47a502af6466442f7, type: 2}
+  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
+  - {fileID: 11400000, guid: 9e3cdb6092f258a47a502af6466442f7, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: 9e3cdb6092f258a47a502af6466442f7, type: 2}
+  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
+  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
+  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 11400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: 77fee6acede88cb46a3906d27216ade6, type: 2}
-  - {fileID: 11400000, guid: 77fee6acede88cb46a3906d27216ade6, type: 2}
+  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
+  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
   _Hand: {fileID: 866037081}
   _Player: {fileID: 1925117256}
   DeckShuffleTweenTime: .800000012
@@ -647,7 +647,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1528567324}
   - 114: {fileID: 1528567323}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Deck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

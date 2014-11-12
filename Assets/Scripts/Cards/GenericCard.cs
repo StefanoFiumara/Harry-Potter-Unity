@@ -21,7 +21,7 @@ public abstract class GenericCard : MonoBehaviour {
     public CardStates State;
     public CardTypes CardType;
 
-    protected Player _Player;
+    public Player _Player;
 
     private readonly Vector2 COLLIDER_SIZE = new Vector2(50f, 70f);
 
