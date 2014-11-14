@@ -73,10 +73,8 @@ public abstract class GenericSpell : GenericCard {
                     {
                         AfterInputAction(selectedCards);
                     }
-                    
                 }
             }
-
             yield return null;
         }
     }

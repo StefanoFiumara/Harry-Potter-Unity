@@ -61,7 +61,6 @@ public class Deck : MonoBehaviour {
         {
             GenericCard card = TakeTopCard();
             _Hand.Add(card);
-            card.transform.parent = _Hand.transform;   
         }
     }
 

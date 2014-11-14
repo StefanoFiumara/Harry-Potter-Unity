@@ -5,24 +5,21 @@ using System.Collections.Generic;
 
 public class Diffindo : GenericSpell {
 
-    private List<GenericCard> SelectedCards;
+    //private List<GenericCard> SelectedCards;
 
     public override void OnPlayAction()
     {
         //Move ALL invalid colliders to ignoreraycast layer
-        _Player._Deck.gameObject.layer = Helper.IGNORE_RAYCAST_LAYER;
-        _Player._OppositePlayer._Deck.gameObject.layer = Helper.IGNORE_RAYCAST_LAYER;
-
-        Helper.DisableCards(_Player._Hand.Cards);
-        Helper.DisableCards(_Player._InPlay.Cards);
-        Helper.DisableCards(_Player._OppositePlayer._Hand.Cards);
+        _Player.DisableAllCards();
+        _Player._OppositePlayer.DisableAllCards();
         
         //place valid cards in valid layer
         foreach(var card in _Player._OppositePlayer._InPlay.Cards) {
+            card.Enable();
             card.gameObject.layer = Helper.VALID_CHOICE_LAYER;
         }
 
-        SelectedCards = new List<GenericCard>();
+        var SelectedCards = new List<GenericCard>();
         StartCoroutine(WaitForPlayerInput(SelectedCards));
     }
 

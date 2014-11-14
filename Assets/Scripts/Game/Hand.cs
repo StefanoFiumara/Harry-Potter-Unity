@@ -20,6 +20,7 @@ public class Hand : MonoBehaviour {
 
     public void Add(GenericCard card, bool flip = true, bool preview = true)
     {
+        card.transform.parent = transform;
         AnimateCardToHand(card.transform, flip, preview);
         AdjustHandSpacing();
         Cards.Add(card);

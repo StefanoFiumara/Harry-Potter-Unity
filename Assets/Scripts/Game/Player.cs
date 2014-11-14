@@ -13,7 +13,7 @@ public class Player : MonoBehaviour {
     public Player _OppositePlayer;
     public Discard _Discard;
 
-    public Transform StartingCharacter; //Set by main menu? GameObject?
+    public GenericCard StartingCharacter; //Set by main menu? GameObject?
 
     public int nLessonsInPlay = 0;
     public List<LessonTypes> LessonTypesInPlay;
@@ -87,4 +87,17 @@ public class Player : MonoBehaviour {
         }
     }
 
+    public void DisableAllCards()
+    {
+        _Deck.gameObject.layer = Helper.IGNORE_RAYCAST_LAYER;
+        Helper.DisableCards(_Hand.Cards);
+        Helper.DisableCards(_InPlay.Cards);
+    }
+
+    public void EnableAllCards()
+    {
+        _Deck.gameObject.layer = Helper.DECK_LAYER;
+        Helper.EnableCards(_Hand.Cards);
+        Helper.EnableCards(_InPlay.Cards);
+    }
 }
