@@ -34,10 +34,10 @@ public class InPlay : MonoBehaviour {
         switch (card.CardType)
         {
             case CardTypes.LESSON:
-                AnimateLessonToBoard(card.transform);
+                AnimateLessonToBoard(card);
                 break;
             case CardTypes.CREATURE:
-                AnimateCreatureToBoard(card.transform);
+                AnimateCreatureToBoard(card);
                 break;
         }
 
@@ -54,27 +54,62 @@ public class InPlay : MonoBehaviour {
         }
     }
 
-    private void AnimateCreatureToBoard(Transform card)
+    public void Remove(GenericCard card)
+    {
+        Cards.Remove(card);
+
+        switch (card.CardType)
+        {
+            case CardTypes.LESSON:
+                RearrangeLessons();
+                break;
+            case CardTypes.CREATURE:
+                RearrangeCreatures();
+                break;
+        }
+    }
+
+    private void AnimateCreatureToBoard(GenericCard card)
     {
         Vector3 cardPosition = CREATURE_POSITION_OFFSET;
 
-        cardPosition.x += (_Player.nCreaturesInPlay % 3) * CREATURE_SPACING.x;
-        cardPosition.y -= (int)(_Player.nCreaturesInPlay / 3) * CREATURE_SPACING.y;
-        cardPosition.z -= (int)(_Player.nCreaturesInPlay / 3);
+        int position = Cards.FindAll(c => c.CardType == CardTypes.CREATURE).IndexOf(card);
 
-        Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_PLAY);
-        Helper.RotateCard(card);
+        cardPosition.x += (position % 3) * CREATURE_SPACING.x;
+        cardPosition.y -= (int)(position / 3) * CREATURE_SPACING.y;
+        cardPosition.z -= (int)(position / 3);
+
+        Helper.TweenCardToPosition(card.transform, cardPosition, CardStates.IN_PLAY);
+        if (card.State == CardStates.IN_HAND)
+        {
+            Helper.RotateCard(card.transform);
+        }
     }
 
-    private void AnimateLessonToBoard(Transform card)
+    private void AnimateLessonToBoard(GenericCard card)
     {
         Vector3 cardPosition = LESSON_POSITION_OFFSET;
 
-        cardPosition.x += (_Player.nLessonsInPlay % 3) * LESSON_SPACING.x;
-        cardPosition.y -= (int)(_Player.nLessonsInPlay / 3) * LESSON_SPACING.y;
-        cardPosition.z -= (int)(_Player.nLessonsInPlay / 3);
+        int position = Cards.FindAll(c => c.CardType == CardTypes.LESSON).IndexOf(card);
 
-        Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_PLAY);
-        Helper.RotateCard(card);
+        cardPosition.x += (position % 3) * LESSON_SPACING.x;
+        cardPosition.y -= (int)(position / 3) * LESSON_SPACING.y;
+        cardPosition.z -= (int)(position / 3);
+
+        Helper.TweenCardToPosition(card.transform, cardPosition, CardStates.IN_PLAY);
+
+        if (card.State == CardStates.IN_HAND)
+        {
+            Helper.RotateCard(card.transform);
+        }
+    }
+
+    private void RearrangeLessons()
+    {
+        Cards.FindAll(card => card.CardType == CardTypes.LESSON).ForEach(card => AnimateLessonToBoard(card));
+    }
+    private void RearrangeCreatures()
+    {
+        Cards.FindAll(card => card.CardType == CardTypes.CREATURE).ForEach(card => AnimateCreatureToBoard(card));
     }
 }

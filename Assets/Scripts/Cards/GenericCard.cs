@@ -25,9 +25,6 @@ public abstract class GenericCard : MonoBehaviour {
 
     private readonly Vector2 COLLIDER_SIZE = new Vector2(50f, 70f);
 
-    public const int PREVIEW_LAYER = 9;
-    public const int CARD_LAYER = 10;
-
     private GameObject FrontPlane;
 
     public void Start()
@@ -40,12 +37,9 @@ public abstract class GenericCard : MonoBehaviour {
             col.size = new Vector3(COLLIDER_SIZE.x, COLLIDER_SIZE.y, 0.2f);
         }
 
-        FrontPlane = transform.FindChild("Front").gameObject;
-    }
+        gameObject.layer = Helper.CARD_LAYER;
 
-    public void SetPlayer(Player p)
-    {
-        _Player = p;
+        FrontPlane = transform.FindChild("Front").gameObject;
     }
 
     public void SwitchState(CardStates newState)
@@ -65,7 +59,7 @@ public abstract class GenericCard : MonoBehaviour {
 
     private void ShowPreview()
     {
-        FrontPlane.layer = PREVIEW_LAYER;
+        FrontPlane.layer = Helper.PREVIEW_LAYER;
         if (State != CardStates.IN_DECK && State != CardStates.DISCARDED)
         {
             if (iTween.Count(gameObject) == 0)
@@ -82,8 +76,20 @@ public abstract class GenericCard : MonoBehaviour {
     
     private void HidePreview()
     {
-        FrontPlane.layer = CARD_LAYER;
+        FrontPlane.layer = Helper.CARD_LAYER;
         Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
+    }
+
+    public void Disable()
+    {
+        gameObject.layer = Helper.IGNORE_RAYCAST_LAYER;
+        FrontPlane.renderer.material.color = new Color(0.35f, 0.35f, 0.35f);
+    }
+
+    public void Enable()
+    {
+        gameObject.layer = Helper.CARD_LAYER;
+        FrontPlane.renderer.material.color = Color.white;
     }
     
 }

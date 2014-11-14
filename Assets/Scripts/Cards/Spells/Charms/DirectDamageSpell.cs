@@ -10,7 +10,7 @@ public class DirectDamageSpell : GenericSpell {
         _Player._OppositePlayer.TakeDamage(damageAmount);
     }
 
-    public override bool MeetsPlayRequirements()
+    public override bool MeetsAdditionalPlayRequirements()
     {
         return true;
     }

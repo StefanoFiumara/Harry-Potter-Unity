@@ -22,7 +22,7 @@ public abstract class GenericSpell : GenericCard {
         {
             if (_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
             {
-                if (MeetsPlayRequirements())
+                if (MeetsAdditionalPlayRequirements())
                 {
                     _Player._Hand.Remove(this);
                     PlaySpell();
@@ -50,5 +50,5 @@ public abstract class GenericSpell : GenericCard {
     }
 
     public abstract void OnPlayAction();
-    public abstract bool MeetsPlayRequirements();
+    public abstract bool MeetsAdditionalPlayRequirements();
 }

@@ -30,7 +30,6 @@ public class Discard : MonoBehaviour {
         Vector3 cardPos = new Vector3(DISCARD_POSITION_OFFSET.x, DISCARD_POSITION_OFFSET.y, 16f);
         cardPos.z -=  Cards.Count * 0.2f;
 
-        Debug.Log("Discarding card with state: " + card.State);
         //Check if a card is being discarded from the board and call the appropriate Action method.
         if (card.State == GenericCard.CardStates.IN_PLAY)
         {

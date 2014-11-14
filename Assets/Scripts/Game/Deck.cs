@@ -25,8 +25,7 @@ public class Deck : MonoBehaviour {
             Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _Player.transform.rotation.eulerAngles.z));
             Cards[i].transform.position += i * Vector3.back * 0.2f;
 
-            Cards[i].gameObject.layer = GenericCard.CARD_LAYER;
-            Cards[i].SetPlayer(_Player);
+            Cards[i]._Player = _Player;
         }
 
         //Set the collider to the proper position
@@ -66,7 +65,6 @@ public class Deck : MonoBehaviour {
         }
     }
 
-
     public void Shuffle()
     {
         for (int i = Cards.Count-1; i >= 0; i--)
@@ -88,5 +86,15 @@ public class Deck : MonoBehaviour {
                                                            "delay", Random.Range(0f,1.5f))
                                                            );
         }
+    }
+
+    public void Disable()
+    {
+        gameObject.layer = Helper.IGNORE_RAYCAST_LAYER;
+    }
+
+    public void Enable()
+    {
+        gameObject.layer = Helper.DECK_LAYER;
     }
 }

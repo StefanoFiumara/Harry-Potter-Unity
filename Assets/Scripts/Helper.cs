@@ -1,8 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 using CardStates = GenericCard.CardStates;
 
 public class Helper {
+
+    public const int PREVIEW_LAYER = 9;
+    public const int CARD_LAYER = 10;
+    public const int VALID_CHOICE_LAYER = 11;
+    public const int IGNORE_RAYCAST_LAYER = 2;
+    public const int DECK_LAYER = 12;
 
     public static Camera PreviewCamera;
     public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
@@ -32,5 +40,15 @@ public class Helper {
                                                          "easetype", iTween.EaseType.easeInOutSine,
                                                          "islocal", true
                                                          ));
+    }
+
+    public static void DisableCards(List<GenericCard> cards)
+    {
+        cards.ForEach(card => card.Disable());
+    }
+
+    public static void EnableCards(List<GenericCard> cards)
+    {
+        cards.ForEach(card => card.Enable());
     }
 }
