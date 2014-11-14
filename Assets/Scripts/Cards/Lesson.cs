@@ -36,7 +36,6 @@ public class Lesson : GenericCard, PersistentCard {
     public void OnExitInPlayAction()
     {
         _Player.nLessonsInPlay--;
-        State = CardStates.DISCARDED;
         _Player.UpdateLessonTypesInPlay();
     }
 

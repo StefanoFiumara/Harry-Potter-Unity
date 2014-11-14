@@ -8,7 +8,6 @@ public abstract class GenericCard : MonoBehaviour {
     {
         IN_DECK, IN_HAND, IN_PLAY, DISCARDED
     }
-
     public enum CardTypes
     {
         LESSON, CREATURE, SPELL, ITEM, LOCATION, MATCH, ADVENTURE, CHARACTER
@@ -90,6 +89,12 @@ public abstract class GenericCard : MonoBehaviour {
     {
         gameObject.layer = Helper.CARD_LAYER;
         FrontPlane.renderer.material.color = Color.white;
+    }
+
+    public void SetSelected()
+    {
+        gameObject.layer = Helper.CARD_LAYER;
+        FrontPlane.renderer.material.color = Color.yellow;
     }
     
 }

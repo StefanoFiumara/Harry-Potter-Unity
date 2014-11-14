@@ -41,17 +41,7 @@ public class InPlay : MonoBehaviour {
                 break;
         }
 
-        var cardInfo = card.GetComponent<GenericCard>() as PersistentCard;
-
-        //Should never be null, but we can't be too careful!
-        if (cardInfo != null)
-        {
-            cardInfo.OnEnterInPlayAction();
-        }
-        else
-        {
-            throw new Exception("non-persistent card added to InPlay board, This should never Happen!");
-        }
+        (card as PersistentCard).OnEnterInPlayAction();
     }
 
     public void Remove(GenericCard card)
@@ -67,6 +57,18 @@ public class InPlay : MonoBehaviour {
                 RearrangeCreatures();
                 break;
         }
+
+        (card as PersistentCard).OnExitInPlayAction();
+    }
+
+    public List<GenericCard> GetCreaturesInPlay()
+    {
+        return Cards.FindAll(c => c.CardType == CardTypes.CREATURE);
+    }
+
+    public List<GenericCard> GetLessonsInPlay()
+    {
+        return Cards.FindAll(c => c.CardType == CardTypes.LESSON);
     }
 
     private void AnimateCreatureToBoard(GenericCard card)

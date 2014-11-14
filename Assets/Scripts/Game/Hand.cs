@@ -14,14 +14,13 @@ public class Hand : MonoBehaviour {
     public static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-240f, -200f, 0f);
     public static readonly float SPACING = 55f;
 
-	// Use this for initialization
 	public void Start () {
         Cards = new List<GenericCard>();
 	}
 
-    public void Add(GenericCard card, bool reveal = true)
+    public void Add(GenericCard card, bool flip = true, bool preview = true)
     {
-        AnimateCardToHand(card.transform, reveal);
+        AnimateCardToHand(card.transform, flip, preview);
         AdjustHandSpacing();
         Cards.Add(card);
     }
@@ -58,29 +57,10 @@ public class Hand : MonoBehaviour {
         cardPosition.x += Cards.Count * Hand.SPACING * shrinkFactor;
         cardPosition.z -= Cards.Count;
 
-        /*
-        iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
-                                                   "position", HAND_PREVIEW_POSITION,
-                                                   "easetype", iTween.EaseType.easeOutExpo,
-                                                   "islocal", true
-                                                   ));
-        */
         if (preview)
         {
             Helper.TweenCardToPosition(card, HAND_PREVIEW_POSITION, card.GetComponent<GenericCard>().State, 0f, iTween.EaseType.easeOutExpo);
         }
-
-        /*
-        iTween.MoveTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
-                                                   "position", cardPosition,
-                                                   "delay", DrawCardTweenTime + 0.25f,
-                                                   "easetype", iTween.EaseType.easeInOutSine,
-                                                   "islocal", true,
-                                                   "oncomplete", "SwitchState",
-                                                   "oncompletetarget", card.gameObject,
-                                                   "oncompleteparams", CardStates.IN_HAND
-                                                   ));
-         * */
 
         Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_HAND, DrawCardTweenTime + 0.25f);
 
@@ -91,10 +71,5 @@ public class Hand : MonoBehaviour {
                                                          "easetype", iTween.EaseType.easeInOutSine
                                                          ));
         }
-    }
-
-    public int NumberOfCards()
-    {
-        return Cards.Count;
     }
 }

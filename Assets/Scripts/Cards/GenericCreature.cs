@@ -39,8 +39,6 @@ public class GenericCreature : GenericCard, PersistentCard {
     {
         _Player.nCreaturesInPlay--;
         _Player.DamagePerTurn -= DamagePerTurn;
-
-        State = CardStates.DISCARDED;
     }
 
     //Generic Creatures don't do anything special on these actions

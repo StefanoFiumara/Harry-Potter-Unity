@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Diffindo : GenericSpell {
 
-    public LayerMask mask;
+    private List<GenericCard> SelectedCards;
 
     public override void OnPlayAction()
     {
@@ -20,7 +22,8 @@ public class Diffindo : GenericSpell {
             card.gameObject.layer = Helper.VALID_CHOICE_LAYER;
         }
 
-        StartCoroutine(WaitForPlayerInput());
+        SelectedCards = new List<GenericCard>();
+        StartCoroutine(WaitForPlayerInput(SelectedCards));
     }
 
     public override bool MeetsAdditionalPlayRequirements()
@@ -28,45 +31,27 @@ public class Diffindo : GenericSpell {
         return _Player._OppositePlayer._InPlay.Cards.Count > 0;
     }
 
-    private IEnumerator WaitForPlayerInput()
+    public override void AfterInputAction(List<GenericCard> selectedCards)
     {
-        bool playerClickedValidCard = false;
-
-        while (!playerClickedValidCard)
+        if (selectedCards.Count == 1)
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                // Casts the ray and get the first game object hit
-                if (Physics.Raycast(ray, out hit,1000f, mask))
-                {
-                    //Get reference to card here
-                    GenericCard target = hit.transform.gameObject.GetComponent<GenericCard>();
-                    
-                    playerClickedValidCard = true;
+            selectedCards[0].Enable();
 
-                    //TODO: call separate function with Action(GenericCard chosenCard); and abstract this loop out
-                    _Player._OppositePlayer._InPlay.Remove(target);
-                    _Player._OppositePlayer._Discard.Add(target, 0.1f);
+            _Player._OppositePlayer._InPlay.Remove(selectedCards[0]);
+            _Player._OppositePlayer._Discard.Add(selectedCards[0], 0.1f);
 
+            //reset the layer for all the cards
+            _Player._Deck.gameObject.layer = 0;
+            _Player._OppositePlayer._Deck.gameObject.layer = 0;
 
-                    //reset the layer for all the cards
-                    _Player._Deck.gameObject.layer = 0;
-                    _Player._OppositePlayer._Deck.gameObject.layer = 0;
-                    foreach (var card in _Player._OppositePlayer._InPlay.Cards)
-                    {
-                        card.gameObject.layer = Helper.CARD_LAYER;
-                    }
-                    Helper.EnableCards(_Player._Hand.Cards);
-                    Helper.EnableCards(_Player._InPlay.Cards);
-                    Helper.EnableCards(_Player._OppositePlayer._Hand.Cards);
-                }
-            }
-
-            yield return null;
+            Helper.EnableCards(_Player._Hand.Cards);
+            Helper.EnableCards(_Player._InPlay.Cards);
+            Helper.EnableCards(_Player._OppositePlayer._Hand.Cards);
+            Helper.EnableCards(_Player._OppositePlayer._InPlay.Cards);
         }
-
-        
+        else
+        {
+            throw new Exception("More than one input sent to Diffindo, this should never happen!");
+        }
     }
 }
