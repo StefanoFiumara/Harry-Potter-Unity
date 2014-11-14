@@ -10,12 +10,7 @@ public abstract class GenericSpell : GenericCard {
 
     public int nInputRequired;
 
-    public static readonly Vector3 SPELL_OFFSET = new Vector3(0f, 0f, -300f);
-
-    public new void Start()
-    {
-        base.Start();
-    }
+    public static readonly Vector3 SPELL_OFFSET = new Vector3(0f, 0f, -400f);
 
     public void OnMouseUp()
     {
@@ -59,11 +54,10 @@ public abstract class GenericSpell : GenericCard {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
                 RaycastHit hit;
-                // Casts the ray and get the first game object hit
                 if (Physics.Raycast(ray, out hit, 1000f, 1 << 11))
                 {
-                    //Get reference to card here
                     GenericCard target = hit.transform.gameObject.GetComponent<GenericCard>();
                     selectedCards.Add(target);
 
