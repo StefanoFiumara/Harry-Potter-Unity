@@ -57,6 +57,7 @@ public class Deck : MonoBehaviour {
 
     private void DrawCard()
     {
+        //TODO: Only use action if player meets all other requirements!
         if (_Player.UseAction())
         {
             GenericCard card = TakeTopCard();

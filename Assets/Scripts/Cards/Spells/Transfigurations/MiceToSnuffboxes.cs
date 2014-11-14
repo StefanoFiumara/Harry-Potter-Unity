@@ -41,7 +41,6 @@ public class MiceToSnuffboxes : GenericSpell {
         foreach(var card in selectedCards) {
             card._Player._InPlay.Remove(card);
             card._Player._Hand.Add(card, false, false);
-            //card.Enable();
             Helper.RotateCard(card.transform);
         }
 

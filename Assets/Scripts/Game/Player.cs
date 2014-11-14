@@ -27,6 +27,7 @@ public class Player : MonoBehaviour {
         LessonTypesInPlay = new List<LessonTypes>(5);
 	}
 
+    //TODO: Rewrite so ActionsAvailable only gets substracted if it is > 0
     public bool UseAction()
     {
         ActionsAvailable--;
