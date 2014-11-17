@@ -37,7 +37,7 @@ public class Player : MonoBehaviour {
             //Player => InPlay AfterTurnAction happens here
             //TODO: Refactor to Player.InitTurn(); ????
             _OppositePlayer.ActionsAvailable += 2;
-            _OppositePlayer._Deck.DrawCard();
+            _OppositePlayer._Deck.DrawCard(1f);
             //Opposite player => InPlay BeforeTurnAction happens here
         }
     }
