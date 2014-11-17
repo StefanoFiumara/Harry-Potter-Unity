@@ -23,6 +23,8 @@ public class Player : MonoBehaviour {
     public int nCreaturesInPlay;
     public int DamagePerTurn;
 
+    public bool IsGoingFirst;
+
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);
 	}
@@ -36,10 +38,16 @@ public class Player : MonoBehaviour {
             ActionsAvailable = 0;
             //Player => InPlay AfterTurnAction happens here
             //TODO: Refactor to Player.InitTurn(); ????
-            _OppositePlayer.ActionsAvailable += 2;
-            _OppositePlayer._Deck.DrawCard(1f);
-            //Opposite player => InPlay BeforeTurnAction happens here
+            _OppositePlayer.InitTurn();
         }
+    }
+
+    public void InitTurn(float drawAnimDelay = 1f)
+    {
+        //Opposite player => InPlay BeforeTurnAction happens here
+        _Deck.DrawCard(drawAnimDelay);
+        ActionsAvailable += 2;
+        //creatures do damage here
     }
 
     public bool CanUseAction()
@@ -70,18 +78,23 @@ public class Player : MonoBehaviour {
                 break;
             }
 
-            iTween.MoveBy(card.gameObject, iTween.Hash("time", 0.5f,
-                                                        "z", 20f,
+            //TODO: Adjust this offset
+            Vector3 cardPosition = Discard.PREVIEW_OFFSET;
+            cardPosition.x += i * Hand.SPACING;
+            //move to 
+            iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.4f,
+                                                        "position", cardPosition,
                                                         "easetype", iTween.EaseType.easeInOutSine,
-                                                        "delay", i * 0.3f
+                                                        "delay", 0.1f
                                                         ));
 
+            //flip
             iTween.RotateTo(card.gameObject, iTween.Hash("time", 0.2f,
                                                         "y", 0f,
                                                         "easetype", iTween.EaseType.easeInOutSine,
-                                                        "delay", i * 0.3f + 0.4f
+                                                        "delay", 0.1f
                                                         ));
-            _Discard.Add(card, 0.3f + i * 0.3f);
+            _Discard.Add(card, 0.9f);
         }
     }
 
