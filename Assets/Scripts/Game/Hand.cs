@@ -18,11 +18,11 @@ public class Hand : MonoBehaviour {
       //  Cards = new List<GenericCard>();
 	}
 
-    public void Add(GenericCard card, bool flip = true, bool preview = true)
+    public void Add(GenericCard card, bool flip = true, bool preview = true, float animDelay = 0f)
     {
         card.transform.parent = transform;
-        AnimateCardToHand(card.transform, flip, preview);
-        AdjustHandSpacing();
+        AnimateCardToHand(card.transform, flip, preview, animDelay);
+        //AdjustHandSpacing();
         Cards.Add(card);
     }
 
@@ -49,7 +49,7 @@ public class Hand : MonoBehaviour {
         }
     }
 
-    private void AnimateCardToHand(Transform card, bool flip = true, bool preview = true)
+    private void AnimateCardToHand(Transform card, bool flip = true, bool preview = true, float animDelay = 0f)
     {
         Vector3 cardPosition = HAND_CARDS_OFFSET;
 
@@ -60,16 +60,17 @@ public class Hand : MonoBehaviour {
 
         if (preview)
         {
-            Helper.TweenCardToPosition(card, HAND_PREVIEW_POSITION, card.GetComponent<GenericCard>().State, 0f, iTween.EaseType.easeOutExpo);
+            Helper.TweenCardToPosition(card, HAND_PREVIEW_POSITION, card.GetComponent<GenericCard>().State, animDelay, iTween.EaseType.easeOutExpo);
         }
 
-        Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_HAND, DrawCardTweenTime + 0.25f);
+       Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_HAND, animDelay + DrawCardTweenTime + 0.25f);
 
         if (flip)
         {
             iTween.RotateTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
                                                          "y", 0f,
-                                                         "easetype", iTween.EaseType.easeInOutSine
+                                                         "easetype", iTween.EaseType.easeInOutSine,
+                                                         "delay", animDelay
                                                          ));
         }
     }

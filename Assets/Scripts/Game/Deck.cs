@@ -62,10 +62,10 @@ public class Deck : MonoBehaviour {
         }
     }
 
-    public void DrawCard()
+    public void DrawCard(float animDelay = 0f)
     {
         GenericCard card = TakeTopCard();
-        _Hand.Add(card);
+        _Hand.Add(card, true, true, animDelay);
     }
 
     public void Shuffle()
