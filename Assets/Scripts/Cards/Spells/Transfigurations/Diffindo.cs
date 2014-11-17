@@ -37,14 +37,8 @@ public class Diffindo : GenericSpell {
             _Player._OppositePlayer._InPlay.Remove(selectedCards[0]);
             _Player._OppositePlayer._Discard.Add(selectedCards[0], 0.1f);
 
-            //reset the layer for all the cards
-            _Player._Deck.gameObject.layer = 0;
-            _Player._OppositePlayer._Deck.gameObject.layer = 0;
-
-            Helper.EnableCards(_Player._Hand.Cards);
-            Helper.EnableCards(_Player._InPlay.Cards);
-            Helper.EnableCards(_Player._OppositePlayer._Hand.Cards);
-            Helper.EnableCards(_Player._OppositePlayer._InPlay.Cards);
+            _Player.EnableAllCards();
+            _Player._OppositePlayer.EnableAllCards();
         }
         else
         {
