@@ -15,7 +15,7 @@ public class Hand : MonoBehaviour {
     public static readonly float SPACING = 55f;
 
 	public void Start () {
-        Cards = new List<GenericCard>();
+      //  Cards = new List<GenericCard>();
 	}
 
     public void Add(GenericCard card, bool flip = true, bool preview = true)

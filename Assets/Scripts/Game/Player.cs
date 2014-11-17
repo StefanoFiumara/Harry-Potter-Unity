@@ -27,20 +27,32 @@ public class Player : MonoBehaviour {
         LessonTypesInPlay = new List<LessonTypes>(5);
 	}
 
-    //TODO: Rewrite so ActionsAvailable only gets substracted if it is > 0
-    public bool UseAction()
+    public void UseAction()
     {
         ActionsAvailable--;
 
         if (ActionsAvailable <= 0)
         {
-            //TODO: Next turn should happen here
             ActionsAvailable = 0;
-            //_OppositePlayer.ActionsAvailable += 2;
-            //Global.CurrentTurn = _OppositePlayer; // ????
+            //Player => InPlay AfterTurnAction happens here
+            //TODO: Refactor to Player.InitTurn(); ????
+            _OppositePlayer.ActionsAvailable += 2;
+            _OppositePlayer._Deck.DrawCard();
+            //Opposite player => InPlay BeforeTurnAction happens here
         }
+    }
 
+    public bool CanUseAction()
+    {
         return ActionsAvailable > 0;
+    }
+
+    public void DrawInitialHand()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            _Deck.DrawCard();
+        }
     }
 
     public void TakeDamage(int amount)

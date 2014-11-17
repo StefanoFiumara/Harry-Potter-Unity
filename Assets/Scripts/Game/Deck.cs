@@ -36,6 +36,9 @@ public class Deck : MonoBehaviour {
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
         }
+
+        //tell the player to draw his hand after this is all done
+        _Player.DrawInitialHand();
 	}
 	
     public GenericCard TakeTopCard()
@@ -52,17 +55,17 @@ public class Deck : MonoBehaviour {
 
     public void OnMouseUp()
     {
-        if(Cards.Count > 0) DrawCard();
+        if (Cards.Count > 0 && _Player.CanUseAction())
+        {
+            _Player.UseAction();
+            DrawCard();
+        }
     }
 
-    private void DrawCard()
+    public void DrawCard()
     {
-        //TODO: Only use action if player meets all other requirements!
-        if (_Player.UseAction())
-        {
-            GenericCard card = TakeTopCard();
-            _Hand.Add(card);
-        }
+        GenericCard card = TakeTopCard();
+        _Hand.Add(card);
     }
 
     public void Shuffle()

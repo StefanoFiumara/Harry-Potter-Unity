@@ -14,9 +14,9 @@ public class Lesson : GenericCard, PersistentCard {
     {
         if (State != CardStates.IN_HAND) return;
 
-        //TODO: Only use action if player meets all other requirements!
-        if (_Player.UseAction())
+        if (_Player.CanUseAction())
         {
+            _Player.UseAction();
             _Player._Hand.Remove(this);
             _Player._InPlay.Add(this);            
         }

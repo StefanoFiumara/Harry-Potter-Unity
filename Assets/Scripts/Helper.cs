@@ -35,9 +35,6 @@ public class Helper {
         //set target based on current rotation, use 20f as an epsilon value for comparison
         Vector3 cardRotation = card.localRotation.eulerAngles;
         float target = cardRotation.z > 20f ? 0f : 270f;
-        
-        Debug.Log("Card Rotation: " + cardRotation.z + " :::: Rotating To: " + target);
-
         iTween.RotateTo(card.gameObject, iTween.Hash("time", 0.5f,
                                                          "z", target,
                                                          "easetype", iTween.EaseType.easeInOutSine,

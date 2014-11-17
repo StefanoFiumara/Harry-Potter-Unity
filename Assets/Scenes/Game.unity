@@ -167,7 +167,7 @@ MonoBehaviour:
   StartingCharacter: {fileID: 0}
   nLessonsInPlay: 0
   LessonTypesInPlay: 
-  ActionsAvailable: 99
+  ActionsAvailable: 0
   nCreaturesInPlay: 0
   DamagePerTurn: 0
 --- !u!4 &226967739
@@ -773,7 +773,7 @@ MonoBehaviour:
   StartingCharacter: {fileID: 0}
   nLessonsInPlay: 0
   LessonTypesInPlay: 
-  ActionsAvailable: 99
+  ActionsAvailable: 2
   nCreaturesInPlay: 0
   DamagePerTurn: 0
 --- !u!4 &1925117257
