@@ -8,7 +8,9 @@ public class Discard : MonoBehaviour {
     private List<GenericCard> Cards;
     public Player _Player; //not sure if needed just yet
 
-    private readonly Vector2 DISCARD_POSITION_OFFSET = new Vector2(-355f, -30f);
+    public static readonly Vector2 DISCARD_POSITION_OFFSET = new Vector2(-355f, -30f);
+
+    public static readonly Vector3 PREVIEW_OFFSET = new Vector3(-300f, -30f, -6f);
 
 	public void Start () {
 	    Cards = new List<GenericCard>();
