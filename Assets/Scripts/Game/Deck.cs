@@ -6,7 +6,6 @@ public class Deck : MonoBehaviour {
 
     public List<GenericCard> Cards;
 
-    public Hand _Hand;
     public Player _Player;
 
     private readonly Vector2 DECK_POSITION_OFFSET = new Vector2(-355f, -124f);
@@ -75,7 +74,7 @@ public class Deck : MonoBehaviour {
            return;
        }
 
-       _Hand.Add(card, true, true, animDelay);
+       _Player._Hand.Add(card, true, true, animDelay);
     }
 
     public void Shuffle()
