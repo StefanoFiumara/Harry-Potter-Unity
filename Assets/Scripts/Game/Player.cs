@@ -27,6 +27,7 @@ public class Player : MonoBehaviour {
 
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);
+        //TODO: Read about xboard protocol for multiplayer
 	}
 
     public void UseAction()
