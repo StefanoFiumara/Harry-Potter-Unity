@@ -178,13 +178,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 100004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffaee63749c8dc54cb3d6e95bfd1c75a, type: 3}
+  m_Script: {fileID: 11500000, guid: b508093c43233df468cc7f7035c19520, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
   CardType: 2
+  _Player: {fileID: 0}
   CostType: 1
   CostAmount: 2
+  nInputRequired: 0
   damageAmount: 3
 --- !u!1001 &100100000
 Prefab:
