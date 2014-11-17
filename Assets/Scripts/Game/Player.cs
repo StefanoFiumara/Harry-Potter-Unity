@@ -36,8 +36,7 @@ public class Player : MonoBehaviour {
         if (ActionsAvailable <= 0)
         {
             ActionsAvailable = 0;
-            //Player => InPlay AfterTurnAction happens here
-            //TODO: Refactor to Player.InitTurn(); ????
+            //TODO: Player => InPlay AfterTurnAction happens here
             _OppositePlayer.InitTurn();
         }
     }
