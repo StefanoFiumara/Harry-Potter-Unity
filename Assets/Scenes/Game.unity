@@ -170,6 +170,7 @@ MonoBehaviour:
   ActionsAvailable: 0
   nCreaturesInPlay: 0
   DamagePerTurn: 0
+  IsGoingFirst: 0
 --- !u!4 &226967739
 Transform:
   m_ObjectHideFlags: 0
@@ -675,11 +676,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 11400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: 77fee6acede88cb46a3906d27216ade6, type: 2}
+  - {fileID: 11400000, guid: ff9834dd84ca7314e8aba03938bd7344, type: 2}
   - {fileID: 11400000, guid: 77fee6acede88cb46a3906d27216ade6, type: 2}
   _Hand: {fileID: 589322087}
   _Player: {fileID: 226967738}
@@ -773,9 +774,10 @@ MonoBehaviour:
   StartingCharacter: {fileID: 0}
   nLessonsInPlay: 0
   LessonTypesInPlay: 
-  ActionsAvailable: 2
+  ActionsAvailable: 0
   nCreaturesInPlay: 0
   DamagePerTurn: 0
+  IsGoingFirst: 1
 --- !u!4 &1925117257
 Transform:
   m_ObjectHideFlags: 0
