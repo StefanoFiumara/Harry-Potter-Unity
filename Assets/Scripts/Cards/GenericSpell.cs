@@ -45,7 +45,7 @@ public abstract class GenericSpell : GenericCard {
     protected void ExecuteActionAndDiscard()
     {
         OnPlayAction();
-        if (nInputRequired == 0) _Player.UseAction();
+        if (nInputRequired == 0) _Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
         _Player._Discard.Add(this, 1f);
     }
 
