@@ -39,6 +39,10 @@ public class Deck : MonoBehaviour {
 
         //tell the player to draw his hand after this is all done
         _Player.DrawInitialHand();
+        if (_Player.IsGoingFirst)
+        {
+            _Player.InitTurn(5.2f);
+        }
 	}
 	
     public GenericCard TakeTopCard()
