@@ -4,8 +4,6 @@ using LessonTypes = Lesson.LessonTypes;
 
 public class GenericCreature : GenericCard, PersistentCard {
 
-	// Use this for initialization
-
     public LessonTypes CostType;
 
     public int CostAmount;
