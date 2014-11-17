@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using LessonTypes = Lesson.LessonTypes;
@@ -22,15 +23,14 @@ public abstract class GenericSpell : GenericCard {
             {
                 if (MeetsAdditionalPlayRequirements())
                 {
-                    _Player.UseAction();
                     _Player._Hand.Remove(this);
-                    PlaySpell();
+                    AnimateAndDiscard();
                 }
             }
         }
     }
 
-    protected void PlaySpell()
+    protected void AnimateAndDiscard()
     {
         //TODO: Rotate if it's being played by the opponent
         iTween.MoveTo(gameObject, iTween.Hash("time", 0.5f,
@@ -45,11 +45,14 @@ public abstract class GenericSpell : GenericCard {
     protected void ExecuteActionAndDiscard()
     {
         OnPlayAction();
+        if (nInputRequired == 0) _Player.UseAction();
         _Player._Discard.Add(this, 1f);
     }
 
     protected IEnumerator WaitForPlayerInput(List<GenericCard> selectedCards)
     {
+        if (nInputRequired == 0) throw new Exception("This card does not require input!");
+
         while (selectedCards.Count < nInputRequired)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
@@ -67,6 +70,7 @@ public abstract class GenericSpell : GenericCard {
                     if (selectedCards.Count == nInputRequired)
                     {
                         AfterInputAction(selectedCards);
+                        _Player.UseAction();
                     }
                 }
             }

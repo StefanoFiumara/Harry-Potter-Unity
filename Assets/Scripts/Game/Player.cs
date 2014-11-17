@@ -51,7 +51,7 @@ public class Player : MonoBehaviour {
     {
         for (int i = 0; i < 7; i++)
         {
-            _Deck.DrawCard(i);
+            _Deck.DrawCard(i*0.6f);
         }
     }
 

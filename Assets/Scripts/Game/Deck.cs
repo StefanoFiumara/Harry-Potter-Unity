@@ -64,8 +64,14 @@ public class Deck : MonoBehaviour {
 
     public void DrawCard(float animDelay = 0f)
     {
-        GenericCard card = TakeTopCard();
-        _Hand.Add(card, true, true, animDelay);
+       GenericCard card = TakeTopCard();
+       if (card == null)
+       {
+           //GameOver
+           return;
+       }
+
+       _Hand.Add(card, true, true, animDelay);
     }
 
     public void Shuffle()
