@@ -27,7 +27,6 @@ public class Player : MonoBehaviour {
 
 	public void Start () {
         LessonTypesInPlay = new List<LessonTypes>(5);
-        //TODO: Read about xboard protocol for multiplayer
 	}
 
     public void UseAction()
@@ -57,7 +56,6 @@ public class Player : MonoBehaviour {
 
     public void DrawInitialHand()
     {
-        //TODO: customize for faster animation
         for (int i = 0; i < 7; i++)
         {
             GenericCard card = _Deck.TakeTopCard();
