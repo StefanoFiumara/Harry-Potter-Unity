@@ -25,9 +25,6 @@ public class Player : MonoBehaviour {
 
     public bool IsGoingFirst;
 
-	public void Start () {
-        LessonTypesInPlay = new List<LessonTypes>(5);
-	}
 
     public void UseAction()
     {
