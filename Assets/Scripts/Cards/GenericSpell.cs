@@ -58,6 +58,7 @@ public abstract class GenericSpell : GenericCard {
         _Player._OppositePlayer.DisableAllCards();
 
         List<GenericCard> validCards = GetValidCards();
+
         //place valid cards in valid layer
         foreach (var card in validCards)
         {
@@ -65,13 +66,14 @@ public abstract class GenericSpell : GenericCard {
             card.gameObject.layer = Helper.VALID_CHOICE_LAYER;
         }
 
-        var SelectedCards = new List<GenericCard>();
-        StartCoroutine(WaitForPlayerInput(SelectedCards));
+        StartCoroutine(WaitForPlayerInput());
     }
 
-    protected IEnumerator WaitForPlayerInput(List<GenericCard> selectedCards)
+    protected IEnumerator WaitForPlayerInput()
     {
         if (nInputRequired == 0) throw new Exception("This card does not require input!");
+
+        var selectedCards = new List<GenericCard>();
 
         while (selectedCards.Count < nInputRequired)
         {
