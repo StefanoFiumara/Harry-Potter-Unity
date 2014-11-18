@@ -42,10 +42,10 @@ public class Player : MonoBehaviour {
         }
     }
 
-    public void InitTurn(float drawAnimDelay = 1f)
+    public void InitTurn()
     {
         //Opposite player => InPlay BeforeTurnAction happens here
-        _Deck.DrawCard(drawAnimDelay);
+        _Deck.DrawCard();
         ActionsAvailable += 2;
         //creatures do damage here
     }
@@ -57,9 +57,24 @@ public class Player : MonoBehaviour {
 
     public void DrawInitialHand()
     {
+        //TODO: customize for faster animation
         for (int i = 0; i < 7; i++)
         {
-            _Deck.DrawCard(i*0.6f);
+            GenericCard card = _Deck.TakeTopCard();
+            Vector3 cardPosition = Hand.HAND_CARDS_OFFSET;
+
+            float shrinkFactor = _Hand.Cards.Count >= 12 ? 0.5f : 1f;
+
+            cardPosition.x += _Hand.Cards.Count * Hand.SPACING * shrinkFactor;
+            cardPosition.z -= _Hand.Cards.Count;
+
+            _Hand.Cards.Add(card);
+            Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.IN_HAND, true, false);
+        }
+
+        if (IsGoingFirst)
+        {
+            InitTurn();
         }
     }
 
@@ -77,24 +92,7 @@ public class Player : MonoBehaviour {
                 Debug.Log("Game Over");
                 break;
             }
-
-            //TODO: Adjust this offset
-            Vector3 cardPosition = Discard.PREVIEW_OFFSET;
-            cardPosition.x += i * Hand.SPACING;
-            //move to 
-            iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.4f,
-                                                        "position", cardPosition,
-                                                        "easetype", iTween.EaseType.easeInOutSine,
-                                                        "delay", 0.1f
-                                                        ));
-
-            //flip
-            iTween.RotateTo(card.gameObject, iTween.Hash("time", 0.2f,
-                                                        "y", 0f,
-                                                        "easetype", iTween.EaseType.easeInOutSine,
-                                                        "delay", 0.1f
-                                                        ));
-            _Discard.Add(card, 0.9f);
+            _Discard.Add(card);
         }
     }
 

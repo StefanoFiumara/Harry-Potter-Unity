@@ -6,8 +6,6 @@ using CardStates = GenericCard.CardStates;
 public class Hand : MonoBehaviour {
     public Player _Player;
 
-    public float DrawCardTweenTime;
-
     public List<GenericCard> Cards;
 
     public static readonly Vector3 HAND_PREVIEW_POSITION = new Vector3(-80f, -13f, -336f);
@@ -18,17 +16,19 @@ public class Hand : MonoBehaviour {
       //  Cards = new List<GenericCard>();
 	}
 
-    public void Add(GenericCard card, bool flip = true, bool preview = true, float animDelay = 0f)
+    public void Add(GenericCard card, bool flip = true, bool preview = true)
     {
         card.transform.parent = transform;
-        AnimateCardToHand(card.transform, flip, preview, animDelay);
-        //AdjustHandSpacing();
+        AnimateCardToHand(card, flip, preview);
         Cards.Add(card);
+
+        if (Cards.Count == 12) AdjustHandSpacing();
     }
 
     public void Remove(GenericCard card)
     {
         Cards.Remove(card);
+
         AdjustHandSpacing();
     }
 
@@ -45,11 +45,11 @@ public class Hand : MonoBehaviour {
             cardPosition.x += i * Hand.SPACING * shrinkFactor;
             cardPosition.z -= i;
 
-            Helper.TweenCardToPosition(Cards[i].transform, cardPosition, CardStates.IN_HAND);
+            Helper.TweenCardToPosition(Cards[i], cardPosition, CardStates.IN_HAND);
         }
     }
 
-    private void AnimateCardToHand(Transform card, bool flip = true, bool preview = true, float animDelay = 0f)
+    private void AnimateCardToHand(GenericCard card, bool flip = true, bool preview = true)
     {
         Vector3 cardPosition = HAND_CARDS_OFFSET;
 
@@ -60,18 +60,9 @@ public class Hand : MonoBehaviour {
 
         if (preview)
         {
-            Helper.TweenCardToPosition(card, HAND_PREVIEW_POSITION, card.GetComponent<GenericCard>().State, animDelay, iTween.EaseType.easeOutExpo);
+            Helper.AddTweenToQueue(card, HAND_PREVIEW_POSITION, 0.5f, 0f, card.State, flip, false);
         }
 
-       Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_HAND, animDelay + DrawCardTweenTime + 0.25f);
-
-        if (flip)
-        {
-            iTween.RotateTo(card.gameObject, iTween.Hash("time", DrawCardTweenTime,
-                                                         "y", 0f,
-                                                         "easetype", iTween.EaseType.easeInOutSine,
-                                                         "delay", animDelay
-                                                         ));
-        }
+        Helper.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, CardStates.IN_HAND, false, card.State == CardStates.IN_PLAY);
     }
 }

@@ -5,7 +5,7 @@ public class Lesson : GenericCard, PersistentCard {
 
     public enum LessonTypes
     {
-        CREATURES, CHARMS, TRANSFIGURATION, POTIONS, QUIDDITCH
+        CREATURES = 0, CHARMS, TRANSFIGURATION, POTIONS, QUIDDITCH
     }
 
     public LessonTypes LessonType;
@@ -16,9 +16,9 @@ public class Lesson : GenericCard, PersistentCard {
 
         if (_Player.CanUseAction())
         {
-            _Player.UseAction();
             _Player._Hand.Remove(this);
-            _Player._InPlay.Add(this);            
+            _Player._InPlay.Add(this);
+            _Player.UseAction();
         }
     }
 

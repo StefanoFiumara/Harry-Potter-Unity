@@ -23,8 +23,8 @@ public abstract class GenericSpell : GenericCard {
             {
                 if (MeetsAdditionalPlayRequirements())
                 {
-                    _Player._Hand.Remove(this);
                     AnimateAndDiscard();
+                    _Player._Hand.Remove(this);
                 }
             }
         }
@@ -33,20 +33,16 @@ public abstract class GenericSpell : GenericCard {
     protected void AnimateAndDiscard()
     {
         //TODO: Rotate if it's being played by the opponent
-        iTween.MoveTo(gameObject, iTween.Hash("time", 0.5f,
-                                              "position", SPELL_OFFSET,
-                                              "easetype", iTween.EaseType.easeInOutSine,
-                                              "oncomplete", "ExecuteActionAndDiscard",
-                                              "islocal", true,
-                                              "oncompletetarget", gameObject
-                                                   ));
+        
+        Helper.AddTweenToQueue(this, SPELL_OFFSET, 0.5f, 0f, State, false, false);
+        Invoke("ExecuteActionAndDiscard", 0.9f);
     }
 
     protected void ExecuteActionAndDiscard()
     {
+        _Player._Discard.Add(this);
         OnPlayAction();
         if (nInputRequired == 0) _Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
-        _Player._Discard.Add(this, 1f);
     }
 
     protected IEnumerator WaitForPlayerInput(List<GenericCard> selectedCards)

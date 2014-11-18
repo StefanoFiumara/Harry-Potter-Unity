@@ -38,10 +38,6 @@ public class Deck : MonoBehaviour {
 
         //tell the player to draw his hand after this is all done
         _Player.DrawInitialHand();
-        if (_Player.IsGoingFirst)
-        {
-            _Player.InitTurn(5.2f);
-        }
 	}
 	
     public GenericCard TakeTopCard()
@@ -60,12 +56,12 @@ public class Deck : MonoBehaviour {
     {
         if (Cards.Count > 0 && _Player.CanUseAction())
         {
-            _Player.UseAction();
             DrawCard();
+            _Player.UseAction();
         }
     }
 
-    public void DrawCard(float animDelay = 0f)
+    public void DrawCard()
     {
        GenericCard card = TakeTopCard();
        if (card == null)
@@ -74,7 +70,7 @@ public class Deck : MonoBehaviour {
            return;
        }
 
-       _Player._Hand.Add(card, true, true, animDelay);
+       _Player._Hand.Add(card, true, true);
     }
 
     public void Shuffle()

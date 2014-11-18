@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CardStates = GenericCard.CardStates;
 
 public class Discard : MonoBehaviour {
 
@@ -24,7 +25,7 @@ public class Discard : MonoBehaviour {
         }
 	}
 
-    public void Add(GenericCard card, float tweenDelay = 0f) 
+    public void Add(GenericCard card) 
     {
         Cards.Add(card);
         card.transform.parent = transform;
@@ -32,12 +33,18 @@ public class Discard : MonoBehaviour {
         Vector3 cardPos = new Vector3(DISCARD_POSITION_OFFSET.x, DISCARD_POSITION_OFFSET.y, 16f);
         cardPos.z -=  Cards.Count * 0.2f;
 
+        /*
         if (card.State == GenericCard.CardStates.IN_PLAY)
         {
-            Helper.RotateCard(card.transform);
+           // Helper.RotateCard(card.transform);
         }
+        */
+        //Helper.TweenCardToPosition(card.transform, cardPos, GenericCard.CardStates.DISCARDED, tweenDelay);
 
-        Helper.TweenCardToPosition(card.transform, cardPos, GenericCard.CardStates.DISCARDED, tweenDelay);
+        Vector3 cardPreviewPos = cardPos;
+        cardPreviewPos.z -= 20f;
+        Helper.AddTweenToQueue(card, cardPreviewPos, 0.35f, 0f, CardStates.DISCARDED, card.State == CardStates.IN_DECK, card.State == CardStates.IN_PLAY);
+        Helper.AddTweenToQueue(card, cardPos, 0.25f, 0f, CardStates.DISCARDED, false, false);
     }
 
     //TODO: OnMouseUp: View cards in discard pile

@@ -19,9 +19,9 @@ public class GenericCreature : GenericCard, PersistentCard {
         {
             if(_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
             {
-                _Player.UseAction();
                 _Player._Hand.Remove(this);
                 _Player._InPlay.Add(this);
+                _Player.UseAction();
             }
         }
     }

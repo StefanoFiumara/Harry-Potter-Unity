@@ -19,29 +19,37 @@ public class Helper : MonoBehaviour {
 
     private static bool TweenQueueRunning = false;
 
-    struct TweenObject
+    public struct TweenObject
     {
         public GameObject target;
-        public float time;
         public Vector3 position;
         public EaseType easeType;
+        public float time;
         public float delay;
+        public bool flip;
+        public bool rotate;
+        public CardStates stateAfterAnimation;
     }
 
-    public static void AddTweenToQueue(GameObject target, Vector3 position, float time, float delay = 0f, EaseType easeType = EaseType.easeInOutSine)
+    public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, CardStates stateAfterAnimation, bool flip, bool rotate, EaseType easeType = EaseType.easeInOutSine)
     {
-        TweenObject newTween;
-        newTween.target = target;
+        TweenObject newTween = new TweenObject();
+
+        newTween.target = target.gameObject;
         newTween.position = position;
         newTween.time = time;
         newTween.delay = delay;
         newTween.easeType = easeType;
+        newTween.stateAfterAnimation = stateAfterAnimation;
+        newTween.flip = flip;
+        newTween.rotate = rotate;
 
         TweenQueue.Enqueue(newTween);
 
         if (TweenQueueRunning == false)
         {
-           // StartCoroutine(RunTweenQueue());
+            TweenQueueRunning = true;
+            StaticCoroutine.DoCoroutine(RunTweenQueue());
         }
     }
 
@@ -50,24 +58,33 @@ public class Helper : MonoBehaviour {
         //I might break the game here
         while (true)
         {
-            if (TweenQueue.Count == 0) yield return null;
+            if (TweenQueue.Count == 0)
+            {
+                yield return null;
+            }
+            else
+            {
+                TweenObject tween = TweenQueue.Dequeue();
 
-            TweenObject tween = TweenQueue.Dequeue();
+                iTween.MoveTo(tween.target, iTween.Hash("time", tween.time,
+                                                        "delay", tween.delay,
+                                                       "position", tween.position,
+                                                       "easetype", tween.easeType,
+                                                       "islocal", true,
+                                                       "oncomplete", "SwitchState",
+                                                       "oncompletetarget", tween.target,
+                                                       "oncompleteparams", tween.stateAfterAnimation
+                                                       ));
 
-            iTween.MoveTo(tween.target, iTween.Hash("time", tween.time,
-                                                   "position", tween.position,
-                                                   "easetype", tween.easeType,
-                                                   "islocal", true,
-                                                   "delay", tween.delay
-                                                   ));
-            yield return new WaitForSeconds(tween.time + tween.delay);
+                if (tween.flip) FlipCard(tween.target, tween.time);
+                if (tween.rotate) RotateCard(tween.target, tween.time);
 
+                yield return new WaitForSeconds(tween.time + tween.delay);
+            }
         }
     }
 
-
-
-    public static void TweenCardToPosition(Transform card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenDelay = 0f, EaseType easeType = iTween.EaseType.easeInOutSine)
+    public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenDelay = 0f, EaseType easeType = iTween.EaseType.easeInOutSine)
     {
         iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.5f,
                                                    "position", cardPosition,
@@ -82,13 +99,25 @@ public class Helper : MonoBehaviour {
         iTween.ScaleTo(card.gameObject, iTween.Hash("x", 1, "y", 1, "time", 0.5f));
     }
 
-    public static void RotateCard(Transform card)
+    private static void RotateCard(GameObject card, float time)
     {
         //set target based on current rotation, use 20f as an epsilon value for comparison
-        Vector3 cardRotation = card.localRotation.eulerAngles;
+        Vector3 cardRotation = card.transform.localRotation.eulerAngles;
         float target = cardRotation.z > 20f ? 0f : 270f;
-        iTween.RotateTo(card.gameObject, iTween.Hash("time", 0.5f,
+        iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
                                                      "z", target,
+                                                     "easetype", iTween.EaseType.easeInOutSine,
+                                                     "islocal", true
+                                                     ));
+    }
+
+    private static void FlipCard(GameObject card, float time)
+    {
+        //set target based on current rotation, use 20f as an epsilon value for comparison
+        Vector3 cardRotation = card.transform.localRotation.eulerAngles;
+        float target = cardRotation.y > 20f ? 0f : 180f;
+        iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
+                                                     "y", target,
                                                      "easetype", iTween.EaseType.easeInOutSine,
                                                      "islocal", true
                                                      ));
