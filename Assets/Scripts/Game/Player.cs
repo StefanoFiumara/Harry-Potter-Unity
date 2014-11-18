@@ -56,6 +56,7 @@ public class Player : MonoBehaviour {
 
     public void DrawInitialHand()
     {
+        //TODO: Needs cleanup
         for (int i = 0; i < 7; i++)
         {
             GenericCard card = _Deck.TakeTopCard();
