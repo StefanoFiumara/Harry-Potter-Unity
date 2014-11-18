@@ -33,7 +33,6 @@ public abstract class GenericSpell : GenericCard {
     protected void AnimateAndDiscard()
     {
         //TODO: Rotate if it's being played by the opponent
-        
         Helper.AddTweenToQueue(this, SPELL_OFFSET, 0.5f, 0f, State, false, false);
         Invoke("ExecuteActionAndDiscard", 0.9f);
     }
@@ -41,8 +40,33 @@ public abstract class GenericSpell : GenericCard {
     protected void ExecuteActionAndDiscard()
     {
         _Player._Discard.Add(this);
-        OnPlayAction();
-        if (nInputRequired == 0) _Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
+        if (nInputRequired == 0)
+        {
+            OnPlayAction();
+            _Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
+        }
+        else
+        {
+            BeginWaitForInput();
+        }
+    }
+
+    private void BeginWaitForInput()
+    {
+        //Move ALL invalid colliders to ignoreraycast layer
+        _Player.DisableAllCards();
+        _Player._OppositePlayer.DisableAllCards();
+
+        List<GenericCard> validCards = GetValidCards();
+        //place valid cards in valid layer
+        foreach (var card in validCards)
+        {
+            card.Enable();
+            card.gameObject.layer = Helper.VALID_CHOICE_LAYER;
+        }
+
+        var SelectedCards = new List<GenericCard>();
+        StartCoroutine(WaitForPlayerInput(SelectedCards));
     }
 
     protected IEnumerator WaitForPlayerInput(List<GenericCard> selectedCards)
@@ -66,6 +90,10 @@ public abstract class GenericSpell : GenericCard {
                     if (selectedCards.Count == nInputRequired)
                     {
                         AfterInputAction(selectedCards);
+
+                        _Player.EnableAllCards();
+                        _Player._OppositePlayer.EnableAllCards();
+
                         _Player.UseAction();
                     }
                 }
@@ -77,4 +105,5 @@ public abstract class GenericSpell : GenericCard {
     public abstract void OnPlayAction();
     public abstract bool MeetsAdditionalPlayRequirements();
     public abstract void AfterInputAction(List<GenericCard> input);
+    protected abstract List<GenericCard> GetValidCards();
 }

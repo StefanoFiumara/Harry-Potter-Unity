@@ -20,7 +20,11 @@ public class DirectDamageSpell : GenericSpell {
 
     public override void AfterInputAction(List<GenericCard> selectedCards)
     {
-        throw new Exception("AfterInputAction called on DirectDamageSpell, this should never happen.");
+        throw new Exception("AfterInputAction called on DirectDamageSpell, this should never happen!");
     }
 
+    protected override List<GenericCard> GetValidCards()
+    {
+        throw new Exception("GetValidCards called on DirectDamageSpell, this should never happen!");
+    }
 }
