@@ -15,4 +15,4 @@ Planned Features
 
 To Test the Project
 -------------------
-You will need to download the Unity3D Game Engine [here](http://unity3d.com/). Open the scene located in /Assets/Scenes/Game.unity and hit the play button at the top of the unity window. You can use the mouse to select cards and play them for both players, you will not find a large selection of cards just yet, remember this is a work in progress!
+You will need to download the Unity3D Game Engine [here](http://unity3d.com/). Open the scene located in **/Assets/Scenes/Game.unity** and hit the play button at the top of the unity window. You can use the mouse to select cards and play them for both players, you will not find a large selection of cards just yet, remember this is a work in progress!
