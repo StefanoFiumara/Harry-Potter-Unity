@@ -12,3 +12,7 @@ Planned Features
 * Difficulty settings for Easy, Normal, and Hard difficulties, depending on how the AI is coded, this may affect which cards the AI will play, but the biggest difference shall be in the random generation of the AI's deck, giving the AI more access to rare and powerful cards on the harder difficulties, and common basic cards on the easy difficulty.
 * A basic tutorial system for introducing a new player to the game, this will have separate mechanics to walk the player through how the card game works and will probably include a pre-built deck to ease the player into the concept.
 * A progress system to track the player's achievements and wins/losses against the AI, maybe an achievement system to track the player's various accomplishments in each game.
+
+To Test the Project
+-------------------
+You will need to download the Unity3D Game Engine [here](http://unity3d.com/). Open the scene located in /Assets/Scenes/Game.unity and hit the play button at the top of the unity window. You can use the mouse to select cards and play them for both players, you will not find a large selection of cards just yet, remember this is a work in progress!
