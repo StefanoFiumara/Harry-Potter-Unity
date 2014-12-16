@@ -115,20 +115,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cards:
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: 9e3cdb6092f258a47a502af6466442f7, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: 9e3cdb6092f258a47a502af6466442f7, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: 9e3cdb6092f258a47a502af6466442f7, type: 2}
-  - {fileID: 11400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
+  - {fileID: 11400000, guid: 77fee6acede88cb46a3906d27216ade6, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
   - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
-  - {fileID: 11400000, guid: d1b2d75c39fed234b8f06fc4f7c93b68, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
-  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   _Player: {fileID: 1925117256}
   DeckShuffleTweenTime: .800000012
 --- !u!1 &226967737
@@ -666,19 +666,19 @@ MonoBehaviour:
   Cards:
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 11400000, guid: 1b10ecf9c77077e4790bf0a3737074a4, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 11400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 11400000, guid: 91949151edcdd5e47b1851aa8bcbd3d4, type: 2}
+  - {fileID: 11400000, guid: d1b2d75c39fed234b8f06fc4f7c93b68, type: 2}
+  - {fileID: 11400000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
-  - {fileID: 11400000, guid: ff9834dd84ca7314e8aba03938bd7344, type: 2}
-  - {fileID: 11400000, guid: 77fee6acede88cb46a3906d27216ade6, type: 2}
+  - {fileID: 11400000, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
+  - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   _Player: {fileID: 226967738}
   DeckShuffleTweenTime: .800000012
 --- !u!4 &1528567324
@@ -720,7 +720,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cards: []
   _Player: {fileID: 226967738}
   InPlayTweenTime: .5
 --- !u!4 &1759829300
@@ -817,7 +816,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cards: []
   _Player: {fileID: 1925117256}
   InPlayTweenTime: .5
 --- !u!4 &2002146217
