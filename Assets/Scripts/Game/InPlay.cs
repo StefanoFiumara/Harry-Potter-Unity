@@ -9,7 +9,11 @@ using CardTypes = GenericCard.CardTypes;
 
 public class InPlay : MonoBehaviour {
 
-    public List<GenericCard> Cards;
+    public List<GenericCard> Cards {
+        get { return _Cards; }
+    }
+
+    private List<GenericCard> _Cards = new List<GenericCard>();
 
     public Player _Player;
 
@@ -21,14 +25,9 @@ public class InPlay : MonoBehaviour {
 
     public float InPlayTweenTime;
 
-    public void Start()
-    {
-        Cards = new List<GenericCard>();
-    }
-
     public void Add(GenericCard card)
     {
-        Cards.Add(card);
+        _Cards.Add(card);
         card.transform.parent = transform;
 
         switch (card.CardType)
@@ -46,7 +45,7 @@ public class InPlay : MonoBehaviour {
 
     public void Remove(GenericCard card)
     {
-        Cards.Remove(card);
+        _Cards.Remove(card);
 
         switch (card.CardType)
         {
@@ -63,12 +62,12 @@ public class InPlay : MonoBehaviour {
 
     public List<GenericCard> GetCreaturesInPlay()
     {
-        return Cards.FindAll(c => c.CardType == CardTypes.CREATURE);
+        return _Cards.FindAll(c => c.CardType == CardTypes.CREATURE);
     }
 
     public List<GenericCard> GetLessonsInPlay()
     {
-        return Cards.FindAll(c => c.CardType == CardTypes.LESSON);
+        return _Cards.FindAll(c => c.CardType == CardTypes.LESSON);
     }
 
     private void AnimateCreatureToBoard(GenericCard card)
@@ -87,7 +86,7 @@ public class InPlay : MonoBehaviour {
 
     private void RearrangeLessons()
     {
-        Cards.FindAll(card => card.CardType == CardTypes.LESSON).ForEach(card => 
+        _Cards.FindAll(card => card.CardType == CardTypes.LESSON).ForEach(card => 
         {
             Vector3 cardPosition = GetTargetPositionForCard(card);
             Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_PLAY);
@@ -95,7 +94,7 @@ public class InPlay : MonoBehaviour {
     }
     private void RearrangeCreatures()
     {
-        Cards.FindAll(card => card.CardType == CardTypes.CREATURE).ForEach(card => 
+        _Cards.FindAll(card => card.CardType == CardTypes.CREATURE).ForEach(card => 
         {
             Vector3 cardPosition = GetTargetPositionForCard(card);
             Helper.TweenCardToPosition(card, cardPosition, CardStates.IN_PLAY);
@@ -104,7 +103,7 @@ public class InPlay : MonoBehaviour {
 
     private Vector3 GetTargetPositionForCard(GenericCard card)
     {
-        int position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
+        int position = _Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
 
         Vector3 cardPosition = new Vector3();
 
