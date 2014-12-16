@@ -6,28 +6,29 @@ using CardStates = GenericCard.CardStates;
 public class Hand : MonoBehaviour {
     public Player _Player;
 
-    public List<GenericCard> Cards;
+    public List<GenericCard> Cards
+    {
+        get { return _Cards; }
+    }
+
+    private List<GenericCard> _Cards = new List<GenericCard>();
 
     public static readonly Vector3 HAND_PREVIEW_POSITION = new Vector3(-80f, -13f, -336f);
     public static readonly Vector3 HAND_CARDS_OFFSET = new Vector3(-240f, -200f, 0f);
     public static readonly float SPACING = 55f;
 
-	public void Start () {
-      //  Cards = new List<GenericCard>();
-	}
-
     public void Add(GenericCard card, bool flip = true, bool preview = true)
     {
         card.transform.parent = transform;
         AnimateCardToHand(card, flip, preview);
-        Cards.Add(card);
+        _Cards.Add(card);
 
-        if (Cards.Count == 12) AdjustHandSpacing();
+        if (_Cards.Count == 12) AdjustHandSpacing();
     }
 
     public void Remove(GenericCard card)
     {
-        Cards.Remove(card);
+        _Cards.Remove(card);
 
         AdjustHandSpacing();
     }
@@ -36,9 +37,9 @@ public class Hand : MonoBehaviour {
     {
         Vector3 cardPosition;
         
-        float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
+        float shrinkFactor = _Cards.Count >= 12 ? 0.5f : 1f;
         
-        for (int i = 0; i < Cards.Count; i++)
+        for (int i = 0; i < _Cards.Count; i++)
         {
             cardPosition = HAND_CARDS_OFFSET;
 

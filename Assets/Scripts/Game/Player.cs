@@ -16,9 +16,19 @@ public class Player : MonoBehaviour {
     public GenericCard StartingCharacter; //Set by main menu? GameObject?
 
     public int nLessonsInPlay = 0;
-    public List<LessonTypes> LessonTypesInPlay;
+    public List<LessonTypes> LessonTypesInPlay
+    {
+        get { return _LessonTypesInPlay; }
+    }
 
-    public int ActionsAvailable = 2;
+    private List<LessonTypes> _LessonTypesInPlay = new List<LessonTypes>();
+
+    public int ActionsAvailable 
+    {
+        get { return _ActionsAvailable; }
+    }
+
+    private int _ActionsAvailable = 0;
 
     public int nCreaturesInPlay;
     public int DamagePerTurn;
@@ -28,25 +38,31 @@ public class Player : MonoBehaviour {
 
     public void UseAction()
     {
-        ActionsAvailable--;
+        _ActionsAvailable--;
 
-        if (ActionsAvailable <= 0)
+        if (_ActionsAvailable <= 0)
         {
-            ActionsAvailable = 0;
-            //TODO: Player => InPlay AfterTurnAction happens here
+            _ActionsAvailable = 0;
+            //AfterTurnAction happens here
             _InPlay.Cards.ForEach(card => (card as PersistentCard).OnInPlayAfterTurnAction());
             _OppositePlayer.InitTurn();
         }
     }
 
+    public void AddAction()
+    {
+        _ActionsAvailable++;
+    }
+
     public void InitTurn()
     {
-        //player => InPlay BeforeTurnAction happens here
+        //BeforeTurnAction happens here
         _InPlay.Cards.ForEach(card => (card as PersistentCard).OnInPlayBeforeTurnAction());
-        _Deck.DrawCard();
-        ActionsAvailable += 2;
 
-        //creatures do damage here
+        _Deck.DrawCard();
+        _ActionsAvailable += 2;
+
+        //Creatures do damage here
         _InPlay.GetCreaturesInPlay().ForEach(card => _OppositePlayer.TakeDamage((card as GenericCreature).DamagePerTurn));
     }
 
@@ -98,15 +114,15 @@ public class Player : MonoBehaviour {
 
     public void UpdateLessonTypesInPlay()
     {
-        LessonTypesInPlay = new List<LessonTypes>();
+        _LessonTypesInPlay = new List<LessonTypes>();
 
         var lessons = _InPlay.Cards.FindAll(card => card is Lesson);
 
         foreach (Lesson card in lessons)
         {
-            if (!LessonTypesInPlay.Contains(card.LessonType))
+            if (!_LessonTypesInPlay.Contains(card.LessonType))
             {
-                LessonTypesInPlay.Add(card.LessonType);
+                _LessonTypesInPlay.Add(card.LessonType);
             }
         }
     }
