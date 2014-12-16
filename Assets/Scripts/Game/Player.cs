@@ -34,16 +34,20 @@ public class Player : MonoBehaviour {
         {
             ActionsAvailable = 0;
             //TODO: Player => InPlay AfterTurnAction happens here
+            _InPlay.Cards.ForEach(card => (card as PersistentCard).OnInPlayAfterTurnAction());
             _OppositePlayer.InitTurn();
         }
     }
 
     public void InitTurn()
     {
-        //Opposite player => InPlay BeforeTurnAction happens here
+        //player => InPlay BeforeTurnAction happens here
+        _InPlay.Cards.ForEach(card => (card as PersistentCard).OnInPlayBeforeTurnAction());
         _Deck.DrawCard();
         ActionsAvailable += 2;
+
         //creatures do damage here
+        _InPlay.GetCreaturesInPlay().ForEach(card => _OppositePlayer.TakeDamage((card as GenericCreature).DamagePerTurn));
     }
 
     public bool CanUseAction()
