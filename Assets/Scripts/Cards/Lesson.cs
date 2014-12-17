@@ -1,25 +1,21 @@
-﻿using UnityEngine;
-using System.Collections;
-
-public class Lesson : GenericCard, PersistentCard {
+﻿public class Lesson : GenericCard, IPersistentCard {
 
     public enum LessonTypes
     {
-        CREATURES = 0, CHARMS, TRANSFIGURATION, POTIONS, QUIDDITCH
+        Creatures = 0, Charms, Transfiguration, Potions, Quidditch
     }
 
     public LessonTypes LessonType;
 
     public void OnMouseUp()
     {
-        if (State != CardStates.IN_HAND) return;
+        if (State != CardStates.InHand) return;
 
-        if (_Player.CanUseAction())
-        {
-            _Player._Hand.Remove(this);
-            _Player._InPlay.Add(this);
-            _Player.UseAction();
-        }
+        if (!_Player.CanUseAction()) return;
+
+        _Player._Hand.Remove(this);
+        _Player._InPlay.Add(this);
+        _Player.UseAction();
     }
 
     public void OnEnterInPlayAction()
@@ -29,14 +25,14 @@ public class Lesson : GenericCard, PersistentCard {
             _Player.LessonTypesInPlay.Add(LessonType);
         }
         
-        _Player.nLessonsInPlay++;
+        _Player.AmountLessonsInPlay++;
 
-        State = CardStates.IN_PLAY;
+        State = CardStates.InPlay;
     }
 
     public void OnExitInPlayAction()
     {
-        _Player.nLessonsInPlay--;
+        _Player.AmountLessonsInPlay--;
         _Player.UpdateLessonTypesInPlay();
     }
 

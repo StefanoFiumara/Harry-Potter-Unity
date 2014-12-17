@@ -1,10 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using LessonTypes = Lesson.LessonTypes;
+﻿public class GenericCreature : GenericCard, IPersistentCard {
 
-public class GenericCreature : GenericCard, PersistentCard {
-
-    public LessonTypes CostType;
+    public Lesson.LessonTypes CostType;
 
     public int CostAmount;
 
@@ -13,30 +9,30 @@ public class GenericCreature : GenericCard, PersistentCard {
 
     public void OnMouseUp()
     {
-        if (State != CardStates.IN_HAND) return;
+        if (State != CardStates.InHand) return;
 
-        if (_Player.CanUseAction())
-        {
-            if(_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
-            {
-                _Player._Hand.Remove(this);
-                _Player._InPlay.Add(this);
-                _Player.UseAction();
-            }
-        }
+        if (!_Player.CanUseAction()) return;
+
+        if (_Player.AmountLessonsInPlay < CostAmount || !_Player.LessonTypesInPlay.Contains(CostType)) return;
+
+        //TODO: MeetsRequirements(); ?
+
+        _Player._Hand.Remove(this);
+        _Player._InPlay.Add(this);
+        _Player.UseAction();
     }
 
     public void OnEnterInPlayAction()
     {
-        _Player.nCreaturesInPlay++;
+        _Player.CreaturesInPlay++;
         _Player.DamagePerTurn += DamagePerTurn;
 
-        State = CardStates.IN_PLAY;
+        State = CardStates.InPlay;
     }
 
     public void OnExitInPlayAction()
     {
-        _Player.nCreaturesInPlay--;
+        _Player.CreaturesInPlay--;
         _Player.DamagePerTurn -= DamagePerTurn;
     }
 

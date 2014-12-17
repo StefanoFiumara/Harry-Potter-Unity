@@ -186,8 +186,8 @@ MonoBehaviour:
   _Player: {fileID: 0}
   CostType: 1
   CostAmount: 2
-  nInputRequired: 0
-  damageAmount: 3
+  InputRequired: 0
+  DamageAmount: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

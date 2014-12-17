@@ -1,4 +1,4 @@
-﻿public interface PersistentCard {
+﻿public interface IPersistentCard {
 
     void OnInPlayBeforeTurnAction();
     void OnInPlayAfterTurnAction();

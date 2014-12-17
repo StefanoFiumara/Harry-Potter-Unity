@@ -6,11 +6,11 @@ using System.Collections.Generic;
 
 public class DirectDamageSpell : GenericSpell {
 
-    public int damageAmount;
+    public int DamageAmount;
 
     public override void OnPlayAction()
     {
-        _Player._OppositePlayer.TakeDamage(damageAmount);
+        _Player._OppositePlayer.TakeDamage(DamageAmount);
     }
 
     public override bool MeetsAdditionalPlayRequirements()

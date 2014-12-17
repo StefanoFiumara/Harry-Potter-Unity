@@ -7,48 +7,48 @@ using EaseType = iTween.EaseType;
 
 public class Helper : MonoBehaviour {
 
-    public const int PREVIEW_LAYER = 9;
-    public const int CARD_LAYER = 10;
-    public const int VALID_CHOICE_LAYER = 11;
-    public const int IGNORE_RAYCAST_LAYER = 2;
-    public const int DECK_LAYER = 12;
+    public const int PreviewLayer = 9;
+    public const int CardLayer = 10;
+    public const int ValidChoiceLayer = 11;
+    public const int IgnoreRaycastLayer = 2;
+    public const int DeckLayer = 12;
 
     public static Camera PreviewCamera;
     public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
     public static Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
 
-    private static bool TweenQueueRunning = false;
+    private static bool _tweenQueueRunning = false;
 
     public struct TweenObject
     {
-        public GameObject target;
-        public Vector3 position;
+        public GameObject Target;
+        public Vector3 Position;
         public EaseType easeType;
-        public float time;
-        public float delay;
-        public bool flip;
-        public bool rotate;
-        public CardStates stateAfterAnimation;
+        public float Time;
+        public float Delay;
+        public bool Flip;
+        public bool Rotate;
+        public CardStates StateAfterAnimation;
     }
 
     public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, CardStates stateAfterAnimation, bool flip, bool rotate, EaseType easeType = EaseType.easeInOutSine)
     {
         TweenObject newTween = new TweenObject();
 
-        newTween.target = target.gameObject;
-        newTween.position = position;
-        newTween.time = time;
-        newTween.delay = delay;
+        newTween.Target = target.gameObject;
+        newTween.Position = position;
+        newTween.Time = time;
+        newTween.Delay = delay;
         newTween.easeType = easeType;
-        newTween.stateAfterAnimation = stateAfterAnimation;
-        newTween.flip = flip;
-        newTween.rotate = rotate;
+        newTween.StateAfterAnimation = stateAfterAnimation;
+        newTween.Flip = flip;
+        newTween.Rotate = rotate;
 
         TweenQueue.Enqueue(newTween);
 
-        if (TweenQueueRunning == false)
+        if (_tweenQueueRunning == false)
         {
-            TweenQueueRunning = true;
+            _tweenQueueRunning = true;
             StaticCoroutine.DoCoroutine(RunTweenQueue());
         }
     }
@@ -66,20 +66,20 @@ public class Helper : MonoBehaviour {
             {
                 TweenObject tween = TweenQueue.Dequeue();
 
-                iTween.MoveTo(tween.target, iTween.Hash("time", tween.time,
-                                                        "delay", tween.delay,
-                                                       "position", tween.position,
+                iTween.MoveTo(tween.Target, iTween.Hash("time", tween.Time,
+                                                        "delay", tween.Delay,
+                                                       "position", tween.Position,
                                                        "easetype", tween.easeType,
                                                        "islocal", true,
                                                        "oncomplete", "SwitchState",
-                                                       "oncompletetarget", tween.target,
-                                                       "oncompleteparams", tween.stateAfterAnimation
+                                                       "oncompletetarget", tween.Target,
+                                                       "oncompleteparams", tween.StateAfterAnimation
                                                        ));
 
-                if (tween.flip) FlipCard(tween.target, tween.time);
-                if (tween.rotate) RotateCard(tween.target, tween.time);
+                if (tween.Flip) FlipCard(tween.Target, tween.Time);
+                if (tween.Rotate) RotateCard(tween.Target, tween.Time);
 
-                yield return new WaitForSeconds(tween.time + tween.delay);
+                yield return new WaitForSeconds(tween.Time + tween.Delay);
             }
         }
     }

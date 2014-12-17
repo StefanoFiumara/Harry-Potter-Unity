@@ -9,38 +9,35 @@ public abstract class GenericSpell : GenericCard {
     public LessonTypes CostType;
     public int CostAmount;
 
-    public int nInputRequired;
+    public int InputRequired;
 
-    public static readonly Vector3 SPELL_OFFSET = new Vector3(0f, 0f, -400f);
+    private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
     public void OnMouseUp()
     {
-        if (State != CardStates.IN_HAND) return;
+        if (State != CardStates.InHand) return;
 
-        if (_Player.CanUseAction())
-        {
-            if (_Player.nLessonsInPlay >= CostAmount && _Player.LessonTypesInPlay.Contains(CostType))
-            {
-                if (MeetsAdditionalPlayRequirements())
-                {
-                    AnimateAndDiscard();
-                    _Player._Hand.Remove(this);
-                }
-            }
-        }
+        if (!_Player.CanUseAction()) return;
+
+        if (_Player.AmountLessonsInPlay < CostAmount || !_Player.LessonTypesInPlay.Contains(CostType)) return;
+
+        if (!MeetsAdditionalPlayRequirements()) return;
+
+        AnimateAndDiscard();
+        _Player._Hand.Remove(this);
     }
 
     protected void AnimateAndDiscard()
     {
         //TODO: Rotate if it's being played by the opponent
-        Helper.AddTweenToQueue(this, SPELL_OFFSET, 0.5f, 0f, State, false, false);
+        Helper.AddTweenToQueue(this, SpellOffset, 0.5f, 0f, State, false, false);
         Invoke("ExecuteActionAndDiscard", 0.9f);
     }
 
     protected void ExecuteActionAndDiscard()
     {
         _Player._Discard.Add(this);
-        if (nInputRequired == 0)
+        if (InputRequired == 0)
         {
             OnPlayAction();
             _Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
@@ -63,7 +60,7 @@ public abstract class GenericSpell : GenericCard {
         foreach (var card in validCards)
         {
             card.Enable();
-            card.gameObject.layer = Helper.VALID_CHOICE_LAYER;
+            card.gameObject.layer = Helper.ValidChoiceLayer;
         }
 
         StartCoroutine(WaitForPlayerInput());
@@ -71,11 +68,11 @@ public abstract class GenericSpell : GenericCard {
 
     protected IEnumerator WaitForPlayerInput()
     {
-        if (nInputRequired == 0) throw new Exception("This card does not require input!");
+        if (InputRequired == 0) throw new Exception("This card does not require input!");
 
         var selectedCards = new List<GenericCard>();
 
-        while (selectedCards.Count < nInputRequired)
+        while (selectedCards.Count < InputRequired)
         {
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
@@ -89,7 +86,7 @@ public abstract class GenericSpell : GenericCard {
 
                     target.SetSelected();
 
-                    if (selectedCards.Count == nInputRequired)
+                    if (selectedCards.Count == InputRequired)
                     {
                         AfterInputAction(selectedCards);
 

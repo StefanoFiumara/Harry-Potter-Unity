@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Deck : MonoBehaviour {
 
@@ -8,14 +7,14 @@ public class Deck : MonoBehaviour {
 
     public Player _Player;
 
-    private readonly Vector2 DECK_POSITION_OFFSET = new Vector2(-355f, -124f);
+    private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
 
     public float DeckShuffleTweenTime = 0.5f;
 
 	// Use this for initialization
 	public void Start () {
         //instantiate cards into scene
-        Vector3 cardPos = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
+        Vector3 cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         for (int i = 0; i < Cards.Count; i++)
         {
             Cards[i] = (GenericCard)Instantiate(Cards[i]);
@@ -33,7 +32,7 @@ public class Deck : MonoBehaviour {
             var col = gameObject.AddComponent<BoxCollider>();
             col.isTrigger = true;
             col.size = new Vector3(50f, 70f, 1f);
-            col.center = new Vector3(DECK_POSITION_OFFSET.x, DECK_POSITION_OFFSET.y, 0f);
+            col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         }
 
         //tell the player to draw his hand after this is all done
@@ -54,42 +53,41 @@ public class Deck : MonoBehaviour {
 
     public void OnMouseUp()
     {
-        if (Cards.Count > 0 && _Player.CanUseAction())
-        {
-            DrawCard();
-            _Player.UseAction();
-        }
+        if (Cards.Count <= 0 || !_Player.CanUseAction()) return;
+
+        DrawCard();
+        _Player.UseAction();
     }
 
     public void DrawCard()
     {
-       GenericCard card = TakeTopCard();
+       var card = TakeTopCard();
        if (card == null)
        {
            //GameOver
            return;
        }
 
-       _Player._Hand.Add(card, true, true);
+       _Player._Hand.Add(card);
     }
 
     public void Shuffle()
     {
-        for (int i = Cards.Count-1; i >= 0; i--)
+        for (var i = Cards.Count-1; i >= 0; i--)
         {
-            int random = Random.Range(0, i);
+            var random = Random.Range(0, i);
 
-            GenericCard temp = Cards[i];
+            var temp = Cards[i];
             Cards[i] = Cards[random];
             Cards[random] = temp;
 
-            float newZ = (transform.position.z + 16f) - i * 0.2f;
+            var newZ = (transform.position.z + 16f) - i * 0.2f;
 
-            Vector3 point1 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y + 80, Cards[i].transform.position.z);
-            Vector3 point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
+            var point1 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y + 80, Cards[i].transform.position.z);
+            var point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
 
             iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", DeckShuffleTweenTime, 
-                                                           "path", new Vector3[] {point1, point2}, 
+                                                           "path", new[] {point1, point2}, 
                                                            "easetype", iTween.EaseType.easeInOutSine, 
                                                            "delay", Random.Range(0f,1.5f))
                                                            );
@@ -98,11 +96,11 @@ public class Deck : MonoBehaviour {
 
     public void Disable()
     {
-        gameObject.layer = Helper.IGNORE_RAYCAST_LAYER;
+        gameObject.layer = Helper.IgnoreRaycastLayer;
     }
 
     public void Enable()
     {
-        gameObject.layer = Helper.DECK_LAYER;
+        gameObject.layer = Helper.DeckLayer;
     }
 }

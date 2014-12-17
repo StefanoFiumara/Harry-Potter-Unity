@@ -6,15 +6,15 @@ public abstract class GenericCard : MonoBehaviour {
 
     public enum CardStates
     {
-        IN_DECK, IN_HAND, IN_PLAY, DISCARDED
+        InDeck, InHand, InPlay, Discarded
     }
     public enum CardTypes
     {
-        LESSON, CREATURE, SPELL, ITEM, LOCATION, MATCH, ADVENTURE, CHARACTER
+        Lesson, Creature, Spell, Item, Location, Match, Adventure, Character
     }
     public enum CostTypes
     {
-        CARE_OF_MAGICAL_CREATURES, CHARMS, TRANSFIGURATION, POTIONS, QUIDDITCH
+        CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch
     }
 
     public CardStates State;
@@ -36,7 +36,7 @@ public abstract class GenericCard : MonoBehaviour {
             col.size = new Vector3(COLLIDER_SIZE.x, COLLIDER_SIZE.y, 0.2f);
         }
 
-        gameObject.layer = Helper.CARD_LAYER;
+        gameObject.layer = Helper.CardLayer;
 
         FrontPlane = transform.FindChild("Front").gameObject;
     }
@@ -58,8 +58,8 @@ public abstract class GenericCard : MonoBehaviour {
 
     private void ShowPreview()
     {
-        FrontPlane.layer = Helper.PREVIEW_LAYER;
-        if (State != CardStates.IN_DECK && State != CardStates.DISCARDED)
+        FrontPlane.layer = Helper.PreviewLayer;
+        if (State != CardStates.InDeck && State != CardStates.Discarded)
         {
             if (iTween.Count(gameObject) == 0)
             {
@@ -75,25 +75,25 @@ public abstract class GenericCard : MonoBehaviour {
     
     private void HidePreview()
     {
-        FrontPlane.layer = Helper.CARD_LAYER;
+        FrontPlane.layer = Helper.CardLayer;
         Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
     }
 
     public void Disable()
     {
-        gameObject.layer = Helper.IGNORE_RAYCAST_LAYER;
+        gameObject.layer = Helper.IgnoreRaycastLayer;
         FrontPlane.renderer.material.color = new Color(0.35f, 0.35f, 0.35f);
     }
 
     public void Enable()
     {
-        gameObject.layer = Helper.CARD_LAYER;
+        gameObject.layer = Helper.CardLayer;
         FrontPlane.renderer.material.color = Color.white;
     }
 
     public void SetSelected()
     {
-        gameObject.layer = Helper.CARD_LAYER;
+        gameObject.layer = Helper.CardLayer;
         FrontPlane.renderer.material.color = Color.yellow;
     }
     

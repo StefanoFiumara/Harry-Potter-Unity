@@ -5,30 +5,30 @@ using System.Collections;
 public class StaticCoroutine : MonoBehaviour
 {
 
-    private static StaticCoroutine mInstance = null;
+    private static StaticCoroutine _mInstance;
 
-    private static StaticCoroutine instance
+    private static StaticCoroutine Instance
     {
         get
         {
-            if (mInstance == null)
+            if (_mInstance == null)
             {
-                mInstance = GameObject.FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine;
+                _mInstance = GameObject.FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine;
 
-                if (mInstance == null)
+                if (_mInstance == null)
                 {
-                    mInstance = new GameObject("StaticCoroutine").AddComponent<StaticCoroutine>();
+                    _mInstance = new GameObject("StaticCoroutine").AddComponent<StaticCoroutine>();
                 }
             }
-            return mInstance;
+            return _mInstance;
         }
     }
 
     void Awake()
     {
-        if (mInstance == null)
+        if (_mInstance == null)
         {
-            mInstance = this as StaticCoroutine;
+            _mInstance = this as StaticCoroutine;
         }
     }
 
@@ -44,17 +44,17 @@ public class StaticCoroutine : MonoBehaviour
     /// <param name="coroutine">Static IEnumerator</param>
     public static void DoCoroutine(IEnumerator coroutine)
     {
-        instance.StartCoroutine(instance.Perform(coroutine)); //this will launch the coroutine on our instance
+        Instance.StartCoroutine(Instance.Perform(coroutine)); //this will launch the coroutine on our instance
     }
 
     void Die()
     {
-        mInstance = null;
+        _mInstance = null;
         Destroy(gameObject);
     }
 
     void OnApplicationQuit()
     {
-        mInstance = null;
+        _mInstance = null;
     }
 }
