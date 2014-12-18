@@ -24,13 +24,10 @@ public class Player : MonoBehaviour {
     public int CreaturesInPlay { get; set; }
     public int DamagePerTurn { get; set; }
 
-    public bool IsGoingFirst;
-
     public Player()
     {
         ActionsAvailable = 0;
     }
-
 
     public void UseAction()
     {
@@ -39,7 +36,7 @@ public class Player : MonoBehaviour {
         if (ActionsAvailable > 0) return;
         ActionsAvailable = 0;
         //AfterTurnAction happens here
-        _InPlay.Cards.ForEach(card => (card as IPersistentCard).OnInPlayAfterTurnAction());
+        _InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
         _OppositePlayer.InitTurn();
     }
 
@@ -51,13 +48,13 @@ public class Player : MonoBehaviour {
     public void InitTurn()
     {
         //BeforeTurnAction happens here
-        _InPlay.Cards.ForEach(card => (card as IPersistentCard).OnInPlayBeforeTurnAction());
+        _InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
 
         _Deck.DrawCard();
         ActionsAvailable += 2;
 
         //Creatures do damage here
-        _InPlay.GetCreaturesInPlay().ForEach(card => _OppositePlayer.TakeDamage((card as GenericCreature).DamagePerTurn));
+        _InPlay.GetCreaturesInPlay().ForEach(card => _OppositePlayer.TakeDamage(((GenericCreature) card).DamagePerTurn));
     }
 
     public bool CanUseAction()
@@ -68,24 +65,21 @@ public class Player : MonoBehaviour {
     public void DrawInitialHand()
     {
         //TODO: Needs cleanup
-        for (int i = 0; i < 7; i++)
+        for (var i = 0; i < 7; i++)
         {
-            GenericCard card = _Deck.TakeTopCard();
-            Vector3 cardPosition = Hand.HandCardsOffset;
+            var card = _Deck.TakeTopCard();
+            var cardPosition = Hand.HandCardsOffset;
 
-            float shrinkFactor = _Hand.Cards.Count >= 12 ? 0.5f : 1f;
+            var shrinkFactor = _Hand.Cards.Count >= 12 ? 0.5f : 1f;
 
             cardPosition.x += _Hand.Cards.Count * Hand.Spacing * shrinkFactor;
             cardPosition.z -= _Hand.Cards.Count;
 
             _Hand.Cards.Add(card);
-            Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InHand, true, false);
-        }
+            card.transform.parent = _Hand.transform;
 
-        if (IsGoingFirst)
-        {
-            InitTurn();
-        }
+            Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InHand, true, false);
+        }       
     }
 
     public void TakeDamage(int amount)

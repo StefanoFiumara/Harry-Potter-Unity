@@ -164,12 +164,7 @@ MonoBehaviour:
   _OppositePlayer: {fileID: 1925117256}
   _Discard: {fileID: 611051675}
   StartingCharacter: {fileID: 0}
-  nLessonsInPlay: 0
-  LessonTypesInPlay: 
-  ActionsAvailable: 0
-  nCreaturesInPlay: 0
-  DamagePerTurn: 0
-  IsGoingFirst: 0
+  AmountLessonsInPlay: 0
 --- !u!4 &226967739
 Transform:
   m_ObjectHideFlags: 0
@@ -214,7 +209,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Player: {fileID: 226967738}
-  Cards: []
 --- !u!4 &589322088
 Transform:
   m_ObjectHideFlags: 0
@@ -266,7 +260,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a378c8f9f15fca4f9b051699389595f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Player: {fileID: 226967738}
+  Player: {fileID: 226967738}
+--- !u!1 &720433611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 720433613}
+  - 114: {fileID: 720433612}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &720433612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 720433611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c98d862212683014892ce49144fb6a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player1: {fileID: 1925117256}
+  Player2: {fileID: 226967738}
+--- !u!4 &720433613
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 720433611}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
 --- !u!1 &866037079
 GameObject:
   m_ObjectHideFlags: 0
@@ -307,7 +342,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _Player: {fileID: 1925117256}
-  Cards: []
 --- !u!1 &1083298368
 GameObject:
   m_ObjectHideFlags: 0
@@ -635,7 +669,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a378c8f9f15fca4f9b051699389595f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Player: {fileID: 1925117256}
+  Player: {fileID: 1925117256}
 --- !u!1 &1528567321
 GameObject:
   m_ObjectHideFlags: 0
@@ -720,7 +754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Player: {fileID: 226967738}
+  Player: {fileID: 226967738}
   InPlayTweenTime: .5
 --- !u!4 &1759829300
 Transform:
@@ -767,12 +801,7 @@ MonoBehaviour:
   _OppositePlayer: {fileID: 226967738}
   _Discard: {fileID: 1441997538}
   StartingCharacter: {fileID: 0}
-  nLessonsInPlay: 0
-  LessonTypesInPlay: 
-  ActionsAvailable: 0
-  nCreaturesInPlay: 0
-  DamagePerTurn: 0
-  IsGoingFirst: 1
+  AmountLessonsInPlay: 0
 --- !u!4 &1925117257
 Transform:
   m_ObjectHideFlags: 0
@@ -816,7 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Player: {fileID: 1925117256}
+  Player: {fileID: 1925117256}
   InPlayTweenTime: .5
 --- !u!4 &2002146217
 Transform:

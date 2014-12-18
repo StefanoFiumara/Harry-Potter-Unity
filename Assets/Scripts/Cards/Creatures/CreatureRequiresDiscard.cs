@@ -7,14 +7,14 @@ public class CreatureRequiresDiscard : GenericCreature, IPersistentCard {
     protected override bool MeetsAdditionalRequirements()
     {
         return _Player._InPlay.GetLessonsInPlay()
-            .FindAll(card => (card as Lesson).LessonType == Lesson.LessonTypes.Creatures)
+            .FindAll(card => ((Lesson) card).LessonType == Lesson.LessonTypes.Creatures)
             .Count >= LessonsToDiscard;
     }
 
-    public void OnEnterInPlayAction()
+    public new void OnEnterInPlayAction()
     {
         base.OnEnterInPlayAction();
 
-        //remove lessons here
+        //TODO: Remove lessons here
     }
 }

@@ -12,10 +12,11 @@ public class Deck : MonoBehaviour {
     public float DeckShuffleTweenTime = 0.5f;
 
 	// Use this for initialization
-	public void Start () {
+	public void Awake () {
         //instantiate cards into scene
-        Vector3 cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
-        for (int i = 0; i < Cards.Count; i++)
+        var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
+
+        for (var i = 0; i < Cards.Count; i++)
         {
             Cards[i] = (GenericCard)Instantiate(Cards[i]);
             Cards[i].transform.parent = transform;
@@ -34,9 +35,7 @@ public class Deck : MonoBehaviour {
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         }
-
-        //tell the player to draw his hand after this is all done
-        _Player.DrawInitialHand();
+        Debug.Log("Init Deck.");
 	}
 	
     public GenericCard TakeTopCard()
