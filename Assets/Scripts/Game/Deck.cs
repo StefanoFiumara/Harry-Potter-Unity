@@ -11,7 +11,6 @@ public class Deck : MonoBehaviour {
 
     public float DeckShuffleTweenTime = 0.5f;
 
-	// Use this for initialization
 	public void Awake () {
         //instantiate cards into scene
         var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
@@ -35,7 +34,6 @@ public class Deck : MonoBehaviour {
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         }
-        Debug.Log("Init Deck.");
 	}
 	
     public GenericCard TakeTopCard()
