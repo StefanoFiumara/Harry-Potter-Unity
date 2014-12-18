@@ -11,22 +11,19 @@ public class Player : MonoBehaviour {
 
     public GenericCard StartingCharacter; //Set by main menu? GameObject?
 
-    public int AmountLessonsInPlay = 0;
-    public List<Lesson.LessonTypes> LessonTypesInPlay
-    {
-        get { return _lessonTypesInPlay; }
-    }
-
-    private List<Lesson.LessonTypes> _lessonTypesInPlay = new List<Lesson.LessonTypes>();
+    public List<Lesson.LessonTypes> LessonTypesInPlay { get; private set; }
 
     public int ActionsAvailable { get; private set; }
 
     public int CreaturesInPlay { get; set; }
     public int DamagePerTurn { get; set; }
+    public int AmountLessonsInPlay { get; set; }
 
     public Player()
     {
+        LessonTypesInPlay = new List<Lesson.LessonTypes>();
         ActionsAvailable = 0;
+        AmountLessonsInPlay = 0;
     }
 
     public void UseAction()
@@ -102,15 +99,15 @@ public class Player : MonoBehaviour {
 
     public void UpdateLessonTypesInPlay()
     {
-        _lessonTypesInPlay = new List<Lesson.LessonTypes>();
+        LessonTypesInPlay = new List<Lesson.LessonTypes>();
 
         var lessons = _InPlay.Cards.FindAll(card => card is Lesson);
 
         foreach (Lesson card in lessons)
         {
-            if (!_lessonTypesInPlay.Contains(card.LessonType))
+            if (!LessonTypesInPlay.Contains(card.LessonType))
             {
-                _lessonTypesInPlay.Add(card.LessonType);
+                LessonTypesInPlay.Add(card.LessonType);
             }
         }
     }
