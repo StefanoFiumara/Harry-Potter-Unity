@@ -15,7 +15,7 @@
 
         if (_Player.AmountLessonsInPlay < CostAmount || !_Player.LessonTypesInPlay.Contains(CostType)) return;
 
-        //TODO: MeetsRequirements(); ?
+        if (!MeetsAdditionalRequirements()) return;
 
         _Player._Hand.Remove(this);
         _Player._InPlay.Add(this);
@@ -34,6 +34,11 @@
     {
         _Player.CreaturesInPlay--;
         _Player.DamagePerTurn -= DamagePerTurn;
+    }
+
+    protected virtual bool MeetsAdditionalRequirements()
+    {
+        return true;
     }
 
     //Generic Creatures don't do anything special on these actions
