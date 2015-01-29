@@ -16,7 +16,7 @@ namespace Assets.Scripts.Game
         {
             _player = transform.GetComponentInParent<Player>();
 
-            //instantiate cards into scene
+            //instantiate cards into scene TODO: Maybe place this in Start() instead of Awake so it is executed after deck generation
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
             
             for (var i = 0; i < Cards.Count; i++)
@@ -30,7 +30,7 @@ namespace Assets.Scripts.Game
                 Cards[i].Player = _player;
             }
 
-            //Set the collider to the proper position
+            //Set the collider to the proper size and position
             if (gameObject.collider == null)
             {
                 var col = gameObject.AddComponent<BoxCollider>();
