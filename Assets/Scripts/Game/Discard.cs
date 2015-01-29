@@ -7,8 +7,7 @@ namespace Assets.Scripts.Game
 {
     public class Discard : MonoBehaviour {
 
-        private List<GenericCard> _cards;
-        public Player Player; //not sure if needed just yet
+        private List<GenericCard> _cards; //TODO: Does this need to be private?
 
         public static readonly Vector2 DiscardPositionOffset = new Vector2(-355f, -30f);
 
