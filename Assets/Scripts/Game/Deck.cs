@@ -8,33 +8,30 @@ namespace Assets.Scripts.Game
 
         public List<GenericCard> Cards;
 
-        [SerializeField]
-        private Player Player
-        {
-            get { return _player; }
-        }
-
-        [SerializeField]
-        private Player _player;
+        private Player _player = null;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
 
         public float DeckShuffleTweenTime = 0.5f;
         
 
-        public void Awake () {
+        public void Awake ()
+        {
+
+            _player = transform.parent.GetComponent<Player>();
+
             //instantiate cards into scene
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
-
+            
             for (var i = 0; i < Cards.Count; i++)
             {
                 Cards[i] = (GenericCard)Instantiate(Cards[i]);
                 Cards[i].transform.parent = transform;
                 Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
-                Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, Player.transform.rotation.eulerAngles.z));
+                Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
                 Cards[i].transform.position += i * Vector3.back * 0.2f;
 
-                Cards[i]._Player = Player;
+                Cards[i]._Player = _player;
             }
 
             //Set the collider to the proper position
@@ -61,10 +58,10 @@ namespace Assets.Scripts.Game
 
         public void OnMouseUp()
         {
-            if (Cards.Count <= 0 || !Player.CanUseAction()) return;
+            if (Cards.Count <= 0 || !_player.CanUseAction()) return;
 
             DrawCard();
-            Player.UseAction();
+            _player.UseAction();
         }
 
         public void DrawCard()
@@ -76,7 +73,7 @@ namespace Assets.Scripts.Game
                 return;
             }
 
-            Player._Hand.Add(card);
+            _player._Hand.Add(card);
         }
 
         public void Shuffle()
