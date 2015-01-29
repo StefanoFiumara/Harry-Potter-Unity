@@ -12,6 +12,7 @@ namespace Assets.Scripts.Game
         {
             Debug.Log("Init GameManager");
 
+            //TODO: Instantiate Player 1 and Player 2 (with generated Decks) in Awake()
             Player1.OppositePlayer = Player2;
             Player2.OppositePlayer = Player1;
 
