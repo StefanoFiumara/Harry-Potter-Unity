@@ -5,7 +5,7 @@
         public int LessonsToDiscard;
         protected override bool MeetsAdditionalRequirements()
         {
-            return _Player._InPlay.GetLessonsInPlay()
+            return Player.InPlay.GetLessonsInPlay()
                 .FindAll(card => ((Lesson) card).LessonType == Lesson.LessonTypes.Creatures)
                 .Count >= LessonsToDiscard;
         }

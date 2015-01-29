@@ -13,29 +13,29 @@
         {
             if (State != CardStates.InHand) return;
 
-            if (!_Player.CanUseAction()) return;
+            if (!Player.CanUseAction()) return;
 
-            if (_Player.AmountLessonsInPlay < CostAmount || !_Player.LessonTypesInPlay.Contains(CostType)) return;
+            if (Player.AmountLessonsInPlay < CostAmount || !Player.LessonTypesInPlay.Contains(CostType)) return;
 
             if (!MeetsAdditionalRequirements()) return;
 
-            _Player._Hand.Remove(this);
-            _Player._InPlay.Add(this);
-            _Player.UseAction();
+            Player.Hand.Remove(this);
+            Player.InPlay.Add(this);
+            Player.UseAction();
         }
 
         public void OnEnterInPlayAction()
         {
-            _Player.CreaturesInPlay++;
-            _Player.DamagePerTurn += DamagePerTurn;
+            Player.CreaturesInPlay++;
+            Player.DamagePerTurn += DamagePerTurn;
 
             State = CardStates.InPlay;
         }
 
         public void OnExitInPlayAction()
         {
-            _Player.CreaturesInPlay--;
-            _Player.DamagePerTurn -= DamagePerTurn;
+            Player.CreaturesInPlay--;
+            Player.DamagePerTurn -= DamagePerTurn;
         }
 
         protected virtual bool MeetsAdditionalRequirements()

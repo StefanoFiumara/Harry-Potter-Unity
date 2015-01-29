@@ -7,12 +7,12 @@ namespace Assets.Scripts.Cards.Spells.Transfigurations
 
         public override bool MeetsAdditionalPlayRequirements()
         {
-            return _Player._OppositePlayer._InPlay.Cards.Count > 0;
+            return Player.OppositePlayer.InPlay.Cards.Count > 0;
         }
 
         protected override List<GenericCard> GetValidCards()
         {
-            return _Player._OppositePlayer._InPlay.Cards;
+            return Player.OppositePlayer.InPlay.Cards;
         }
         public override void AfterInputAction(List<GenericCard> selectedCards)
         {
@@ -20,8 +20,8 @@ namespace Assets.Scripts.Cards.Spells.Transfigurations
             {
                 selectedCards[0].Enable();
 
-                _Player._OppositePlayer._InPlay.Remove(selectedCards[0]);
-                _Player._OppositePlayer._Discard.Add(selectedCards[0]);
+                Player.OppositePlayer.InPlay.Remove(selectedCards[0]);
+                Player.OppositePlayer.Discard.Add(selectedCards[0]);
             }
             else
             {

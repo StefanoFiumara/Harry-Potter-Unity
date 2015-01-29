@@ -11,6 +11,10 @@ namespace Assets.Scripts.Game
         void Start()
         {
             Debug.Log("Init GameManager");
+
+            Player1.OppositePlayer = Player2;
+            Player2.OppositePlayer = Player1;
+
             Player1.DrawInitialHand();
             Player2.DrawInitialHand();
 

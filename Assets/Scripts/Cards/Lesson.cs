@@ -13,29 +13,29 @@
         {
             if (State != CardStates.InHand) return;
 
-            if (!_Player.CanUseAction()) return;
+            if (!Player.CanUseAction()) return;
 
-            _Player._Hand.Remove(this);
-            _Player._InPlay.Add(this);
-            _Player.UseAction();
+            Player.Hand.Remove(this);
+            Player.InPlay.Add(this);
+            Player.UseAction();
         }
 
         public void OnEnterInPlayAction()
         {
-            if (!_Player.LessonTypesInPlay.Contains(LessonType))
+            if (!Player.LessonTypesInPlay.Contains(LessonType))
             {
-                _Player.LessonTypesInPlay.Add(LessonType);
+                Player.LessonTypesInPlay.Add(LessonType);
             }
         
-            _Player.AmountLessonsInPlay++;
+            Player.AmountLessonsInPlay++;
 
             State = CardStates.InPlay;
         }
 
         public void OnExitInPlayAction()
         {
-            _Player.AmountLessonsInPlay--;
-            _Player.UpdateLessonTypesInPlay();
+            Player.AmountLessonsInPlay--;
+            Player.UpdateLessonTypesInPlay();
         }
 
         //Lesson Cards don't implement these methods

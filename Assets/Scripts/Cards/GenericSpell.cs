@@ -19,14 +19,14 @@ namespace Assets.Scripts.Cards
         {
             if (State != CardStates.InHand) return;
 
-            if (!_Player.CanUseAction()) return;
+            if (!Player.CanUseAction()) return;
 
-            if (_Player.AmountLessonsInPlay < CostAmount || !_Player.LessonTypesInPlay.Contains(CostType)) return;
+            if (Player.AmountLessonsInPlay < CostAmount || !Player.LessonTypesInPlay.Contains(CostType)) return;
 
             if (!MeetsAdditionalPlayRequirements()) return;
 
             AnimateAndDiscard();
-            _Player._Hand.Remove(this);
+            Player.Hand.Remove(this);
         }
 
         protected void AnimateAndDiscard()
@@ -38,11 +38,11 @@ namespace Assets.Scripts.Cards
 
         protected void ExecuteActionAndDiscard()
         {
-            _Player._Discard.Add(this);
+            Player.Discard.Add(this);
             if (InputRequired == 0)
             {
                 OnPlayAction();
-                _Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
+                Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
             }
             else
             {
@@ -53,8 +53,8 @@ namespace Assets.Scripts.Cards
         private void BeginWaitForInput()
         {
             //Move ALL invalid colliders to ignoreraycast layer
-            _Player.DisableAllCards();
-            _Player._OppositePlayer.DisableAllCards();
+            Player.DisableAllCards();
+            Player.OppositePlayer.DisableAllCards();
 
             List<GenericCard> validCards = GetValidCards();
 
@@ -78,12 +78,12 @@ namespace Assets.Scripts.Cards
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
-                    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, 1000f, 1 << 11))
                     {
-                        GenericCard target = hit.transform.gameObject.GetComponent<GenericCard>();
+                        var target = hit.transform.gameObject.GetComponent<GenericCard>();
                         selectedCards.Add(target);
 
                         target.SetSelected();
@@ -92,10 +92,10 @@ namespace Assets.Scripts.Cards
                         {
                             AfterInputAction(selectedCards);
 
-                            _Player.EnableAllCards();
-                            _Player._OppositePlayer.EnableAllCards();
+                            Player.EnableAllCards();
+                            Player.OppositePlayer.EnableAllCards();
 
-                            _Player.UseAction();
+                            Player.UseAction();
                         }
                     }
                 }

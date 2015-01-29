@@ -44,96 +44,96 @@ using UnityEngine;
 /// <para>Author: Bob Berkebile (http://pixelplacement.com)</para>
 /// <para>Support: http://itween.pixelplacement.com</para>
 /// </summary>
-public class iTween : MonoBehaviour{
+public class ITween : MonoBehaviour{
 		
 	#region Variables
 	
 	//repository of all living iTweens:
-	public static List<Hashtable> tweens = new List<Hashtable>();
+	public static List<Hashtable> Tweens = new List<Hashtable>();
 	
 	//camera fade object:
-	private static GameObject cameraFade;
+	private static GameObject _cameraFade;
 	
 	//status members (made public for visual troubleshooting in the inspector):
-	public string id, type, method;
-	public iTween.EaseType easeType;
-	public float time, delay;
+	public string Id, Type, Method;
+	public ITween.EaseType easeType;
+	public float Time, Delay;
 	public LoopType loopType;
-	public bool isRunning,isPaused;
+	public bool IsRunning,IsPaused;
 	/* GFX47 MOD START */
-	public string _name;
+	public string Name;
 	/* GFX47 MOD END */
 		
 	//private members:
- 	private float runningTime, percentage;
-	private float delayStarted; //probably not neccesary that this be protected but it shuts Unity's compiler up about this being "never used"
-	private bool kinematic, isLocal, loop, reverse, wasPaused, physics;
-	private Hashtable tweenArguments;
-	private Space space;
-	private delegate float EasingFunction(float start, float end, float Value);
+ 	private float _runningTime, _percentage;
+	private float _delayStarted; //probably not neccesary that this be protected but it shuts Unity's compiler up about this being "never used"
+	private bool _kinematic, _isLocal, _loop, _reverse, _wasPaused, _physics;
+	private Hashtable _tweenArguments;
+	private Space _space;
+	private delegate float EasingFunction(float start, float end, float value);
 	private delegate void ApplyTween();
-	private EasingFunction ease;
-	private ApplyTween apply;
-	private AudioSource audioSource;
-	private Vector3[] vector3s;
-	private Vector2[] vector2s;
-	private Color[,] colors;
-	private float[] floats;
-	private Rect[] rects;
-	private CRSpline path;
-	private Vector3 preUpdate;
-	private Vector3 postUpdate;
-	private NamedValueColor namedcolorvalue;
+	private EasingFunction _ease;
+	private ApplyTween _apply;
+	private AudioSource _audioSource;
+	private Vector3[] _vector3S;
+	private Vector2[] _vector2S;
+	private Color[,] _colors;
+	private float[] _floats;
+	private Rect[] _rects;
+	private CrSpline _path;
+	private Vector3 _preUpdate;
+	private Vector3 _postUpdate;
+	private NamedValueColor _namedcolorvalue;
 
-    private float lastRealTime; // Added by PressPlay
-    private bool useRealTime; // Added by PressPlay
+    private float _lastRealTime; // Added by PressPlay
+    private bool _useRealTime; // Added by PressPlay
 	
-	private Transform thisTransform;
+	private Transform _thisTransform;
 
 
 	/// <summary>
 	/// The type of easing to use based on Robert Penner's open source easing equations (http://www.robertpenner.com/easing_terms_of_use.html).
 	/// </summary>
 	public enum EaseType{
-		easeInQuad,
-		easeOutQuad,
-		easeInOutQuad,
-		easeInCubic,
-		easeOutCubic,
-		easeInOutCubic,
-		easeInQuart,
-		easeOutQuart,
-		easeInOutQuart,
-		easeInQuint,
-		easeOutQuint,
-		easeInOutQuint,
-		easeInSine,
-		easeOutSine,
-		easeInOutSine,
-		easeInExpo,
-		easeOutExpo,
-		easeInOutExpo,
-		easeInCirc,
-		easeOutCirc,
-		easeInOutCirc,
-		linear,
-		spring,
+		EaseInQuad,
+		EaseOutQuad,
+		EaseInOutQuad,
+		EaseInCubic,
+		EaseOutCubic,
+		EaseInOutCubic,
+		EaseInQuart,
+		EaseOutQuart,
+		EaseInOutQuart,
+		EaseInQuint,
+		EaseOutQuint,
+		EaseInOutQuint,
+		EaseInSine,
+		EaseOutSine,
+		EaseInOutSine,
+		EaseInExpo,
+		EaseOutExpo,
+		EaseInOutExpo,
+		EaseInCirc,
+		EaseOutCirc,
+		EaseInOutCirc,
+		Linear,
+		Spring,
 		/* GFX47 MOD START */
 		//bounce,
-		easeInBounce,
-		easeOutBounce,
-		easeInOutBounce,
+		EaseInBounce,
+		EaseOutBounce,
+		EaseInOutBounce,
 		/* GFX47 MOD END */
-		easeInBack,
-		easeOutBack,
-		easeInOutBack,
+		EaseInBack,
+		EaseOutBack,
+		EaseInOutBack,
 		/* GFX47 MOD START */
 		//elastic,
-		easeInElastic,
-		easeOutElastic,
-		easeInOutElastic,
+		EaseInElastic,
+		EaseOutElastic,
+		EaseInOutElastic,
 		/* GFX47 MOD END */
-		punch
+		Punch
 	}
 	
 	/// <summary>
@@ -143,15 +143,15 @@ public class iTween : MonoBehaviour{
 		/// <summary>
 		/// Do not loop.
 		/// </summary>
-		none,
+		None,
 		/// <summary>
 		/// Rewind and replay.
 		/// </summary>
-		loop,
+		Loop,
 		/// <summary>
 		/// Ping pong the animation back and forth.
 		/// </summary>
-		pingPong
+		PingPong
 	}
 	
 	/// <summary>
@@ -161,19 +161,19 @@ public class iTween : MonoBehaviour{
 		/// <summary>
 		/// The main color of a material. Used by default and not required for Color methods to work in iTween.
 		/// </summary>
-		_Color,
+		Color,
 		/// <summary>
 		/// The specular color of a material (used in specular/glossy/vertexlit shaders).
 		/// </summary>
-		_SpecColor,
+		SpecColor,
 		/// <summary>
 		/// The emissive color of a material (used in vertexlit shaders).
 		/// </summary>
-		_Emission,
+		Emission,
 		/// <summary>
 		/// The reflection color of the material (used in reflective shaders).
 		/// </summary>
-		_ReflectColor
+		ReflectColor
 	}
 				
 	#endregion
@@ -185,26 +185,26 @@ public class iTween : MonoBehaviour{
 	/// </summary>
 	public static class Defaults{
 		//general defaults:
-		public static float time = 1f;
-		public static float delay = 0f;	
-		public static NamedValueColor namedColorValue = NamedValueColor._Color;
-		public static LoopType loopType = LoopType.none;
-		public static EaseType easeType = iTween.EaseType.easeOutExpo;
-		public static float lookSpeed = 3f;
-		public static bool isLocal = false;
-		public static Space space = Space.Self;
-		public static bool orientToPath = false;
-		public static Color color = Color.white;
+		public static float Time = 1f;
+		public static float Delay = 0f;	
+		public static NamedValueColor NamedColorValue = NamedValueColor.Color;
+		public static LoopType LoopType = LoopType.None;
+		public static EaseType EaseType = ITween.EaseType.EaseOutExpo;
+		public static float LookSpeed = 3f;
+		public static bool IsLocal = false;
+		public static Space Space = Space.Self;
+		public static bool OrientToPath = false;
+		public static Color Color = Color.white;
 		//update defaults:
-		public static float updateTimePercentage = .05f;
-		public static float updateTime = 1f*updateTimePercentage;
+		public static float UpdateTimePercentage = .05f;
+		public static float UpdateTime = 1f*UpdateTimePercentage;
 		//cameraFade defaults:
 		public static int cameraFadeDepth = 999999;
 		//path look ahead amount:
-		public static float lookAhead = .05f;
-        public static bool useRealTime = false; // Added by PressPlay
+		public static float LookAhead = .05f;
+        public static bool UseRealTime = false; // Added by PressPlay
 		//look direction:
-		public static Vector3 up = Vector3.up;
+		public static Vector3 Up = Vector3.up;
 	}
 	
 	#endregion
@@ -231,7 +231,7 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Single"/> for the time in seconds the animation will take to complete.
 	/// </param>
 	public static void CameraFadeFrom(float amount, float time){
-		if(cameraFade){
+		if(_cameraFade){
 			CameraFadeFrom(Hash("amount",amount,"time",time));
 		}else{
 			Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
@@ -285,8 +285,8 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void CameraFadeFrom(Hashtable args){		
 		//establish iTween:
-		if(cameraFade){
-			ColorFrom(cameraFade,args);
+		if(_cameraFade){
+			ColorFrom(_cameraFade,args);
 		}else{
 			Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
 		}
@@ -302,7 +302,7 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Single"/> for the time in seconds the animation will take to complete.
 	/// </param>
 	public static void CameraFadeTo(float amount, float time){
-		if(cameraFade){
+		if(_cameraFade){
 			CameraFadeTo(Hash("amount",amount,"time",time));
 		}else{
 			Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
@@ -362,9 +362,9 @@ public class iTween : MonoBehaviour{
 		cameraFade.guiTexture.pixelInset=new Rect(0,0,Screen.width,Screen.height);
 		*/
 	
-		if(cameraFade){
+		if(_cameraFade){
 			//establish iTween:
-			ColorTo(cameraFade,args);
+			ColorTo(_cameraFade,args);
 		}else{
 			Debug.LogError("iTween Error: You must first add a camera fade object with CameraFadeAdd() before atttempting to use camera fading.");
 		}
@@ -423,7 +423,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ValueTo(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		if (!args.Contains("onupdate") || !args.Contains("from") || !args.Contains("to")) {
 			Debug.LogError("iTween Error: ValueTo() requires an 'onupdate' callback function and a 'from' and 'to' property.  The supplied 'onupdate' callback must accept a single argument that is the same type as the supplied 'from' and 'to' properties!");
@@ -449,7 +449,7 @@ public class iTween : MonoBehaviour{
 			
 			//set a default easeType of linear if none is supplied since eased color interpolation is nearly unrecognizable:
 			if (!args.Contains("easetype")) {
-				args.Add("easetype",EaseType.linear);
+				args.Add("easetype",EaseType.Linear);
 			}
 			
 			Launch(target,args);
@@ -682,7 +682,7 @@ public class iTween : MonoBehaviour{
 		Color tempColor = new Color();
 		
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//handle children:
 		if(!args.Contains("includechildren") || (bool)args["includechildren"]){
@@ -695,7 +695,7 @@ public class iTween : MonoBehaviour{
 		
 		//set a default easeType of linear if none is supplied since eased color interpolation is nearly unrecognizable:
 		if (!args.Contains("easetype")) {
-			args.Add("easetype",EaseType.linear);
+			args.Add("easetype",EaseType.Linear);
 		}
 		
 		//set tempColor and base fromColor:
@@ -837,7 +837,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ColorTo(GameObject target, Hashtable args){	
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//handle children:
 		if(!args.Contains("includechildren") || (bool)args["includechildren"]){
@@ -850,7 +850,7 @@ public class iTween : MonoBehaviour{
 		
 		//set a default easeType of linear if none is supplied since eased color interpolation is nearly unrecognizable:
 		if (!args.Contains("easetype")) {
-			args.Add("easetype",EaseType.linear);
+			args.Add("easetype",EaseType.Linear);
 		}
 		
 		//establish iTween:
@@ -935,7 +935,7 @@ public class iTween : MonoBehaviour{
 		AudioSource tempAudioSource;
 		
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//set tempAudioSource:
 		if(args.Contains("audiosource")){
@@ -972,7 +972,7 @@ public class iTween : MonoBehaviour{
 		
 		//set a default easeType of linear if none is supplied since eased audio interpolation is nearly unrecognizable:
 		if (!args.Contains("easetype")) {
-			args.Add("easetype",EaseType.linear);
+			args.Add("easetype",EaseType.Linear);
 		}
 		
 		//establish iTween:
@@ -1053,11 +1053,11 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void AudioTo(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//set a default easeType of linear if none is supplied since eased audio interpolation is nearly unrecognizable:
 		if (!args.Contains("easetype")) {
-			args.Add("easetype",EaseType.linear);
+			args.Add("easetype",EaseType.Linear);
 		}
 		
 		//establish iTween:
@@ -1129,7 +1129,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void Stab(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="stab";
@@ -1208,16 +1208,16 @@ public class iTween : MonoBehaviour{
 		Vector3 tempRestriction;
 		
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//set look:
 		tempRotation=target.transform.eulerAngles;
 		if (args["looktarget"].GetType() == typeof(Transform)) {
 			//target.transform.LookAt((Transform)args["looktarget"]);
-			target.transform.LookAt((Transform)args["looktarget"], (Vector3?)args["up"] ?? Defaults.up);
+			target.transform.LookAt((Transform)args["looktarget"], (Vector3?)args["up"] ?? Defaults.Up);
 		}else if(args["looktarget"].GetType() == typeof(Vector3)){
 			//target.transform.LookAt((Vector3)args["looktarget"]);
-			target.transform.LookAt((Vector3)args["looktarget"], (Vector3?)args["up"] ?? Defaults.up);
+			target.transform.LookAt((Vector3)args["looktarget"], (Vector3?)args["up"] ?? Defaults.Up);
 		}
 		
 		//axis restriction:
@@ -1318,7 +1318,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void LookTo(GameObject target, Hashtable args){		
 		//clean args:
-		args = iTween.CleanArgs(args);			
+		args = ITween.CleanArgs(args);			
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("looktarget")){
@@ -1434,7 +1434,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void MoveTo(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("position")){
@@ -1548,7 +1548,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void MoveFrom(GameObject target, Hashtable args){
 		//clean args:
-			args = iTween.CleanArgs(args);
+			args = ITween.CleanArgs(args);
 		
 		bool tempIsLocal;
 		
@@ -1556,7 +1556,7 @@ public class iTween : MonoBehaviour{
 		if(args.Contains("islocal")){
 			tempIsLocal = (bool)args["islocal"];
 		}else{
-			tempIsLocal = Defaults.isLocal;	
+			tempIsLocal = Defaults.IsLocal;	
 		}
 		
 		if(args.Contains("path")){
@@ -1730,7 +1730,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void MoveAdd(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="move";
@@ -1828,7 +1828,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void MoveBy(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="move";
@@ -1911,7 +1911,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ScaleTo(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("scale")){
@@ -2007,7 +2007,7 @@ public class iTween : MonoBehaviour{
 		Vector3 fromScale;
 	
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//set base fromScale:
 		tempScale=fromScale=target.transform.localScale;
@@ -2119,7 +2119,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ScaleAdd(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="scale";
@@ -2202,7 +2202,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ScaleBy(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="scale";
@@ -2288,7 +2288,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void RotateTo(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("rotation")){
@@ -2388,13 +2388,13 @@ public class iTween : MonoBehaviour{
 		bool tempIsLocal;
 	
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//set tempIsLocal:
 		if(args.Contains("islocal")){
 			tempIsLocal = (bool)args["islocal"];
 		}else{
-			tempIsLocal = Defaults.isLocal;	
+			tempIsLocal = Defaults.IsLocal;	
 		}
 
 		//set tempRotation and base fromRotation:
@@ -2518,7 +2518,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void RotateAdd(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="rotate";
@@ -2607,7 +2607,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void RotateBy(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="rotate";
@@ -2696,7 +2696,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ShakePosition(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="shake";
@@ -2773,7 +2773,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ShakeScale(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="shake";
@@ -2853,7 +2853,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void ShakeRotation(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="shake";
@@ -2939,12 +2939,12 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void PunchPosition(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="punch";
 		args["method"]="position";
-		args["easetype"]=EaseType.punch;
+		args["easetype"]=EaseType.Punch;
 		Launch(target,args);
 	}		
 	
@@ -3020,12 +3020,12 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void PunchRotation(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="punch";
 		args["method"]="rotation";
-		args["easetype"]=EaseType.punch;
+		args["easetype"]=EaseType.Punch;
 		Launch(target,args);
 	}	
 	
@@ -3098,12 +3098,12 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void PunchScale(GameObject target, Hashtable args){
 		//clean args:
-		args = iTween.CleanArgs(args);
+		args = ITween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="punch";
 		args["method"]="scale";
-		args["easetype"]=EaseType.punch;
+		args["easetype"]=EaseType.Punch;
 		Launch(target,args);
 	}	
 	
@@ -3113,141 +3113,141 @@ public class iTween : MonoBehaviour{
 	
 	//call correct set target method and set tween application delegate:
 	void GenerateTargets(){
-		switch (type) {
+		switch (Type) {
 			case "value":
-				switch (method) {
+				switch (Method) {
 					case "float":
 						GenerateFloatTargets();
-						apply = new ApplyTween(ApplyFloatTargets);
+						_apply = new ApplyTween(ApplyFloatTargets);
 					break;
 				case "vector2":
 						GenerateVector2Targets();
-						apply = new ApplyTween(ApplyVector2Targets);
+						_apply = new ApplyTween(ApplyVector2Targets);
 					break;
 				case "vector3":
 						GenerateVector3Targets();
-						apply = new ApplyTween(ApplyVector3Targets);
+						_apply = new ApplyTween(ApplyVector3Targets);
 					break;
 				case "color":
 						GenerateColorTargets();
-						apply = new ApplyTween(ApplyColorTargets);
+						_apply = new ApplyTween(ApplyColorTargets);
 					break;
 				case "rect":
 						GenerateRectTargets();
-						apply = new ApplyTween(ApplyRectTargets);
+						_apply = new ApplyTween(ApplyRectTargets);
 					break;
 				}
 			break;
 			case "color":
-				switch (method) {
+				switch (Method) {
 					case "to":
 						GenerateColorToTargets();
-						apply = new ApplyTween(ApplyColorToTargets);
+						_apply = new ApplyTween(ApplyColorToTargets);
 					break;
 				}
 			break;
 			case "audio":
-				switch (method) {
+				switch (Method) {
 					case "to":
 						GenerateAudioToTargets();
-						apply = new ApplyTween(ApplyAudioToTargets);
+						_apply = new ApplyTween(ApplyAudioToTargets);
 					break;
 				}
 			break;
 			case "move":
-				switch (method) {
+				switch (Method) {
 					case "to":
 						//using a path?
-						if(tweenArguments.Contains("path")){
+						if(_tweenArguments.Contains("path")){
 							GenerateMoveToPathTargets();
-							apply = new ApplyTween(ApplyMoveToPathTargets);
+							_apply = new ApplyTween(ApplyMoveToPathTargets);
 						}else{ //not using a path?
 							GenerateMoveToTargets();
-							apply = new ApplyTween(ApplyMoveToTargets);
+							_apply = new ApplyTween(ApplyMoveToTargets);
 						}
 					break;
 					case "by":
 					case "add":
 						GenerateMoveByTargets();
-						apply = new ApplyTween(ApplyMoveByTargets);
+						_apply = new ApplyTween(ApplyMoveByTargets);
 					break;
 				}
 			break;
 			case "scale":
-				switch (method){
+				switch (Method){
 					case "to":
 						GenerateScaleToTargets();
-						apply = new ApplyTween(ApplyScaleToTargets);
+						_apply = new ApplyTween(ApplyScaleToTargets);
 					break;
 					case "by":
 						GenerateScaleByTargets();
-						apply = new ApplyTween(ApplyScaleToTargets);
+						_apply = new ApplyTween(ApplyScaleToTargets);
 					break;
 					case "add":
 						GenerateScaleAddTargets();
-						apply = new ApplyTween(ApplyScaleToTargets);
+						_apply = new ApplyTween(ApplyScaleToTargets);
 					break;
 				}
 			break;
 			case "rotate":
-				switch (method) {
+				switch (Method) {
 					case "to":
 						GenerateRotateToTargets();
-						apply = new ApplyTween(ApplyRotateToTargets);
+						_apply = new ApplyTween(ApplyRotateToTargets);
 					break;
 					case "add":
 						GenerateRotateAddTargets();
-						apply = new ApplyTween(ApplyRotateAddTargets);
+						_apply = new ApplyTween(ApplyRotateAddTargets);
 					break;
 					case "by":
 						GenerateRotateByTargets();
-						apply = new ApplyTween(ApplyRotateAddTargets);
+						_apply = new ApplyTween(ApplyRotateAddTargets);
 					break;				
 				}
 			break;
 			case "shake":
-				switch (method) {
+				switch (Method) {
 					case "position":
 						GenerateShakePositionTargets();
-						apply = new ApplyTween(ApplyShakePositionTargets);
+						_apply = new ApplyTween(ApplyShakePositionTargets);
 					break;		
 					case "scale":
 						GenerateShakeScaleTargets();
-						apply = new ApplyTween(ApplyShakeScaleTargets);
+						_apply = new ApplyTween(ApplyShakeScaleTargets);
 					break;
 					case "rotation":
 						GenerateShakeRotationTargets();
-						apply = new ApplyTween(ApplyShakeRotationTargets);
+						_apply = new ApplyTween(ApplyShakeRotationTargets);
 					break;
 				}
 			break;			
 			case "punch":
-				switch (method) {
+				switch (Method) {
 					case "position":
 						GeneratePunchPositionTargets();
-						apply = new ApplyTween(ApplyPunchPositionTargets);
+						_apply = new ApplyTween(ApplyPunchPositionTargets);
 					break;	
 					case "rotation":
 						GeneratePunchRotationTargets();
-						apply = new ApplyTween(ApplyPunchRotationTargets);
+						_apply = new ApplyTween(ApplyPunchRotationTargets);
 					break;	
 					case "scale":
 						GeneratePunchScaleTargets();
-						apply = new ApplyTween(ApplyPunchScaleTargets);
+						_apply = new ApplyTween(ApplyPunchScaleTargets);
 					break;
 				}
 			break;
 			case "look":
-				switch (method) {
+				switch (Method) {
 					case "to":
 						GenerateLookToTargets();
-						apply = new ApplyTween(ApplyLookToTargets);
+						_apply = new ApplyTween(ApplyLookToTargets);
 					break;	
 				}
 			break;	
 			case "stab":
 				GenerateStabTargets();
-				apply = new ApplyTween(ApplyStabTargets);
+				_apply = new ApplyTween(ApplyStabTargets);
 			break;	
 		}
 	}
@@ -3258,66 +3258,66 @@ public class iTween : MonoBehaviour{
 	
 	void GenerateRectTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		rects=new Rect[3];
+		_rects=new Rect[3];
 		
 		//from and to values:
-		rects[0]=(Rect)tweenArguments["from"];
-		rects[1]=(Rect)tweenArguments["to"];
+		_rects[0]=(Rect)_tweenArguments["from"];
+		_rects[1]=(Rect)_tweenArguments["to"];
 	}		
 	
 	void GenerateColorTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		colors=new Color[1,3];
+		_colors=new Color[1,3];
 		
 		//from and to values:
-		colors[0,0]=(Color)tweenArguments["from"];
-		colors[0,1]=(Color)tweenArguments["to"];
+		_colors[0,0]=(Color)_tweenArguments["from"];
+		_colors[0,1]=(Color)_tweenArguments["to"];
 	}	
 	
 	void GenerateVector3Targets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from and to values:
-		vector3s[0]=(Vector3)tweenArguments["from"];
-		vector3s[1]=(Vector3)tweenArguments["to"];
+		_vector3S[0]=(Vector3)_tweenArguments["from"];
+		_vector3S[1]=(Vector3)_tweenArguments["to"];
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateVector2Targets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector2s=new Vector2[3];
+		_vector2S=new Vector2[3];
 		
 		//from and to values:
-		vector2s[0]=(Vector2)tweenArguments["from"];
-		vector2s[1]=(Vector2)tweenArguments["to"];
+		_vector2S[0]=(Vector2)_tweenArguments["from"];
+		_vector2S[1]=(Vector2)_tweenArguments["to"];
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			Vector3 fromV3 = new Vector3(vector2s[0].x,vector2s[0].y,0);
-			Vector3 toV3 = new Vector3(vector2s[1].x,vector2s[1].y,0);
+		if(_tweenArguments.Contains("speed")){
+			Vector3 fromV3 = new Vector3(_vector2S[0].x,_vector2S[0].y,0);
+			Vector3 toV3 = new Vector3(_vector2S[1].x,_vector2S[1].y,0);
 			float distance = Math.Abs(Vector3.Distance(fromV3,toV3));
-			time = distance/(float)tweenArguments["speed"];
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateFloatTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		floats=new float[3];
+		_floats=new float[3];
 		
 		//from and to values:
-		floats[0]=(float)tweenArguments["from"];
-		floats[1]=(float)tweenArguments["to"];
+		_floats[0]=(float)_tweenArguments["from"];
+		_floats[1]=(float)_tweenArguments["to"];
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(floats[0] - floats[1]);
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(_floats[0] - _floats[1]);
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 		
@@ -3327,82 +3327,82 @@ public class iTween : MonoBehaviour{
 		
 		//from and init to values:
 		if(GetComponent<GUITexture>()){
-			colors = new Color[1,3];
-			colors[0,0] = colors[0,1] = guiTexture.color;
+			_colors = new Color[1,3];
+			_colors[0,0] = _colors[0,1] = guiTexture.color;
 		}else if(GetComponent<GUIText>()){
-			colors = new Color[1,3];
-			colors[0,0] = colors[0,1] = guiText.material.color;
+			_colors = new Color[1,3];
+			_colors[0,0] = _colors[0,1] = guiText.material.color;
 		}else if(renderer){
-			colors = new Color[renderer.materials.Length,3];
+			_colors = new Color[renderer.materials.Length,3];
 			for (int i = 0; i < renderer.materials.Length; i++) {
-				colors[i,0]=renderer.materials[i].GetColor(namedcolorvalue.ToString());
-				colors[i,1]=renderer.materials[i].GetColor(namedcolorvalue.ToString());
+				_colors[i,0]=renderer.materials[i].GetColor(_namedcolorvalue.ToString());
+				_colors[i,1]=renderer.materials[i].GetColor(_namedcolorvalue.ToString());
 			}
 			//colors[0] = colors[1] = renderer.material.color;	
 		}else if(light){
-			colors = new Color[1,3];
-			colors[0,0] = colors[0,1] = light.color;	
+			_colors = new Color[1,3];
+			_colors[0,0] = _colors[0,1] = light.color;	
 		}else{
-			colors = new Color[1,3]; //empty placeholder incase the GO is perhaps an empty holder or something similar
+			_colors = new Color[1,3]; //empty placeholder incase the GO is perhaps an empty holder or something similar
 		}
 		
 		//to values:
-		if (tweenArguments.Contains("color")) {
+		if (_tweenArguments.Contains("color")) {
 			//colors[1]=(Color)tweenArguments["color"];
-			for (int i = 0; i < colors.GetLength(0); i++) {
-				colors[i,1]=(Color)tweenArguments["color"];
+			for (int i = 0; i < _colors.GetLength(0); i++) {
+				_colors[i,1]=(Color)_tweenArguments["color"];
 			}
 		}else{
-			if (tweenArguments.Contains("r")) {
+			if (_tweenArguments.Contains("r")) {
 				//colors[1].r=(float)tweenArguments["r"];
-				for (int i = 0; i < colors.GetLength(0); i++) {
-					colors[i,1].r=(float)tweenArguments["r"];
+				for (int i = 0; i < _colors.GetLength(0); i++) {
+					_colors[i,1].r=(float)_tweenArguments["r"];
 				}
 			}
-			if (tweenArguments.Contains("g")) {
+			if (_tweenArguments.Contains("g")) {
 				//colors[1].g=(float)tweenArguments["g"];
-				for (int i = 0; i < colors.GetLength(0); i++) {
-					colors[i,1].g=(float)tweenArguments["g"];
+				for (int i = 0; i < _colors.GetLength(0); i++) {
+					_colors[i,1].g=(float)_tweenArguments["g"];
 				}
 			}
-			if (tweenArguments.Contains("b")) {
+			if (_tweenArguments.Contains("b")) {
 				//colors[1].b=(float)tweenArguments["b"];
-				for (int i = 0; i < colors.GetLength(0); i++) {
-					colors[i,1].b=(float)tweenArguments["b"];
+				for (int i = 0; i < _colors.GetLength(0); i++) {
+					_colors[i,1].b=(float)_tweenArguments["b"];
 				}
 			}
-			if (tweenArguments.Contains("a")) {
+			if (_tweenArguments.Contains("a")) {
 				//colors[1].a=(float)tweenArguments["a"];
-				for (int i = 0; i < colors.GetLength(0); i++) {
-					colors[i,1].a=(float)tweenArguments["a"];
+				for (int i = 0; i < _colors.GetLength(0); i++) {
+					_colors[i,1].a=(float)_tweenArguments["a"];
 				}
 			}
 		}
 		
 		//alpha or amount?
-		if(tweenArguments.Contains("amount")){
+		if(_tweenArguments.Contains("amount")){
 			//colors[1].a=(float)tweenArguments["amount"];
-			for (int i = 0; i < colors.GetLength(0); i++) {
-				colors[i,1].a=(float)tweenArguments["amount"];
+			for (int i = 0; i < _colors.GetLength(0); i++) {
+				_colors[i,1].a=(float)_tweenArguments["amount"];
 			}
-		}else if(tweenArguments.Contains("alpha")){
+		}else if(_tweenArguments.Contains("alpha")){
 			//colors[1].a=(float)tweenArguments["alpha"];
-			for (int i = 0; i < colors.GetLength(0); i++) {
-				colors[i,1].a=(float)tweenArguments["alpha"];
+			for (int i = 0; i < _colors.GetLength(0); i++) {
+				_colors[i,1].a=(float)_tweenArguments["alpha"];
 			}
 		}
 	}
 	
 	void GenerateAudioToTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector2s=new Vector2[3];
+		_vector2S=new Vector2[3];
 		
 		//set audioSource:
-		if(tweenArguments.Contains("audiosource")){
-			audioSource=(AudioSource)tweenArguments["audiosource"];
+		if(_tweenArguments.Contains("audiosource")){
+			_audioSource=(AudioSource)_tweenArguments["audiosource"];
 		}else{
 			if(GetComponent<AudioSource>()){
-				audioSource=audio;
+				_audioSource=audio;
 			}else{
 				//throw error if no AudioSource is available:
 				Debug.LogError("iTween Error: AudioTo requires an AudioSource.");
@@ -3411,63 +3411,63 @@ public class iTween : MonoBehaviour{
 		}		
 		
 		//from values and default to values:
-		vector2s[0]=vector2s[1]=new Vector2(audioSource.volume,audioSource.pitch);
+		_vector2S[0]=_vector2S[1]=new Vector2(_audioSource.volume,_audioSource.pitch);
 				
 		//to values:
-		if (tweenArguments.Contains("volume")) {
-			vector2s[1].x=(float)tweenArguments["volume"];	
+		if (_tweenArguments.Contains("volume")) {
+			_vector2S[1].x=(float)_tweenArguments["volume"];	
 		}
-		if (tweenArguments.Contains("pitch")) {
-			vector2s[1].y=(float)tweenArguments["pitch"];	
+		if (_tweenArguments.Contains("pitch")) {
+			_vector2S[1].y=(float)_tweenArguments["pitch"];	
 		}
 	}
 	
 	void GenerateStabTargets(){
 		//set audioSource:
-		if(tweenArguments.Contains("audiosource")){
-			audioSource=(AudioSource)tweenArguments["audiosource"];
+		if(_tweenArguments.Contains("audiosource")){
+			_audioSource=(AudioSource)_tweenArguments["audiosource"];
 		}else{
 			if(GetComponent<AudioSource>()){
-				audioSource=audio;
+				_audioSource=audio;
 			}else{
 				//add and populate AudioSource if one doesn't exist:
 				gameObject.AddComponent<AudioSource>();
-				audioSource=audio;
-				audioSource.playOnAwake=false;
+				_audioSource=audio;
+				_audioSource.playOnAwake=false;
 				
 			}
 		}
 		
 		//populate audioSource's clip:
-		audioSource.clip=(AudioClip)tweenArguments["audioclip"];
+		_audioSource.clip=(AudioClip)_tweenArguments["audioclip"];
 		
 		//set audio's pitch and volume if requested:
-		if(tweenArguments.Contains("pitch")){
-			audioSource.pitch=(float)tweenArguments["pitch"];
+		if(_tweenArguments.Contains("pitch")){
+			_audioSource.pitch=(float)_tweenArguments["pitch"];
 		}
-		if(tweenArguments.Contains("volume")){
-			audioSource.volume=(float)tweenArguments["volume"];
+		if(_tweenArguments.Contains("volume")){
+			_audioSource.volume=(float)_tweenArguments["volume"];
 		}
 			
 		//set run time based on length of clip after pitch is augmented
-		time=audioSource.clip.length/audioSource.pitch;
+		Time=_audioSource.clip.length/_audioSource.pitch;
 	}
 	
 	void GenerateLookToTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from values:
-		vector3s[0]=thisTransform.eulerAngles;
+		_vector3S[0]=_thisTransform.eulerAngles;
 		
 		//set look:
-		if(tweenArguments.Contains("looktarget")){
-			if (tweenArguments["looktarget"].GetType() == typeof(Transform)) {
+		if(_tweenArguments.Contains("looktarget")){
+			if (_tweenArguments["looktarget"].GetType() == typeof(Transform)) {
 				//transform.LookAt((Transform)tweenArguments["looktarget"]);
-				thisTransform.LookAt((Transform)tweenArguments["looktarget"], (Vector3?)tweenArguments["up"] ?? Defaults.up);
-			}else if(tweenArguments["looktarget"].GetType() == typeof(Vector3)){
+				_thisTransform.LookAt((Transform)_tweenArguments["looktarget"], (Vector3?)_tweenArguments["up"] ?? Defaults.Up);
+			}else if(_tweenArguments["looktarget"].GetType() == typeof(Vector3)){
 				//transform.LookAt((Vector3)tweenArguments["looktarget"]);
-				thisTransform.LookAt((Vector3)tweenArguments["looktarget"], (Vector3?)tweenArguments["up"] ?? Defaults.up);
+				_thisTransform.LookAt((Vector3)_tweenArguments["looktarget"], (Vector3?)_tweenArguments["up"] ?? Defaults.Up);
 			}
 		}else{
 			Debug.LogError("iTween Error: LookTo needs a 'looktarget' property!");
@@ -3475,34 +3475,34 @@ public class iTween : MonoBehaviour{
 		}
 
 		//to values:
-		vector3s[1]=thisTransform.eulerAngles;
-		thisTransform.eulerAngles=vector3s[0];
+		_vector3S[1]=_thisTransform.eulerAngles;
+		_thisTransform.eulerAngles=_vector3S[0];
 		
 		//axis restriction:
-		if(tweenArguments.Contains("axis")){
-			switch((string)tweenArguments["axis"]){
+		if(_tweenArguments.Contains("axis")){
+			switch((string)_tweenArguments["axis"]){
 				case "x":
-					vector3s[1].y=vector3s[0].y;
-					vector3s[1].z=vector3s[0].z;
+					_vector3S[1].y=_vector3S[0].y;
+					_vector3S[1].z=_vector3S[0].z;
 				break;
 				case "y":
-					vector3s[1].x=vector3s[0].x;
-					vector3s[1].z=vector3s[0].z;
+					_vector3S[1].x=_vector3S[0].x;
+					_vector3S[1].z=_vector3S[0].z;
 				break;
 				case "z":
-					vector3s[1].x=vector3s[0].x;
-					vector3s[1].y=vector3s[0].y;
+					_vector3S[1].x=_vector3S[0].x;
+					_vector3S[1].y=_vector3S[0].y;
 				break;
 			}
 		}
 		
 		//shortest distance:
-		vector3s[1]=new Vector3(clerp(vector3s[0].x,vector3s[1].x,1),clerp(vector3s[0].y,vector3s[1].y,1),clerp(vector3s[0].z,vector3s[1].z,1));
+		_vector3S[1]=new Vector3(Clerp(_vector3S[0].x,_vector3S[1].x,1),Clerp(_vector3S[0].y,_vector3S[1].y,1),Clerp(_vector3S[0].z,_vector3S[1].z,1));
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}	
 	
@@ -3510,8 +3510,8 @@ public class iTween : MonoBehaviour{
 		 Vector3[] suppliedPath;
 		
 		//create and store path points:
-		if(tweenArguments["path"].GetType() == typeof(Vector3[])){
-			Vector3[] temp = (Vector3[])tweenArguments["path"];
+		if(_tweenArguments["path"].GetType() == typeof(Vector3[])){
+			Vector3[] temp = (Vector3[])_tweenArguments["path"];
 			//if only one point is supplied fall back to MoveTo's traditional use since we can't have a curve with one value:
 			if(temp.Length==1){
 				Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
@@ -3520,7 +3520,7 @@ public class iTween : MonoBehaviour{
 			suppliedPath=new Vector3[temp.Length];
 			Array.Copy(temp,suppliedPath, temp.Length);
 		}else{
-			Transform[] temp = (Transform[])tweenArguments["path"];
+			Transform[] temp = (Transform[])_tweenArguments["path"];
 			//if only one point is supplied fall back to MoveTo's traditional use since we can't have a curve with one value:
 			if(temp.Length==1){
 				Debug.LogError("iTween Error: Attempting a path movement with MoveTo requires an array of more than 1 entry!");
@@ -3535,8 +3535,8 @@ public class iTween : MonoBehaviour{
 		//do we need to plot a path to get to the beginning of the supplied path?		
 		bool plotStart;
 		int offset;
-		if(thisTransform.position != suppliedPath[0]){
-			if(!tweenArguments.Contains("movetopath") || (bool)tweenArguments["movetopath"]==true){
+		if(_thisTransform.position != suppliedPath[0]){
+			if(!_tweenArguments.Contains("movetopath") || (bool)_tweenArguments["movetopath"]==true){
 				plotStart=true;
 				offset=3;	
 			}else{
@@ -3549,461 +3549,461 @@ public class iTween : MonoBehaviour{
 		}				
 
 		//build calculated path:
-		vector3s = new Vector3[suppliedPath.Length+offset];
+		_vector3S = new Vector3[suppliedPath.Length+offset];
 		if(plotStart){
-			vector3s[1]=thisTransform.position;
+			_vector3S[1]=_thisTransform.position;
 			offset=2;
 		}else{
 			offset=1;
 		}		
 		
 		//populate calculate path;
-		Array.Copy(suppliedPath,0,vector3s,offset,suppliedPath.Length);
+		Array.Copy(suppliedPath,0,_vector3S,offset,suppliedPath.Length);
 		
 		//populate start and end control points:
 		//vector3s[0] = vector3s[1] - vector3s[2];
-		vector3s[0] = vector3s[1] + (vector3s[1] - vector3s[2]);
-		vector3s[vector3s.Length-1] = vector3s[vector3s.Length-2] + (vector3s[vector3s.Length-2] - vector3s[vector3s.Length-3]);
+		_vector3S[0] = _vector3S[1] + (_vector3S[1] - _vector3S[2]);
+		_vector3S[_vector3S.Length-1] = _vector3S[_vector3S.Length-2] + (_vector3S[_vector3S.Length-2] - _vector3S[_vector3S.Length-3]);
 		
 		//is this a closed, continuous loop? yes? well then so let's make a continuous Catmull-Rom spline!
-		if(vector3s[1] == vector3s[vector3s.Length-2]){
-			Vector3[] tmpLoopSpline = new Vector3[vector3s.Length];
-			Array.Copy(vector3s,tmpLoopSpline,vector3s.Length);
+		if(_vector3S[1] == _vector3S[_vector3S.Length-2]){
+			Vector3[] tmpLoopSpline = new Vector3[_vector3S.Length];
+			Array.Copy(_vector3S,tmpLoopSpline,_vector3S.Length);
 			tmpLoopSpline[0]=tmpLoopSpline[tmpLoopSpline.Length-3];
 			tmpLoopSpline[tmpLoopSpline.Length-1]=tmpLoopSpline[2];
-			vector3s=new Vector3[tmpLoopSpline.Length];
-			Array.Copy(tmpLoopSpline,vector3s,tmpLoopSpline.Length);
+			_vector3S=new Vector3[tmpLoopSpline.Length];
+			Array.Copy(tmpLoopSpline,_vector3S,tmpLoopSpline.Length);
 		}
 		
 		//create Catmull-Rom path:
-		path = new CRSpline(vector3s);
+		_path = new CrSpline(_vector3S);
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = PathLength(vector3s);
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = PathLength(_vector3S);
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateMoveToTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from values:
-		if (isLocal) {
-			vector3s[0]=vector3s[1]=thisTransform.localPosition;				
+		if (_isLocal) {
+			_vector3S[0]=_vector3S[1]=_thisTransform.localPosition;				
 		}else{
-			vector3s[0]=vector3s[1]=thisTransform.position;
+			_vector3S[0]=_vector3S[1]=_thisTransform.position;
 		}
 		
 		//to values:
-		if (tweenArguments.Contains("position")) {
-			if (tweenArguments["position"].GetType() == typeof(Transform)){
-				Transform trans = (Transform)tweenArguments["position"];
-				vector3s[1]=trans.position;
-			}else if(tweenArguments["position"].GetType() == typeof(Vector3)){
-				vector3s[1]=(Vector3)tweenArguments["position"];
+		if (_tweenArguments.Contains("position")) {
+			if (_tweenArguments["position"].GetType() == typeof(Transform)){
+				Transform trans = (Transform)_tweenArguments["position"];
+				_vector3S[1]=trans.position;
+			}else if(_tweenArguments["position"].GetType() == typeof(Vector3)){
+				_vector3S[1]=(Vector3)_tweenArguments["position"];
 			}
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 		
 		//handle orient to path request:
-		if(tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"]){
-			tweenArguments["looktarget"] = vector3s[1];
+		if(_tweenArguments.Contains("orienttopath") && (bool)_tweenArguments["orienttopath"]){
+			_tweenArguments["looktarget"] = _vector3S[1];
 		}
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateMoveByTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation, [3] previous value for Translate usage to allow Space utilization, [4] original rotation to make sure look requests don't interfere with the direction object should move in, [5] for dial in location:
-		vector3s=new Vector3[6];
+		_vector3S=new Vector3[6];
 		
 		//grab starting rotation:
-		vector3s[4] = thisTransform.eulerAngles;
+		_vector3S[4] = _thisTransform.eulerAngles;
 		
 		//from values:
-		vector3s[0]=vector3s[1]=vector3s[3]=thisTransform.position;
+		_vector3S[0]=_vector3S[1]=_vector3S[3]=_thisTransform.position;
 				
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=vector3s[0] + (Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=_vector3S[0] + (Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=vector3s[0].x + (float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=_vector3S[0].x + (float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=vector3s[0].y +(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=_vector3S[0].y +(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=vector3s[0].z + (float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=_vector3S[0].z + (float)_tweenArguments["z"];
 			}
 		}	
 		
 		//calculation for dial in:
-		thisTransform.Translate(vector3s[1],space);
-		vector3s[5] = thisTransform.position;
-		thisTransform.position=vector3s[0];
+		_thisTransform.Translate(_vector3S[1],_space);
+		_vector3S[5] = _thisTransform.position;
+		_thisTransform.position=_vector3S[0];
 		
 		//handle orient to path request:
-		if(tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"]){
-			tweenArguments["looktarget"] = vector3s[1];
+		if(_tweenArguments.Contains("orienttopath") && (bool)_tweenArguments["orienttopath"]){
+			_tweenArguments["looktarget"] = _vector3S[1];
 		}
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateScaleToTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from values:
-		vector3s[0]=vector3s[1]=thisTransform.localScale;				
+		_vector3S[0]=_vector3S[1]=_thisTransform.localScale;				
 
 		//to values:
-		if (tweenArguments.Contains("scale")) {
-			if (tweenArguments["scale"].GetType() == typeof(Transform)){
-				Transform trans = (Transform)tweenArguments["scale"];
-				vector3s[1]=trans.localScale;					
-			}else if(tweenArguments["scale"].GetType() == typeof(Vector3)){
-				vector3s[1]=(Vector3)tweenArguments["scale"];
+		if (_tweenArguments.Contains("scale")) {
+			if (_tweenArguments["scale"].GetType() == typeof(Transform)){
+				Transform trans = (Transform)_tweenArguments["scale"];
+				_vector3S[1]=trans.localScale;					
+			}else if(_tweenArguments["scale"].GetType() == typeof(Vector3)){
+				_vector3S[1]=(Vector3)_tweenArguments["scale"];
 			}
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		} 
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateScaleByTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from values:
-		vector3s[0]=vector3s[1]=thisTransform.localScale;				
+		_vector3S[0]=_vector3S[1]=_thisTransform.localScale;				
 
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=Vector3.Scale(vector3s[1],(Vector3)tweenArguments["amount"]);
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=Vector3.Scale(_vector3S[1],(Vector3)_tweenArguments["amount"]);
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x*=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x*=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y*=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y*=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z*=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z*=(float)_tweenArguments["z"];
 			}
 		} 
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateScaleAddTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from values:
-		vector3s[0]=vector3s[1]=thisTransform.localScale;				
+		_vector3S[0]=_vector3S[1]=_thisTransform.localScale;				
 
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]+=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]+=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x+=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x+=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y+=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y+=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z+=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z+=(float)_tweenArguments["z"];
 			}
 		}
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateRotateToTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from values:
-		if (isLocal) {
-			vector3s[0]=vector3s[1]=thisTransform.localEulerAngles;				
+		if (_isLocal) {
+			_vector3S[0]=_vector3S[1]=_thisTransform.localEulerAngles;				
 		}else{
-			vector3s[0]=vector3s[1]=thisTransform.eulerAngles;
+			_vector3S[0]=_vector3S[1]=_thisTransform.eulerAngles;
 		}
 		
 		//to values:
-		if (tweenArguments.Contains("rotation")) {
-			if (tweenArguments["rotation"].GetType() == typeof(Transform)){
-				Transform trans = (Transform)tweenArguments["rotation"];
-				vector3s[1]=trans.eulerAngles;			
-			}else if(tweenArguments["rotation"].GetType() == typeof(Vector3)){
-				vector3s[1]=(Vector3)tweenArguments["rotation"];
+		if (_tweenArguments.Contains("rotation")) {
+			if (_tweenArguments["rotation"].GetType() == typeof(Transform)){
+				Transform trans = (Transform)_tweenArguments["rotation"];
+				_vector3S[1]=trans.eulerAngles;			
+			}else if(_tweenArguments["rotation"].GetType() == typeof(Vector3)){
+				_vector3S[1]=(Vector3)_tweenArguments["rotation"];
 			}
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 		
 		//shortest distance:
-		vector3s[1]=new Vector3(clerp(vector3s[0].x,vector3s[1].x,1),clerp(vector3s[0].y,vector3s[1].y,1),clerp(vector3s[0].z,vector3s[1].z,1));
+		_vector3S[1]=new Vector3(Clerp(_vector3S[0].x,_vector3S[1].x,1),Clerp(_vector3S[0].y,_vector3S[1].y,1),Clerp(_vector3S[0].z,_vector3S[1].z,1));
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}
 	
 	void GenerateRotateAddTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation, [3] previous value for Rotate usage to allow Space utilization:
-		vector3s=new Vector3[5];
+		_vector3S=new Vector3[5];
 		
 		//from values:
-		vector3s[0]=vector3s[1]=vector3s[3]=thisTransform.eulerAngles;
+		_vector3S[0]=_vector3S[1]=_vector3S[3]=_thisTransform.eulerAngles;
 		
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]+=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]+=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x+=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x+=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y+=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y+=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z+=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z+=(float)_tweenArguments["z"];
 			}
 		}
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}		
 	
 	void GenerateRotateByTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation, [3] previous value for Rotate usage to allow Space utilization:
-		vector3s=new Vector3[4];
+		_vector3S=new Vector3[4];
 		
 		//from values:
-		vector3s[0]=vector3s[1]=vector3s[3]=thisTransform.eulerAngles;
+		_vector3S[0]=_vector3S[1]=_vector3S[3]=_thisTransform.eulerAngles;
 		
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]+=Vector3.Scale((Vector3)tweenArguments["amount"],new Vector3(360,360,360));
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]+=Vector3.Scale((Vector3)_tweenArguments["amount"],new Vector3(360,360,360));
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x+=360 * (float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x+=360 * (float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y+=360 * (float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y+=360 * (float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z+=360 * (float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z+=360 * (float)_tweenArguments["z"];
 			}
 		}
 		
 		//need for speed?
-		if(tweenArguments.Contains("speed")){
-			float distance = Math.Abs(Vector3.Distance(vector3s[0],vector3s[1]));
-			time = distance/(float)tweenArguments["speed"];
+		if(_tweenArguments.Contains("speed")){
+			float distance = Math.Abs(Vector3.Distance(_vector3S[0],_vector3S[1]));
+			Time = distance/(float)_tweenArguments["speed"];
 		}
 	}		
 	
 	void GenerateShakePositionTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation, [3] original rotation to make sure look requests don't interfere with the direction object should move in:
-		vector3s=new Vector3[4];
+		_vector3S=new Vector3[4];
 		
 		//grab starting rotation:
-		vector3s[3] = thisTransform.eulerAngles;		
+		_vector3S[3] = _thisTransform.eulerAngles;		
 		
 		//root:
-		vector3s[0]=thisTransform.position;
+		_vector3S[0]=_thisTransform.position;
 		
 		//amount:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 	}		
 	
 	void GenerateShakeScaleTargets(){
 		//values holder [0] root value, [1] amount, [2] generated amount:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//root:
-		vector3s[0]=thisTransform.localScale;
+		_vector3S[0]=_thisTransform.localScale;
 		
 		//amount:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 	}		
 		
 	void GenerateShakeRotationTargets(){
 		//values holder [0] root value, [1] amount, [2] generated amount:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//root:
-		vector3s[0]=thisTransform.eulerAngles;
+		_vector3S[0]=_thisTransform.eulerAngles;
 		
 		//amount:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 	}	
 	
 	void GeneratePunchPositionTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation, [3] previous value for Translate usage to allow Space utilization, [4] original rotation to make sure look requests don't interfere with the direction object should move in:
-		vector3s=new Vector3[5];
+		_vector3S=new Vector3[5];
 		
 		//grab starting rotation:
-		vector3s[4] = thisTransform.eulerAngles;
+		_vector3S[4] = _thisTransform.eulerAngles;
 		
 		//from values:
-		vector3s[0]=thisTransform.position;
-		vector3s[1]=vector3s[3]=Vector3.zero;
+		_vector3S[0]=_thisTransform.position;
+		_vector3S[1]=_vector3S[3]=Vector3.zero;
 				
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 	}	
 	
 	void GeneratePunchRotationTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation, [3] previous value for Translate usage to allow Space utilization:
-		vector3s=new Vector3[4];
+		_vector3S=new Vector3[4];
 		
 		//from values:
-		vector3s[0]=thisTransform.eulerAngles;
-		vector3s[1]=vector3s[3]=Vector3.zero;
+		_vector3S[0]=_thisTransform.eulerAngles;
+		_vector3S[1]=_vector3S[3]=Vector3.zero;
 				
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 	}		
 	
 	void GeneratePunchScaleTargets(){
 		//values holder [0] from, [1] to, [2] calculated value from ease equation:
-		vector3s=new Vector3[3];
+		_vector3S=new Vector3[3];
 		
 		//from values:
-		vector3s[0]=thisTransform.localScale;
-		vector3s[1]=Vector3.zero;
+		_vector3S[0]=_thisTransform.localScale;
+		_vector3S[1]=Vector3.zero;
 				
 		//to values:
-		if (tweenArguments.Contains("amount")) {
-			vector3s[1]=(Vector3)tweenArguments["amount"];
+		if (_tweenArguments.Contains("amount")) {
+			_vector3S[1]=(Vector3)_tweenArguments["amount"];
 		}else{
-			if (tweenArguments.Contains("x")) {
-				vector3s[1].x=(float)tweenArguments["x"];
+			if (_tweenArguments.Contains("x")) {
+				_vector3S[1].x=(float)_tweenArguments["x"];
 			}
-			if (tweenArguments.Contains("y")) {
-				vector3s[1].y=(float)tweenArguments["y"];
+			if (_tweenArguments.Contains("y")) {
+				_vector3S[1].y=(float)_tweenArguments["y"];
 			}
-			if (tweenArguments.Contains("z")) {
-				vector3s[1].z=(float)tweenArguments["z"];
+			if (_tweenArguments.Contains("z")) {
+				_vector3S[1].z=(float)_tweenArguments["z"];
 			}
 		}
 	}
@@ -4014,85 +4014,85 @@ public class iTween : MonoBehaviour{
 	
 	void ApplyRectTargets(){
 		//calculate:
-		rects[2].x = ease(rects[0].x,rects[1].x,percentage);
-		rects[2].y = ease(rects[0].y,rects[1].y,percentage);
-		rects[2].width = ease(rects[0].width,rects[1].width,percentage);
-		rects[2].height = ease(rects[0].height,rects[1].height,percentage);
+		_rects[2].x = _ease(_rects[0].x,_rects[1].x,_percentage);
+		_rects[2].y = _ease(_rects[0].y,_rects[1].y,_percentage);
+		_rects[2].width = _ease(_rects[0].width,_rects[1].width,_percentage);
+		_rects[2].height = _ease(_rects[0].height,_rects[1].height,_percentage);
 		
 		//apply:
-		tweenArguments["onupdateparams"]=rects[2];
+		_tweenArguments["onupdateparams"]=_rects[2];
 		
 		//dial in:
-		if(percentage==1){
-			tweenArguments["onupdateparams"]=rects[1];
+		if(_percentage==1){
+			_tweenArguments["onupdateparams"]=_rects[1];
 		}
 	}		
 	
 	void ApplyColorTargets(){
 		//calculate:
-		colors[0,2].r = ease(colors[0,0].r,colors[0,1].r,percentage);
-		colors[0,2].g = ease(colors[0,0].g,colors[0,1].g,percentage);
-		colors[0,2].b = ease(colors[0,0].b,colors[0,1].b,percentage);
-		colors[0,2].a = ease(colors[0,0].a,colors[0,1].a,percentage);
+		_colors[0,2].r = _ease(_colors[0,0].r,_colors[0,1].r,_percentage);
+		_colors[0,2].g = _ease(_colors[0,0].g,_colors[0,1].g,_percentage);
+		_colors[0,2].b = _ease(_colors[0,0].b,_colors[0,1].b,_percentage);
+		_colors[0,2].a = _ease(_colors[0,0].a,_colors[0,1].a,_percentage);
 		
 		//apply:
-		tweenArguments["onupdateparams"]=colors[0,2];
+		_tweenArguments["onupdateparams"]=_colors[0,2];
 		
 		//dial in:
-		if(percentage==1){
-			tweenArguments["onupdateparams"]=colors[0,1];
+		if(_percentage==1){
+			_tweenArguments["onupdateparams"]=_colors[0,1];
 		}
 	}	
 		
 	void ApplyVector3Targets(){
 		//calculate:
-		vector3s[2].x = ease(vector3s[0].x,vector3s[1].x,percentage);
-		vector3s[2].y = ease(vector3s[0].y,vector3s[1].y,percentage);
-		vector3s[2].z = ease(vector3s[0].z,vector3s[1].z,percentage);
+		_vector3S[2].x = _ease(_vector3S[0].x,_vector3S[1].x,_percentage);
+		_vector3S[2].y = _ease(_vector3S[0].y,_vector3S[1].y,_percentage);
+		_vector3S[2].z = _ease(_vector3S[0].z,_vector3S[1].z,_percentage);
 		
 		//apply:
-		tweenArguments["onupdateparams"]=vector3s[2];
+		_tweenArguments["onupdateparams"]=_vector3S[2];
 		
 		//dial in:
-		if(percentage==1){
-			tweenArguments["onupdateparams"]=vector3s[1];
+		if(_percentage==1){
+			_tweenArguments["onupdateparams"]=_vector3S[1];
 		}
 	}		
 	
 	void ApplyVector2Targets(){
 		//calculate:
-		vector2s[2].x = ease(vector2s[0].x,vector2s[1].x,percentage);
-		vector2s[2].y = ease(vector2s[0].y,vector2s[1].y,percentage);
+		_vector2S[2].x = _ease(_vector2S[0].x,_vector2S[1].x,_percentage);
+		_vector2S[2].y = _ease(_vector2S[0].y,_vector2S[1].y,_percentage);
 		
 		//apply:
-		tweenArguments["onupdateparams"]=vector2s[2];
+		_tweenArguments["onupdateparams"]=_vector2S[2];
 		
 		//dial in:
-		if(percentage==1){
-			tweenArguments["onupdateparams"]=vector2s[1];
+		if(_percentage==1){
+			_tweenArguments["onupdateparams"]=_vector2S[1];
 		}
 	}	
 	
 	void ApplyFloatTargets(){
 		//calculate:
-		floats[2] = ease(floats[0],floats[1],percentage);
+		_floats[2] = _ease(_floats[0],_floats[1],_percentage);
 		
 		//apply:
-		tweenArguments["onupdateparams"]=floats[2];
+		_tweenArguments["onupdateparams"]=_floats[2];
 		
 		//dial in:
-		if(percentage==1){
-			tweenArguments["onupdateparams"]=floats[1];
+		if(_percentage==1){
+			_tweenArguments["onupdateparams"]=_floats[1];
 		}
 	}	
 	
 	void ApplyColorToTargets(){
 		//calculate:
-		for (int i = 0; i < colors.GetLength(0); i++) {
-			colors[i,2].r = ease(colors[i,0].r,colors[i,1].r,percentage);
-			colors[i,2].g = ease(colors[i,0].g,colors[i,1].g,percentage);
-			colors[i,2].b = ease(colors[i,0].b,colors[i,1].b,percentage);
-			colors[i,2].a = ease(colors[i,0].a,colors[i,1].a,percentage);
+		for (int i = 0; i < _colors.GetLength(0); i++) {
+			_colors[i,2].r = _ease(_colors[i,0].r,_colors[i,1].r,_percentage);
+			_colors[i,2].g = _ease(_colors[i,0].g,_colors[i,1].g,_percentage);
+			_colors[i,2].b = _ease(_colors[i,0].b,_colors[i,1].b,_percentage);
+			_colors[i,2].a = _ease(_colors[i,0].a,_colors[i,1].a,_percentage);
 		}
 		/*
 		colors[2].r = ease(colors[0].r,colors[1].r,percentage);
@@ -4104,53 +4104,53 @@ public class iTween : MonoBehaviour{
 		//apply:
 		if(GetComponent<GUITexture>()){
 			//guiTexture.color=colors[2];
-			guiTexture.color=colors[0,2];
+			guiTexture.color=_colors[0,2];
 		}else if(GetComponent<GUIText>()){
 			//guiText.material.color=colors[2];
-			guiText.material.color=colors[0,2];
+			guiText.material.color=_colors[0,2];
 		}else if(renderer){
 			//renderer.material.color=colors[2];
-			for (int i = 0; i < colors.GetLength(0); i++) {
-				renderer.materials[i].SetColor(namedcolorvalue.ToString(),colors[i,2]);
+			for (int i = 0; i < _colors.GetLength(0); i++) {
+				renderer.materials[i].SetColor(_namedcolorvalue.ToString(),_colors[i,2]);
 			}
 		}else if(light){
 			//light.color=colors[2];	
-			light.color=colors[0,2];
+			light.color=_colors[0,2];
 		}
 		
 		//dial in:
-		if(percentage==1){
+		if(_percentage==1){
 			if(GetComponent<GUITexture>()){
 				//guiTexture.color=colors[1];
-				guiTexture.color=colors[0,1];
+				guiTexture.color=_colors[0,1];
 			}else if(GetComponent<GUIText>()){
 				//guiText.material.color=colors[1];
-				guiText.material.color=colors[0,1];
+				guiText.material.color=_colors[0,1];
 			}else if(renderer){
 				//renderer.material.color=colors[1];	
-				for (int i = 0; i < colors.GetLength(0); i++) {
-					renderer.materials[i].SetColor(namedcolorvalue.ToString(),colors[i,1]);
+				for (int i = 0; i < _colors.GetLength(0); i++) {
+					renderer.materials[i].SetColor(_namedcolorvalue.ToString(),_colors[i,1]);
 				}
 			}else if(light){
 				//light.color=colors[1];	
-				light.color=colors[0,1];
+				light.color=_colors[0,1];
 			}			
 		}
 	}	
 	
 	void ApplyAudioToTargets(){
 		//calculate:
-		vector2s[2].x = ease(vector2s[0].x,vector2s[1].x,percentage);
-		vector2s[2].y = ease(vector2s[0].y,vector2s[1].y,percentage);
+		_vector2S[2].x = _ease(_vector2S[0].x,_vector2S[1].x,_percentage);
+		_vector2S[2].y = _ease(_vector2S[0].y,_vector2S[1].y,_percentage);
 		
 		//apply:
-		audioSource.volume=vector2s[2].x;
-		audioSource.pitch=vector2s[2].y;
+		_audioSource.volume=_vector2S[2].x;
+		_audioSource.pitch=_vector2S[2].y;
 		
 		//dial in:
-		if(percentage==1){
-			audioSource.volume=vector2s[1].x;
-			audioSource.pitch=vector2s[1].y;	
+		if(_percentage==1){
+			_audioSource.volume=_vector2S[1].x;
+			_audioSource.pitch=_vector2S[1].y;	
 		}
 	}	
 	
@@ -4159,102 +4159,102 @@ public class iTween : MonoBehaviour{
 	}
 	
 	void ApplyMoveToPathTargets(){
-		preUpdate = thisTransform.position;
-		float t = ease(0,1,percentage);
+		_preUpdate = _thisTransform.position;
+		float t = _ease(0,1,_percentage);
 		float lookAheadAmount;
 		
 		//clamp easing equation results as "back" will fail since overshoots aren't handled in the Catmull-Rom interpolation:
-		if(isLocal){
-			thisTransform.localPosition=path.Interp(Mathf.Clamp(t,0,1));	
+		if(_isLocal){
+			_thisTransform.localPosition=_path.Interp(Mathf.Clamp(t,0,1));	
 		}else{
-			thisTransform.position=path.Interp(Mathf.Clamp(t,0,1));	
+			_thisTransform.position=_path.Interp(Mathf.Clamp(t,0,1));	
 		}
 		
 		//handle orient to path request:
-		if(tweenArguments.Contains("orienttopath") && (bool)tweenArguments["orienttopath"]){
+		if(_tweenArguments.Contains("orienttopath") && (bool)_tweenArguments["orienttopath"]){
 			
 			//plot a point slightly ahead in the interpolation by pushing the percentage forward using the default lookahead value:
 			float tLook;
-			if(tweenArguments.Contains("lookahead")){
-				lookAheadAmount = (float)tweenArguments["lookahead"];
+			if(_tweenArguments.Contains("lookahead")){
+				lookAheadAmount = (float)_tweenArguments["lookahead"];
 			}else{
-				lookAheadAmount = Defaults.lookAhead;
+				lookAheadAmount = Defaults.LookAhead;
 			}
 			//tLook = ease(0,1,percentage+lookAheadAmount);			
-			tLook = ease(0,1, Mathf.Min(1f, percentage+lookAheadAmount)); 
+			tLook = _ease(0,1, Mathf.Min(1f, _percentage+lookAheadAmount)); 
 			
 			//locate new leading point with a clamp as stated above:
 			//Vector3 lookDistance = path.Interp(Mathf.Clamp(tLook,0,1)) - transform.position;
-			tweenArguments["looktarget"] = path.Interp(Mathf.Clamp(tLook,0,1));
+			_tweenArguments["looktarget"] = _path.Interp(Mathf.Clamp(tLook,0,1));
 		}
 		
 		//need physics?
-		postUpdate=thisTransform.position;
-		if(physics){
-			thisTransform.position=preUpdate;
-			rigidbody.MovePosition(postUpdate);
+		_postUpdate=_thisTransform.position;
+		if(_physics){
+			_thisTransform.position=_preUpdate;
+			rigidbody.MovePosition(_postUpdate);
 		}
 	}
 	
 	void ApplyMoveToTargets(){
 		//record current:
-		preUpdate=thisTransform.position;
+		_preUpdate=_thisTransform.position;
 			
 		
 		//calculate:
-		vector3s[2].x = ease(vector3s[0].x,vector3s[1].x,percentage);
-		vector3s[2].y = ease(vector3s[0].y,vector3s[1].y,percentage);
-		vector3s[2].z = ease(vector3s[0].z,vector3s[1].z,percentage);
+		_vector3S[2].x = _ease(_vector3S[0].x,_vector3S[1].x,_percentage);
+		_vector3S[2].y = _ease(_vector3S[0].y,_vector3S[1].y,_percentage);
+		_vector3S[2].z = _ease(_vector3S[0].z,_vector3S[1].z,_percentage);
 		
 		//apply:	
-		if (isLocal) {
-			thisTransform.localPosition=vector3s[2];
+		if (_isLocal) {
+			_thisTransform.localPosition=_vector3S[2];
 		}else{
-			thisTransform.position=vector3s[2];
+			_thisTransform.position=_vector3S[2];
 		}
 			
 		//dial in:
-		if(percentage==1){
-			if (isLocal) {
-				thisTransform.localPosition=vector3s[1];		
+		if(_percentage==1){
+			if (_isLocal) {
+				_thisTransform.localPosition=_vector3S[1];		
 			}else{
-				thisTransform.position=vector3s[1];
+				_thisTransform.position=_vector3S[1];
 			}
 		}
 			
 		//need physics?
-		postUpdate=thisTransform.position;
-		if(physics){
-			thisTransform.position=preUpdate;
-			rigidbody.MovePosition(postUpdate);
+		_postUpdate=_thisTransform.position;
+		if(_physics){
+			_thisTransform.position=_preUpdate;
+			rigidbody.MovePosition(_postUpdate);
 		}
 	}	
 	
 	void ApplyMoveByTargets(){	
-		preUpdate = thisTransform.position;
+		_preUpdate = _thisTransform.position;
 		
 		//reset rotation to prevent look interferences as object rotates and attempts to move with translate and record current rotation
 		Vector3 currentRotation = new Vector3();
 		
-		if(tweenArguments.Contains("looktarget")){
-			currentRotation = thisTransform.eulerAngles;
-			thisTransform.eulerAngles = vector3s[4];	
+		if(_tweenArguments.Contains("looktarget")){
+			currentRotation = _thisTransform.eulerAngles;
+			_thisTransform.eulerAngles = _vector3S[4];	
 		}
 		
 		//calculate:
-		vector3s[2].x = ease(vector3s[0].x,vector3s[1].x,percentage);
-		vector3s[2].y = ease(vector3s[0].y,vector3s[1].y,percentage);
-		vector3s[2].z = ease(vector3s[0].z,vector3s[1].z,percentage);
+		_vector3S[2].x = _ease(_vector3S[0].x,_vector3S[1].x,_percentage);
+		_vector3S[2].y = _ease(_vector3S[0].y,_vector3S[1].y,_percentage);
+		_vector3S[2].z = _ease(_vector3S[0].z,_vector3S[1].z,_percentage);
 				
 		//apply:
-		thisTransform.Translate(vector3s[2]-vector3s[3],space);
+		_thisTransform.Translate(_vector3S[2]-_vector3S[3],_space);
 		
 		//record:
-		vector3s[3]=vector3s[2];
+		_vector3S[3]=_vector3S[2];
 		
 		//reset rotation:
-		if(tweenArguments.Contains("looktarget")){
-			thisTransform.eulerAngles = currentRotation;	
+		if(_tweenArguments.Contains("looktarget")){
+			_thisTransform.eulerAngles = currentRotation;	
 		}
 				
 		/*
@@ -4265,236 +4265,236 @@ public class iTween : MonoBehaviour{
 		*/
 		
 		//need physics?
-		postUpdate=thisTransform.position;
-		if(physics){
-			thisTransform.position=preUpdate;
-			rigidbody.MovePosition(postUpdate);
+		_postUpdate=_thisTransform.position;
+		if(_physics){
+			_thisTransform.position=_preUpdate;
+			rigidbody.MovePosition(_postUpdate);
 		}
 	}	
 	
 	void ApplyScaleToTargets(){
 		//calculate:
-		vector3s[2].x = ease(vector3s[0].x,vector3s[1].x,percentage);
-		vector3s[2].y = ease(vector3s[0].y,vector3s[1].y,percentage);
-		vector3s[2].z = ease(vector3s[0].z,vector3s[1].z,percentage);
+		_vector3S[2].x = _ease(_vector3S[0].x,_vector3S[1].x,_percentage);
+		_vector3S[2].y = _ease(_vector3S[0].y,_vector3S[1].y,_percentage);
+		_vector3S[2].z = _ease(_vector3S[0].z,_vector3S[1].z,_percentage);
 		
 		//apply:
-		thisTransform.localScale=vector3s[2];	
+		_thisTransform.localScale=_vector3S[2];	
 		
 		//dial in:
-		if(percentage==1){
-			thisTransform.localScale=vector3s[1];
+		if(_percentage==1){
+			_thisTransform.localScale=_vector3S[1];
 		}
 	}
 	
 	void ApplyLookToTargets(){
 		//calculate:
-		vector3s[2].x = ease(vector3s[0].x,vector3s[1].x,percentage);
-		vector3s[2].y = ease(vector3s[0].y,vector3s[1].y,percentage);
-		vector3s[2].z = ease(vector3s[0].z,vector3s[1].z,percentage);
+		_vector3S[2].x = _ease(_vector3S[0].x,_vector3S[1].x,_percentage);
+		_vector3S[2].y = _ease(_vector3S[0].y,_vector3S[1].y,_percentage);
+		_vector3S[2].z = _ease(_vector3S[0].z,_vector3S[1].z,_percentage);
 		
 		//apply:
-		if (isLocal) {
-			thisTransform.localRotation = Quaternion.Euler(vector3s[2]);
+		if (_isLocal) {
+			_thisTransform.localRotation = Quaternion.Euler(_vector3S[2]);
 		}else{
-			thisTransform.rotation = Quaternion.Euler(vector3s[2]);
+			_thisTransform.rotation = Quaternion.Euler(_vector3S[2]);
 		};	
 	}	
 	
 	void ApplyRotateToTargets(){
-		preUpdate=thisTransform.eulerAngles;
+		_preUpdate=_thisTransform.eulerAngles;
 		
 		//calculate:
-		vector3s[2].x = ease(vector3s[0].x,vector3s[1].x,percentage);
-		vector3s[2].y = ease(vector3s[0].y,vector3s[1].y,percentage);
-		vector3s[2].z = ease(vector3s[0].z,vector3s[1].z,percentage);
+		_vector3S[2].x = _ease(_vector3S[0].x,_vector3S[1].x,_percentage);
+		_vector3S[2].y = _ease(_vector3S[0].y,_vector3S[1].y,_percentage);
+		_vector3S[2].z = _ease(_vector3S[0].z,_vector3S[1].z,_percentage);
 		
 		//apply:
-		if (isLocal) {
-			thisTransform.localRotation = Quaternion.Euler(vector3s[2]);
+		if (_isLocal) {
+			_thisTransform.localRotation = Quaternion.Euler(_vector3S[2]);
 		}else{
-			thisTransform.rotation = Quaternion.Euler(vector3s[2]);
+			_thisTransform.rotation = Quaternion.Euler(_vector3S[2]);
 		};	
 		
 		//dial in:
-		if(percentage==1){
-			if (isLocal) {
-				thisTransform.localRotation = Quaternion.Euler(vector3s[1]);
+		if(_percentage==1){
+			if (_isLocal) {
+				_thisTransform.localRotation = Quaternion.Euler(_vector3S[1]);
 			}else{
-				thisTransform.rotation = Quaternion.Euler(vector3s[1]);
+				_thisTransform.rotation = Quaternion.Euler(_vector3S[1]);
 			};
 		}
 		
 		//need physics?
-		postUpdate=thisTransform.eulerAngles;
-		if(physics){
-			thisTransform.eulerAngles=preUpdate;
-			rigidbody.MoveRotation(Quaternion.Euler(postUpdate));
+		_postUpdate=_thisTransform.eulerAngles;
+		if(_physics){
+			_thisTransform.eulerAngles=_preUpdate;
+			rigidbody.MoveRotation(Quaternion.Euler(_postUpdate));
 		}
 	}
 	
 	void ApplyRotateAddTargets(){
-		preUpdate = thisTransform.eulerAngles;
+		_preUpdate = _thisTransform.eulerAngles;
 		
 		//calculate:
-		vector3s[2].x = ease(vector3s[0].x,vector3s[1].x,percentage);
-		vector3s[2].y = ease(vector3s[0].y,vector3s[1].y,percentage);
-		vector3s[2].z = ease(vector3s[0].z,vector3s[1].z,percentage);
+		_vector3S[2].x = _ease(_vector3S[0].x,_vector3S[1].x,_percentage);
+		_vector3S[2].y = _ease(_vector3S[0].y,_vector3S[1].y,_percentage);
+		_vector3S[2].z = _ease(_vector3S[0].z,_vector3S[1].z,_percentage);
 		
 		//apply:
-		thisTransform.Rotate(vector3s[2]-vector3s[3],space);
+		_thisTransform.Rotate(_vector3S[2]-_vector3S[3],_space);
 
 		//record:
-		vector3s[3]=vector3s[2];	
+		_vector3S[3]=_vector3S[2];	
 		
 		//need physics?
-		postUpdate=thisTransform.eulerAngles;
-		if(physics){
-			thisTransform.eulerAngles=preUpdate;
-			rigidbody.MoveRotation(Quaternion.Euler(postUpdate));
+		_postUpdate=_thisTransform.eulerAngles;
+		if(_physics){
+			_thisTransform.eulerAngles=_preUpdate;
+			rigidbody.MoveRotation(Quaternion.Euler(_postUpdate));
 		}		
 	}	
 	
 	void ApplyShakePositionTargets(){
 		//preUpdate = transform.position;
-		if (isLocal) {
-			preUpdate = thisTransform.localPosition;
+		if (_isLocal) {
+			_preUpdate = _thisTransform.localPosition;
 		}else{
-			preUpdate = thisTransform.position;
+			_preUpdate = _thisTransform.position;
 		}
 		
 		//reset rotation to prevent look interferences as object rotates and attempts to move with translate and record current rotation
 		Vector3 currentRotation = new Vector3();
 		
-		if(tweenArguments.Contains("looktarget")){
-			currentRotation = thisTransform.eulerAngles;
-			thisTransform.eulerAngles = vector3s[3];	
+		if(_tweenArguments.Contains("looktarget")){
+			currentRotation = _thisTransform.eulerAngles;
+			_thisTransform.eulerAngles = _vector3S[3];	
 		}
 		
 		//impact:
-		if (percentage==0) {
-			thisTransform.Translate(vector3s[1],space);
+		if (_percentage==0) {
+			_thisTransform.Translate(_vector3S[1],_space);
 		}
 		
 		//transform.position=vector3s[0];
 		//reset:
-		if (isLocal) {
-			thisTransform.localPosition=vector3s[0];
+		if (_isLocal) {
+			_thisTransform.localPosition=_vector3S[0];
 		}else{
-			thisTransform.position=vector3s[0];
+			_thisTransform.position=_vector3S[0];
 		}
 		
 		//generate:
-		float diminishingControl = 1-percentage;
-		vector3s[2].x= UnityEngine.Random.Range(-vector3s[1].x*diminishingControl, vector3s[1].x*diminishingControl);
-		vector3s[2].y= UnityEngine.Random.Range(-vector3s[1].y*diminishingControl, vector3s[1].y*diminishingControl);
-		vector3s[2].z= UnityEngine.Random.Range(-vector3s[1].z*diminishingControl, vector3s[1].z*diminishingControl);
+		float diminishingControl = 1-_percentage;
+		_vector3S[2].x= UnityEngine.Random.Range(-_vector3S[1].x*diminishingControl, _vector3S[1].x*diminishingControl);
+		_vector3S[2].y= UnityEngine.Random.Range(-_vector3S[1].y*diminishingControl, _vector3S[1].y*diminishingControl);
+		_vector3S[2].z= UnityEngine.Random.Range(-_vector3S[1].z*diminishingControl, _vector3S[1].z*diminishingControl);
 
 		//apply:	
 		//transform.Translate(vector3s[2],space);	
-		if (isLocal) {
-			thisTransform.localPosition+=vector3s[2];
+		if (_isLocal) {
+			_thisTransform.localPosition+=_vector3S[2];
 		}else{
-			thisTransform.position+=vector3s[2];
+			_thisTransform.position+=_vector3S[2];
 		}
 		
 		//reset rotation:
-		if(tweenArguments.Contains("looktarget")){
-			thisTransform.eulerAngles = currentRotation;	
+		if(_tweenArguments.Contains("looktarget")){
+			_thisTransform.eulerAngles = currentRotation;	
 		}	
 		
 		//need physics?
-		postUpdate=thisTransform.position;
-		if(physics){
-			thisTransform.position=preUpdate;
-			rigidbody.MovePosition(postUpdate);
+		_postUpdate=_thisTransform.position;
+		if(_physics){
+			_thisTransform.position=_preUpdate;
+			rigidbody.MovePosition(_postUpdate);
 		}
 	}	
 	
 	void ApplyShakeScaleTargets(){
 		//impact:
-		if (percentage==0) {
-			thisTransform.localScale=vector3s[1];
+		if (_percentage==0) {
+			_thisTransform.localScale=_vector3S[1];
 		}
 		
 		//reset:
-		thisTransform.localScale=vector3s[0];
+		_thisTransform.localScale=_vector3S[0];
 		
 		//generate:
-		float diminishingControl = 1-percentage;
-		vector3s[2].x= UnityEngine.Random.Range(-vector3s[1].x*diminishingControl, vector3s[1].x*diminishingControl);
-		vector3s[2].y= UnityEngine.Random.Range(-vector3s[1].y*diminishingControl, vector3s[1].y*diminishingControl);
-		vector3s[2].z= UnityEngine.Random.Range(-vector3s[1].z*diminishingControl, vector3s[1].z*diminishingControl);
+		float diminishingControl = 1-_percentage;
+		_vector3S[2].x= UnityEngine.Random.Range(-_vector3S[1].x*diminishingControl, _vector3S[1].x*diminishingControl);
+		_vector3S[2].y= UnityEngine.Random.Range(-_vector3S[1].y*diminishingControl, _vector3S[1].y*diminishingControl);
+		_vector3S[2].z= UnityEngine.Random.Range(-_vector3S[1].z*diminishingControl, _vector3S[1].z*diminishingControl);
 
 		//apply:
-		thisTransform.localScale+=vector3s[2];
+		_thisTransform.localScale+=_vector3S[2];
 	}		
 	
 	void ApplyShakeRotationTargets(){
-		preUpdate = thisTransform.eulerAngles;
+		_preUpdate = _thisTransform.eulerAngles;
 		
 		//impact:
-		if (percentage==0) {
-			thisTransform.Rotate(vector3s[1],space);
+		if (_percentage==0) {
+			_thisTransform.Rotate(_vector3S[1],_space);
 		}
 		
 		//reset:
-		thisTransform.eulerAngles=vector3s[0];
+		_thisTransform.eulerAngles=_vector3S[0];
 		
 		//generate:
-		float diminishingControl = 1-percentage;
-		vector3s[2].x= UnityEngine.Random.Range(-vector3s[1].x*diminishingControl, vector3s[1].x*diminishingControl);
-		vector3s[2].y= UnityEngine.Random.Range(-vector3s[1].y*diminishingControl, vector3s[1].y*diminishingControl);
-		vector3s[2].z= UnityEngine.Random.Range(-vector3s[1].z*diminishingControl, vector3s[1].z*diminishingControl);
+		float diminishingControl = 1-_percentage;
+		_vector3S[2].x= UnityEngine.Random.Range(-_vector3S[1].x*diminishingControl, _vector3S[1].x*diminishingControl);
+		_vector3S[2].y= UnityEngine.Random.Range(-_vector3S[1].y*diminishingControl, _vector3S[1].y*diminishingControl);
+		_vector3S[2].z= UnityEngine.Random.Range(-_vector3S[1].z*diminishingControl, _vector3S[1].z*diminishingControl);
 
 		//apply:
-		thisTransform.Rotate(vector3s[2],space);
+		_thisTransform.Rotate(_vector3S[2],_space);
 		
 		//need physics?
-		postUpdate=thisTransform.eulerAngles;
-		if(physics){
-			thisTransform.eulerAngles=preUpdate;
-			rigidbody.MoveRotation(Quaternion.Euler(postUpdate));
+		_postUpdate=_thisTransform.eulerAngles;
+		if(_physics){
+			_thisTransform.eulerAngles=_preUpdate;
+			rigidbody.MoveRotation(Quaternion.Euler(_postUpdate));
 		}
 	}		
 	
 	void ApplyPunchPositionTargets(){
-		preUpdate = thisTransform.position;
+		_preUpdate = _thisTransform.position;
 		
 		//reset rotation to prevent look interferences as object rotates and attempts to move with translate and record current rotation
 		Vector3 currentRotation = new Vector3();
 		
-		if(tweenArguments.Contains("looktarget")){
-			currentRotation = thisTransform.eulerAngles;
-			thisTransform.eulerAngles = vector3s[4];	
+		if(_tweenArguments.Contains("looktarget")){
+			currentRotation = _thisTransform.eulerAngles;
+			_thisTransform.eulerAngles = _vector3S[4];	
 		}
 		
 		//calculate:
-		if(vector3s[1].x>0){
-			vector3s[2].x = punch(vector3s[1].x,percentage);
-		}else if(vector3s[1].x<0){
-			vector3s[2].x=-punch(Mathf.Abs(vector3s[1].x),percentage); 
+		if(_vector3S[1].x>0){
+			_vector3S[2].x = Punch(_vector3S[1].x,_percentage);
+		}else if(_vector3S[1].x<0){
+			_vector3S[2].x=-Punch(Mathf.Abs(_vector3S[1].x),_percentage); 
 		}
-		if(vector3s[1].y>0){
-			vector3s[2].y=punch(vector3s[1].y,percentage);
-		}else if(vector3s[1].y<0){
-			vector3s[2].y=-punch(Mathf.Abs(vector3s[1].y),percentage); 
+		if(_vector3S[1].y>0){
+			_vector3S[2].y=Punch(_vector3S[1].y,_percentage);
+		}else if(_vector3S[1].y<0){
+			_vector3S[2].y=-Punch(Mathf.Abs(_vector3S[1].y),_percentage); 
 		}
-		if(vector3s[1].z>0){
-			vector3s[2].z=punch(vector3s[1].z,percentage);
-		}else if(vector3s[1].z<0){
-			vector3s[2].z=-punch(Mathf.Abs(vector3s[1].z),percentage); 
+		if(_vector3S[1].z>0){
+			_vector3S[2].z=Punch(_vector3S[1].z,_percentage);
+		}else if(_vector3S[1].z<0){
+			_vector3S[2].z=-Punch(Mathf.Abs(_vector3S[1].z),_percentage); 
 		}
 		
 		//apply:
-		thisTransform.Translate(vector3s[2]-vector3s[3],space);
+		_thisTransform.Translate(_vector3S[2]-_vector3S[3],_space);
 
 		//record:
-		vector3s[3]=vector3s[2];
+		_vector3S[3]=_vector3S[2];
 		
 		//reset rotation:
-		if(tweenArguments.Contains("looktarget")){
-			thisTransform.eulerAngles = currentRotation;	
+		if(_tweenArguments.Contains("looktarget")){
+			_thisTransform.eulerAngles = currentRotation;	
 		}
 		
 		//dial in:
@@ -4505,38 +4505,38 @@ public class iTween : MonoBehaviour{
 		*/
 		
 		//need physics?
-		postUpdate=thisTransform.position;
-		if(physics){
-			thisTransform.position=preUpdate;
-			rigidbody.MovePosition(postUpdate);
+		_postUpdate=_thisTransform.position;
+		if(_physics){
+			_thisTransform.position=_preUpdate;
+			rigidbody.MovePosition(_postUpdate);
 		}
 	}		
 	
 	void ApplyPunchRotationTargets(){
-		preUpdate = thisTransform.eulerAngles;
+		_preUpdate = _thisTransform.eulerAngles;
 		
 		//calculate:
-		if(vector3s[1].x>0){
-			vector3s[2].x = punch(vector3s[1].x,percentage);
-		}else if(vector3s[1].x<0){
-			vector3s[2].x=-punch(Mathf.Abs(vector3s[1].x),percentage); 
+		if(_vector3S[1].x>0){
+			_vector3S[2].x = Punch(_vector3S[1].x,_percentage);
+		}else if(_vector3S[1].x<0){
+			_vector3S[2].x=-Punch(Mathf.Abs(_vector3S[1].x),_percentage); 
 		}
-		if(vector3s[1].y>0){
-			vector3s[2].y=punch(vector3s[1].y,percentage);
-		}else if(vector3s[1].y<0){
-			vector3s[2].y=-punch(Mathf.Abs(vector3s[1].y),percentage); 
+		if(_vector3S[1].y>0){
+			_vector3S[2].y=Punch(_vector3S[1].y,_percentage);
+		}else if(_vector3S[1].y<0){
+			_vector3S[2].y=-Punch(Mathf.Abs(_vector3S[1].y),_percentage); 
 		}
-		if(vector3s[1].z>0){
-			vector3s[2].z=punch(vector3s[1].z,percentage);
-		}else if(vector3s[1].z<0){
-			vector3s[2].z=-punch(Mathf.Abs(vector3s[1].z),percentage); 
+		if(_vector3S[1].z>0){
+			_vector3S[2].z=Punch(_vector3S[1].z,_percentage);
+		}else if(_vector3S[1].z<0){
+			_vector3S[2].z=-Punch(Mathf.Abs(_vector3S[1].z),_percentage); 
 		}
 		
 		//apply:
-		thisTransform.Rotate(vector3s[2]-vector3s[3],space);
+		_thisTransform.Rotate(_vector3S[2]-_vector3S[3],_space);
 
 		//record:
-		vector3s[3]=vector3s[2];
+		_vector3S[3]=_vector3S[2];
 		
 		//dial in:
 		/*
@@ -4546,33 +4546,33 @@ public class iTween : MonoBehaviour{
 		*/
 		
 		//need physics?
-		postUpdate=thisTransform.eulerAngles;
-		if(physics){
-			thisTransform.eulerAngles=preUpdate;
-			rigidbody.MoveRotation(Quaternion.Euler(postUpdate));
+		_postUpdate=_thisTransform.eulerAngles;
+		if(_physics){
+			_thisTransform.eulerAngles=_preUpdate;
+			rigidbody.MoveRotation(Quaternion.Euler(_postUpdate));
 		}
 	}	
 	
 	void ApplyPunchScaleTargets(){
 		//calculate:
-		if(vector3s[1].x>0){
-			vector3s[2].x = punch(vector3s[1].x,percentage);
-		}else if(vector3s[1].x<0){
-			vector3s[2].x=-punch(Mathf.Abs(vector3s[1].x),percentage); 
+		if(_vector3S[1].x>0){
+			_vector3S[2].x = Punch(_vector3S[1].x,_percentage);
+		}else if(_vector3S[1].x<0){
+			_vector3S[2].x=-Punch(Mathf.Abs(_vector3S[1].x),_percentage); 
 		}
-		if(vector3s[1].y>0){
-			vector3s[2].y=punch(vector3s[1].y,percentage);
-		}else if(vector3s[1].y<0){
-			vector3s[2].y=-punch(Mathf.Abs(vector3s[1].y),percentage); 
+		if(_vector3S[1].y>0){
+			_vector3S[2].y=Punch(_vector3S[1].y,_percentage);
+		}else if(_vector3S[1].y<0){
+			_vector3S[2].y=-Punch(Mathf.Abs(_vector3S[1].y),_percentage); 
 		}
-		if(vector3s[1].z>0){
-			vector3s[2].z=punch(vector3s[1].z,percentage);
-		}else if(vector3s[1].z<0){
-			vector3s[2].z=-punch(Mathf.Abs(vector3s[1].z),percentage); 
+		if(_vector3S[1].z>0){
+			_vector3S[2].z=Punch(_vector3S[1].z,_percentage);
+		}else if(_vector3S[1].z<0){
+			_vector3S[2].z=-Punch(Mathf.Abs(_vector3S[1].z),_percentage); 
 		}
 		
 		//apply:
-		thisTransform.localScale=vector3s[0]+vector3s[2];
+		_thisTransform.localScale=_vector3S[0]+_vector3S[2];
 		
 		//dial in:
 		/*
@@ -4587,10 +4587,10 @@ public class iTween : MonoBehaviour{
 	#region #5 Tween Steps
 	
 	IEnumerator TweenDelay(){
-		delayStarted = Time.time;
-		yield return new WaitForSeconds (delay);
-		if(wasPaused){
-			wasPaused=false;
+		_delayStarted = UnityEngine.Time.time;
+		yield return new WaitForSeconds (Delay);
+		if(_wasPaused){
+			_wasPaused=false;
 			TweenStart();	
 		}
 	}	
@@ -4598,57 +4598,57 @@ public class iTween : MonoBehaviour{
 	void TweenStart(){		
 		CallBack("onstart");
 		
-		if(!loop){//only if this is not a loop
+		if(!_loop){//only if this is not a loop
 			ConflictCheck();
 			GenerateTargets();
 		}
 				
 		//run stab:
-		if(type == "stab"){
-			audioSource.PlayOneShot(audioSource.clip);
+		if(Type == "stab"){
+			_audioSource.PlayOneShot(_audioSource.clip);
 		}
 		
 		//toggle isKinematic for iTweens that may interfere with physics:
-		if (type == "move" || type=="scale" || type=="rotate" || type=="punch" || type=="shake" || type=="curve" || type=="look") {
+		if (Type == "move" || Type=="scale" || Type=="rotate" || Type=="punch" || Type=="shake" || Type=="curve" || Type=="look") {
 			EnableKinematic();
 		}
 		
-		isRunning = true;
+		IsRunning = true;
 	}
 	
 	IEnumerator TweenRestart(){
-		if(delay > 0){
-			delayStarted = Time.time;
-			yield return new WaitForSeconds (delay);
+		if(Delay > 0){
+			_delayStarted = UnityEngine.Time.time;
+			yield return new WaitForSeconds (Delay);
 		}
-		loop=true;
+		_loop=true;
 		TweenStart();
 	}	
 	
 	void TweenUpdate(){
-		apply();
+		_apply();
 		CallBack("onupdate");
 		UpdatePercentage();		
 	}
 			
 	void TweenComplete(){
-		isRunning=false;
+		IsRunning=false;
 		
 		//dial in percentage to 1 or 0 for final run:
-		if(percentage>.5f){
-			percentage=1f;
+		if(_percentage>.5f){
+			_percentage=1f;
 		}else{
-			percentage=0;	
+			_percentage=0;	
 		}
 		
 		//apply dial in and final run:
-		apply();
-		if(type == "value"){
+		_apply();
+		if(Type == "value"){
 			CallBack("onupdate"); //CallBack run for ValueTo since it only calculates and applies in the update callback
 		}
 		
 		//loop or dispose?
-		if(loopType==LoopType.none){
+		if(loopType==LoopType.None){
 			Dispose();
 		}else{
 			TweenLoop();
@@ -4660,18 +4660,18 @@ public class iTween : MonoBehaviour{
 	void TweenLoop(){
 		DisableKinematic(); //give physics control again
 		switch(loopType){
-			case LoopType.loop:
+			case LoopType.Loop:
 				//rewind:
-				percentage=0;
-				runningTime=0;
-				apply();
+				_percentage=0;
+				_runningTime=0;
+				_apply();
 				
 				//replay:
 				StartCoroutine("TweenRestart");
 				break;
-			case LoopType.pingPong:
-				reverse = !reverse;
-				runningTime=0;
+			case LoopType.PingPong:
+				_reverse = !_reverse;
+				_runningTime=0;
 			
 				//replay:
 				StartCoroutine("TweenRestart");
@@ -4720,7 +4720,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static Vector3 Vector3Update(Vector3 currentValue, Vector3 targetValue, float speed){
 		Vector3 diff = targetValue - currentValue;
-		currentValue += (diff * speed) * Time.deltaTime;
+		currentValue += (diff * speed) * UnityEngine.Time.deltaTime;
 		return (currentValue);
 	}
 	
@@ -4741,7 +4741,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static Vector2 Vector2Update(Vector2 currentValue, Vector2 targetValue, float speed){
 		Vector2 diff = targetValue - currentValue;
-		currentValue += (diff * speed) * Time.deltaTime;
+		currentValue += (diff * speed) * UnityEngine.Time.deltaTime;
 		return (currentValue);
 	}
 	
@@ -4762,7 +4762,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static float FloatUpdate(float currentValue, float targetValue, float speed){
 		float diff = targetValue - currentValue;
-		currentValue += (diff * speed) * Time.deltaTime;
+		currentValue += (diff * speed) * UnityEngine.Time.deltaTime;
 		return (currentValue);
 	}
 	
@@ -4842,9 +4842,9 @@ public class iTween : MonoBehaviour{
 		//set smooth time:
 		if(args.Contains("time")){
 			time=(float)args["time"];
-			time*=Defaults.updateTimePercentage;
+			time*=Defaults.UpdateTimePercentage;
 		}else{
-			time=Defaults.updateTime;
+			time=Defaults.UpdateTime;
 		}
 		
 		//init values:
@@ -4930,14 +4930,14 @@ public class iTween : MonoBehaviour{
 		
 		AudioSource audioSource;
 		float time;
-		Vector2[] vector2s = new Vector2[4];
+		Vector2[] vector2S = new Vector2[4];
 			
 		//set smooth time:
 		if(args.Contains("time")){
 			time=(float)args["time"];
-			time*=Defaults.updateTimePercentage;
+			time*=Defaults.UpdateTimePercentage;
 		}else{
-			time=Defaults.updateTime;
+			time=Defaults.UpdateTime;
 		}
 
 		//set audioSource:
@@ -4954,23 +4954,23 @@ public class iTween : MonoBehaviour{
 		}		
 		
 		//from values:
-		vector2s[0] = vector2s[1] = new Vector2(audioSource.volume,audioSource.pitch);
+		vector2S[0] = vector2S[1] = new Vector2(audioSource.volume,audioSource.pitch);
 		
 		//set to:
 		if(args.Contains("volume")){
-			vector2s[1].x=(float)args["volume"];
+			vector2S[1].x=(float)args["volume"];
 		}
 		if(args.Contains("pitch")){
-			vector2s[1].y=(float)args["pitch"];
+			vector2S[1].y=(float)args["pitch"];
 		}
 		
 		//calculate:
-		vector2s[3].x=Mathf.SmoothDampAngle(vector2s[0].x,vector2s[1].x,ref vector2s[2].x,time);
-		vector2s[3].y=Mathf.SmoothDampAngle(vector2s[0].y,vector2s[1].y,ref vector2s[2].y,time);
+		vector2S[3].x=Mathf.SmoothDampAngle(vector2S[0].x,vector2S[1].x,ref vector2S[2].x,time);
+		vector2S[3].y=Mathf.SmoothDampAngle(vector2S[0].y,vector2S[1].y,ref vector2S[2].y,time);
 	
 		//apply:
-		audioSource.volume=vector2s[3].x;
-		audioSource.pitch=vector2s[3].y;
+		audioSource.volume=vector2S[3].x;
+		audioSource.pitch=vector2S[3].y;
 	}
 	
 	/// <summary>
@@ -5018,51 +5018,51 @@ public class iTween : MonoBehaviour{
 		
 		bool isLocal;
 		float time;
-		Vector3[] vector3s = new Vector3[4];
+		Vector3[] vector3S = new Vector3[4];
 		Vector3 preUpdate = target.transform.eulerAngles;
 		
 		//set smooth time:
 		if(args.Contains("time")){
 			time=(float)args["time"];
-			time*=Defaults.updateTimePercentage;
+			time*=Defaults.UpdateTimePercentage;
 		}else{
-			time=Defaults.updateTime;
+			time=Defaults.UpdateTime;
 		}
 		
 		//set isLocal:
 		if(args.Contains("islocal")){
 			isLocal = (bool)args["islocal"];
 		}else{
-			isLocal = Defaults.isLocal;	
+			isLocal = Defaults.IsLocal;	
 		}
 		
 		//from values:
 		if(isLocal){
-			vector3s[0] = target.transform.localEulerAngles;
+			vector3S[0] = target.transform.localEulerAngles;
 		}else{
-			vector3s[0] = target.transform.eulerAngles;	
+			vector3S[0] = target.transform.eulerAngles;	
 		}
 		
 		//set to:
 		if(args.Contains("rotation")){
 			if (args["rotation"].GetType() == typeof(Transform)){
 				Transform trans = (Transform)args["rotation"];
-				vector3s[1]=trans.eulerAngles;
+				vector3S[1]=trans.eulerAngles;
 			}else if(args["rotation"].GetType() == typeof(Vector3)){
-				vector3s[1]=(Vector3)args["rotation"];
+				vector3S[1]=(Vector3)args["rotation"];
 			}	
 		}
 				
 		//calculate:
-		vector3s[3].x=Mathf.SmoothDampAngle(vector3s[0].x,vector3s[1].x,ref vector3s[2].x,time);
-		vector3s[3].y=Mathf.SmoothDampAngle(vector3s[0].y,vector3s[1].y,ref vector3s[2].y,time);
-		vector3s[3].z=Mathf.SmoothDampAngle(vector3s[0].z,vector3s[1].z,ref vector3s[2].z,time);
+		vector3S[3].x=Mathf.SmoothDampAngle(vector3S[0].x,vector3S[1].x,ref vector3S[2].x,time);
+		vector3S[3].y=Mathf.SmoothDampAngle(vector3S[0].y,vector3S[1].y,ref vector3S[2].y,time);
+		vector3S[3].z=Mathf.SmoothDampAngle(vector3S[0].z,vector3S[1].z,ref vector3S[2].z,time);
 	
 		//apply:
 		if(isLocal){
-			target.transform.localEulerAngles=vector3s[3];
+			target.transform.localEulerAngles=vector3S[3];
 		}else{
-			target.transform.eulerAngles=vector3s[3];
+			target.transform.eulerAngles=vector3S[3];
 		}
 		
 		//need physics?
@@ -5111,46 +5111,46 @@ public class iTween : MonoBehaviour{
 		CleanArgs(args);
 		
 		float time;
-		Vector3[] vector3s = new Vector3[4];
+		Vector3[] vector3S = new Vector3[4];
 			
 		//set smooth time:
 		if(args.Contains("time")){
 			time=(float)args["time"];
-			time*=Defaults.updateTimePercentage;
+			time*=Defaults.UpdateTimePercentage;
 		}else{
-			time=Defaults.updateTime;
+			time=Defaults.UpdateTime;
 		}
 		
 		//init values:
-		vector3s[0] = vector3s[1] = target.transform.localScale;
+		vector3S[0] = vector3S[1] = target.transform.localScale;
 		
 		//to values:
 		if (args.Contains("scale")) {
 			if (args["scale"].GetType() == typeof(Transform)){
 				Transform trans = (Transform)args["scale"];
-				vector3s[1]=trans.localScale;
+				vector3S[1]=trans.localScale;
 			}else if(args["scale"].GetType() == typeof(Vector3)){
-				vector3s[1]=(Vector3)args["scale"];
+				vector3S[1]=(Vector3)args["scale"];
 			}				
 		}else{
 			if (args.Contains("x")) {
-				vector3s[1].x=(float)args["x"];
+				vector3S[1].x=(float)args["x"];
 			}
 			if (args.Contains("y")) {
-				vector3s[1].y=(float)args["y"];
+				vector3S[1].y=(float)args["y"];
 			}
 			if (args.Contains("z")) {
-				vector3s[1].z=(float)args["z"];
+				vector3S[1].z=(float)args["z"];
 			}
 		}
 		
 		//calculate:
-		vector3s[3].x=Mathf.SmoothDamp(vector3s[0].x,vector3s[1].x,ref vector3s[2].x,time);
-		vector3s[3].y=Mathf.SmoothDamp(vector3s[0].y,vector3s[1].y,ref vector3s[2].y,time);
-		vector3s[3].z=Mathf.SmoothDamp(vector3s[0].z,vector3s[1].z,ref vector3s[2].z,time);
+		vector3S[3].x=Mathf.SmoothDamp(vector3S[0].x,vector3S[1].x,ref vector3S[2].x,time);
+		vector3S[3].y=Mathf.SmoothDamp(vector3S[0].y,vector3S[1].y,ref vector3S[2].y,time);
+		vector3S[3].z=Mathf.SmoothDamp(vector3S[0].z,vector3S[1].z,ref vector3S[2].z,time);
 				
 		//apply:
-		target.transform.localScale=vector3s[3];		
+		target.transform.localScale=vector3S[3];		
 	}	
 	
 	/// <summary>
@@ -5206,72 +5206,72 @@ public class iTween : MonoBehaviour{
 		CleanArgs(args);
 		
 		float time;
-		Vector3[] vector3s = new Vector3[4];
+		Vector3[] vector3S = new Vector3[4];
 		bool isLocal;
 		Vector3 preUpdate = target.transform.position;
 			
 		//set smooth time:
 		if(args.Contains("time")){
 			time=(float)args["time"];
-			time*=Defaults.updateTimePercentage;
+			time*=Defaults.UpdateTimePercentage;
 		}else{
-			time=Defaults.updateTime;
+			time=Defaults.UpdateTime;
 		}
 			
 		//set isLocal:
 		if(args.Contains("islocal")){
 			isLocal = (bool)args["islocal"];
 		}else{
-			isLocal = Defaults.isLocal;	
+			isLocal = Defaults.IsLocal;	
 		}
 		 
 		//init values:
 		if(isLocal){
-			vector3s[0] = vector3s[1] = target.transform.localPosition;
+			vector3S[0] = vector3S[1] = target.transform.localPosition;
 		}else{
-			vector3s[0] = vector3s[1] = target.transform.position;	
+			vector3S[0] = vector3S[1] = target.transform.position;	
 		}
 		
 		//to values:
 		if (args.Contains("position")) {
 			if (args["position"].GetType() == typeof(Transform)){
 				Transform trans = (Transform)args["position"];
-				vector3s[1]=trans.position;
+				vector3S[1]=trans.position;
 			}else if(args["position"].GetType() == typeof(Vector3)){
-				vector3s[1]=(Vector3)args["position"];
+				vector3S[1]=(Vector3)args["position"];
 			}			
 		}else{
 			if (args.Contains("x")) {
-				vector3s[1].x=(float)args["x"];
+				vector3S[1].x=(float)args["x"];
 			}
 			if (args.Contains("y")) {
-				vector3s[1].y=(float)args["y"];
+				vector3S[1].y=(float)args["y"];
 			}
 			if (args.Contains("z")) {
-				vector3s[1].z=(float)args["z"];
+				vector3S[1].z=(float)args["z"];
 			}
 		}
 		
 		//calculate:
-		vector3s[3].x=Mathf.SmoothDamp(vector3s[0].x,vector3s[1].x,ref vector3s[2].x,time);
-		vector3s[3].y=Mathf.SmoothDamp(vector3s[0].y,vector3s[1].y,ref vector3s[2].y,time);
-		vector3s[3].z=Mathf.SmoothDamp(vector3s[0].z,vector3s[1].z,ref vector3s[2].z,time);
+		vector3S[3].x=Mathf.SmoothDamp(vector3S[0].x,vector3S[1].x,ref vector3S[2].x,time);
+		vector3S[3].y=Mathf.SmoothDamp(vector3S[0].y,vector3S[1].y,ref vector3S[2].y,time);
+		vector3S[3].z=Mathf.SmoothDamp(vector3S[0].z,vector3S[1].z,ref vector3S[2].z,time);
 			
 		//handle orient to path:
 		if(args.Contains("orienttopath") && (bool)args["orienttopath"]){
-			args["looktarget"] = vector3s[3];
+			args["looktarget"] = vector3S[3];
 		}
 		
 		//look applications:
 		if(args.Contains("looktarget")){
-			iTween.LookUpdate(target,args);
+			ITween.LookUpdate(target,args);
 		}
 		
 		//apply:
 		if(isLocal){
-			target.transform.localPosition = vector3s[3];			
+			target.transform.localPosition = vector3S[3];			
 		}else{
-			target.transform.position=vector3s[3];	
+			target.transform.position=vector3S[3];	
 		}	
 		
 		//need physics?
@@ -5314,30 +5314,30 @@ public class iTween : MonoBehaviour{
 		CleanArgs(args);
 		
 		float time;
-		Vector3[] vector3s = new Vector3[5];
+		Vector3[] vector3S = new Vector3[5];
 		
 		//set smooth time:
 		if(args.Contains("looktime")){
 			time=(float)args["looktime"];
-			time*=Defaults.updateTimePercentage;
+			time*=Defaults.UpdateTimePercentage;
 		}else if(args.Contains("time")){
 			time=(float)args["time"]*.15f;
-			time*=Defaults.updateTimePercentage;
+			time*=Defaults.UpdateTimePercentage;
 		}else{
-			time=Defaults.updateTime;
+			time=Defaults.UpdateTime;
 		}
 		
 		//from values:
-		vector3s[0] = target.transform.eulerAngles;
+		vector3S[0] = target.transform.eulerAngles;
 		
 		//set look:
 		if(args.Contains("looktarget")){
 			if (args["looktarget"].GetType() == typeof(Transform)) {
 				//target.transform.LookAt((Transform)args["looktarget"]);
-				target.transform.LookAt((Transform)args["looktarget"], (Vector3?)args["up"] ?? Defaults.up);
+				target.transform.LookAt((Transform)args["looktarget"], (Vector3?)args["up"] ?? Defaults.Up);
 			}else if(args["looktarget"].GetType() == typeof(Vector3)){
 				//target.transform.LookAt((Vector3)args["looktarget"]);
-				target.transform.LookAt((Vector3)args["looktarget"], (Vector3?)args["up"] ?? Defaults.up);
+				target.transform.LookAt((Vector3)args["looktarget"], (Vector3?)args["up"] ?? Defaults.Up);
 			}
 		}else{
 			Debug.LogError("iTween Error: LookUpdate needs a 'looktarget' property!");
@@ -5345,37 +5345,37 @@ public class iTween : MonoBehaviour{
 		}
 		
 		//to values and reset look:
-		vector3s[1]=target.transform.eulerAngles;
-		target.transform.eulerAngles=vector3s[0];
+		vector3S[1]=target.transform.eulerAngles;
+		target.transform.eulerAngles=vector3S[0];
 		
 		//calculate:
-		vector3s[3].x=Mathf.SmoothDampAngle(vector3s[0].x,vector3s[1].x,ref vector3s[2].x,time);
-		vector3s[3].y=Mathf.SmoothDampAngle(vector3s[0].y,vector3s[1].y,ref vector3s[2].y,time);
-		vector3s[3].z=Mathf.SmoothDampAngle(vector3s[0].z,vector3s[1].z,ref vector3s[2].z,time);
+		vector3S[3].x=Mathf.SmoothDampAngle(vector3S[0].x,vector3S[1].x,ref vector3S[2].x,time);
+		vector3S[3].y=Mathf.SmoothDampAngle(vector3S[0].y,vector3S[1].y,ref vector3S[2].y,time);
+		vector3S[3].z=Mathf.SmoothDampAngle(vector3S[0].z,vector3S[1].z,ref vector3S[2].z,time);
 	
 		//apply:
-		target.transform.eulerAngles=vector3s[3];
+		target.transform.eulerAngles=vector3S[3];
 		
 		//axis restriction:
 		if(args.Contains("axis")){
-			vector3s[4]=target.transform.eulerAngles;
+			vector3S[4]=target.transform.eulerAngles;
 			switch((string)args["axis"]){
 				case "x":
-					vector3s[4].y=vector3s[0].y;
-					vector3s[4].z=vector3s[0].z;
+					vector3S[4].y=vector3S[0].y;
+					vector3S[4].z=vector3S[0].z;
 				break;
 				case "y":
-					vector3s[4].x=vector3s[0].x;
-					vector3s[4].z=vector3s[0].z;
+					vector3S[4].x=vector3S[0].x;
+					vector3S[4].z=vector3S[0].z;
 				break;
 				case "z":
-					vector3s[4].x=vector3s[0].x;
-					vector3s[4].y=vector3s[0].y;
+					vector3S[4].x=vector3S[0].x;
+					vector3S[4].y=vector3S[0].y;
 				break;
 			}
 			
 			//apply axis restriction:
-			target.transform.eulerAngles=vector3s[4];
+			target.transform.eulerAngles=vector3S[4];
 		}	
 	}
 	
@@ -5417,14 +5417,14 @@ public class iTween : MonoBehaviour{
 			suppliedPath[i]=path[i].position;
 		}
 		
-		Vector3[] vector3s = PathControlPointGenerator(suppliedPath);
+		Vector3[] vector3S = PathControlPointGenerator(suppliedPath);
 		
 		//Line Draw:
-		Vector3 prevPt = Interp(vector3s,0);
-		int SmoothAmount = path.Length*20;
-		for (int i = 1; i <= SmoothAmount; i++) {
-			float pm = (float) i / SmoothAmount;
-			Vector3 currPt = Interp(vector3s,pm);
+		Vector3 prevPt = Interp(vector3S,0);
+		int smoothAmount = path.Length*20;
+		for (int i = 1; i <= smoothAmount; i++) {
+			float pm = (float) i / smoothAmount;
+			Vector3 currPt = Interp(vector3S,pm);
 			pathLength += Vector3.Distance(prevPt,currPt);
 			prevPt = currPt;
 		}
@@ -5444,14 +5444,14 @@ public class iTween : MonoBehaviour{
 	public static float PathLength(Vector3[] path){
 		float pathLength = 0;
 		
-		Vector3[] vector3s = PathControlPointGenerator(path);
+		Vector3[] vector3S = PathControlPointGenerator(path);
 		
 		//Line Draw:
-		Vector3 prevPt = Interp(vector3s,0);
-		int SmoothAmount = path.Length*20;
-		for (int i = 1; i <= SmoothAmount; i++) {
-			float pm = (float) i / SmoothAmount;
-			Vector3 currPt = Interp(vector3s,pm);
+		Vector3 prevPt = Interp(vector3S,0);
+		int smoothAmount = path.Length*20;
+		for (int i = 1; i <= smoothAmount; i++) {
+			float pm = (float) i / smoothAmount;
+			Vector3 currPt = Interp(vector3S,pm);
 			pathLength += Vector3.Distance(prevPt,currPt);
 			prevPt = currPt;
 		}
@@ -5582,7 +5582,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void DrawLine(Vector3[] line) {
 		if(line.Length>0){
-			DrawLineHelper(line,Defaults.color,"gizmos");
+			DrawLineHelper(line,Defaults.Color,"gizmos");
 		}
 	}	
 	
@@ -5614,7 +5614,7 @@ public class iTween : MonoBehaviour{
 			for (int i = 0; i < line.Length; i++) {
 				suppliedLine[i]=line[i].position;
 			}
-			DrawLineHelper(suppliedLine,Defaults.color,"gizmos");
+			DrawLineHelper(suppliedLine,Defaults.Color,"gizmos");
 		}
 	}		
 	
@@ -5647,7 +5647,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void DrawLineGizmos(Vector3[] line) {
 		if(line.Length>0){
-			DrawLineHelper(line,Defaults.color,"gizmos");
+			DrawLineHelper(line,Defaults.Color,"gizmos");
 		}
 	}	
 	
@@ -5679,7 +5679,7 @@ public class iTween : MonoBehaviour{
 			for (int i = 0; i < line.Length; i++) {
 				suppliedLine[i]=line[i].position;
 			}
-			DrawLineHelper(suppliedLine,Defaults.color,"gizmos");
+			DrawLineHelper(suppliedLine,Defaults.Color,"gizmos");
 		}
 	}		
 	
@@ -5712,7 +5712,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void DrawLineHandles(Vector3[] line) {
 		if(line.Length>0){
-			DrawLineHelper(line,Defaults.color,"handles");
+			DrawLineHelper(line,Defaults.Color,"handles");
 		}
 	}	
 	
@@ -5744,7 +5744,7 @@ public class iTween : MonoBehaviour{
 			for (int i = 0; i < line.Length; i++) {
 				suppliedLine[i]=line[i].position;
 			}
-			DrawLineHelper(suppliedLine,Defaults.color,"handles");
+			DrawLineHelper(suppliedLine,Defaults.Color,"handles");
 		}
 	}		
 	
@@ -5793,7 +5793,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void DrawPath(Vector3[] path) {
 		if(path.Length>0){
-			DrawPathHelper(path,Defaults.color,"gizmos");
+			DrawPathHelper(path,Defaults.Color,"gizmos");
 		}
 	}		
 	
@@ -5826,7 +5826,7 @@ public class iTween : MonoBehaviour{
 				suppliedPath[i]=path[i].position;
 			}
 			
-			DrawPathHelper(suppliedPath,Defaults.color,"gizmos");	
+			DrawPathHelper(suppliedPath,Defaults.Color,"gizmos");	
 		}
 	}		
 	
@@ -5859,7 +5859,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void DrawPathGizmos(Vector3[] path) {
 		if(path.Length>0){
-			DrawPathHelper(path,Defaults.color,"gizmos");
+			DrawPathHelper(path,Defaults.Color,"gizmos");
 		}
 	}		
 	
@@ -5892,7 +5892,7 @@ public class iTween : MonoBehaviour{
 				suppliedPath[i]=path[i].position;
 			}
 			
-			DrawPathHelper(suppliedPath,Defaults.color,"gizmos");	
+			DrawPathHelper(suppliedPath,Defaults.Color,"gizmos");	
 		}
 	}		
 	
@@ -5925,7 +5925,7 @@ public class iTween : MonoBehaviour{
 	/// </param>
 	public static void DrawPathHandles(Vector3[] path) {
 		if(path.Length>0){
-			DrawPathHelper(path,Defaults.color,"handles");
+			DrawPathHelper(path,Defaults.Color,"handles");
 		}
 	}		
 	
@@ -5958,7 +5958,7 @@ public class iTween : MonoBehaviour{
 				suppliedPath[i]=path[i].position;
 			}
 			
-			DrawPathHelper(suppliedPath,Defaults.color,"handles");	
+			DrawPathHelper(suppliedPath,Defaults.Color,"handles");	
 		}
 	}		
 	
@@ -5990,8 +5990,8 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.Int32"/>
 	/// </param>
 	public static void CameraFadeDepth(int depth){
-		if(cameraFade){
-			cameraFade.transform.position=new Vector3(cameraFade.transform.position.x,cameraFade.transform.position.y,depth);
+		if(_cameraFade){
+			_cameraFade.transform.position=new Vector3(_cameraFade.transform.position.x,_cameraFade.transform.position.y,depth);
 		}
 	}
 	
@@ -5999,8 +5999,8 @@ public class iTween : MonoBehaviour{
 	/// Removes and destroyes a camera fade.
 	/// </summary>
 	public static void CameraFadeDestroy(){
-		if(cameraFade){
-			Destroy(cameraFade);
+		if(_cameraFade){
+			Destroy(_cameraFade);
 		}
 	}
 	
@@ -6011,8 +6011,8 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="Texture2D"/>
 	/// </param>
 	public static void CameraFadeSwap(Texture2D texture){
-		if(cameraFade){
-			cameraFade.guiTexture.texture=texture;
+		if(_cameraFade){
+			_cameraFade.guiTexture.texture=texture;
 		}
 	}
 	
@@ -6029,16 +6029,16 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="GameObject"/> for a reference to the CameraFade.
 	/// </returns>
 	public static GameObject CameraFadeAdd(Texture2D texture, int depth){
-		if(cameraFade){
+		if(_cameraFade){
 			return null;
 		}else{			
 			//establish colorFade object:
-			cameraFade = new GameObject("iTween Camera Fade");
-			cameraFade.transform.position= new Vector3(.5f,.5f,depth);
-			cameraFade.AddComponent<GUITexture>();
-			cameraFade.guiTexture.texture=texture;
-			cameraFade.guiTexture.color = new Color(.5f,.5f,.5f,0);
-			return cameraFade;
+			_cameraFade = new GameObject("iTween Camera Fade");
+			_cameraFade.transform.position= new Vector3(.5f,.5f,depth);
+			_cameraFade.AddComponent<GUITexture>();
+			_cameraFade.guiTexture.texture=texture;
+			_cameraFade.guiTexture.color = new Color(.5f,.5f,.5f,0);
+			return _cameraFade;
 		}
 	}
 	
@@ -6052,16 +6052,16 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="GameObject"/> for a reference to the CameraFade.
 	/// </returns>
 	public static GameObject CameraFadeAdd(Texture2D texture){
-		if(cameraFade){
+		if(_cameraFade){
 			return null;
 		}else{			
 			//establish colorFade object:
-			cameraFade = new GameObject("iTween Camera Fade");
-			cameraFade.transform.position= new Vector3(.5f,.5f,Defaults.cameraFadeDepth);
-			cameraFade.AddComponent<GUITexture>();
-			cameraFade.guiTexture.texture=texture;
-			cameraFade.guiTexture.color = new Color(.5f,.5f,.5f,0);
-			return cameraFade;
+			_cameraFade = new GameObject("iTween Camera Fade");
+			_cameraFade.transform.position= new Vector3(.5f,.5f,Defaults.cameraFadeDepth);
+			_cameraFade.AddComponent<GUITexture>();
+			_cameraFade.guiTexture.texture=texture;
+			_cameraFade.guiTexture.color = new Color(.5f,.5f,.5f,0);
+			return _cameraFade;
 		}
 	}
 	
@@ -6072,16 +6072,16 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="GameObject"/> for a reference to the CameraFade.
 	/// </returns>
 	public static GameObject CameraFadeAdd(){
-		if(cameraFade){
+		if(_cameraFade){
 			return null;
 		}else{			
 			//establish colorFade object:
-			cameraFade = new GameObject("iTween Camera Fade");
-			cameraFade.transform.position= new Vector3(.5f,.5f,Defaults.cameraFadeDepth);
-			cameraFade.AddComponent<GUITexture>();
-			cameraFade.guiTexture.texture=CameraTexture(Color.black);
-			cameraFade.guiTexture.color = new Color(.5f,.5f,.5f,0);
-			return cameraFade;
+			_cameraFade = new GameObject("iTween Camera Fade");
+			_cameraFade.transform.position= new Vector3(.5f,.5f,Defaults.cameraFadeDepth);
+			_cameraFade.AddComponent<GUITexture>();
+			_cameraFade.guiTexture.texture=CameraTexture(Color.black);
+			_cameraFade.guiTexture.color = new Color(.5f,.5f,.5f,0);
+			return _cameraFade;
 		}
 	}	
 	
@@ -6094,8 +6094,8 @@ public class iTween : MonoBehaviour{
 	/// Resume all iTweens on a GameObject.
 	/// </summary>
 	public static void Resume(GameObject target){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
 			item.enabled=true;
 		}
 	}
@@ -6119,9 +6119,9 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to resume.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Resume(GameObject target, string type){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			string targetType = item.type+item.method;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.enabled=true;
@@ -6136,9 +6136,9 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to resume.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Resume(GameObject target, string type, bool includechildren){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			string targetType = item.type+item.method;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.enabled=true;
@@ -6155,8 +6155,8 @@ public class iTween : MonoBehaviour{
 	/// Resume all iTweens in scene.
 	/// </summary>
 	public static void Resume(){
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			GameObject target = (GameObject)currentTween["target"];
 			Resume(target);
 		}
@@ -6171,8 +6171,8 @@ public class iTween : MonoBehaviour{
 	public static void Resume(string type){
 		ArrayList resumeArray = new ArrayList();
 		
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			GameObject target = (GameObject)currentTween["target"];
 			resumeArray.Insert(resumeArray.Count,target);
 		}
@@ -6190,13 +6190,13 @@ public class iTween : MonoBehaviour{
 	/// Pause all iTweens on a GameObject.
 	/// </summary>
 	public static void Pause(GameObject target){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			if(item.delay>0){
-				item.delay-=Time.time-item.delayStarted;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			if(item.Delay>0){
+				item.Delay-=UnityEngine.Time.time-item._delayStarted;
 				item.StopCoroutine("TweenDelay");
 			}
-			item.isPaused=true;
+			item.IsPaused=true;
 			item.enabled=false;
 		}
 	}
@@ -6220,16 +6220,16 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to pause.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Pause(GameObject target, string type){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			string targetType = item.type+item.method;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
-				if(item.delay>0){
-					item.delay-=Time.time-item.delayStarted;
+				if(item.Delay>0){
+					item.Delay-=UnityEngine.Time.time-item._delayStarted;
 					item.StopCoroutine("TweenDelay");
 				}
-				item.isPaused=true;
+				item.IsPaused=true;
 				item.enabled=false;
 			}
 		}
@@ -6242,16 +6242,16 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to pause.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Pause(GameObject target, string type, bool includechildren){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			string targetType = item.type+item.method;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
-				if(item.delay>0){
-					item.delay-=Time.time-item.delayStarted;
+				if(item.Delay>0){
+					item.Delay-=UnityEngine.Time.time-item._delayStarted;
 					item.StopCoroutine("TweenDelay");
 				}
-				item.isPaused=true;
+				item.IsPaused=true;
 				item.enabled=false;
 			}
 		}
@@ -6266,8 +6266,8 @@ public class iTween : MonoBehaviour{
 	/// Pause all iTweens in scene.
 	/// </summary>
 	public static void Pause(){
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			GameObject target = (GameObject)currentTween["target"];
 			Pause(target);
 		}
@@ -6282,8 +6282,8 @@ public class iTween : MonoBehaviour{
 	public static void Pause(string type){
 		ArrayList pauseArray = new ArrayList();
 		
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			GameObject target = (GameObject)currentTween["target"];
 			pauseArray.Insert(pauseArray.Count,target);
 		}
@@ -6301,7 +6301,7 @@ public class iTween : MonoBehaviour{
 	/// Count all iTweens in current scene.
 	/// </summary>
 	public static int Count(){
-		return(tweens.Count);
+		return(Tweens.Count);
 	}
 	
 	/// <summary>
@@ -6313,8 +6313,8 @@ public class iTween : MonoBehaviour{
 	public static int Count(string type){
 		int tweenCount = 0;
 
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			string targetType = (string)currentTween["type"]+(string)currentTween["method"];
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6329,7 +6329,7 @@ public class iTween : MonoBehaviour{
 	/// Count all iTweens on a GameObject.
 	/// </summary>
 	public static int Count(GameObject target){
-		Component[] tweens = target.GetComponents<iTween>();
+		Component[] tweens = target.GetComponents<ITween>();
 		return(tweens.Length);
 	}
 	
@@ -6341,9 +6341,9 @@ public class iTween : MonoBehaviour{
 	/// </param>  
 	public static int Count(GameObject target, string type){
 		int tweenCount = 0;
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			string targetType = item.type+item.method;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				tweenCount++;
@@ -6360,12 +6360,12 @@ public class iTween : MonoBehaviour{
 	/// Stop and destroy all Tweens in current scene.
 	/// </summary>
 	public static void Stop(){
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			GameObject target = (GameObject)currentTween["target"];
 			Stop(target);
 		}
-		tweens.Clear();
+		Tweens.Clear();
 	}	
 	
 	/// <summary>
@@ -6377,8 +6377,8 @@ public class iTween : MonoBehaviour{
 	public static void Stop(string type){
 		ArrayList stopArray = new ArrayList();
 		
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			GameObject target = (GameObject)currentTween["target"];
 			stopArray.Insert(stopArray.Count,target);
 		}
@@ -6398,8 +6398,8 @@ public class iTween : MonoBehaviour{
 	public static void StopByName(string name){
 		ArrayList stopArray = new ArrayList();
 		
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable currentTween = tweens[i];
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable currentTween = Tweens[i];
 			GameObject target = (GameObject)currentTween["target"];
 			stopArray.Insert(stopArray.Count,target);
 		}
@@ -6414,8 +6414,8 @@ public class iTween : MonoBehaviour{
 	/// Stop and destroy all iTweens on a GameObject.
 	/// </summary>
 	public static void Stop(GameObject target){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
 			item.Dispose();
 		}
 	}
@@ -6439,9 +6439,9 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to stop.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Stop(GameObject target, string type){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			string targetType = item.type+item.method;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.Dispose();
@@ -6457,14 +6457,14 @@ public class iTween : MonoBehaviour{
 	/// The <see cref="System.String"/> name of iTween you would like to stop.
 	/// </param>	
 	public static void StopByName(GameObject target, string name){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
 			/*string targetType = item.type+item.method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.Dispose();
 			}*/
-			if(item._name == name){
+			if(item.Name == name){
 				item.Dispose();
 			}
 		}
@@ -6478,9 +6478,9 @@ public class iTween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to stop.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Stop(GameObject target, string type, bool includechildren){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
-			string targetType = item.type+item.method;
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
+			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.Dispose();
@@ -6501,14 +6501,14 @@ public class iTween : MonoBehaviour{
 	/// The <see cref="System.String"/> name of iTween you would like to stop.
 	/// </param>	
 	public static void StopByName(GameObject target, string name, bool includechildren){
-		Component[] tweens = target.GetComponents<iTween>();
-		foreach (iTween item in tweens){
+		Component[] tweens = target.GetComponents<ITween>();
+		foreach (ITween item in tweens){
 			/*string targetType = item.type+item.method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
 				item.Dispose();
 			}*/
-			if(item._name == name){
+			if(item.Name == name){
 				item.Dispose();
 			}
 		}
@@ -6549,19 +6549,19 @@ public class iTween : MonoBehaviour{
 
 	#region Component Segments
 	
-	private iTween(Hashtable h) {
-		tweenArguments = h;	
+	private ITween(Hashtable h) {
+		_tweenArguments = h;	
 	}
 	
 	void Awake(){
-		thisTransform = transform;
+		_thisTransform = transform;
 			
 		RetrieveArgs();
-        lastRealTime = Time.realtimeSinceStartup; // Added by PressPlay
+        _lastRealTime = UnityEngine.Time.realtimeSinceStartup; // Added by PressPlay
 	}
 	
 	IEnumerator Start(){
-		if(delay > 0){
+		if(Delay > 0){
 			yield return StartCoroutine("TweenDelay");
 		}
 		TweenStart();
@@ -6569,15 +6569,15 @@ public class iTween : MonoBehaviour{
 	
 	//non-physics
 	void Update(){
-		if(isRunning && !physics){
-			if(!reverse){
-				if(percentage<1f){
+		if(IsRunning && !_physics){
+			if(!_reverse){
+				if(_percentage<1f){
 					TweenUpdate();
 				}else{
 					TweenComplete();	
 				}
 			}else{
-				if(percentage>0){
+				if(_percentage>0){
 					TweenUpdate();
 				}else{
 					TweenComplete();	
@@ -6588,15 +6588,15 @@ public class iTween : MonoBehaviour{
 	
 	//physics
 	void FixedUpdate(){
-		if(isRunning && physics){
-			if(!reverse){
-				if(percentage<1f){
+		if(IsRunning && _physics){
+			if(!_reverse){
+				if(_percentage<1f){
 					TweenUpdate();
 				}else{
 					TweenComplete();	
 				}
 			}else{
-				if(percentage>0){
+				if(_percentage>0){
 					TweenUpdate();
 				}else{
 					TweenComplete();	
@@ -6607,23 +6607,23 @@ public class iTween : MonoBehaviour{
 
 	void LateUpdate(){
 		//look applications:
-		if(tweenArguments.Contains("looktarget") && isRunning){
-			if(type =="move" || type =="shake" || type=="punch"){
-				LookUpdate(gameObject,tweenArguments);
+		if(_tweenArguments.Contains("looktarget") && IsRunning){
+			if(Type =="move" || Type =="shake" || Type=="punch"){
+				LookUpdate(gameObject,_tweenArguments);
 			}			
 		}
 	}
 	
 	void OnEnable(){
-		if(isRunning){
+		if(IsRunning){
 			EnableKinematic();
 		}
 	
 		//resume delay:
-		if(isPaused){
-			isPaused=false;
-			if(delay > 0){
-				wasPaused=true;
+		if(IsPaused){
+			IsPaused=false;
+			if(Delay > 0){
+				_wasPaused=true;
 				ResumeDelay();
 			}
 		}
@@ -6650,15 +6650,15 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	private static void DrawPathHelper(Vector3[] path, Color color, string method){
-		Vector3[] vector3s = PathControlPointGenerator(path);
+		Vector3[] vector3S = PathControlPointGenerator(path);
 		
 		//Line Draw:
-		Vector3 prevPt = Interp(vector3s,0);
+		Vector3 prevPt = Interp(vector3S,0);
 		Gizmos.color=color;
-		int SmoothAmount = path.Length*20;
-		for (int i = 1; i <= SmoothAmount; i++) {
-			float pm = (float) i / SmoothAmount;
-			Vector3 currPt = Interp(vector3s,pm);
+		int smoothAmount = path.Length*20;
+		for (int i = 1; i <= smoothAmount; i++) {
+			float pm = (float) i / smoothAmount;
+			Vector3 currPt = Interp(vector3S,pm);
 			if(method == "gizmos"){
 				Gizmos.DrawLine(currPt, prevPt);
 			}else if(method == "handles"){
@@ -6671,32 +6671,32 @@ public class iTween : MonoBehaviour{
 	
 	private static Vector3[] PathControlPointGenerator(Vector3[] path){
 		Vector3[] suppliedPath;
-		Vector3[] vector3s;
+		Vector3[] vector3S;
 		
 		//create and store path points:
 		suppliedPath = path;
 
 		//populate calculate path;
 		int offset = 2;
-		vector3s = new Vector3[suppliedPath.Length+offset];
-		Array.Copy(suppliedPath,0,vector3s,1,suppliedPath.Length);
+		vector3S = new Vector3[suppliedPath.Length+offset];
+		Array.Copy(suppliedPath,0,vector3S,1,suppliedPath.Length);
 		
 		//populate start and end control points:
 		//vector3s[0] = vector3s[1] - vector3s[2];
-		vector3s[0] = vector3s[1] + (vector3s[1] - vector3s[2]);
-		vector3s[vector3s.Length-1] = vector3s[vector3s.Length-2] + (vector3s[vector3s.Length-2] - vector3s[vector3s.Length-3]);
+		vector3S[0] = vector3S[1] + (vector3S[1] - vector3S[2]);
+		vector3S[vector3S.Length-1] = vector3S[vector3S.Length-2] + (vector3S[vector3S.Length-2] - vector3S[vector3S.Length-3]);
 		
 		//is this a closed, continuous loop? yes? well then so let's make a continuous Catmull-Rom spline!
-		if(vector3s[1] == vector3s[vector3s.Length-2]){
-			Vector3[] tmpLoopSpline = new Vector3[vector3s.Length];
-			Array.Copy(vector3s,tmpLoopSpline,vector3s.Length);
+		if(vector3S[1] == vector3S[vector3S.Length-2]){
+			Vector3[] tmpLoopSpline = new Vector3[vector3S.Length];
+			Array.Copy(vector3S,tmpLoopSpline,vector3S.Length);
 			tmpLoopSpline[0]=tmpLoopSpline[tmpLoopSpline.Length-3];
 			tmpLoopSpline[tmpLoopSpline.Length-1]=tmpLoopSpline[2];
-			vector3s=new Vector3[tmpLoopSpline.Length];
-			Array.Copy(tmpLoopSpline,vector3s,tmpLoopSpline.Length);
+			vector3S=new Vector3[tmpLoopSpline.Length];
+			Array.Copy(tmpLoopSpline,vector3S,tmpLoopSpline.Length);
 		}	
 		
-		return(vector3s);
+		return(vector3S);
 	}
 	
 	//andeeee from the Unity forum's steller Catmull-Rom class ( http://forum.unity3d.com/viewtopic.php?p=218400#218400 ):
@@ -6719,23 +6719,23 @@ public class iTween : MonoBehaviour{
 	}	
 		
 	//andeeee from the Unity forum's steller Catmull-Rom class ( http://forum.unity3d.com/viewtopic.php?p=218400#218400 ):
-	private class CRSpline {
-		public Vector3[] pts;
+	private class CrSpline {
+		public Vector3[] Pts;
 		
-		public CRSpline(params Vector3[] pts) {
-			this.pts = new Vector3[pts.Length];
-			Array.Copy(pts, this.pts, pts.Length);
+		public CrSpline(params Vector3[] pts) {
+			this.Pts = new Vector3[pts.Length];
+			Array.Copy(pts, this.Pts, pts.Length);
 		}
 		
 		
 		public Vector3 Interp(float t) {
-			int numSections = pts.Length - 3;
+			int numSections = Pts.Length - 3;
 			int currPt = Mathf.Min(Mathf.FloorToInt(t * (float) numSections), numSections - 1);
 			float u = t * (float) numSections - (float) currPt;
-			Vector3 a = pts[currPt];
-			Vector3 b = pts[currPt + 1];
-			Vector3 c = pts[currPt + 2];
-			Vector3 d = pts[currPt + 3];
+			Vector3 a = Pts[currPt];
+			Vector3 b = Pts[currPt + 1];
+			Vector3 c = Pts[currPt + 2];
+			Vector3 d = Pts[currPt + 3];
 			return .5f*((-a+3f*b-3f*c+d)*(u*u*u)+(2f*a-5f*b+4f*c-d)*(u*u)+(-a+c)*u+2f*b);
 		}	
 	}	
@@ -6743,15 +6743,15 @@ public class iTween : MonoBehaviour{
 	//catalog new tween and add component phase of iTween:
 	static void Launch(GameObject target, Hashtable args){
 		if(!args.Contains("id")){
-			args["id"] = GenerateID();
+			args["id"] = GenerateId();
 		}
 		if(!args.Contains("target")){
 			args["target"] = target;
 		
 		}		
 
-		tweens.Insert (0, args);
-		target.AddComponent<iTween>();
+		Tweens.Insert (0, args);
+		target.AddComponent<ITween>();
 	}		
 	
 	//cast any accidentally supplied doubles and ints as floats as iTween only uses floats internally and unify parameter case:
@@ -6788,7 +6788,7 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	//random ID generator:
-	static string GenerateID(){
+	static string GenerateId(){
 //		int strlen = 15;
 //		char[] chars = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','0','1','2','3','4','5','6','7','8'};
 //		int num_chars = chars.Length - 1;
@@ -6801,115 +6801,115 @@ public class iTween : MonoBehaviour{
 	
 	//grab and set generic, neccesary iTween arguments:
 	void RetrieveArgs(){
-		foreach (Hashtable item in tweens) {
+		foreach (Hashtable item in Tweens) {
 			if((GameObject)item["target"] == gameObject){
-				tweenArguments=item;
+				_tweenArguments=item;
 				break;
 			}
 		}
 		
-		id=(string)tweenArguments["id"];
-		type=(string)tweenArguments["type"];
+		Id=(string)_tweenArguments["id"];
+		Type=(string)_tweenArguments["type"];
 		/* GFX47 MOD START */
-		_name=(string)tweenArguments["name"];
+		Name=(string)_tweenArguments["name"];
 		/* GFX47 MOD END */
-		method=(string)tweenArguments["method"];
+		Method=(string)_tweenArguments["method"];
                
-		if(tweenArguments.Contains("time")){
-			time=(float)tweenArguments["time"];
+		if(_tweenArguments.Contains("time")){
+			Time=(float)_tweenArguments["time"];
 		}else{
-			time=Defaults.time;
+			Time=Defaults.Time;
 		}
 			
 		//do we need to use physics, is there a rigidbody?
 		if(rigidbody != null){
-			physics=true;
+			_physics=true;
 		}
                
-		if(tweenArguments.Contains("delay")){
-			delay=(float)tweenArguments["delay"];
+		if(_tweenArguments.Contains("delay")){
+			Delay=(float)_tweenArguments["delay"];
 		}else{
-			delay=Defaults.delay;
+			Delay=Defaults.Delay;
 		}
 				
-		if(tweenArguments.Contains("namedcolorvalue")){
+		if(_tweenArguments.Contains("namedcolorvalue")){
 			//allows namedcolorvalue to be set as either an enum(C# friendly) or a string(JS friendly), string case usage doesn't matter to further increase usability:
-			if(tweenArguments["namedcolorvalue"].GetType() == typeof(NamedValueColor)){
-				namedcolorvalue=(NamedValueColor)tweenArguments["namedcolorvalue"];
+			if(_tweenArguments["namedcolorvalue"].GetType() == typeof(NamedValueColor)){
+				_namedcolorvalue=(NamedValueColor)_tweenArguments["namedcolorvalue"];
 			}else{
 				try {
-					namedcolorvalue=(NamedValueColor)Enum.Parse(typeof(NamedValueColor),(string)tweenArguments["namedcolorvalue"],true); 
+					_namedcolorvalue=(NamedValueColor)Enum.Parse(typeof(NamedValueColor),(string)_tweenArguments["namedcolorvalue"],true); 
 				} catch {
 					Debug.LogWarning("iTween: Unsupported namedcolorvalue supplied! Default will be used.");
-					namedcolorvalue = iTween.NamedValueColor._Color;
+					_namedcolorvalue = ITween.NamedValueColor.Color;
 				}
 			}			
 		}else{
-			namedcolorvalue=Defaults.namedColorValue;	
+			_namedcolorvalue=Defaults.NamedColorValue;	
 		}	
 		
-		if(tweenArguments.Contains("looptype")){
+		if(_tweenArguments.Contains("looptype")){
 			//allows loopType to be set as either an enum(C# friendly) or a string(JS friendly), string case usage doesn't matter to further increase usability:
-			if(tweenArguments["looptype"].GetType() == typeof(LoopType)){
-				loopType=(LoopType)tweenArguments["looptype"];
+			if(_tweenArguments["looptype"].GetType() == typeof(LoopType)){
+				loopType=(LoopType)_tweenArguments["looptype"];
 			}else{
 				try {
-					loopType=(LoopType)Enum.Parse(typeof(LoopType),(string)tweenArguments["looptype"],true); 
+					loopType=(LoopType)Enum.Parse(typeof(LoopType),(string)_tweenArguments["looptype"],true); 
 				} catch {
 					Debug.LogWarning("iTween: Unsupported loopType supplied! Default will be used.");
-					loopType = iTween.LoopType.none;	
+					loopType = ITween.LoopType.None;	
 				}
 			}			
 		}else{
-			loopType = iTween.LoopType.none;	
+			loopType = ITween.LoopType.None;	
 		}			
          
-		if(tweenArguments.Contains("easetype")){
+		if(_tweenArguments.Contains("easetype")){
 			//allows easeType to be set as either an enum(C# friendly) or a string(JS friendly), string case usage doesn't matter to further increase usability:
-			if(tweenArguments["easetype"].GetType() == typeof(EaseType)){
-				easeType=(EaseType)tweenArguments["easetype"];
+			if(_tweenArguments["easetype"].GetType() == typeof(EaseType)){
+				easeType=(EaseType)_tweenArguments["easetype"];
 			}else{
 				try {
-					easeType=(EaseType)Enum.Parse(typeof(EaseType),(string)tweenArguments["easetype"],true); 
+					easeType=(EaseType)Enum.Parse(typeof(EaseType),(string)_tweenArguments["easetype"],true); 
 				} catch {
 					Debug.LogWarning("iTween: Unsupported easeType supplied! Default will be used.");
-					easeType=Defaults.easeType;
+					easeType=Defaults.EaseType;
 				}
 			}
 		}else{
-			easeType=Defaults.easeType;
+			easeType=Defaults.EaseType;
 		}
 				
-		if(tweenArguments.Contains("space")){
+		if(_tweenArguments.Contains("space")){
 			//allows space to be set as either an enum(C# friendly) or a string(JS friendly), string case usage doesn't matter to further increase usability:
-			if(tweenArguments["space"].GetType() == typeof(Space)){
-				space=(Space)tweenArguments["space"];
+			if(_tweenArguments["space"].GetType() == typeof(Space)){
+				_space=(Space)_tweenArguments["space"];
 			}else{
 				try {
-					space=(Space)Enum.Parse(typeof(Space),(string)tweenArguments["space"],true); 	
+					_space=(Space)Enum.Parse(typeof(Space),(string)_tweenArguments["space"],true); 	
 				} catch {
 					Debug.LogWarning("iTween: Unsupported space supplied! Default will be used.");
-					space = Defaults.space;
+					_space = Defaults.Space;
 				}
 			}			
 		}else{
-			space = Defaults.space;
+			_space = Defaults.Space;
 		}
 		
-		if(tweenArguments.Contains("islocal")){
-			isLocal = (bool)tweenArguments["islocal"];
+		if(_tweenArguments.Contains("islocal")){
+			_isLocal = (bool)_tweenArguments["islocal"];
 		}else{
-			isLocal = Defaults.isLocal;
+			_isLocal = Defaults.IsLocal;
 		}
 
         // Added by PressPlay
-        if (tweenArguments.Contains("ignoretimescale"))
+        if (_tweenArguments.Contains("ignoretimescale"))
         {
-            useRealTime = (bool)tweenArguments["ignoretimescale"];
+            _useRealTime = (bool)_tweenArguments["ignoretimescale"];
         }
         else
         {
-            useRealTime = Defaults.useRealTime;
+            _useRealTime = Defaults.UseRealTime;
         }
 
 		//instantiates a cached ease equation reference:
@@ -6919,110 +6919,110 @@ public class iTween : MonoBehaviour{
 	//instantiates a cached ease equation refrence:
 	void GetEasingFunction(){
 		switch (easeType){
-		case EaseType.easeInQuad:
-			ease  = new EasingFunction(easeInQuad);
+		case EaseType.EaseInQuad:
+			_ease  = new EasingFunction(EaseInQuad);
 			break;
-		case EaseType.easeOutQuad:
-			ease = new EasingFunction(easeOutQuad);
+		case EaseType.EaseOutQuad:
+			_ease = new EasingFunction(EaseOutQuad);
 			break;
-		case EaseType.easeInOutQuad:
-			ease = new EasingFunction(easeInOutQuad);
+		case EaseType.EaseInOutQuad:
+			_ease = new EasingFunction(EaseInOutQuad);
 			break;
-		case EaseType.easeInCubic:
-			ease = new EasingFunction(easeInCubic);
+		case EaseType.EaseInCubic:
+			_ease = new EasingFunction(EaseInCubic);
 			break;
-		case EaseType.easeOutCubic:
-			ease = new EasingFunction(easeOutCubic);
+		case EaseType.EaseOutCubic:
+			_ease = new EasingFunction(EaseOutCubic);
 			break;
-		case EaseType.easeInOutCubic:
-			ease = new EasingFunction(easeInOutCubic);
+		case EaseType.EaseInOutCubic:
+			_ease = new EasingFunction(EaseInOutCubic);
 			break;
-		case EaseType.easeInQuart:
-			ease = new EasingFunction(easeInQuart);
+		case EaseType.EaseInQuart:
+			_ease = new EasingFunction(EaseInQuart);
 			break;
-		case EaseType.easeOutQuart:
-			ease = new EasingFunction(easeOutQuart);
+		case EaseType.EaseOutQuart:
+			_ease = new EasingFunction(EaseOutQuart);
 			break;
-		case EaseType.easeInOutQuart:
-			ease = new EasingFunction(easeInOutQuart);
+		case EaseType.EaseInOutQuart:
+			_ease = new EasingFunction(EaseInOutQuart);
 			break;
-		case EaseType.easeInQuint:
-			ease = new EasingFunction(easeInQuint);
+		case EaseType.EaseInQuint:
+			_ease = new EasingFunction(EaseInQuint);
 			break;
-		case EaseType.easeOutQuint:
-			ease = new EasingFunction(easeOutQuint);
+		case EaseType.EaseOutQuint:
+			_ease = new EasingFunction(EaseOutQuint);
 			break;
-		case EaseType.easeInOutQuint:
-			ease = new EasingFunction(easeInOutQuint);
+		case EaseType.EaseInOutQuint:
+			_ease = new EasingFunction(EaseInOutQuint);
 			break;
-		case EaseType.easeInSine:
-			ease = new EasingFunction(easeInSine);
+		case EaseType.EaseInSine:
+			_ease = new EasingFunction(EaseInSine);
 			break;
-		case EaseType.easeOutSine:
-			ease = new EasingFunction(easeOutSine);
+		case EaseType.EaseOutSine:
+			_ease = new EasingFunction(EaseOutSine);
 			break;
-		case EaseType.easeInOutSine:
-			ease = new EasingFunction(easeInOutSine);
+		case EaseType.EaseInOutSine:
+			_ease = new EasingFunction(EaseInOutSine);
 			break;
-		case EaseType.easeInExpo:
-			ease = new EasingFunction(easeInExpo);
+		case EaseType.EaseInExpo:
+			_ease = new EasingFunction(EaseInExpo);
 			break;
-		case EaseType.easeOutExpo:
-			ease = new EasingFunction(easeOutExpo);
+		case EaseType.EaseOutExpo:
+			_ease = new EasingFunction(EaseOutExpo);
 			break;
-		case EaseType.easeInOutExpo:
-			ease = new EasingFunction(easeInOutExpo);
+		case EaseType.EaseInOutExpo:
+			_ease = new EasingFunction(EaseInOutExpo);
 			break;
-		case EaseType.easeInCirc:
-			ease = new EasingFunction(easeInCirc);
+		case EaseType.EaseInCirc:
+			_ease = new EasingFunction(EaseInCirc);
 			break;
-		case EaseType.easeOutCirc:
-			ease = new EasingFunction(easeOutCirc);
+		case EaseType.EaseOutCirc:
+			_ease = new EasingFunction(EaseOutCirc);
 			break;
-		case EaseType.easeInOutCirc:
-			ease = new EasingFunction(easeInOutCirc);
+		case EaseType.EaseInOutCirc:
+			_ease = new EasingFunction(EaseInOutCirc);
 			break;
-		case EaseType.linear:
-			ease = new EasingFunction(linear);
+		case EaseType.Linear:
+			_ease = new EasingFunction(Linear);
 			break;
-		case EaseType.spring:
-			ease = new EasingFunction(spring);
+		case EaseType.Spring:
+			_ease = new EasingFunction(Spring);
 			break;
 		/* GFX47 MOD START */
 		/*case EaseType.bounce:
 			ease = new EasingFunction(bounce);
 			break;*/
-		case EaseType.easeInBounce:
-			ease = new EasingFunction(easeInBounce);
+		case EaseType.EaseInBounce:
+			_ease = new EasingFunction(EaseInBounce);
 			break;
-		case EaseType.easeOutBounce:
-			ease = new EasingFunction(easeOutBounce);
+		case EaseType.EaseOutBounce:
+			_ease = new EasingFunction(EaseOutBounce);
 			break;
-		case EaseType.easeInOutBounce:
-			ease = new EasingFunction(easeInOutBounce);
+		case EaseType.EaseInOutBounce:
+			_ease = new EasingFunction(EaseInOutBounce);
 			break;
 		/* GFX47 MOD END */
-		case EaseType.easeInBack:
-			ease = new EasingFunction(easeInBack);
+		case EaseType.EaseInBack:
+			_ease = new EasingFunction(EaseInBack);
 			break;
-		case EaseType.easeOutBack:
-			ease = new EasingFunction(easeOutBack);
+		case EaseType.EaseOutBack:
+			_ease = new EasingFunction(EaseOutBack);
 			break;
-		case EaseType.easeInOutBack:
-			ease = new EasingFunction(easeInOutBack);
+		case EaseType.EaseInOutBack:
+			_ease = new EasingFunction(EaseInOutBack);
 			break;
 		/* GFX47 MOD START */
 		/*case EaseType.elastic:
 			ease = new EasingFunction(elastic);
 			break;*/
-		case EaseType.easeInElastic:
-			ease = new EasingFunction(easeInElastic);
+		case EaseType.EaseInElastic:
+			_ease = new EasingFunction(EaseInElastic);
 			break;
-		case EaseType.easeOutElastic:
-			ease = new EasingFunction(easeOutElastic);
+		case EaseType.EaseOutElastic:
+			_ease = new EasingFunction(EaseOutElastic);
 			break;
-		case EaseType.easeInOutElastic:
-			ease = new EasingFunction(easeInOutElastic);
+		case EaseType.EaseInOutElastic:
+			_ease = new EasingFunction(EaseInOutElastic);
 			break;
 		/* GFX47 MOD END */
 		}
@@ -7032,37 +7032,37 @@ public class iTween : MonoBehaviour{
 	void UpdatePercentage(){
 
 	        // Added by PressPlay   
-	        if (useRealTime)
+	        if (_useRealTime)
 	        {
-	            runningTime += (Time.realtimeSinceStartup - lastRealTime);      
+	            _runningTime += (UnityEngine.Time.realtimeSinceStartup - _lastRealTime);      
 	        }
 	        else
 	        {
-	            runningTime += Time.deltaTime;
+	            _runningTime += UnityEngine.Time.deltaTime;
 	        }
 	
-			if(reverse){
-				percentage = 1 - runningTime/time;	
+			if(_reverse){
+				_percentage = 1 - _runningTime/Time;	
 			}else{
-				percentage = runningTime/time;	
+				_percentage = _runningTime/Time;	
 			}
 	
-	        lastRealTime = Time.realtimeSinceStartup; // Added by PressPlay
+	        _lastRealTime = UnityEngine.Time.realtimeSinceStartup; // Added by PressPlay
 	}
 	
 	void CallBack(string callbackType){
-		if (tweenArguments.Contains(callbackType) && !tweenArguments.Contains("ischild")) {
+		if (_tweenArguments.Contains(callbackType) && !_tweenArguments.Contains("ischild")) {
 			//establish target:
 			GameObject target;
-			if (tweenArguments.Contains(callbackType+"target")) {
-				target=(GameObject)tweenArguments[callbackType+"target"];
+			if (_tweenArguments.Contains(callbackType+"target")) {
+				target=(GameObject)_tweenArguments[callbackType+"target"];
 			}else{
 				target=gameObject;	
 			}
 			
 			//throw an error if a string wasn't passed for callback:
-			if (tweenArguments[callbackType].GetType() == typeof(System.String)) {
-				target.SendMessage((string)tweenArguments[callbackType],(object)tweenArguments[callbackType+"params"],SendMessageOptions.DontRequireReceiver);
+			if (_tweenArguments[callbackType].GetType() == typeof(System.String)) {
+				target.SendMessage((string)_tweenArguments[callbackType],(object)_tweenArguments[callbackType+"params"],SendMessageOptions.DontRequireReceiver);
 			}else{
 				Debug.LogError("iTween Error: Callback method references must be passed as a String!");
 				Destroy (this);
@@ -7071,10 +7071,10 @@ public class iTween : MonoBehaviour{
 	}
 	
 	void Dispose(){
-		for (int i = 0; i < tweens.Count; i++) {
-			Hashtable tweenEntry = tweens[i];
-			if ((string)tweenEntry["id"] == id){
-				tweens.RemoveAt(i);
+		for (int i = 0; i < Tweens.Count; i++) {
+			Hashtable tweenEntry = Tweens[i];
+			if ((string)tweenEntry["id"] == Id){
+				Tweens.RemoveAt(i);
 				break;
 			}
 		}
@@ -7082,29 +7082,29 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	void ConflictCheck(){//if a new iTween is about to run and is of the same type as an in progress iTween this will destroy the previous if the new one is NOT identical in every way or it will destroy the new iTween if they are:	
-		Component[] tweens = GetComponents<iTween>();
-		foreach (iTween item in tweens) {
-			if(item.type == "value"){
+		Component[] tweens = GetComponents<ITween>();
+		foreach (ITween item in tweens) {
+			if(item.Type == "value"){
 				return;
-			}else if(item.isRunning && item.type==type){
+			}else if(item.IsRunning && item.Type==Type){
 				//cancel out if this is a shake or punch variant:
-				if (item.method != method) {
+				if (item.Method != Method) {
 					return;
 				}				
 				
 				//step 1: check for length first since it's the fastest:
-				if(item.tweenArguments.Count != tweenArguments.Count){
+				if(item._tweenArguments.Count != _tweenArguments.Count){
 					item.Dispose();
 					return;
 				}
 				
 				//step 2: side-by-side check to figure out if this is an identical tween scenario to handle Update usages of iTween:
-				foreach (DictionaryEntry currentProp in tweenArguments) {
-					if(!item.tweenArguments.Contains(currentProp.Key)){
+				foreach (DictionaryEntry currentProp in _tweenArguments) {
+					if(!item._tweenArguments.Contains(currentProp.Key)){
 						item.Dispose();
 						return;
 					}else{
-						if(!item.tweenArguments[currentProp.Key].Equals(tweenArguments[currentProp.Key]) && (string)currentProp.Key != "id"){//if we aren't comparing ids and something isn't exactly the same replace the running iTween: 
+						if(!item._tweenArguments[currentProp.Key].Equals(_tweenArguments[currentProp.Key]) && (string)currentProp.Key != "id"){//if we aren't comparing ids and something isn't exactly the same replace the running iTween: 
 							item.Dispose();
 							return;
 						}
@@ -7146,11 +7146,11 @@ public class iTween : MonoBehaviour{
 	
 	#region Easing Curves
 	
-	private float linear(float start, float end, float value){
+	private float Linear(float start, float end, float value){
 		return Mathf.Lerp(start, end, value);
 	}
 	
-	private float clerp(float start, float end, float value){
+	private float Clerp(float start, float end, float value){
 		float min = 0.0f;
 		float max = 360.0f;
 		float half = Mathf.Abs((max - min) * 0.5f);
@@ -7166,23 +7166,23 @@ public class iTween : MonoBehaviour{
 		return retval;
     }
 
-	private float spring(float start, float end, float value){
+	private float Spring(float start, float end, float value){
 		value = Mathf.Clamp01(value);
 		value = (Mathf.Sin(value * Mathf.PI * (0.2f + 2.5f * value * value * value)) * Mathf.Pow(1f - value, 2.2f) + value) * (1f + (1.2f * (1f - value)));
 		return start + (end - start) * value;
 	}
 
-	private float easeInQuad(float start, float end, float value){
+	private float EaseInQuad(float start, float end, float value){
 		end -= start;
 		return end * value * value + start;
 	}
 
-	private float easeOutQuad(float start, float end, float value){
+	private float EaseOutQuad(float start, float end, float value){
 		end -= start;
 		return -end * value * (value - 2) + start;
 	}
 
-	private float easeInOutQuad(float start, float end, float value){
+	private float EaseInOutQuad(float start, float end, float value){
 		value /= .5f;
 		end -= start;
 		if (value < 1) return end * 0.5f * value * value + start;
@@ -7190,18 +7190,18 @@ public class iTween : MonoBehaviour{
 		return -end * 0.5f * (value * (value - 2) - 1) + start;
 	}
 
-	private float easeInCubic(float start, float end, float value){
+	private float EaseInCubic(float start, float end, float value){
 		end -= start;
 		return end * value * value * value + start;
 	}
 
-	private float easeOutCubic(float start, float end, float value){
+	private float EaseOutCubic(float start, float end, float value){
 		value--;
 		end -= start;
 		return end * (value * value * value + 1) + start;
 	}
 
-	private float easeInOutCubic(float start, float end, float value){
+	private float EaseInOutCubic(float start, float end, float value){
 		value /= .5f;
 		end -= start;
 		if (value < 1) return end * 0.5f * value * value * value + start;
@@ -7209,18 +7209,18 @@ public class iTween : MonoBehaviour{
 		return end * 0.5f * (value * value * value + 2) + start;
 	}
 
-	private float easeInQuart(float start, float end, float value){
+	private float EaseInQuart(float start, float end, float value){
 		end -= start;
 		return end * value * value * value * value + start;
 	}
 
-	private float easeOutQuart(float start, float end, float value){
+	private float EaseOutQuart(float start, float end, float value){
 		value--;
 		end -= start;
 		return -end * (value * value * value * value - 1) + start;
 	}
 
-	private float easeInOutQuart(float start, float end, float value){
+	private float EaseInOutQuart(float start, float end, float value){
 		value /= .5f;
 		end -= start;
 		if (value < 1) return end * 0.5f * value * value * value * value + start;
@@ -7228,18 +7228,18 @@ public class iTween : MonoBehaviour{
 		return -end * 0.5f * (value * value * value * value - 2) + start;
 	}
 
-	private float easeInQuint(float start, float end, float value){
+	private float EaseInQuint(float start, float end, float value){
 		end -= start;
 		return end * value * value * value * value * value + start;
 	}
 
-	private float easeOutQuint(float start, float end, float value){
+	private float EaseOutQuint(float start, float end, float value){
 		value--;
 		end -= start;
 		return end * (value * value * value * value * value + 1) + start;
 	}
 
-	private float easeInOutQuint(float start, float end, float value){
+	private float EaseInOutQuint(float start, float end, float value){
 		value /= .5f;
 		end -= start;
 		if (value < 1) return end * 0.5f * value * value * value * value * value + start;
@@ -7247,32 +7247,32 @@ public class iTween : MonoBehaviour{
 		return end * 0.5f * (value * value * value * value * value + 2) + start;
 	}
 
-	private float easeInSine(float start, float end, float value){
+	private float EaseInSine(float start, float end, float value){
 		end -= start;
 		return -end * Mathf.Cos(value * (Mathf.PI * 0.5f)) + end + start;
 	}
 
-	private float easeOutSine(float start, float end, float value){
+	private float EaseOutSine(float start, float end, float value){
 		end -= start;
 		return end * Mathf.Sin(value * (Mathf.PI * 0.5f)) + start;
 	}
 
-	private float easeInOutSine(float start, float end, float value){
+	private float EaseInOutSine(float start, float end, float value){
 		end -= start;
 		return -end * 0.5f * (Mathf.Cos(Mathf.PI * value) - 1) + start;
 	}
 
-	private float easeInExpo(float start, float end, float value){
+	private float EaseInExpo(float start, float end, float value){
 		end -= start;
 		return end * Mathf.Pow(2, 10 * (value - 1)) + start;
 	}
 
-	private float easeOutExpo(float start, float end, float value){
+	private float EaseOutExpo(float start, float end, float value){
 		end -= start;
 		return end * (-Mathf.Pow(2, -10 * value ) + 1) + start;
 	}
 
-	private float easeInOutExpo(float start, float end, float value){
+	private float EaseInOutExpo(float start, float end, float value){
 		value /= .5f;
 		end -= start;
 		if (value < 1) return end * 0.5f * Mathf.Pow(2, 10 * (value - 1)) + start;
@@ -7280,18 +7280,18 @@ public class iTween : MonoBehaviour{
 		return end * 0.5f * (-Mathf.Pow(2, -10 * value) + 2) + start;
 	}
 
-	private float easeInCirc(float start, float end, float value){
+	private float EaseInCirc(float start, float end, float value){
 		end -= start;
 		return -end * (Mathf.Sqrt(1 - value * value) - 1) + start;
 	}
 
-	private float easeOutCirc(float start, float end, float value){
+	private float EaseOutCirc(float start, float end, float value){
 		value--;
 		end -= start;
 		return end * Mathf.Sqrt(1 - value * value) + start;
 	}
 
-	private float easeInOutCirc(float start, float end, float value){
+	private float EaseInOutCirc(float start, float end, float value){
 		value /= .5f;
 		end -= start;
 		if (value < 1) return -end * 0.5f * (Mathf.Sqrt(1 - value * value) - 1) + start;
@@ -7300,16 +7300,16 @@ public class iTween : MonoBehaviour{
 	}
 
 	/* GFX47 MOD START */
-	private float easeInBounce(float start, float end, float value){
+	private float EaseInBounce(float start, float end, float value){
 		end -= start;
 		float d = 1f;
-		return end - easeOutBounce(0, end, d-value) + start;
+		return end - EaseOutBounce(0, end, d-value) + start;
 	}
 	/* GFX47 MOD END */
 
 	/* GFX47 MOD START */
 	//private float bounce(float start, float end, float value){
-	private float easeOutBounce(float start, float end, float value){
+	private float EaseOutBounce(float start, float end, float value){
 		value /= 1f;
 		end -= start;
 		if (value < (1 / 2.75f)){
@@ -7328,29 +7328,29 @@ public class iTween : MonoBehaviour{
 	/* GFX47 MOD END */
 
 	/* GFX47 MOD START */
-	private float easeInOutBounce(float start, float end, float value){
+	private float EaseInOutBounce(float start, float end, float value){
 		end -= start;
 		float d = 1f;
-		if (value < d* 0.5f) return easeInBounce(0, end, value*2) * 0.5f + start;
-		else return easeOutBounce(0, end, value*2-d) * 0.5f + end*0.5f + start;
+		if (value < d* 0.5f) return EaseInBounce(0, end, value*2) * 0.5f + start;
+		else return EaseOutBounce(0, end, value*2-d) * 0.5f + end*0.5f + start;
 	}
 	/* GFX47 MOD END */
 
-	private float easeInBack(float start, float end, float value){
+	private float EaseInBack(float start, float end, float value){
 		end -= start;
 		value /= 1;
 		float s = 1.70158f;
 		return end * (value) * value * ((s + 1) * value - s) + start;
 	}
 
-	private float easeOutBack(float start, float end, float value){
+	private float EaseOutBack(float start, float end, float value){
 		float s = 1.70158f;
 		end -= start;
 		value = (value) - 1;
 		return end * ((value) * value * ((s + 1) * value + s) + 1) + start;
 	}
 
-	private float easeInOutBack(float start, float end, float value){
+	private float EaseInOutBack(float start, float end, float value){
 		float s = 1.70158f;
 		end -= start;
 		value /= .5f;
@@ -7363,7 +7363,7 @@ public class iTween : MonoBehaviour{
 		return end * 0.5f * ((value) * value * (((s) + 1) * value + s) + 2) + start;
 	}
 
-	private float punch(float amplitude, float value){
+	private float Punch(float amplitude, float value){
 		float s = 9;
 		if (value == 0){
 			return 0;
@@ -7377,7 +7377,7 @@ public class iTween : MonoBehaviour{
     }
 	
 	/* GFX47 MOD START */
-	private float easeInElastic(float start, float end, float value){
+	private float EaseInElastic(float start, float end, float value){
 		end -= start;
 		
 		float d = 1f;
@@ -7402,7 +7402,7 @@ public class iTween : MonoBehaviour{
 
 	/* GFX47 MOD START */
 	//private float elastic(float start, float end, float value){
-	private float easeOutElastic(float start, float end, float value){
+	private float EaseOutElastic(float start, float end, float value){
 	/* GFX47 MOD END */
 		//Thank you to rafael.marteleto for fixing this as a port over from Pedro's UnityTween
 		end -= start;
@@ -7427,7 +7427,7 @@ public class iTween : MonoBehaviour{
 	}		
 	
 	/* GFX47 MOD START */
-	private float easeInOutElastic(float start, float end, float value){
+	private float EaseInOutElastic(float start, float end, float value){
 		end -= start;
 		
 		float d = 1f;

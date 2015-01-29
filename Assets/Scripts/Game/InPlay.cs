@@ -11,7 +11,7 @@ namespace Assets.Scripts.Game
 
         public List<GenericCard> Cards { get; private set; }
 
-        public Player Player;
+       // public Player Player;
 
         private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
         private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);

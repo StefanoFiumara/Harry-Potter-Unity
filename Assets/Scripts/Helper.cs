@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Cards;
 using UnityEngine;
 using CardStates = Assets.Scripts.Cards.GenericCard.CardStates;
-using EaseType = iTween.EaseType;
+using EaseType = ITween.EaseType;
 
 namespace Assets.Scripts
 {
@@ -33,7 +33,7 @@ namespace Assets.Scripts
             public CardStates StateAfterAnimation;
         }
 
-        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, CardStates stateAfterAnimation, bool flip, bool rotate, EaseType easeType = EaseType.easeInOutSine)
+        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, CardStates stateAfterAnimation, bool flip, bool rotate, EaseType easeType = EaseType.EaseInOutSine)
         {
             TweenObject newTween = new TweenObject();
 
@@ -68,7 +68,7 @@ namespace Assets.Scripts
                 {
                     TweenObject tween = TweenQueue.Dequeue();
 
-                    iTween.MoveTo(tween.Target, iTween.Hash("time", tween.Time,
+                    ITween.MoveTo(tween.Target, ITween.Hash("time", tween.Time,
                         "delay", tween.Delay,
                         "position", tween.Position,
                         "easetype", tween.easeType,
@@ -86,9 +86,9 @@ namespace Assets.Scripts
             }
         }
 
-        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenDelay = 0f, EaseType easeType = iTween.EaseType.easeInOutSine)
+        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenDelay = 0f, EaseType easeType = ITween.EaseType.EaseInOutSine)
         {
-            iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.5f,
+            ITween.MoveTo(card.gameObject, ITween.Hash("time", 0.5f,
                 "position", cardPosition,
                 "easetype", easeType,
                 "islocal", true,
@@ -98,7 +98,7 @@ namespace Assets.Scripts
                 "oncompleteparams", stateAfterAnimation
                 ));
 
-            iTween.ScaleTo(card.gameObject, iTween.Hash("x", 1, "y", 1, "time", 0.5f));
+            ITween.ScaleTo(card.gameObject, ITween.Hash("x", 1, "y", 1, "time", 0.5f));
         }
 
         private static void RotateCard(GameObject card, float time)
@@ -106,9 +106,9 @@ namespace Assets.Scripts
             //set target based on current rotation, use 20f as an epsilon value for comparison
             Vector3 cardRotation = card.transform.localRotation.eulerAngles;
             float target = cardRotation.z > 20f ? 0f : 270f;
-            iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
+            ITween.RotateTo(card.gameObject, ITween.Hash("time", time,
                 "z", target,
-                "easetype", iTween.EaseType.easeInOutSine,
+                "easetype", ITween.EaseType.EaseInOutSine,
                 "islocal", true
                 ));
         }
@@ -118,9 +118,9 @@ namespace Assets.Scripts
             //set target based on current rotation, use 20f as an epsilon value for comparison
             Vector3 cardRotation = card.transform.localRotation.eulerAngles;
             float target = cardRotation.y > 20f ? 0f : 180f;
-            iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
+            ITween.RotateTo(card.gameObject, ITween.Hash("time", time,
                 "y", target,
-                "easetype", iTween.EaseType.easeInOutSine,
+                "easetype", ITween.EaseType.EaseInOutSine,
                 "islocal", true
                 ));
         }

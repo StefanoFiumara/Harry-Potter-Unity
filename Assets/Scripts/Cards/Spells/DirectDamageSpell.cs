@@ -9,7 +9,7 @@ namespace Assets.Scripts.Cards.Spells
 
         public override void OnPlayAction()
         {
-            _Player._OppositePlayer.TakeDamage(DamageAmount);
+            Player.OppositePlayer.TakeDamage(DamageAmount);
         }
 
         public override bool MeetsAdditionalPlayRequirements()
@@ -17,14 +17,11 @@ namespace Assets.Scripts.Cards.Spells
             return true;
         }
 
-        public override void AfterInputAction(List<GenericCard> selectedCards)
-        {
-            throw new Exception("AfterInputAction called on DirectDamageSpell, this should never happen!");
-        }
+        public override void AfterInputAction(List<GenericCard> selectedCards) { }
 
         protected override List<GenericCard> GetValidCards()
         {
-            throw new Exception("GetValidCards called on DirectDamageSpell, this should never happen!");
+            return null;
         }
     }
 }

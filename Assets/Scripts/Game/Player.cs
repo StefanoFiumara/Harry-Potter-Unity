@@ -5,12 +5,12 @@ using UnityEngine;
 namespace Assets.Scripts.Game
 {
     public class Player : MonoBehaviour {
+        public Player OppositePlayer { get; set; }
 
-        public Hand _Hand;
-        public Deck _Deck;
-        public InPlay _InPlay;
-        public Player _OppositePlayer;
-        public Discard _Discard;
+        public Hand Hand { get; private set; }
+        public Deck Deck { get; private set; }
+        public InPlay InPlay { get; private set; }
+        public Discard Discard { get; private set; }
 
         public GenericCard StartingCharacter; //Set by main menu? GameObject?
 
@@ -22,11 +22,17 @@ namespace Assets.Scripts.Game
         public int DamagePerTurn { get; set; }
         public int AmountLessonsInPlay { get; set; }
 
-        public Player()
+        public void Awake()
         {
+            Debug.Log("Player Start");
             LessonTypesInPlay = new List<Lesson.LessonTypes>();
             ActionsAvailable = 0;
             AmountLessonsInPlay = 0;
+
+            Hand = transform.GetComponentInChildren<Hand>();
+            Deck = transform.GetComponentInChildren<Deck>();
+            InPlay = transform.GetComponentInChildren<InPlay>();
+            Discard = transform.GetComponentInChildren<Discard>();
         }
 
         public void UseAction()
@@ -36,8 +42,8 @@ namespace Assets.Scripts.Game
             if (ActionsAvailable > 0) return;
             ActionsAvailable = 0;
             //AfterTurnAction happens here
-            _InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
-            _OppositePlayer.InitTurn();
+            InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
+            OppositePlayer.InitTurn();
         }
 
         public void AddAction()
@@ -48,13 +54,15 @@ namespace Assets.Scripts.Game
         public void InitTurn()
         {
             //BeforeTurnAction happens here
-            _InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
+            InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
 
-            _Deck.DrawCard();
+            Deck.DrawCard();
             ActionsAvailable += 2;
 
             //Creatures do damage here
-            _InPlay.GetCreaturesInPlay().ForEach(card => _OppositePlayer.TakeDamage(((GenericCreature) card).DamagePerTurn));
+            InPlay.GetCreaturesInPlay()
+                .ForEach(card => OppositePlayer
+                    .TakeDamage( ( (GenericCreature)card).DamagePerTurn) );
         }
 
         public bool CanUseAction()
@@ -67,16 +75,16 @@ namespace Assets.Scripts.Game
             //TODO: Needs cleanup
             for (var i = 0; i < 7; i++)
             {
-                var card = _Deck.TakeTopCard();
+                var card = Deck.TakeTopCard();
                 var cardPosition = Hand.HandCardsOffset;
 
-                var shrinkFactor = _Hand.Cards.Count >= 12 ? 0.5f : 1f;
+                var shrinkFactor = Hand.Cards.Count >= 12 ? 0.5f : 1f;
 
-                cardPosition.x += _Hand.Cards.Count * Hand.Spacing * shrinkFactor;
-                cardPosition.z -= _Hand.Cards.Count;
+                cardPosition.x += Hand.Cards.Count * Hand.Spacing * shrinkFactor;
+                cardPosition.z -= Hand.Cards.Count;
 
-                _Hand.Cards.Add(card);
-                card.transform.parent = _Hand.transform;
+                Hand.Cards.Add(card);
+                card.transform.parent = Hand.transform;
 
                 Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InHand, true, false);
             }       
@@ -88,7 +96,7 @@ namespace Assets.Scripts.Game
 
             for (var i = 0; i < amount; i++)
             {
-                var card = _Deck.TakeTopCard();
+                var card = Deck.TakeTopCard();
 
                 if (card == null)
                 {
@@ -96,7 +104,7 @@ namespace Assets.Scripts.Game
                     Debug.Log("Game Over");
                     break;
                 }
-                _Discard.Add(card);
+                Discard.Add(card);
             }
         }
 
@@ -104,29 +112,30 @@ namespace Assets.Scripts.Game
         {
             LessonTypesInPlay = new List<Lesson.LessonTypes>();
 
-            var lessons = _InPlay.Cards.FindAll(card => card is Lesson);
+            var lessons = InPlay.Cards.FindAll(card => card is Lesson);
 
-            foreach (Lesson card in lessons)
+            foreach (var genericCard in lessons)
             {
-                if (!LessonTypesInPlay.Contains(card.LessonType))
+                var lessonCard = (Lesson) genericCard;
+                if (!LessonTypesInPlay.Contains(lessonCard.LessonType))
                 {
-                    LessonTypesInPlay.Add(card.LessonType);
+                    LessonTypesInPlay.Add(lessonCard.LessonType);
                 }
             }
         }
 
         public void DisableAllCards()
         {
-            _Deck.gameObject.layer = Helper.IgnoreRaycastLayer;
-            Helper.DisableCards(_Hand.Cards);
-            Helper.DisableCards(_InPlay.Cards);
+            Deck.gameObject.layer = Helper.IgnoreRaycastLayer;
+            Helper.DisableCards(Hand.Cards);
+            Helper.DisableCards(InPlay.Cards);
         }
 
         public void EnableAllCards()
         {
-            _Deck.gameObject.layer = Helper.DeckLayer;
-            Helper.EnableCards(_Hand.Cards);
-            Helper.EnableCards(_InPlay.Cards);
+            Deck.gameObject.layer = Helper.DeckLayer;
+            Helper.EnableCards(Hand.Cards);
+            Helper.EnableCards(InPlay.Cards);
         }
     }
 }

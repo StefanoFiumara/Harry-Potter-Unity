@@ -21,11 +21,11 @@ namespace Assets.Scripts.Cards
         public CardStates State;
         public CardTypes CardType;
 
-        public Player _Player;
+        public Player Player;
 
-        private readonly Vector2 COLLIDER_SIZE = new Vector2(50f, 70f);
+        private readonly Vector2 _colliderSize = new Vector2(50f, 70f);
 
-        private GameObject FrontPlane;
+        private GameObject _frontPlane;
 
         public void Start()
         {
@@ -34,12 +34,12 @@ namespace Assets.Scripts.Cards
             {
                 var col = gameObject.AddComponent<BoxCollider>();
                 col.isTrigger = true;
-                col.size = new Vector3(COLLIDER_SIZE.x, COLLIDER_SIZE.y, 0.2f);
+                col.size = new Vector3(_colliderSize.x, _colliderSize.y, 0.2f);
             }
 
             gameObject.layer = Helper.CardLayer;
 
-            FrontPlane = transform.FindChild("Front").gameObject;
+            _frontPlane = transform.FindChild("Front").gameObject;
         }
 
         public void SwitchState(CardStates newState)
@@ -59,10 +59,10 @@ namespace Assets.Scripts.Cards
 
         private void ShowPreview()
         {
-            FrontPlane.layer = Helper.PreviewLayer;
+            _frontPlane.layer = Helper.PreviewLayer;
             if (State != CardStates.InDeck && State != CardStates.Discarded)
             {
-                if (iTween.Count(gameObject) == 0)
+                if (ITween.Count(gameObject) == 0)
                 {
                     Helper.PreviewCamera.transform.rotation = transform.rotation;
                     Helper.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
@@ -76,26 +76,26 @@ namespace Assets.Scripts.Cards
     
         private void HidePreview()
         {
-            FrontPlane.layer = Helper.CardLayer;
+            _frontPlane.layer = Helper.CardLayer;
             Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
         }
 
         public void Disable()
         {
             gameObject.layer = Helper.IgnoreRaycastLayer;
-            FrontPlane.renderer.material.color = new Color(0.35f, 0.35f, 0.35f);
+            _frontPlane.renderer.material.color = new Color(0.35f, 0.35f, 0.35f);
         }
 
         public void Enable()
         {
             gameObject.layer = Helper.CardLayer;
-            FrontPlane.renderer.material.color = Color.white;
+            _frontPlane.renderer.material.color = Color.white;
         }
 
         public void SetSelected()
         {
             gameObject.layer = Helper.CardLayer;
-            FrontPlane.renderer.material.color = Color.yellow;
+            _frontPlane.renderer.material.color = Color.yellow;
         }
     
     }

@@ -6,8 +6,7 @@ using CardStates = Assets.Scripts.Cards.GenericCard.CardStates;
 namespace Assets.Scripts.Game
 {
     public class Hand : MonoBehaviour {
-        public Player _Player;
-
+        
         public List<GenericCard> Cards { get; private set; }
 
         public static readonly Vector3 HandPreviewPosition = new Vector3(-80f, -13f, -336f);

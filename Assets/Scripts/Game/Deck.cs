@@ -6,19 +6,19 @@ namespace Assets.Scripts.Game
 {
     public class Deck : MonoBehaviour {
 
-        public List<GenericCard> Cards;
+        public List<GenericCard> Cards; //TODO: Convert to auto-property after implementing deck generation?
 
-        private Player _player = null;
+        private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
 
-        public float DeckShuffleTweenTime = 0.5f;
+        public float DeckShuffleTweenTime = 0.5f; //TODO: Standardize tween times
         
 
         public void Awake ()
         {
 
-            _player = transform.parent.GetComponent<Player>();
+            _player = transform.GetComponentInParent<Player>();
 
             //instantiate cards into scene
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
@@ -31,7 +31,7 @@ namespace Assets.Scripts.Game
                 Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
                 Cards[i].transform.position += i * Vector3.back * 0.2f;
 
-                Cards[i]._Player = _player;
+                Cards[i].Player = _player;
             }
 
             //Set the collider to the proper position
@@ -73,7 +73,7 @@ namespace Assets.Scripts.Game
                 return;
             }
 
-            _player._Hand.Add(card);
+            _player.Hand.Add(card);
         }
 
         public void Shuffle()
@@ -91,9 +91,9 @@ namespace Assets.Scripts.Game
                 var point1 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y + 80, Cards[i].transform.position.z);
                 var point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
 
-                iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", DeckShuffleTweenTime, 
+                ITween.MoveTo(Cards[i].gameObject, ITween.Hash("time", DeckShuffleTweenTime, 
                     "path", new[] {point1, point2}, 
-                    "easetype", iTween.EaseType.easeInOutSine, 
+                    "easetype", ITween.EaseType.EaseInOutSine, 
                     "delay", Random.Range(0f,1.5f))
                     );
             }
