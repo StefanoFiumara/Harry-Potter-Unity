@@ -11,13 +11,9 @@ namespace Assets.Scripts.Game
         private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
-
-        public float DeckShuffleTweenTime = 0.5f; //TODO: Standardize tween times
         
-
         public void Awake ()
         {
-
             _player = transform.GetComponentInParent<Player>();
 
             //instantiate cards into scene
@@ -91,11 +87,11 @@ namespace Assets.Scripts.Game
                 var point1 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y + 80, Cards[i].transform.position.z);
                 var point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
 
-                ITween.MoveTo(Cards[i].gameObject, ITween.Hash("time", DeckShuffleTweenTime, 
-                    "path", new[] {point1, point2}, 
-                    "easetype", ITween.EaseType.EaseInOutSine, 
-                    "delay", Random.Range(0f,1.5f))
-                    );
+                ITween.MoveTo(Cards[i].gameObject, ITween.Hash("time", 0.5f, 
+                                                               "path", new[] {point1, point2}, 
+                                                               "easetype", ITween.EaseType.EaseInOutSine, 
+                                                               "delay", Random.Range(0f,1.5f))
+                                                               );
             }
         }
 
