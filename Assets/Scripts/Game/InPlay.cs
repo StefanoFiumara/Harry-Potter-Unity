@@ -1,132 +1,133 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using LessonTypes = Lesson.LessonTypes;
-using CardStates = GenericCard.CardStates;
-using CardTypes = GenericCard.CardTypes;
+﻿using System.Collections.Generic;
+using Assets.Scripts.Cards;
+using UnityEngine;
+using CardStates = Assets.Scripts.Cards.GenericCard.CardStates;
+using CardTypes = Assets.Scripts.Cards.GenericCard.CardTypes;
 
 
-public class InPlay : MonoBehaviour {
+namespace Assets.Scripts.Game
+{
+    public class InPlay : MonoBehaviour {
 
-    public List<GenericCard> Cards { get; private set; }
+        public List<GenericCard> Cards { get; private set; }
 
-    public Player Player;
+        public Player Player;
 
-    private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
-    private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);
+        private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
+        private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);
 
-    private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
-    private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
+        private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
+        private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
 
-    public float InPlayTweenTime;
+        public float InPlayTweenTime;
 
-    public InPlay()
-    {
-        Cards = new List<GenericCard>();
-    }
-
-    public void Add(GenericCard card)
-    {
-        Cards.Add(card);
-        card.transform.parent = transform;
-
-        switch (card.CardType)
+        public InPlay()
         {
-            case CardTypes.Lesson:
-                AnimateLessonToBoard(card);
-                break;
-            case CardTypes.Creature:
-                AnimateCreatureToBoard(card);
-                break;
+            Cards = new List<GenericCard>();
         }
 
-        (card as IPersistentCard).OnEnterInPlayAction();
-    }
-
-    public void Remove(GenericCard card)
-    {
-        Cards.Remove(card);
-
-        switch (card.CardType)
+        public void Add(GenericCard card)
         {
-            case CardTypes.Lesson:
-                RearrangeLessons();
-                break;
-            case CardTypes.Creature:
-                RearrangeCreatures();
-                break;
+            Cards.Add(card);
+            card.transform.parent = transform;
+
+            switch (card.CardType)
+            {
+                case CardTypes.Lesson:
+                    AnimateLessonToBoard(card);
+                    break;
+                case CardTypes.Creature:
+                    AnimateCreatureToBoard(card);
+                    break;
+            }
+
+            (card as IPersistentCard).OnEnterInPlayAction();
         }
 
-        (card as IPersistentCard).OnExitInPlayAction();
-    }
+        public void Remove(GenericCard card)
+        {
+            Cards.Remove(card);
 
-    public List<GenericCard> GetCreaturesInPlay()
-    {
-        return Cards.FindAll(c => c.CardType == CardTypes.Creature);
-    }
+            switch (card.CardType)
+            {
+                case CardTypes.Lesson:
+                    RearrangeLessons();
+                    break;
+                case CardTypes.Creature:
+                    RearrangeCreatures();
+                    break;
+            }
 
-    public List<GenericCard> GetLessonsInPlay()
-    {
-        return Cards.FindAll(c => c.CardType == CardTypes.Lesson);
-    }
+            (card as IPersistentCard).OnExitInPlayAction();
+        }
 
-    private void AnimateCreatureToBoard(GenericCard card)
-    {
-        Vector3 cardPosition = GetTargetPositionForCard(card);
-        Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
-    }
+        public List<GenericCard> GetCreaturesInPlay()
+        {
+            return Cards.FindAll(c => c.CardType == CardTypes.Creature);
+        }
 
-    private void AnimateLessonToBoard(GenericCard card)
-    {
-        Vector3 cardPosition = GetTargetPositionForCard(card);
-        Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
-    }
+        public List<GenericCard> GetLessonsInPlay()
+        {
+            return Cards.FindAll(c => c.CardType == CardTypes.Lesson);
+        }
+
+        private void AnimateCreatureToBoard(GenericCard card)
+        {
+            Vector3 cardPosition = GetTargetPositionForCard(card);
+            Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
+        }
+
+        private void AnimateLessonToBoard(GenericCard card)
+        {
+            Vector3 cardPosition = GetTargetPositionForCard(card);
+            Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
+        }
 
     
 
-    private void RearrangeLessons()
-    {
-        Cards.FindAll(card => card.CardType == CardTypes.Lesson).ForEach(card => 
+        private void RearrangeLessons()
         {
-            Vector3 cardPosition = GetTargetPositionForCard(card);
-            Helper.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
-        });
-    }
-    private void RearrangeCreatures()
-    {
-        Cards.FindAll(card => card.CardType == CardTypes.Creature).ForEach(card => 
+            Cards.FindAll(card => card.CardType == CardTypes.Lesson).ForEach(card => 
+            {
+                Vector3 cardPosition = GetTargetPositionForCard(card);
+                Helper.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
+            });
+        }
+        private void RearrangeCreatures()
         {
-            Vector3 cardPosition = GetTargetPositionForCard(card);
-            Helper.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
-        });
-    }
-
-    private Vector3 GetTargetPositionForCard(GenericCard card)
-    {
-        int position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
-
-        Vector3 cardPosition = new Vector3();
-
-        switch (card.CardType)
-        {
-            case CardTypes.Lesson:
-                cardPosition = LessonPositionOffset;
-                cardPosition.x += (position % 3) * LessonSpacing.x;
-                cardPosition.y -= (int)(position / 3) * LessonSpacing.y;
-                break;
-            case CardTypes.Creature:
-                cardPosition = CreaturePositionOffset;
-                cardPosition.x += (position % 3) * CreatureSpacing.x;
-                cardPosition.y -= (int)(position / 3) * CreatureSpacing.y;
-                break;
-            default:
-                Debug.Log("Warning: GetTargetPositionForCard could not identify cardType");
-                break;
+            Cards.FindAll(card => card.CardType == CardTypes.Creature).ForEach(card => 
+            {
+                Vector3 cardPosition = GetTargetPositionForCard(card);
+                Helper.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
+            });
         }
 
-        cardPosition.z -= (int)(position / 3);
+        private Vector3 GetTargetPositionForCard(GenericCard card)
+        {
+            int position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
 
-        return cardPosition;
+            Vector3 cardPosition = new Vector3();
+
+            switch (card.CardType)
+            {
+                case CardTypes.Lesson:
+                    cardPosition = LessonPositionOffset;
+                    cardPosition.x += (position % 3) * LessonSpacing.x;
+                    cardPosition.y -= (int)(position / 3) * LessonSpacing.y;
+                    break;
+                case CardTypes.Creature:
+                    cardPosition = CreaturePositionOffset;
+                    cardPosition.x += (position % 3) * CreatureSpacing.x;
+                    cardPosition.y -= (int)(position / 3) * CreatureSpacing.y;
+                    break;
+                default:
+                    Debug.Log("Warning: GetTargetPositionForCard could not identify cardType");
+                    break;
+            }
+
+            cardPosition.z -= (int)(position / 3);
+
+            return cardPosition;
+        }
     }
 }

@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
-public class RegisterPreviewCamera : MonoBehaviour {
+namespace Assets.Scripts
+{
+    public class RegisterPreviewCamera : MonoBehaviour {
 
-	public void Start () {
-        Helper.PreviewCamera = GetComponent<Camera>();
-	}
+        public void Start () {
+            Helper.PreviewCamera = GetComponent<Camera>();
+        }
 
+    }
 }

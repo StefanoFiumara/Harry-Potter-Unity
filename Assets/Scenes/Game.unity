@@ -129,7 +129,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  _Player: {fileID: 1925117256}
+  _player: {fileID: 1925117256}
   DeckShuffleTweenTime: .800000012
 --- !u!1 &226967737
 GameObject:
@@ -164,7 +164,6 @@ MonoBehaviour:
   _OppositePlayer: {fileID: 1925117256}
   _Discard: {fileID: 611051675}
   StartingCharacter: {fileID: 0}
-  AmountLessonsInPlay: 0
 --- !u!4 &226967739
 Transform:
   m_ObjectHideFlags: 0
@@ -713,7 +712,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  _Player: {fileID: 226967738}
+  _player: {fileID: 226967738}
   DeckShuffleTweenTime: .800000012
 --- !u!4 &1528567324
 Transform:
@@ -801,7 +800,6 @@ MonoBehaviour:
   _OppositePlayer: {fileID: 226967738}
   _Discard: {fileID: 1441997538}
   StartingCharacter: {fileID: 0}
-  AmountLessonsInPlay: 0
 --- !u!4 &1925117257
 Transform:
   m_ObjectHideFlags: 0
