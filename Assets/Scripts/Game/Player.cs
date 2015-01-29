@@ -12,8 +12,6 @@ namespace Assets.Scripts.Game
         public InPlay InPlay { get; private set; }
         public Discard Discard { get; private set; }
 
-        public GenericCard StartingCharacter; //Set by main menu? GameObject?
-
         public List<Lesson.LessonTypes> LessonTypesInPlay { get; private set; }
 
         public int ActionsAvailable { get; private set; }
