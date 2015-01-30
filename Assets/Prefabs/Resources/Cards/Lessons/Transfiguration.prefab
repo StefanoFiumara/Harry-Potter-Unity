@@ -182,9 +182,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardType: 0
-  Classification: 2
+  Classification: 5
   _cardName: Transfiguration
-  Player: {fileID: 0}
   LessonType: 2
 --- !u!1001 &100100000
 Prefab:
