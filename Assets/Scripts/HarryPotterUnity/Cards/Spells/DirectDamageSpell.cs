@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.Cards.Spells
+namespace Assets.Scripts.HarryPotterUnity.Cards.Spells
 {
     public class DirectDamageSpell : GenericSpell {
 

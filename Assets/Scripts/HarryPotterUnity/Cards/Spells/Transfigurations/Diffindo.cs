@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.Cards.Spells.Transfigurations
+namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
 {
     public class Diffindo : GenericSpell {
 

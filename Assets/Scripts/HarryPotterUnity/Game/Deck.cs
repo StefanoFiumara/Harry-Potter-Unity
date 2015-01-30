@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Cards;
+using Assets.Scripts.HarryPotterUnity.Cards;
+using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Deck : MonoBehaviour {
 
@@ -97,12 +98,12 @@ namespace Assets.Scripts.Game
 
         public void Disable()
         {
-            gameObject.layer = Helper.IgnoreRaycastLayer;
+            gameObject.layer = UtilManager.IgnoreRaycastLayer;
         }
 
         public void Enable()
         {
-            gameObject.layer = Helper.DeckLayer;
+            gameObject.layer = UtilManager.DeckLayer;
         }
     }
 }

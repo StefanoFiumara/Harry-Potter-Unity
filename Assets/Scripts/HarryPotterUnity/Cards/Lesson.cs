@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Cards
+﻿namespace Assets.Scripts.HarryPotterUnity.Cards
 {
     public class Lesson : GenericCard, IPersistentCard {
 

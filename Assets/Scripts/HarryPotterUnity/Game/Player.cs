@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Cards;
+using Assets.Scripts.HarryPotterUnity.Cards;
+using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Player : MonoBehaviour {
         public Player OppositePlayer { get; set; }
@@ -84,7 +85,7 @@ namespace Assets.Scripts.Game
                 Hand.Cards.Add(card);
                 card.transform.parent = Hand.transform;
 
-                Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InHand, true, false);
+                UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InHand, true, false);
             }       
         }
 
@@ -124,16 +125,16 @@ namespace Assets.Scripts.Game
 
         public void DisableAllCards()
         {
-            Deck.gameObject.layer = Helper.IgnoreRaycastLayer;
-            Helper.DisableCards(Hand.Cards);
-            Helper.DisableCards(InPlay.Cards);
+            Deck.gameObject.layer = UtilManager.IgnoreRaycastLayer;
+            UtilManager.DisableCards(Hand.Cards);
+            UtilManager.DisableCards(InPlay.Cards);
         }
 
         public void EnableAllCards()
         {
-            Deck.gameObject.layer = Helper.DeckLayer;
-            Helper.EnableCards(Hand.Cards);
-            Helper.EnableCards(InPlay.Cards);
+            Deck.gameObject.layer = UtilManager.DeckLayer;
+            UtilManager.EnableCards(Hand.Cards);
+            UtilManager.EnableCards(InPlay.Cards);
         }
     }
 }

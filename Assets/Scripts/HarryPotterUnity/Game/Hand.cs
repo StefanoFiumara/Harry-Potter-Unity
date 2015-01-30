@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Cards;
+using Assets.Scripts.HarryPotterUnity.Cards;
+using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
-using CardStates = Assets.Scripts.Cards.GenericCard.CardStates;
+using CardStates = Assets.Scripts.HarryPotterUnity.Cards.GenericCard.CardStates;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Hand : MonoBehaviour {
         
@@ -45,7 +46,7 @@ namespace Assets.Scripts.Game
                 cardPosition.x += i * Hand.Spacing * shrinkFactor;
                 cardPosition.z -= i;
 
-                Helper.TweenCardToPosition(Cards[i], cardPosition, CardStates.InHand);
+                UtilManager.TweenCardToPosition(Cards[i], cardPosition, CardStates.InHand);
             }
         }
 
@@ -60,10 +61,10 @@ namespace Assets.Scripts.Game
 
             if (preview)
             {
-                Helper.AddTweenToQueue(card, HandPreviewPosition, 0.5f, 0f, card.State, flip, false);
+                UtilManager.AddTweenToQueue(card, HandPreviewPosition, 0.5f, 0f, card.State, flip, false);
             }
 
-            Helper.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, CardStates.InHand, false, card.State == CardStates.InPlay);
+            UtilManager.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, CardStates.InHand, false, card.State == CardStates.InPlay);
         }
     }
 }

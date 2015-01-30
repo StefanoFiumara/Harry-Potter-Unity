@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Cards;
+using Assets.Scripts.HarryPotterUnity.Cards;
+using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
-using CardStates = Assets.Scripts.Cards.GenericCard.CardStates;
-using CardTypes = Assets.Scripts.Cards.GenericCard.CardTypes;
+using CardStates = Assets.Scripts.HarryPotterUnity.Cards.GenericCard.CardStates;
+using CardTypes = Assets.Scripts.HarryPotterUnity.Cards.GenericCard.CardTypes;
 
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class InPlay : MonoBehaviour {
 
@@ -74,13 +75,13 @@ namespace Assets.Scripts.Game
         private void AnimateCreatureToBoard(GenericCard card)
         {
             Vector3 cardPosition = GetTargetPositionForCard(card);
-            Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
+            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
         }
 
         private void AnimateLessonToBoard(GenericCard card)
         {
             Vector3 cardPosition = GetTargetPositionForCard(card);
-            Helper.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
+            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, CardStates.InPlay, false, card.State == CardStates.InHand);
         }
 
     
@@ -90,7 +91,7 @@ namespace Assets.Scripts.Game
             Cards.FindAll(card => card.CardType == CardTypes.Lesson).ForEach(card => 
             {
                 Vector3 cardPosition = GetTargetPositionForCard(card);
-                Helper.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
+                UtilManager.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
             });
         }
         private void RearrangeCreatures()
@@ -98,7 +99,7 @@ namespace Assets.Scripts.Game
             Cards.FindAll(card => card.CardType == CardTypes.Creature).ForEach(card => 
             {
                 Vector3 cardPosition = GetTargetPositionForCard(card);
-                Helper.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
+                UtilManager.TweenCardToPosition(card, cardPosition, CardStates.InPlay);
             });
         }
 

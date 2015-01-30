@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class GameManager : MonoBehaviour
     {

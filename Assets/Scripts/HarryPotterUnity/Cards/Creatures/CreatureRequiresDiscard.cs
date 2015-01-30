@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Cards.Creatures
+﻿namespace Assets.Scripts.HarryPotterUnity.Cards.Creatures
 {
     public class CreatureRequiresDiscard : GenericCreature, IPersistentCard {
 

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.HarryPotterUnity.Utils
 {
     public class RegisterPreviewCamera : MonoBehaviour {
 
         public void Start () {
-            Helper.PreviewCamera = GetComponent<Camera>();
+            UtilManager.PreviewCamera = GetComponent<Camera>();
         }
 
     }

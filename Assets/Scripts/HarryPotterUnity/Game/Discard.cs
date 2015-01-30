@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.Cards;
+using Assets.Scripts.HarryPotterUnity.Cards;
+using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
-using CardStates = Assets.Scripts.Cards.GenericCard.CardStates;
+using CardStates = Assets.Scripts.HarryPotterUnity.Cards.GenericCard.CardStates;
 
-namespace Assets.Scripts.Game
+namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Discard : MonoBehaviour {
 
@@ -36,8 +37,8 @@ namespace Assets.Scripts.Game
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
 
-            Helper.AddTweenToQueue(card, cardPreviewPos, 0.35f, 0f, CardStates.Discarded, card.State == CardStates.InDeck, card.State == CardStates.InPlay);
-            Helper.AddTweenToQueue(card, cardPos, 0.25f, 0f, CardStates.Discarded, false, false);
+            UtilManager.AddTweenToQueue(card, cardPreviewPos, 0.35f, 0f, CardStates.Discarded, card.State == CardStates.InDeck, card.State == CardStates.InPlay);
+            UtilManager.AddTweenToQueue(card, cardPos, 0.25f, 0f, CardStates.Discarded, false, false);
         }
 
         //TODO: OnMouseUp: View cards in discard pile

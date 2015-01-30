@@ -1,7 +1,8 @@
-﻿using Assets.Scripts.Game;
+﻿using Assets.Scripts.HarryPotterUnity.Game;
+using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.Cards
+namespace Assets.Scripts.HarryPotterUnity.Cards
 {
     public abstract class GenericCard : MonoBehaviour {
 
@@ -18,7 +19,7 @@ namespace Assets.Scripts.Cards
             CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch
         }
 
-        public CardStates State;
+        public CardStates State { get; set; }
         public CardTypes CardType;
 
         public Player Player;
@@ -37,7 +38,7 @@ namespace Assets.Scripts.Cards
                 col.size = new Vector3(_colliderSize.x, _colliderSize.y, 0.2f);
             }
 
-            gameObject.layer = Helper.CardLayer;
+            gameObject.layer = UtilManager.CardLayer;
 
             _frontPlane = transform.FindChild("Front").gameObject;
         }
@@ -59,13 +60,13 @@ namespace Assets.Scripts.Cards
 
         private void ShowPreview()
         {
-            _frontPlane.layer = Helper.PreviewLayer;
+            _frontPlane.layer = UtilManager.PreviewLayer;
             if (State != CardStates.InDeck && State != CardStates.Discarded)
             {
                 if (ITween.Count(gameObject) == 0)
                 {
-                    Helper.PreviewCamera.transform.rotation = transform.rotation;
-                    Helper.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
+                    UtilManager.PreviewCamera.transform.rotation = transform.rotation;
+                    UtilManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
                 }
                 else
                 {
@@ -76,25 +77,25 @@ namespace Assets.Scripts.Cards
     
         private void HidePreview()
         {
-            _frontPlane.layer = Helper.CardLayer;
-            Helper.PreviewCamera.transform.position = Helper.DefaultPreviewCameraPos;
+            _frontPlane.layer = UtilManager.CardLayer;
+            UtilManager.PreviewCamera.transform.position = UtilManager.DefaultPreviewCameraPos;
         }
 
         public void Disable()
         {
-            gameObject.layer = Helper.IgnoreRaycastLayer;
+            gameObject.layer = UtilManager.IgnoreRaycastLayer;
             _frontPlane.renderer.material.color = new Color(0.35f, 0.35f, 0.35f);
         }
 
         public void Enable()
         {
-            gameObject.layer = Helper.CardLayer;
+            gameObject.layer = UtilManager.CardLayer;
             _frontPlane.renderer.material.color = Color.white;
         }
 
         public void SetSelected()
         {
-            gameObject.layer = Helper.CardLayer;
+            gameObject.layer = UtilManager.CardLayer;
             _frontPlane.renderer.material.color = Color.yellow;
         }
     

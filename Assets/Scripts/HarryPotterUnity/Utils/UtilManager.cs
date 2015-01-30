@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.Cards;
+using Assets.Scripts.HarryPotterUnity.Cards;
 using UnityEngine;
-using CardStates = Assets.Scripts.Cards.GenericCard.CardStates;
+using CardStates = Assets.Scripts.HarryPotterUnity.Cards.GenericCard.CardStates;
 using EaseType = ITween.EaseType;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.HarryPotterUnity.Utils
 {
-    public class Helper : MonoBehaviour {
+    public class UtilManager : MonoBehaviour {
 
         public const int PreviewLayer = 9;
         public const int CardLayer = 10;

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
-using LessonTypes = Assets.Scripts.Cards.Lesson.LessonTypes;
+using LessonTypes = Assets.Scripts.HarryPotterUnity.Cards.Lesson.LessonTypes;
 
-namespace Assets.Scripts.Cards
+namespace Assets.Scripts.HarryPotterUnity.Cards
 {
     public abstract class GenericSpell : GenericCard {
 
@@ -32,7 +33,7 @@ namespace Assets.Scripts.Cards
         protected void AnimateAndDiscard()
         {
             //TODO: Rotate if it's being played by the opponent
-            Helper.AddTweenToQueue(this, SpellOffset, 0.5f, 0f, State, false, false);
+            UtilManager.AddTweenToQueue(this, SpellOffset, 0.5f, 0f, State, false, false);
             Invoke("ExecuteActionAndDiscard", 0.9f);
         }
 
@@ -62,7 +63,7 @@ namespace Assets.Scripts.Cards
             foreach (var card in validCards)
             {
                 card.Enable();
-                card.gameObject.layer = Helper.ValidChoiceLayer;
+                card.gameObject.layer = UtilManager.ValidChoiceLayer;
             }
 
             StartCoroutine(WaitForPlayerInput());
