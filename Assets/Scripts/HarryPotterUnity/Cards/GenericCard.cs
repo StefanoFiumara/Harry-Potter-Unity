@@ -19,14 +19,33 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
             CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch
         }
 
+        public enum ClassificationTypes
+        {
+            CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch,
+            Lesson,
+            Character,
+            Adventure
+        }
+        
         public CardStates State { get; set; }
         public CardTypes CardType;
 
-        public Player Player;
+        public ClassificationTypes Classification;
+
+        [SerializeField]
+        private string _cardName = "";
+        public string CardName
+        {
+            get { return _cardName; }
+            private set { _cardName = value; }
+        }
+
+        public Player Player { get; set; }
 
         private readonly Vector2 _colliderSize = new Vector2(50f, 70f);
 
         private GameObject _frontPlane;
+
 
         public void Start()
         {

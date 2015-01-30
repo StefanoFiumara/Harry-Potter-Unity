@@ -129,8 +129,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  _player: {fileID: 1925117256}
-  DeckShuffleTweenTime: .800000012
 --- !u!1 &226967737
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,12 +156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c074680bb62d40478aeeb9f600f4575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Hand: {fileID: 589322087}
-  _Deck: {fileID: 1528567323}
-  _InPlay: {fileID: 1759829299}
-  _OppositePlayer: {fileID: 1925117256}
-  _Discard: {fileID: 611051675}
-  StartingCharacter: {fileID: 0}
 --- !u!4 &226967739
 Transform:
   m_ObjectHideFlags: 0
@@ -207,7 +199,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f67bb9cf7dde2409094a5a197e3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Player: {fileID: 226967738}
 --- !u!4 &589322088
 Transform:
   m_ObjectHideFlags: 0
@@ -259,7 +250,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a378c8f9f15fca4f9b051699389595f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 226967738}
 --- !u!1 &720433611
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,6 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Player1: {fileID: 1925117256}
   Player2: {fileID: 226967738}
+  CardLibrary: []
 --- !u!4 &720433613
 Transform:
   m_ObjectHideFlags: 0
@@ -340,7 +331,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05f67bb9cf7dde2409094a5a197e3e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Player: {fileID: 1925117256}
 --- !u!1 &1083298368
 GameObject:
   m_ObjectHideFlags: 0
@@ -668,7 +658,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a378c8f9f15fca4f9b051699389595f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1925117256}
 --- !u!1 &1528567321
 GameObject:
   m_ObjectHideFlags: 0
@@ -712,8 +701,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea7b9519fc9be3e4dab09516bd46a3ed, type: 2}
   - {fileID: 11400000, guid: aadf26746bd02bb41a6438361dae64a9, type: 2}
   - {fileID: 11400000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  _player: {fileID: 226967738}
-  DeckShuffleTweenTime: .800000012
 --- !u!4 &1528567324
 Transform:
   m_ObjectHideFlags: 0
@@ -753,7 +740,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 226967738}
   InPlayTweenTime: .5
 --- !u!4 &1759829300
 Transform:
@@ -794,12 +780,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c074680bb62d40478aeeb9f600f4575, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _Hand: {fileID: 866037081}
-  _Deck: {fileID: 222928294}
-  _InPlay: {fileID: 2002146216}
-  _OppositePlayer: {fileID: 226967738}
-  _Discard: {fileID: 1441997538}
-  StartingCharacter: {fileID: 0}
 --- !u!4 &1925117257
 Transform:
   m_ObjectHideFlags: 0
@@ -843,7 +823,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f63c47b1a8663642a836ab80997e6f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 1925117256}
   InPlayTweenTime: .5
 --- !u!4 &2002146217
 Transform:

@@ -1,25 +1,28 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Assets.Scripts.HarryPotterUnity.Cards;
+using UnityEditor;
+using UnityEngine;
 
 namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class GameManager : MonoBehaviour
     {
-
         public Player Player1, Player2;
-
-        // Use this for initialization
+        
         void Start()
         {
             Debug.Log("Init GameManager");
-
             //TODO: Instantiate Player 1 and Player 2 (with generated Decks) in Awake()
-            Player1.OppositePlayer = Player2;
-            Player2.OppositePlayer = Player1;
-
-            Player1.DrawInitialHand();
-            Player2.DrawInitialHand();
-
-            Player1.InitTurn();
+           // Player1.OppositePlayer = Player2;
+           // Player2.OppositePlayer = Player1;
+           //
+           // Player1.DrawInitialHand();
+           // Player2.DrawInitialHand();
+           //
+           // Player1.InitTurn();
         }
     }
 }

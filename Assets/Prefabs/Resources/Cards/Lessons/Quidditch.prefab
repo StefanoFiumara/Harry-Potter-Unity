@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 10
-  m_Name: Creatures
+  m_Name: Quidditch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: e7667323a0e11524aaa15b45a1c237f7, type: 2}
+  - {fileID: 2100000, guid: 337bedbcf1d11ab4cb5fec439bfa5776, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -181,9 +181,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84927fa802d65014baaf987d6a2b727b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
   CardType: 0
-  LessonType: 0
+  Classification: 5
+  _cardName: Quidditch
+  Player: {fileID: 0}
+  LessonType: 4
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

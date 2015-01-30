@@ -181,8 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84927fa802d65014baaf987d6a2b727b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
   CardType: 0
+  Classification: 2
+  _cardName: Transfiguration
+  Player: {fileID: 0}
   LessonType: 2
 --- !u!1001 &100100000
 Prefab:

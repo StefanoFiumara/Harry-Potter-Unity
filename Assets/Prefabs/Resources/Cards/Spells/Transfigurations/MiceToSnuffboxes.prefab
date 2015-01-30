@@ -181,9 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583fe6f527c51af4585eefce7884e6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
   CardType: 2
-  _Player: {fileID: 0}
+  Classification: 2
+  _cardName: Mice to Snuffboxes
+  Player: {fileID: 0}
   CostType: 2
   CostAmount: 5
   InputRequired: 2

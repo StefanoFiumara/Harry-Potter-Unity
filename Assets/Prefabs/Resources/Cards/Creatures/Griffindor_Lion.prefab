@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 10
-  m_Name: Curious_Raven
+  m_Name: Griffindor_Lion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: bb624449cfad52042b29a4f722fbcfa3, type: 2}
+  - {fileID: 2100000, guid: 6923ef4bee7cf194bab02654259c85ce, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -181,12 +181,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc1957cf7fba8544a92144e06e1d409a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  State: 0
   CardType: 1
+  Classification: 0
+  _cardName: Griffindor Lion
+  Player: {fileID: 0}
   CostType: 0
-  CostAmount: 2
-  DamagePerTurn: 1
-  Health: 1
+  CostAmount: 6
+  DamagePerTurn: 3
+  Health: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
