@@ -2,7 +2,6 @@
 using Assets.Scripts.HarryPotterUnity.Cards;
 using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
-using CardStates = Assets.Scripts.HarryPotterUnity.Cards.GenericCard.CardStates;
 
 namespace Assets.Scripts.HarryPotterUnity.Game
 {
@@ -43,10 +42,10 @@ namespace Assets.Scripts.HarryPotterUnity.Game
             {
                 var cardPosition = HandCardsOffset;
 
-                cardPosition.x += i * Hand.Spacing * shrinkFactor;
+                cardPosition.x += i * Spacing * shrinkFactor;
                 cardPosition.z -= i;
 
-                UtilManager.TweenCardToPosition(Cards[i], cardPosition, CardStates.InHand);
+                UtilManager.TweenCardToPosition(Cards[i], cardPosition, GenericCard.CardStates.InHand);
             }
         }
 
@@ -56,7 +55,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 
             var shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
 
-            cardPosition.x += Cards.Count * Hand.Spacing * shrinkFactor;
+            cardPosition.x += Cards.Count * Spacing * shrinkFactor;
             cardPosition.z -= Cards.Count;
 
             if (preview)
@@ -64,7 +63,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
                 UtilManager.AddTweenToQueue(card, HandPreviewPosition, 0.5f, 0f, card.State, flip, false);
             }
 
-            UtilManager.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, CardStates.InHand, false, card.State == CardStates.InPlay);
+            UtilManager.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, GenericCard.CardStates.InHand, false, card.State == GenericCard.CardStates.InPlay);
         }
     }
 }

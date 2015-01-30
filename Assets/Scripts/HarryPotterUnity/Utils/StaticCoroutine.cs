@@ -14,7 +14,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
             {
                 if (_mInstance == null)
                 {
-                    _mInstance = GameObject.FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine;
+                    _mInstance = FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine;
 
                     if (_mInstance == null)
                     {

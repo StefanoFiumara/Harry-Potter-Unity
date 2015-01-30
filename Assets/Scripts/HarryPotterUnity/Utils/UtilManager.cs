@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Assets.Scripts.HarryPotterUnity.Cards;
 using UnityEngine;
-using CardStates = Assets.Scripts.HarryPotterUnity.Cards.GenericCard.CardStates;
-using EaseType = ITween.EaseType;
 
 namespace Assets.Scripts.HarryPotterUnity.Utils
 {
@@ -25,15 +23,15 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
         {
             public GameObject Target;
             public Vector3 Position;
-            public EaseType easeType;
+            public ITween.EaseType easeType;
             public float Time;
             public float Delay;
             public bool Flip;
             public bool Rotate;
-            public CardStates StateAfterAnimation;
+            public GenericCard.CardStates StateAfterAnimation;
         }
 
-        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, CardStates stateAfterAnimation, bool flip, bool rotate, EaseType easeType = EaseType.EaseInOutSine)
+        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate, ITween.EaseType easeType = ITween.EaseType.EaseInOutSine)
         {
             TweenObject newTween = new TweenObject();
 
@@ -86,7 +84,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
             }
         }
 
-        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, CardStates stateAfterAnimation, float tweenDelay = 0f, EaseType easeType = ITween.EaseType.EaseInOutSine)
+        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, GenericCard.CardStates stateAfterAnimation, float tweenDelay = 0f, ITween.EaseType easeType = ITween.EaseType.EaseInOutSine)
         {
             ITween.MoveTo(card.gameObject, ITween.Hash("time", 0.5f,
                 "position", cardPosition,

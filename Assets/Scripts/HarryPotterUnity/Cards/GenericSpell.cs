@@ -3,13 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.HarryPotterUnity.Utils;
 using UnityEngine;
-using LessonTypes = Assets.Scripts.HarryPotterUnity.Cards.Lesson.LessonTypes;
 
 namespace Assets.Scripts.HarryPotterUnity.Cards
 {
     public abstract class GenericSpell : GenericCard {
 
-        public LessonTypes CostType;
+        public Lesson.LessonTypes CostType;
         public int CostAmount;
 
         public int InputRequired;
