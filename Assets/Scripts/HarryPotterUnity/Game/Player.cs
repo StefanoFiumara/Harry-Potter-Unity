@@ -6,8 +6,8 @@ using UnityEngine;
 namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Player : MonoBehaviour {
-        public Player OppositePlayer { get; set; }
 
+        public Player OppositePlayer { get; set; }
         public Hand Hand { get; private set; }
         public Deck Deck { get; private set; }
         public InPlay InPlay { get; private set; }
@@ -23,7 +23,6 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 
         public void Awake()
         {
-            Debug.Log("Player Start");
             LessonTypesInPlay = new List<Lesson.LessonTypes>();
             ActionsAvailable = 0;
             AmountLessonsInPlay = 0;
