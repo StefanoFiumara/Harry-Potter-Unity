@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.HarryPotterUnity.Utils;
+using UnityEngine;
 
 namespace Assets.Scripts.HarryPotterUnity.Game
 {
@@ -8,15 +9,16 @@ namespace Assets.Scripts.HarryPotterUnity.Game
         
         void Start()
         {
-            Debug.Log("Init GameManager");
-            //TODO: Instantiate Player 1 and Player 2 (with generated Decks) in Awake()
-           // Player1.OppositePlayer = Player2;
-           // Player2.OppositePlayer = Player1;
-           //
-           // Player1.DrawInitialHand();
-           // Player2.DrawInitialHand();
-           //
-           // Player1.InitTurn();
+           //TODO: Instantiate Player 1 and Player 2 (with generated Decks) in Awake()
+           Player1.OppositePlayer = Player2;
+           Player2.OppositePlayer = Player1;
+           
+           Player1.DrawInitialHand();
+           Player2.DrawInitialHand();
+           
+           Player1.InitTurn();
+
+         
         }
     }
 }
