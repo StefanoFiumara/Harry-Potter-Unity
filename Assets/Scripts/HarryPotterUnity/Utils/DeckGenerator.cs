@@ -66,7 +66,6 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
                     AddCardsToDeck(ref deck, MapLessonType(types[0]), 10);
                     break;
             }
-            //TODO: Finish this function
 
             return deck;
         }
