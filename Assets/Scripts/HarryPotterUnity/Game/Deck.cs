@@ -7,7 +7,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Deck : MonoBehaviour {
 
-        public List<GenericCard> Cards { get; private set; } //TODO: Convert to auto-property after implementing deck generation?
+        public List<GenericCard> Cards { get; private set; }
 
         private Player _player;
 
@@ -68,6 +68,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
             if (card == null)
             {
                 //GameOver
+                Debug.Log("Game Over");
                 return;
             }
 
