@@ -7,14 +7,14 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Discard : MonoBehaviour {
 
-        private List<GenericCard> _cards; //TODO: Does this need to be private?
+        public List<GenericCard> Cards { get; private set; } //TODO: Does this need to be private?
 
         public static readonly Vector2 DiscardPositionOffset = new Vector2(-355f, -30f);
 
         public static readonly Vector3 PreviewOffset = new Vector3(-300f, -30f, -6f);
 
         public void Start () {
-            _cards = new List<GenericCard>();
+            Cards = new List<GenericCard>();
 
             if (gameObject.collider == null)
             {
@@ -27,11 +27,11 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 
         public void Add(GenericCard card) 
         {
-            _cards.Add(card);
+            Cards.Add(card);
             card.transform.parent = transform;
 
             var cardPos = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 16f);
-            cardPos.z -=  _cards.Count * 0.2f;
+            cardPos.z -=  Cards.Count * 0.2f;
 
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
