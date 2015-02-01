@@ -17,6 +17,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
         private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
 
+        //TODO: Remove this
         public float InPlayTweenTime;
 
         public InPlay()
