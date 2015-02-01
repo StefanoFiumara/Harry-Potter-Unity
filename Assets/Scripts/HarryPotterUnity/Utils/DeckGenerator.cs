@@ -36,7 +36,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
             }
         }
 
-        public List<GenericCard> GenerateDeck(List<Lesson.LessonTypes> types)
+        public static List<GenericCard> GenerateDeck(List<Lesson.LessonTypes> types)
         {
             if (types.Count != 2 && types.Count != 3)
             {

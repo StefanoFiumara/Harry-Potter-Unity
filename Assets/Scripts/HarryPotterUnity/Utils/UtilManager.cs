@@ -33,16 +33,18 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
 
         public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate, ITween.EaseType easeType = ITween.EaseType.EaseInOutSine)
         {
-            TweenObject newTween = new TweenObject();
+            var newTween = new TweenObject
+            {
+                Target = target.gameObject,
+                Position = position,
+                Time = time,
+                Delay = delay,
+                easeType = easeType,
+                StateAfterAnimation = stateAfterAnimation,
+                Flip = flip,
+                Rotate = rotate
+            };
 
-            newTween.Target = target.gameObject;
-            newTween.Position = position;
-            newTween.Time = time;
-            newTween.Delay = delay;
-            newTween.easeType = easeType;
-            newTween.StateAfterAnimation = stateAfterAnimation;
-            newTween.Flip = flip;
-            newTween.Rotate = rotate;
 
             TweenQueue.Enqueue(newTween);
 
@@ -64,7 +66,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
                 }
                 else
                 {
-                    TweenObject tween = TweenQueue.Dequeue();
+                    var tween = TweenQueue.Dequeue();
 
                     ITween.MoveTo(tween.Target, ITween.Hash("time", tween.Time,
                         "delay", tween.Delay,

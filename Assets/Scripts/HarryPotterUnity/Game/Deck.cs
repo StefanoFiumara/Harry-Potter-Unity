@@ -7,17 +7,27 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class Deck : MonoBehaviour {
 
-        public List<GenericCard> Cards; //TODO: Convert to auto-property after implementing deck generation?
+        public List<GenericCard> Cards { get; private set; } //TODO: Convert to auto-property after implementing deck generation?
 
         private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
-        
-        public void Awake ()
+
+        public void Awake()
         {
             _player = transform.GetComponentInParent<Player>();
 
-            //instantiate cards into scene TODO: Maybe place this in Start() instead of Awake so it is executed after deck generation
+            var col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+            col.size = new Vector3(50f, 70f, 1f);
+            col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
+        }
+
+        public void InitDeck (List<GenericCard> cardList)
+        {
+            Cards = new List<GenericCard>(cardList);
+
+            //instantiate cardList into scene
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
             
             for (var i = 0; i < Cards.Count; i++)
@@ -29,15 +39,6 @@ namespace Assets.Scripts.HarryPotterUnity.Game
                 Cards[i].transform.position += i * Vector3.back * 0.2f;
 
                 Cards[i].Player = _player;
-            }
-
-            //Set the collider to the proper size and position
-            if (gameObject.collider == null)
-            {
-                var col = gameObject.AddComponent<BoxCollider>();
-                col.isTrigger = true;
-                col.size = new Vector3(50f, 70f, 1f);
-                col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
             }
         }
 	
