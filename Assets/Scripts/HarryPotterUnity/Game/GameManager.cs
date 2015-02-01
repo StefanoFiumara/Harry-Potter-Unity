@@ -26,8 +26,8 @@ namespace Assets.Scripts.HarryPotterUnity.Game
             Player2.Deck.InitDeck(
                 DeckGenerator.GenerateDeck(new List<Lesson.LessonTypes>
                 {
-                    Lesson.LessonTypes.Potions,
-                    Lesson.LessonTypes.Quidditch,
+                    Lesson.LessonTypes.Creatures,
+                    Lesson.LessonTypes.Charms,
                     Lesson.LessonTypes.Transfiguration
                 }));
 
