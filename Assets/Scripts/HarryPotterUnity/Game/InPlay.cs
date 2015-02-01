@@ -6,19 +6,13 @@ using UnityEngine;
 namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class InPlay : MonoBehaviour {
-
         public List<GenericCard> Cards { get; private set; }
-
-       // public Player Player;
 
         private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
         private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);
 
         private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
-
-        //TODO: Remove this
-        public float InPlayTweenTime;
 
         public InPlay()
         {
@@ -40,7 +34,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
                     break;
             }
 
-            (card as IPersistentCard).OnEnterInPlayAction();
+            ((IPersistentCard) card).OnEnterInPlayAction();
         }
 
         public void Remove(GenericCard card)
@@ -57,7 +51,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
                     break;
             }
 
-            (card as IPersistentCard).OnExitInPlayAction();
+            ((IPersistentCard) card).OnExitInPlayAction();
         }
 
         public List<GenericCard> GetCreaturesInPlay()
@@ -72,41 +66,41 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 
         private void AnimateCreatureToBoard(GenericCard card)
         {
-            Vector3 cardPosition = GetTargetPositionForCard(card);
+            var cardPosition = GetTargetPositionForCard(card);
             UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, false, card.State == GenericCard.CardStates.InHand);
         }
 
         private void AnimateLessonToBoard(GenericCard card)
         {
-            Vector3 cardPosition = GetTargetPositionForCard(card);
+            var cardPosition = GetTargetPositionForCard(card);
             UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, false, card.State == GenericCard.CardStates.InHand);
         }
-
-    
 
         private void RearrangeLessons()
         {
             Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Lesson).ForEach(card => 
             {
-                Vector3 cardPosition = GetTargetPositionForCard(card);
+                var cardPosition = GetTargetPositionForCard(card);
                 UtilManager.TweenCardToPosition(card, cardPosition, GenericCard.CardStates.InPlay);
             });
         }
+
         private void RearrangeCreatures()
         {
             Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Creature).ForEach(card => 
             {
-                Vector3 cardPosition = GetTargetPositionForCard(card);
+                var cardPosition = GetTargetPositionForCard(card);
                 UtilManager.TweenCardToPosition(card, cardPosition, GenericCard.CardStates.InPlay);
             });
         }
 
         private Vector3 GetTargetPositionForCard(GenericCard card)
         {
-            int position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
+            var position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
 
-            Vector3 cardPosition = new Vector3();
+            var cardPosition = new Vector3();
 
+            //TODO: Violates OCP!
             switch (card.CardType)
             {
                 case GenericCard.CardTypes.Lesson:
