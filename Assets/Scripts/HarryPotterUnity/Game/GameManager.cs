@@ -8,21 +8,44 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 {
     public class GameManager : MonoBehaviour
     {
-        public Player Player1, Player2;
+        [SerializeField] protected GameObject PlayerObject;
+
+        public Player Player1 { get; set; }
+        public Player Player2 { get; set; }
         
         void Start()
         {
-             //TODO: Instantiate Player 1 and Player 2 (with generated Decks) in Awake()
-             Player1.OppositePlayer = Player2;
-             Player2.OppositePlayer = Player1;
+            SpawnPlayers();
+        }
 
+        IEnumerator StartGame()
+        {
+            yield return new WaitForSeconds(2.4f);
+            Player1.DrawInitialHand();
+            Player2.DrawInitialHand();
+
+            Player1.InitTurn();
+        }
+        public void SpawnPlayers()
+        {
+            Player1 = ((GameObject) Instantiate(PlayerObject)).GetComponent<Player>();
+            Player2 = ((GameObject) Instantiate(PlayerObject)).GetComponent<Player>();
+
+            Player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+
+            Player1.transform.parent = Player2.transform.parent = transform;
+
+            Player1.OppositePlayer = Player2;
+            Player2.OppositePlayer = Player1;
+
+            //temporary lesson types, switch out with player input when we build the menu
             Player1.Deck.InitDeck(
                 DeckGenerator.GenerateDeck(new List<Lesson.LessonTypes>
                 {
                     Lesson.LessonTypes.Creatures,
                     Lesson.LessonTypes.Charms
                 }));
-            
+
             Player2.Deck.InitDeck(
                 DeckGenerator.GenerateDeck(new List<Lesson.LessonTypes>
                 {
@@ -36,14 +59,5 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 
             StartCoroutine(StartGame());
         }
-
-        IEnumerator StartGame()
-        {
-            yield return new WaitForSeconds(2.4f);
-            Player1.DrawInitialHand();
-            Player2.DrawInitialHand();
-
-            Player1.InitTurn();
-        } 
     }
 }
