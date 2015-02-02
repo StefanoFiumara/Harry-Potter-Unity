@@ -13,7 +13,6 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
     public class DeckGenerator
     {
         private static List<GenericCard> _cardLibrary;
-
         public static List<GenericCard> CardLibrary
         {
             get {
@@ -63,7 +62,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
                     AddLessonsToDeck(ref deck, types[1], 8);
                     AddCardsToDeck(ref deck, MapLessonType(types[1]), 10);
                     AddLessonsToDeck(ref deck, types[2], 7);
-                    AddCardsToDeck(ref deck, MapLessonType(types[0]), 10);
+                    AddCardsToDeck(ref deck, MapLessonType(types[2]), 10);
                     break;
             }
 
