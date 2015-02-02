@@ -18,7 +18,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
 
                     if (_mInstance == null)
                     {
-                        _mInstance = new GameObject("StaticCoroutine").AddComponent<StaticCoroutine>();
+                        _mInstance = new GameObject("TweenQueueManager").AddComponent<StaticCoroutine>();
                     }
                 }
                 return _mInstance;
