@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.HarryPotterUnity.UI;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.HarryPotterUnity.Utils
 {
     public class NetworkManager : MonoBehaviour
     {
-
         [SerializeField] private Text _networkStatusText;
 
         public void Start ()
