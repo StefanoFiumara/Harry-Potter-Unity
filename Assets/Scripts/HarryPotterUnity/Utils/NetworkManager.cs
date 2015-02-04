@@ -7,7 +7,6 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
     public class NetworkManager : MonoBehaviour
     {
         [SerializeField] private Text _networkStatusText;
-        private bool _connected = false;
 
         public enum NetworkState
         {
@@ -31,16 +30,12 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
             _networkState = NetworkState.InLobby;
         }
 
-        public void OnJoinedRoom()
-        {
-            _networkState = PhotonNetwork.room.playerCount >= 2 ? NetworkState.InGame : NetworkState.WaitingForMatch;
-        }
-
         public void OnPhotonPlayerConnected()
         {
             _networkState = PhotonNetwork.room.playerCount >= 2 ? NetworkState.InGame : NetworkState.WaitingForMatch;
 
             //start game here?
+            
         }
 
         public void OnGUI()
@@ -73,9 +68,14 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
         {
             if (GUI.Button(new Rect(100, 100, 190, 90), "Find Match..."))
             {
-                _networkState = NetworkState.WaitingForMatch;
-                PhotonNetwork.JoinRandomRoom();
+                FindMatch_Click();
             }
+        }
+
+        private void FindMatch_Click()
+        {
+            _networkState = NetworkState.WaitingForMatch;
+            PhotonNetwork.JoinRandomRoom();
         }
 
         public void OnPhotonRandomJoinFailed()
