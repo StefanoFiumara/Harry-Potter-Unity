@@ -62,6 +62,7 @@ namespace HarryPotterUnity.Utils
             //remove players?
         }
 
+        // ReSharper disable once InconsistentNaming
         public void OnGUI()
         {
             GUI.contentColor = Color.yellow;
