@@ -38,6 +38,7 @@ namespace HarryPotterUnity.Utils
 
             //spawn player here? prompt for lesson type?
             _gameManager.SpawnPlayer2();
+            //rotate camera?
         }
 
         public void OnJoinedRoom()
@@ -56,6 +57,7 @@ namespace HarryPotterUnity.Utils
 
         public void OnPhotonPlayerDisconnected()
         {
+            _gameManager.DestroyPlayers();
             PhotonNetwork.LeaveRoom();
             //remove players?
         }
