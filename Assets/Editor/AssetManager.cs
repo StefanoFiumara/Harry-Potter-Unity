@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using HarryPotterUnity.Cards;
+﻿using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
