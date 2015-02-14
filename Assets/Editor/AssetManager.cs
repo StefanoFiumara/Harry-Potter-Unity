@@ -33,7 +33,6 @@ namespace Assets.Editor
             }
         }
 
-
         [MenuItem("HP-TCG Card Management/Remove Photon Views from Cards")]
         public static void RemovePhotonViews()
         {
@@ -45,7 +44,8 @@ namespace Assets.Editor
                 var view = obj.GetComponent<PhotonView>();
                 if (view)
                 {
-                    Destroy(obj.GetPhotonView());
+                    DestroyImmediate(obj.GetPhotonView(), true);
+                    Debug.Log("Destroyed photon view");
                 }
                 else
                 {
