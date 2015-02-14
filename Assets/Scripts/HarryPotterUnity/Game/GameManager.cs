@@ -8,8 +8,7 @@ namespace HarryPotterUnity.Game
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] protected GameObject PlayerObject;
-
+        //TODO: Are these references kept between clients?
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
         
