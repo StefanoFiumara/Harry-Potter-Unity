@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
+namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
     public class MiceToSnuffboxes : GenericSpell {
 

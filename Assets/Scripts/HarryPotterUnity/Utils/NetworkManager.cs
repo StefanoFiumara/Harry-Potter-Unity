@@ -1,12 +1,14 @@
-﻿using Assets.Scripts.HarryPotterUnity.UI;
+﻿using HarryPotterUnity.Game;
 using UnityEngine;
 using UnityEngine.UI;
+#pragma warning disable 649
 
-namespace Assets.Scripts.HarryPotterUnity.Utils
+namespace HarryPotterUnity.Utils
 {
     public class NetworkManager : MonoBehaviour
     {
         [SerializeField] private Text _networkStatusText;
+        [SerializeField] private GameManager _gameManager;
 
         public enum NetworkState
         {
@@ -32,14 +34,35 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
 
         public void OnPhotonPlayerConnected()
         {
-            _networkState = PhotonNetwork.room.playerCount >= 2 ? NetworkState.InGame : NetworkState.WaitingForMatch;
+            _networkState = NetworkState.InGame;
 
-            //start game here?
-            
+            //spawn player here? prompt for lesson type?
+            _gameManager.SpawnPlayer2();
+        }
+
+        public void OnJoinedRoom()
+        {
+            if (PhotonNetwork.room.playerCount < 2)
+            {
+                _networkState = NetworkState.WaitingForMatch;
+            }
+            else
+            {
+                _networkState = NetworkState.InGame;
+                //spawn player here? prompt for lesson types?
+                _gameManager.SpawnPlayer1();
+            }
+        }
+
+        public void OnPhotonPlayerDisconnected()
+        {
+            PhotonNetwork.LeaveRoom();
+            //remove players?
         }
 
         public void OnGUI()
         {
+            GUI.contentColor = Color.yellow;
             switch (_networkState)
             {
                 case NetworkState.InLobby:
@@ -56,17 +79,17 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
 
         private void ShowStartingGame()
         {
-            GUI.Label(new Rect(100,100,190,90), "Match found! Joining Game...");
+            GUI.Label(new Rect(10,20,130,40), "Match found! Joining Game...");
         }
 
         private void ShowWaiting()
         {
-            GUI.Label(new Rect(100,100,190,90), "Waiting for match...");
+            GUI.Label(new Rect(10,20,130,40), "Waiting for match...");
         }
 
         private void ShowMainMenu()
         {
-            if (GUI.Button(new Rect(100, 100, 190, 90), "Find Match..."))
+            if (GUI.Button(new Rect(10, 20, 130, 40), "Find Match..."))
             {
                 FindMatch_Click();
             }
@@ -80,7 +103,8 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
 
         public void OnPhotonRandomJoinFailed()
         {
-            PhotonNetwork.JoinOrCreateRoom(string.Format("Room {0}", PhotonNetwork.GetRoomList().Length),  null, null);
+            var roomName = string.Format("Room {0}", PhotonNetwork.GetRoomList().Length);
+            PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions {maxPlayers =  2}, null);
         }
     }
 }

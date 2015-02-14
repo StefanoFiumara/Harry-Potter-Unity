@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.HarryPotterUnity.Cards
+﻿namespace HarryPotterUnity.Cards
 {
     public class GenericCreature : GenericCard, IPersistentCard {
 

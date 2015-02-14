@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.HarryPotterUnity.Game;
-using Assets.Scripts.HarryPotterUnity.Utils;
+﻿using HarryPotterUnity.Game;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards
 {
     public abstract class GenericCard : MonoBehaviour {
 

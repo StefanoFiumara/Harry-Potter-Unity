@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.HarryPotterUnity.Utils;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards
 {
     public abstract class GenericSpell : GenericCard {
 

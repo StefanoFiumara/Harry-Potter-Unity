@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.UI
+namespace HarryPotterUnity.UI
 {
     public class HudManager : MonoBehaviour {
 
