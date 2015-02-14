@@ -27,11 +27,11 @@ namespace HarryPotterUnity.Game
         {
             Cards = new List<GenericCard>(cardList);
 
-            //instantiate cardList into scene
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
             
             for (var i = 0; i < Cards.Count; i++)
             {
+                //TODO: instantiate in PhotonNetwork
                 Cards[i] = (GenericCard)Instantiate(Cards[i]);
                 Cards[i].transform.parent = transform;
                 Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
