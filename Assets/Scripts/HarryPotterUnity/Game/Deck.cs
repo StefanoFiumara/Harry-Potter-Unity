@@ -23,6 +23,7 @@ namespace HarryPotterUnity.Game
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         }
 
+        [RPC]
         public void InitDeck (List<GenericCard> cardList)
         {
             Cards = new List<GenericCard>(cardList);
