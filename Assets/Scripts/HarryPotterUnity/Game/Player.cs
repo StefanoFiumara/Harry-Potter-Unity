@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
-    public class Player : MonoBehaviour {
+    public class Player : Photon.MonoBehaviour {
 
         public Player OppositePlayer { get; set; }
         public Hand Hand { get; private set; }
@@ -31,6 +31,23 @@ namespace HarryPotterUnity.Game
             Deck = transform.GetComponentInChildren<Deck>();
             InPlay = transform.GetComponentInChildren<InPlay>();
             Discard = transform.GetComponentInChildren<Discard>();
+        }
+
+        public void Start()
+        {
+            photonView.RPC("InitDeck", PhotonTargets.All);   
+        }
+
+        [RPC]
+        public void InitDeck()
+        {
+            Deck.InitDeck(
+                DeckGenerator.GenerateDeck(new List<Lesson.LessonTypes>
+                {
+                    Lesson.LessonTypes.Creatures,
+                    Lesson.LessonTypes.Charms,
+                    Lesson.LessonTypes.Transfiguration
+                }));
         }
 
         public void UseAction()
