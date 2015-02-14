@@ -35,9 +35,7 @@ namespace HarryPotterUnity.Utils
         public void OnPhotonPlayerConnected()
         {
             _networkState = NetworkState.InGame;
-
             //spawn player here? prompt for lesson type?
-            _gameManager.SpawnPlayer2();
             //rotate camera?
         }
 
@@ -51,7 +49,6 @@ namespace HarryPotterUnity.Utils
             {
                 _networkState = NetworkState.InGame;
                 //spawn player here? prompt for lesson types?
-                _gameManager.SpawnPlayer1();
             }
         }
 

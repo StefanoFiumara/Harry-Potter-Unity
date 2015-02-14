@@ -35,7 +35,7 @@ namespace HarryPotterUnity.Game
 
         public void Start()
         {
-            photonView.RPC("InitDeck", PhotonTargets.All);   
+            photonView.RPC("InitDeck", PhotonTargets.All);
         }
 
         [RPC]
