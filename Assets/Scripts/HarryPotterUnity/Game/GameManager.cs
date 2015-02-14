@@ -26,7 +26,8 @@ namespace HarryPotterUnity.Game
         
         public void SpawnPlayer1()
         {
-            Player1 = ((GameObject)Instantiate(PlayerObject)).GetComponent<Player>();
+            // Player1 = ((GameObject)Instantiate(PlayerObject)).GetComponent<Player>();
+            Player1 = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0).GetComponent<Player>();
             Player1.transform.parent = transform;
 
             Player1.OppositePlayer = Player2;
@@ -41,7 +42,9 @@ namespace HarryPotterUnity.Game
         }
         public void SpawnPlayer2()
         {
-            Player2 = ((GameObject)Instantiate(PlayerObject)).GetComponent<Player>();
+           // Player2 = ((GameObject)Instantiate(PlayerObject)).GetComponent<Player>();
+
+            Player2 = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.Euler(0f, 0f, 180f), 0).GetComponent<Player>();
             Player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
             Player2.transform.parent = transform;
 
@@ -54,6 +57,12 @@ namespace HarryPotterUnity.Game
                     Lesson.LessonTypes.Charms,
                     Lesson.LessonTypes.Transfiguration
                 }));
+        }
+
+        public void DestroyPlayers()
+        {
+            Destroy(Player1);
+            Destroy(Player2);
         }
     }
 }
