@@ -37,10 +37,13 @@ namespace HarryPotterUnity.Utils
             _networkState = NetworkState.InGame;
             //spawn player here? prompt for lesson type?
             //rotate camera?
+            
+            //TODO: Call RPC to spawn player objects here (GameManager.StartGame?)
         }
 
         public void OnJoinedRoom()
         {
+            //TODO: Spawn player prefab here
             if (PhotonNetwork.room.playerCount < 2)
             {
                 _networkState = NetworkState.WaitingForMatch;
