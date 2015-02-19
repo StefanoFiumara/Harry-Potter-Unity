@@ -35,7 +35,8 @@ namespace HarryPotterUnity.Game
 
         public void Start()
         {
-            photonView.RPC("InitDeck", PhotonTargets.All);
+            //TODO: Do nothing on start, call init deck after both players are connected
+            //photonView.RPC("InitDeck", PhotonTargets.All);
         }
 
         [RPC]
