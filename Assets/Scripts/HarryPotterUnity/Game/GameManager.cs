@@ -11,6 +11,7 @@ namespace HarryPotterUnity.Game
         
         public void StartGame()
         {
+            //TODO: Spawn player gets called OnjoinedRoom from separate clients, this function should only set the references as it is an RPC called from all clients
             SpawnPlayer1();
             SpawnPlayer2();
             StartCoroutine(_beginGameSequence());
