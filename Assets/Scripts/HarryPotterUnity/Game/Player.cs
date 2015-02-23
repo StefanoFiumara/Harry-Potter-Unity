@@ -40,6 +40,9 @@ namespace Assets.Scripts.HarryPotterUnity.Game
             if (ActionsAvailable > 0) return;
             ActionsAvailable = 0;
             //AfterTurnAction happens here
+            //TODO: Convert to proper event
+            //Player.cs -> public delegate void EndTurnEvents / BeginTurnEvents / DamageEvents
+            // Card.cs -> OnEnterInPlayAction -> Player.EndTurnEvents += OnInPlayAfterTurnAction; // ???
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
             OppositePlayer.InitTurn();
         }
