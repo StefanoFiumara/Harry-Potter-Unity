@@ -28,7 +28,5 @@ MonoBehaviour:
   - PunPickupSimple
   - PunRespawn
   - RequestForPickupTimes
-  - SpawnPlayer1
-  - SpawnPlayer2
-  - InitDeck
+  - StartGameRpc
   DisableAutoOpenWizard: 0

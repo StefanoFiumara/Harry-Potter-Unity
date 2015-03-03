@@ -10,6 +10,8 @@ namespace HarryPotterUnity.Utils
         [SerializeField] private Text _networkStatusText;
         [SerializeField] private GameManager _gameManager;
 
+        private GameObject _manager;
+
         public enum NetworkState
         {
             Disconnected, InLobby, WaitingForMatch, InGame
@@ -22,7 +24,7 @@ namespace HarryPotterUnity.Utils
             PhotonNetwork.ConnectUsingSettings("v0.1");
         }
 
-        public void FixedUpdate()
+        public void Update()
         {
             _networkStatusText.text = string.Format("Network Status: {0}", PhotonNetwork.connectionStateDetailed);
         }
@@ -32,27 +34,22 @@ namespace HarryPotterUnity.Utils
             _networkState = NetworkState.InLobby;
         }
 
+        public void OnJoinedRoom()
+        {
+            _networkState = PhotonNetwork.room.playerCount < 2 ? NetworkState.WaitingForMatch : NetworkState.InGame;
+
+            if (PhotonNetwork.room.playerCount == 1)
+            {
+                _manager = PhotonNetwork.Instantiate("PlayerPhotonRpcManager", Vector3.zero, Quaternion.identity, 0);
+            }
+        }
+
         public void OnPhotonPlayerConnected()
         {
             _networkState = NetworkState.InGame;
-            //spawn player here? prompt for lesson type?
-            //rotate camera?
-            
-            //TODO: Call RPC to spawn player objects here (GameManager.StartGame?)
-        }
 
-        public void OnJoinedRoom()
-        {
-            //TODO: Spawn player prefab here
-            if (PhotonNetwork.room.playerCount < 2)
-            {
-                _networkState = NetworkState.WaitingForMatch;
-            }
-            else
-            {
-                _networkState = NetworkState.InGame;
-                //spawn player here? prompt for lesson types?
-            }
+            var seed = Random.Range(int.MinValue, int.MaxValue);
+            _manager.GetPhotonView().RPC("StartGameRpc", PhotonTargets.All, seed);
         }
 
         public void OnPhotonPlayerDisconnected()

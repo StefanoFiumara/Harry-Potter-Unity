@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
@@ -8,12 +10,29 @@ namespace HarryPotterUnity.Game
         //TODO: Are these references kept between clients?
         public Player Player1;
         public Player Player2;
-        
+
+        //reference this instead of the two instances above?
+        public List<Player> Players;
+
+        public void Start()
+        {
+            Players = new List<Player>();
+        }
+
+
         public void StartGame()
         {
-            //TODO: Spawn player gets called OnjoinedRoom from separate clients, this function should only set the references as it is an RPC called from all clients
-            SpawnPlayer1();
-            SpawnPlayer2();
+            if(Players.Count != 2) throw new Exception(string.Format("There are {0} players in the room, there must be exactly 2!", Players.Count));
+            
+            Player1 = Players[0];
+            Player2 = Players[1];
+
+            Player1.OppositePlayer = Player2;
+            Player2.OppositePlayer = Player1;
+
+            Player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+
+
             StartCoroutine(_beginGameSequence());
         }
 
@@ -26,24 +45,6 @@ namespace HarryPotterUnity.Game
             Player2.DrawInitialHand();
 
             Player1.InitTurn();
-        }
-
-        private void SpawnPlayer1()
-        {
-            // Player1 = ((GameObject)Instantiate(PlayerObject)).GetComponent<Player>();
-            Player1 = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity, 0).GetComponent<Player>();
-            Player1.transform.parent = transform;
-
-            Player1.OppositePlayer = Player2;
-        }
-        private void SpawnPlayer2()
-        {
-           // Player2 = ((GameObject)Instantiate(PlayerObject)).GetComponent<Player>();
-            Player2 = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.Euler(0f, 0f, 180f), 0).GetComponent<Player>();
-            Player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
-            Player2.transform.parent = transform;
-
-            Player2.OppositePlayer = Player1;
         }
 
         public void DestroyPlayers()

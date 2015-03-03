@@ -40,7 +40,7 @@ namespace HarryPotterUnity.Cards
             private set { _cardName = value; }
         }
 
-        public Player Player { get; set; }
+        public Player Player; // { get; set; }
 
         private readonly Vector2 _colliderSize = new Vector2(50f, 70f);
 

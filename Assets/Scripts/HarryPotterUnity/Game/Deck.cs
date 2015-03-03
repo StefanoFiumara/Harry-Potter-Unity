@@ -5,9 +5,10 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
-    public class Deck : MonoBehaviour {
+    public class Deck : MonoBehaviour
+    {
 
-        public List<GenericCard> Cards { get; private set; }
+        public List<GenericCard> Cards;// { get; private set; }
 
         private Player _player;
 
@@ -31,7 +32,6 @@ namespace HarryPotterUnity.Game
             
             for (var i = 0; i < Cards.Count; i++)
             {
-                //TODO: instantiate in PhotonNetwork
                 Cards[i] = (GenericCard)Instantiate(Cards[i]);
                 Cards[i].transform.parent = transform;
                 Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;

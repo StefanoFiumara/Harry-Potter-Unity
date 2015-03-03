@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
-    public class Player : Photon.MonoBehaviour {
+    public class Player : MonoBehaviour {
 
         public Player OppositePlayer { get; set; }
         public Hand Hand { get; private set; }
@@ -33,13 +33,6 @@ namespace HarryPotterUnity.Game
             Discard = transform.GetComponentInChildren<Discard>();
         }
 
-        public void Start()
-        {
-            //TODO: Do nothing on start, call init deck after both players are connected
-            //photonView.RPC("InitDeck", PhotonTargets.All);
-        }
-
-        [RPC]
         public void InitDeck()
         {
             Deck.InitDeck(
