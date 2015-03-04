@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
+using Newtonsoft.Json;
+
 public class AccountService
 {
     private const string ServiceUrl = "https://service.exitgames.com/AccountExt/AccountServiceExt.aspx";
