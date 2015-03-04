@@ -1,5 +1,7 @@
 Build/
 bin/
+packages.config
+packages/
 # =============== #
 # Unity generated #
 # =============== #
