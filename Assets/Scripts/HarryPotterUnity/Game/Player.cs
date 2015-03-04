@@ -44,9 +44,9 @@ namespace HarryPotterUnity.Game
                 }));
         }
 
-        public void UseAction()
+        public void UseActions(int amount = 1)
         {
-            ActionsAvailable--;
+            ActionsAvailable -= amount;
 
             if (ActionsAvailable > 0) return;
             ActionsAvailable = 0;
@@ -74,9 +74,9 @@ namespace HarryPotterUnity.Game
                     .TakeDamage( ( (GenericCreature)card).DamagePerTurn) );
         }
 
-        public bool CanUseAction()
+        public bool CanUseActions(int amount = 1)
         {
-            return ActionsAvailable > 0;
+            return ActionsAvailable >= amount;
         }
 
         public void DrawInitialHand()
