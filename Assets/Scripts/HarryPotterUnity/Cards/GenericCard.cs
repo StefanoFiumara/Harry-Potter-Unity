@@ -33,14 +33,15 @@ namespace HarryPotterUnity.Cards
         public ClassificationTypes Classification;
 
         [SerializeField]
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        // ReSharper disable once ConvertToConstant.Local
         private string _cardName = "";
         public string CardName
         {
             get { return _cardName; }
-            private set { _cardName = value; }
         }
 
-        public Player Player; // { get; set; }
+        public Player Player { get; set; }
 
         private readonly Vector2 _colliderSize = new Vector2(50f, 70f);
 
@@ -49,7 +50,6 @@ namespace HarryPotterUnity.Cards
 
         public void Start()
         {
-            //Add the collider through code instead of through unity so that if it ever changes, we won't need to edit every prefab.
             if(gameObject.GetComponent<Collider>() == null)
             {
                 var col = gameObject.AddComponent<BoxCollider>();
@@ -80,17 +80,16 @@ namespace HarryPotterUnity.Cards
         private void ShowPreview()
         {
             _frontPlane.layer = UtilManager.PreviewLayer;
-            if (State != CardStates.InDeck && State != CardStates.Discarded)
+            if (State == CardStates.InDeck || State == CardStates.Discarded) return;
+
+            if (ITween.Count(gameObject) == 0)
             {
-                if (ITween.Count(gameObject) == 0)
-                {
-                    UtilManager.PreviewCamera.transform.rotation = transform.rotation;
-                    UtilManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
-                }
-                else
-                {
-                    HidePreview();
-                }
+                UtilManager.PreviewCamera.transform.rotation = transform.rotation;
+                UtilManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
+            }
+            else
+            {
+                HidePreview();
             }
         }
     
