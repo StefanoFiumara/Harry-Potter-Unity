@@ -10,7 +10,16 @@ namespace HarryPotterUnity.Utils
     {
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
- 
+
+        private HudManager _hudManager;
+
+        public void Start()
+        {
+            _hudManager = GameObject.Find("HudManager").GetComponent<HudManager>();
+
+            if(!_hudManager) throw new Exception("MultiplayerGameManager could not find HudManager!");
+        }
+
         public void SpawnPlayers()
         {
             var playerObject = Resources.Load("Player");
@@ -21,7 +30,8 @@ namespace HarryPotterUnity.Utils
         [RPC]
         public void StartGameRpc(int rngSeed)
         {
-            Debug.Log("Seed: " + rngSeed);
+            _hudManager.DisableHud();
+
             UnityEngine.Random.seed = rngSeed;
             SpawnPlayers();
             StartGame();
@@ -51,6 +61,12 @@ namespace HarryPotterUnity.Utils
             Player2.DrawInitialHand();
 
             Player1.InitTurn();
+        }
+
+        public void OnDestroy()
+        {
+            Destroy(Player1.gameObject);
+            Destroy(Player2.gameObject);
         }
     }
 }
