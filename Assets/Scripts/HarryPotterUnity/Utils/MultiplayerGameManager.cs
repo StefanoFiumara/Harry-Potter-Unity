@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
+using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Utils
 {
-    public class MultiplayerGameManager : Photon.MonoBehaviour
+    public class MultiplayerGameManager : MonoBehaviour
     {
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
@@ -33,7 +34,7 @@ namespace HarryPotterUnity.Utils
         {
             _hudManager.DisableHud();
 
-            UnityEngine.Random.seed = rngSeed;
+            Random.seed = rngSeed;
             SpawnPlayers();
             StartGame();
         }
