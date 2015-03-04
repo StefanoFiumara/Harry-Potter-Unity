@@ -50,7 +50,7 @@ namespace HarryPotterUnity.Cards
         public void Start()
         {
             //Add the collider through code instead of through unity so that if it ever changes, we won't need to edit every prefab.
-            if(gameObject.collider == null)
+            if(gameObject.GetComponent<Collider>() == null)
             {
                 var col = gameObject.AddComponent<BoxCollider>();
                 col.isTrigger = true;
@@ -103,19 +103,19 @@ namespace HarryPotterUnity.Cards
         public void Disable()
         {
             gameObject.layer = UtilManager.IgnoreRaycastLayer;
-            _frontPlane.renderer.material.color = new Color(0.35f, 0.35f, 0.35f);
+            _frontPlane.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.35f);
         }
 
         public void Enable()
         {
             gameObject.layer = UtilManager.CardLayer;
-            _frontPlane.renderer.material.color = Color.white;
+            _frontPlane.GetComponent<Renderer>().material.color = Color.white;
         }
 
         public void SetSelected()
         {
             gameObject.layer = UtilManager.CardLayer;
-            _frontPlane.renderer.material.color = Color.yellow;
+            _frontPlane.GetComponent<Renderer>().material.color = Color.yellow;
         }
     
     }

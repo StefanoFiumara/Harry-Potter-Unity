@@ -16,7 +16,7 @@ namespace HarryPotterUnity.Game
         public void Start () {
             Cards = new List<GenericCard>();
 
-            if (gameObject.collider == null)
+            if (gameObject.GetComponent<Collider>() == null)
             {
                 var col = gameObject.AddComponent<BoxCollider>();
                 col.isTrigger = true;
