@@ -56,10 +56,10 @@ namespace HarryPotterUnity.Game
 
         public void OnMouseUp()
         {
-            if (Cards.Count <= 0 || !_player.CanUseAction()) return;
+            if (Cards.Count <= 0 || !_player.CanUseActions()) return;
 
             DrawCard();
-            _player.UseAction();
+            _player.UseActions();
         }
 
         public void DrawCard()
