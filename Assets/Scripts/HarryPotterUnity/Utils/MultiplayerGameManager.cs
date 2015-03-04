@@ -6,10 +6,10 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Utils
 {
-    public class PlayerPhotonRpcManager : Photon.MonoBehaviour
+    public class MultiplayerGameManager : Photon.MonoBehaviour
     {
-        public Player Player1;
-        public Player Player2;
+        public Player Player1 { get; set; }
+        public Player Player2 { get; set; }
  
         public void SpawnPlayers()
         {

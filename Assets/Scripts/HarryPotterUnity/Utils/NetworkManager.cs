@@ -8,7 +8,6 @@ namespace HarryPotterUnity.Utils
     public class NetworkManager : MonoBehaviour
     {
         [SerializeField] private Text _networkStatusText;
-        [SerializeField] private GameManager _gameManager;
 
         private GameObject _manager;
 
@@ -40,7 +39,7 @@ namespace HarryPotterUnity.Utils
 
             if (PhotonNetwork.room.playerCount == 1)
             {
-                _manager = PhotonNetwork.Instantiate("PlayerPhotonRpcManager", Vector3.zero, Quaternion.identity, 0);
+                _manager = PhotonNetwork.Instantiate("MultiplayerGameManager", Vector3.zero, Quaternion.identity, 0);
             }
         }
 
@@ -54,7 +53,6 @@ namespace HarryPotterUnity.Utils
 
         public void OnPhotonPlayerDisconnected()
         {
-            _gameManager.DestroyPlayers();
             PhotonNetwork.LeaveRoom();
             //remove players?
         }
@@ -62,7 +60,7 @@ namespace HarryPotterUnity.Utils
         // ReSharper disable once InconsistentNaming
         public void OnGUI()
         {
-            GUI.contentColor = Color.yellow;
+            //GUI.contentColor = Color.yellow;
             switch (_networkState)
             {
                 case NetworkState.InLobby:
