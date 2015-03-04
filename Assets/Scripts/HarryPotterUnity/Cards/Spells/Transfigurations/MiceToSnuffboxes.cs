@@ -27,7 +27,5 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
                 card.Player.Hand.Add(card, false, false);
             }
         }
-
-        public override void OnPlayAction() { }
     }
 }
