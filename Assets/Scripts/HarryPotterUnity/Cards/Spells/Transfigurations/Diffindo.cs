@@ -14,6 +14,7 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
         {
             return Player.OppositePlayer.InPlay.Cards;
         }
+
         public override void AfterInputAction(List<GenericCard> selectedCards)
         {
             if (selectedCards.Count == 1)
@@ -27,11 +28,6 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
             {
                 throw new Exception("More than one input sent to Diffindo, this should never happen!");
             }
-        }
-
-        public override void OnPlayAction()
-        {
-            throw new Exception("OnPlayAction called on Diffindo, this should never happen!");
         }
     }
 }
