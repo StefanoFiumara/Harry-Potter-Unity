@@ -9,15 +9,16 @@
 
         public LessonTypes LessonType;
 
-        public void OnMouseUp()
+        public override void OnClickAction()
         {
-            if (State != CardStates.InHand) return;
-
-            if (!Player.CanUseAction()) return;
-
             Player.Hand.Remove(this);
             Player.InPlay.Add(this);
-            Player.UseAction();
+            Player.UseActions();
+        }
+
+        public override bool MeetsAdditionalPlayRequirements()
+        {
+            return true;
         }
 
         public void OnEnterInPlayAction()

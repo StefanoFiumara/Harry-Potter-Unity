@@ -26,7 +26,9 @@ namespace HarryPotterUnity.Cards
             Character,
             Adventure
         }
-        
+
+        public int ActionCost = 1;
+
         public CardStates State { get; set; }
         public CardTypes CardType;
 
@@ -76,6 +78,23 @@ namespace HarryPotterUnity.Cards
         {
             HidePreview();
         }
+
+        public void OnMouseUp()
+        {
+            if (State != CardStates.InHand) return;
+            if (!Player.CanUseActions(ActionCost)) return;
+            if (!MeetsAdditionalPlayRequirements()) return;
+
+            OnClickAction();
+
+            if (CardType != CardTypes.Spell)
+            {
+                Player.UseActions(ActionCost);   
+            }
+        }
+
+        public abstract void OnClickAction();
+        public abstract bool MeetsAdditionalPlayRequirements();
 
         private void ShowPreview()
         {

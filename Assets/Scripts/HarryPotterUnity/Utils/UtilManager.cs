@@ -5,6 +5,18 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Utils
 {
+    public class TweenObject
+    {
+        public GameObject Target;
+        public Vector3 Position;
+        public ITween.EaseType EaseType;
+        public float Time;
+        public float Delay;
+        public bool Flip;
+        public bool Rotate;
+        public GenericCard.CardStates StateAfterAnimation;
+    }
+
     public class UtilManager : MonoBehaviour {
 
         public const int PreviewLayer = 9;
@@ -18,18 +30,6 @@ namespace HarryPotterUnity.Utils
         public static Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
 
         private static bool _tweenQueueRunning;
-
-        public struct TweenObject
-        {
-            public GameObject Target;
-            public Vector3 Position;
-            public ITween.EaseType EaseType;
-            public float Time;
-            public float Delay;
-            public bool Flip;
-            public bool Rotate;
-            public GenericCard.CardStates StateAfterAnimation;
-        }
 
         public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate, ITween.EaseType easeType = ITween.EaseType.EaseInOutSine)
         {
@@ -48,11 +48,10 @@ namespace HarryPotterUnity.Utils
 
             TweenQueue.Enqueue(newTween);
 
-            if (_tweenQueueRunning == false)
-            {
-                _tweenQueueRunning = true;
-                StaticCoroutine.DoCoroutine(RunTweenQueue());
-            }
+            if (_tweenQueueRunning) return;
+
+            _tweenQueueRunning = true;
+            StaticCoroutine.DoCoroutine(RunTweenQueue());
         }
 
         private static IEnumerator RunTweenQueue()
