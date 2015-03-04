@@ -10,17 +10,5 @@ namespace HarryPotterUnity.Cards.Spells
         {
             Player.OppositePlayer.TakeDamage(DamageAmount);
         }
-
-        public override bool MeetsAdditionalPlayRequirements()
-        {
-            return true;
-        }
-
-        public override void AfterInputAction(List<GenericCard> selectedCards) { }
-
-        protected override List<GenericCard> GetValidCards()
-        {
-            return null;
-        }
     }
 }
