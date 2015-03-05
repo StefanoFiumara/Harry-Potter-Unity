@@ -184,7 +184,6 @@ MonoBehaviour:
   CardType: 1
   Classification: 0
   _cardName: Hufflepuff Badger
-  Player: {fileID: 0}
   CostType: 0
   CostAmount: 3
   DamagePerTurn: 1

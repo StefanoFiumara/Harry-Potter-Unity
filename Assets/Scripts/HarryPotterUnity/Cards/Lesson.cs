@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.HarryPotterUnity.Cards
+﻿namespace HarryPotterUnity.Cards
 {
     public class Lesson : GenericCard, IPersistentCard {
 
@@ -9,15 +9,15 @@
 
         public LessonTypes LessonType;
 
-        public void OnMouseUp()
+        public override void OnClickAction()
         {
-            if (State != CardStates.InHand) return;
-
-            if (!Player.CanUseAction()) return;
-
             Player.Hand.Remove(this);
-            Player.InPlay.Add(this);
-            Player.UseAction();
+            Player.InPlay.Add(this);            
+        }
+
+        public override bool MeetsAdditionalPlayRequirements()
+        {
+            return true;
         }
 
         public void OnEnterInPlayAction()

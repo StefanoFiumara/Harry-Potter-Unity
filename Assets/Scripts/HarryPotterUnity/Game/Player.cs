@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.HarryPotterUnity.Cards;
-using Assets.Scripts.HarryPotterUnity.Utils;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Game
+namespace HarryPotterUnity.Game
 {
     public class Player : MonoBehaviour {
 
@@ -33,9 +33,20 @@ namespace Assets.Scripts.HarryPotterUnity.Game
             Discard = transform.GetComponentInChildren<Discard>();
         }
 
-        public void UseAction()
+        public void InitDeck()
         {
-            ActionsAvailable--;
+            Deck.InitDeck(
+                DeckGenerator.GenerateDeck(new List<Lesson.LessonTypes>
+                {
+                    Lesson.LessonTypes.Creatures,
+                    Lesson.LessonTypes.Charms,
+                    Lesson.LessonTypes.Transfiguration
+                }));
+        }
+
+        public void UseActions(int amount = 1)
+        {
+            ActionsAvailable -= amount;
 
             if (ActionsAvailable > 0) return;
             ActionsAvailable = 0;
@@ -63,9 +74,9 @@ namespace Assets.Scripts.HarryPotterUnity.Game
                     .TakeDamage( ( (GenericCreature)card).DamagePerTurn) );
         }
 
-        public bool CanUseAction()
+        public bool CanUseActions(int amount = 1)
         {
-            return ActionsAvailable > 0;
+            return ActionsAvailable >= amount;
         }
 
         public void DrawInitialHand()

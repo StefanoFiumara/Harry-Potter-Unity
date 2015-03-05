@@ -184,7 +184,6 @@ MonoBehaviour:
   CardType: 2
   Classification: 2
   _cardName: Mice to Snuffboxes
-  Player: {fileID: 0}
   CostType: 2
   CostAmount: 5
   InputRequired: 2

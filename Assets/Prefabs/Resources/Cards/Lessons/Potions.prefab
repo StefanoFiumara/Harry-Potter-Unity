@@ -184,7 +184,6 @@ MonoBehaviour:
   CardType: 0
   Classification: 5
   _cardName: Potions
-  Player: {fileID: 0}
   LessonType: 3
 --- !u!1001 &100100000
 Prefab:

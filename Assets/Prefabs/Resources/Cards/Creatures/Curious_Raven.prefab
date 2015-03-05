@@ -184,7 +184,6 @@ MonoBehaviour:
   CardType: 1
   Classification: 0
   _cardName: Curious Raven
-  Player: {fileID: 0}
   CostType: 0
   CostAmount: 2
   DamagePerTurn: 1

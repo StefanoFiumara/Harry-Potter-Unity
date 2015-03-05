@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.HarryPotterUnity.Utils;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards
 {
     public abstract class GenericSpell : GenericCard {
 
@@ -15,18 +15,17 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
 
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
-        public void OnMouseUp()
+        public sealed override void OnClickAction()
         {
-            if (State != CardStates.InHand) return;
-
-            if (!Player.CanUseAction()) return;
-
-            if (Player.AmountLessonsInPlay < CostAmount || !Player.LessonTypesInPlay.Contains(CostType)) return;
-
-            if (!MeetsAdditionalPlayRequirements()) return;
-
             AnimateAndDiscard();
             Player.Hand.Remove(this);
+        }
+
+        public sealed override bool MeetsAdditionalPlayRequirements()
+        {
+            return Player.AmountLessonsInPlay >= CostAmount &&
+                   Player.LessonTypesInPlay.Contains(CostType) &&
+                   MeetsAdditionalInputRequirements();
         }
 
         protected void AnimateAndDiscard()
@@ -42,7 +41,7 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
             if (InputRequired == 0)
             {
                 OnPlayAction();
-                Player.UseAction(); //If the card requires input, the action will be used after the input is selected.
+                Player.UseActions(ActionCost); //If the card requires input, the action will be used after the input is selected.
             }
             else
             {
@@ -56,7 +55,7 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
             Player.DisableAllCards();
             Player.OppositePlayer.DisableAllCards();
 
-            List<GenericCard> validCards = GetValidCards();
+            var validCards = GetValidCards();
 
             //place valid cards in valid layer
             foreach (var card in validCards)
@@ -95,7 +94,7 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
                             Player.EnableAllCards();
                             Player.OppositePlayer.EnableAllCards();
 
-                            Player.UseAction();
+                            Player.UseActions(ActionCost);
                         }
                     }
                 }
@@ -103,9 +102,19 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
             }
         }
 
-        public abstract void OnPlayAction();
-        public abstract bool MeetsAdditionalPlayRequirements();
-        public abstract void AfterInputAction(List<GenericCard> input);
-        protected abstract List<GenericCard> GetValidCards();
+        public virtual bool MeetsAdditionalInputRequirements()
+        {
+            return true;
+        }
+
+        protected virtual List<GenericCard> GetValidCards()
+        {
+            return null;
+        }
+
+        public virtual void OnPlayAction() { }
+        public virtual void AfterInputAction(List<GenericCard> input) { }
+
+
     }
 }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
+namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
     public class Diffindo : GenericSpell {
 
-        public override bool MeetsAdditionalPlayRequirements()
+        public override bool MeetsAdditionalInputRequirements()
         {
             return Player.OppositePlayer.InPlay.Cards.Count > 0;
         }
@@ -14,6 +14,7 @@ namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
         {
             return Player.OppositePlayer.InPlay.Cards;
         }
+
         public override void AfterInputAction(List<GenericCard> selectedCards)
         {
             if (selectedCards.Count == 1)
@@ -27,11 +28,6 @@ namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
             {
                 throw new Exception("More than one input sent to Diffindo, this should never happen!");
             }
-        }
-
-        public override void OnPlayAction()
-        {
-            throw new Exception("OnPlayAction called on Diffindo, this should never happen!");
         }
     }
 }

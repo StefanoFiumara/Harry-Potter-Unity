@@ -1,10 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using Assets.Scripts.HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Utils
+namespace HarryPotterUnity.Utils
 {
+    public class TweenObject
+    {
+        public GameObject Target;
+        public Vector3 Position;
+        public ITween.EaseType EaseType;
+        public float Time;
+        public float Delay;
+        public bool Flip;
+        public bool Rotate;
+        public GenericCard.CardStates StateAfterAnimation;
+    }
+
     public class UtilManager : MonoBehaviour {
 
         public const int PreviewLayer = 9;
@@ -17,19 +29,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
         public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
         public static Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
 
-        private static bool _tweenQueueRunning = false;
-
-        public struct TweenObject
-        {
-            public GameObject Target;
-            public Vector3 Position;
-            public ITween.EaseType easeType;
-            public float Time;
-            public float Delay;
-            public bool Flip;
-            public bool Rotate;
-            public GenericCard.CardStates StateAfterAnimation;
-        }
+        private static bool _tweenQueueRunning;
 
         public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate, ITween.EaseType easeType = ITween.EaseType.EaseInOutSine)
         {
@@ -39,7 +39,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
                 Position = position,
                 Time = time,
                 Delay = delay,
-                easeType = easeType,
+                EaseType = easeType,
                 StateAfterAnimation = stateAfterAnimation,
                 Flip = flip,
                 Rotate = rotate
@@ -48,11 +48,10 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
 
             TweenQueue.Enqueue(newTween);
 
-            if (_tweenQueueRunning == false)
-            {
-                _tweenQueueRunning = true;
-                StaticCoroutine.DoCoroutine(RunTweenQueue());
-            }
+            if (_tweenQueueRunning) return;
+
+            _tweenQueueRunning = true;
+            StaticCoroutine.DoCoroutine(RunTweenQueue());
         }
 
         private static IEnumerator RunTweenQueue()
@@ -71,7 +70,7 @@ namespace Assets.Scripts.HarryPotterUnity.Utils
                     ITween.MoveTo(tween.Target, ITween.Hash("time", tween.Time,
                         "delay", tween.Delay,
                         "position", tween.Position,
-                        "easetype", tween.easeType,
+                        "easetype", tween.EaseType,
                         "islocal", true,
                         "oncomplete", "SwitchState",
                         "oncompletetarget", tween.Target,

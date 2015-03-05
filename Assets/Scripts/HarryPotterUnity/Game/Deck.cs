@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.HarryPotterUnity.Cards;
-using Assets.Scripts.HarryPotterUnity.Utils;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Game
+namespace HarryPotterUnity.Game
 {
-    public class Deck : MonoBehaviour {
+    public class Deck : MonoBehaviour
+    {
 
-        public List<GenericCard> Cards { get; private set; }
+        public List<GenericCard> Cards;// { get; private set; }
 
         private Player _player;
 
@@ -27,7 +28,6 @@ namespace Assets.Scripts.HarryPotterUnity.Game
         {
             Cards = new List<GenericCard>(cardList);
 
-            //instantiate cardList into scene
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
             
             for (var i = 0; i < Cards.Count; i++)
@@ -56,10 +56,10 @@ namespace Assets.Scripts.HarryPotterUnity.Game
 
         public void OnMouseUp()
         {
-            if (Cards.Count <= 0 || !_player.CanUseAction()) return;
+            if (Cards.Count <= 0 || !_player.CanUseActions()) return;
 
             DrawCard();
-            _player.UseAction();
+            _player.UseActions();
         }
 
         public void DrawCard()

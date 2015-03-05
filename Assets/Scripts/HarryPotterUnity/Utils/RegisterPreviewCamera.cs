@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Utils
+namespace HarryPotterUnity.Utils
 {
     public class RegisterPreviewCamera : MonoBehaviour {
 

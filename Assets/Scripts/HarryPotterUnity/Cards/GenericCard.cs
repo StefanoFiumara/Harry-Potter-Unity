@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.HarryPotterUnity.Game;
-using Assets.Scripts.HarryPotterUnity.Utils;
+﻿using HarryPotterUnity.Game;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards
 {
     public abstract class GenericCard : MonoBehaviour {
 
@@ -26,18 +26,21 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
             Character,
             Adventure
         }
-        
+
+        public int ActionCost = 1;
+
         public CardStates State { get; set; }
         public CardTypes CardType;
 
         public ClassificationTypes Classification;
 
         [SerializeField]
+        // ReSharper disable once FieldCanBeMadeReadOnly.Local
+        // ReSharper disable once ConvertToConstant.Local
         private string _cardName = "";
         public string CardName
         {
             get { return _cardName; }
-            private set { _cardName = value; }
         }
 
         public Player Player { get; set; }
@@ -49,8 +52,7 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
 
         public void Start()
         {
-            //Add the collider through code instead of through unity so that if it ever changes, we won't need to edit every prefab.
-            if(gameObject.collider == null)
+            if(gameObject.GetComponent<Collider>() == null)
             {
                 var col = gameObject.AddComponent<BoxCollider>();
                 col.isTrigger = true;
@@ -77,20 +79,36 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
             HidePreview();
         }
 
+        public void OnMouseUp()
+        {
+            if (State != CardStates.InHand) return;
+            if (!Player.CanUseActions(ActionCost)) return;
+            if (!MeetsAdditionalPlayRequirements()) return;
+
+            OnClickAction();
+
+            if (CardType != CardTypes.Spell)
+            {
+                Player.UseActions(ActionCost);   
+            }
+        }
+
+        public abstract void OnClickAction();
+        public abstract bool MeetsAdditionalPlayRequirements();
+
         private void ShowPreview()
         {
             _frontPlane.layer = UtilManager.PreviewLayer;
-            if (State != CardStates.InDeck && State != CardStates.Discarded)
+            if (State == CardStates.InDeck || State == CardStates.Discarded) return;
+
+            if (ITween.Count(gameObject) == 0)
             {
-                if (ITween.Count(gameObject) == 0)
-                {
-                    UtilManager.PreviewCamera.transform.rotation = transform.rotation;
-                    UtilManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
-                }
-                else
-                {
-                    HidePreview();
-                }
+                UtilManager.PreviewCamera.transform.rotation = transform.rotation;
+                UtilManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
+            }
+            else
+            {
+                HidePreview();
             }
         }
     
@@ -103,19 +121,19 @@ namespace Assets.Scripts.HarryPotterUnity.Cards
         public void Disable()
         {
             gameObject.layer = UtilManager.IgnoreRaycastLayer;
-            _frontPlane.renderer.material.color = new Color(0.35f, 0.35f, 0.35f);
+            _frontPlane.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.35f);
         }
 
         public void Enable()
         {
             gameObject.layer = UtilManager.CardLayer;
-            _frontPlane.renderer.material.color = Color.white;
+            _frontPlane.GetComponent<Renderer>().material.color = Color.white;
         }
 
         public void SetSelected()
         {
             gameObject.layer = UtilManager.CardLayer;
-            _frontPlane.renderer.material.color = Color.yellow;
+            _frontPlane.GetComponent<Renderer>().material.color = Color.yellow;
         }
     
     }

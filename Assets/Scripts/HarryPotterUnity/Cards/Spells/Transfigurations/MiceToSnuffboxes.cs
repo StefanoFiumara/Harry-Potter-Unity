@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
+namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
     public class MiceToSnuffboxes : GenericSpell {
 
@@ -11,7 +11,7 @@ namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
 
             return validCards;
         }
-        public override bool MeetsAdditionalPlayRequirements()
+        public override bool MeetsAdditionalInputRequirements()
         {
             //There must be at least 2 creatures in play
             var validCards = Player.InPlay.GetCreaturesInPlay();
@@ -27,7 +27,5 @@ namespace Assets.Scripts.HarryPotterUnity.Cards.Spells.Transfigurations
                 card.Player.Hand.Add(card, false, false);
             }
         }
-
-        public override void OnPlayAction() { }
     }
 }

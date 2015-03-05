@@ -1,3 +1,7 @@
+Build/
+bin/
+packages.config
+packages/
 # =============== #
 # Unity generated #
 # =============== #
@@ -5,7 +9,7 @@ Temp/
 Obj/
 UnityGenerated/
 Library/
- 
+
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
 # ===================================== #

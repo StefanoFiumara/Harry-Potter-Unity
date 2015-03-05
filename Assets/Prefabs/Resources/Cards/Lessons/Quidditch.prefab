@@ -184,7 +184,6 @@ MonoBehaviour:
   CardType: 0
   Classification: 5
   _cardName: Quidditch
-  Player: {fileID: 0}
   LessonType: 4
 --- !u!1001 &100100000
 Prefab:

@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.HarryPotterUnity.Cards;
-using Assets.Scripts.HarryPotterUnity.Utils;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Game
+namespace HarryPotterUnity.Game
 {
     public class InPlay : MonoBehaviour {
         public List<GenericCard> Cards { get; private set; }

@@ -184,7 +184,6 @@ MonoBehaviour:
   CardType: 2
   Classification: 2
   _cardName: Diffindo
-  Player: {fileID: 0}
   CostType: 2
   CostAmount: 8
   InputRequired: 1

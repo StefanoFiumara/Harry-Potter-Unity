@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Assets.Scripts.HarryPotterUnity.Cards;
-using Assets.Scripts.HarryPotterUnity.Utils;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace Assets.Scripts.HarryPotterUnity.Game
+namespace HarryPotterUnity.Game
 {
     public class Discard : MonoBehaviour {
 
@@ -16,7 +16,7 @@ namespace Assets.Scripts.HarryPotterUnity.Game
         public void Start () {
             Cards = new List<GenericCard>();
 
-            if (gameObject.collider == null)
+            if (gameObject.GetComponent<Collider>() == null)
             {
                 var col = gameObject.AddComponent<BoxCollider>();
                 col.isTrigger = true;

@@ -184,7 +184,6 @@ MonoBehaviour:
   CardType: 2
   Classification: 1
   _cardName: Magical Mishap
-  Player: {fileID: 0}
   CostType: 1
   CostAmount: 2
   InputRequired: 0

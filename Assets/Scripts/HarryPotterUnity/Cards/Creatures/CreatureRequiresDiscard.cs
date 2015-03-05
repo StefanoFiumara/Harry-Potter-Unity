@@ -1,9 +1,11 @@
-﻿namespace Assets.Scripts.HarryPotterUnity.Cards.Creatures
+﻿using System.Linq;
+
+namespace HarryPotterUnity.Cards.Creatures
 {
     public class CreatureRequiresDiscard : GenericCreature, IPersistentCard {
 
         public int LessonsToDiscard;
-        protected override bool MeetsAdditionalRequirements()
+        protected override bool MeetsAdditionalCreatureRequirements()
         {
             return Player.InPlay.GetLessonsInPlay()
                 .FindAll(card => ((Lesson) card).LessonType == Lesson.LessonTypes.Creatures)
@@ -14,7 +16,15 @@
         {
             base.OnEnterInPlayAction();
 
-            //TODO: Remove lessons here
+            for (var i = 0; i < LessonsToDiscard; i++)
+            {
+                var lesson =
+                    Player.InPlay.GetLessonsInPlay()
+                                 .First(x => ((Lesson) x).LessonType == Lesson.LessonTypes.Creatures);
+
+                Player.InPlay.Remove(lesson);
+                Player.Discard.Add(lesson);
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.HarryPotterUnity.Cards
+﻿namespace HarryPotterUnity.Cards
 {
     public class GenericCreature : GenericCard, IPersistentCard {
 
@@ -9,19 +9,17 @@
         public int DamagePerTurn;
         public int Health;
 
-        public void OnMouseUp()
+        public override void OnClickAction()
         {
-            if (State != CardStates.InHand) return;
-
-            if (!Player.CanUseAction()) return;
-
-            if (Player.AmountLessonsInPlay < CostAmount || !Player.LessonTypesInPlay.Contains(CostType)) return;
-
-            if (!MeetsAdditionalRequirements()) return;
-
             Player.Hand.Remove(this);
             Player.InPlay.Add(this);
-            Player.UseAction();
+        }
+
+        public override bool MeetsAdditionalPlayRequirements()
+        {
+            return Player.AmountLessonsInPlay >= CostAmount && 
+                  Player.LessonTypesInPlay.Contains(CostType) &&
+                  MeetsAdditionalCreatureRequirements();
         }
 
         public void OnEnterInPlayAction()
@@ -38,7 +36,7 @@
             Player.DamagePerTurn -= DamagePerTurn;
         }
 
-        protected virtual bool MeetsAdditionalRequirements()
+        protected virtual bool MeetsAdditionalCreatureRequirements()
         {
             return true;
         }
