@@ -13,16 +13,16 @@ namespace HarryPotterUnity.Utils
         public Player Player1 { get; set; }
         public Player Player2 { get; set; }
 
-        private HudManager _hudManager;
+        private MultiplayerLobbyHudManager _multiplayerLobbyHudManager;
 
         public void Start()
         {
-            _hudManager = GameObject.Find("HudManager").GetComponent<HudManager>();
+            _multiplayerLobbyHudManager = GameObject.Find("MultiplayerLobbyHudManager").GetComponent<MultiplayerLobbyHudManager>();
 
-            if(!_hudManager) throw new Exception("MultiplayerGameManager could not find HudManager!");
+            if(!_multiplayerLobbyHudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
         }
 
-        public void SpawnPlayers()
+        private void SpawnPlayers()
         {
             var playerObject = Resources.Load("Player");
             Player1 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
@@ -32,14 +32,14 @@ namespace HarryPotterUnity.Utils
         [RPC]
         public void StartGameRpc(int rngSeed)
         {
-            _hudManager.DisableHud();
+            _multiplayerLobbyHudManager.DisableHud();
 
             Random.seed = rngSeed;
             SpawnPlayers();
             StartGame();
         }
 
-        public void StartGame()
+        private void StartGame()
         {
             if(!Player1 || !Player2) throw new Exception("Error: One of the players was not properly instantiated!");
 
@@ -67,8 +67,8 @@ namespace HarryPotterUnity.Utils
 
         public void OnDestroy()
         {
-            Destroy(Player1.gameObject);
-            Destroy(Player2.gameObject);
+            if(Player1) Destroy(Player1.gameObject);
+            if(Player2) Destroy(Player2.gameObject);
         }
     }
 }

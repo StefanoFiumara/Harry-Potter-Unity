@@ -5,7 +5,7 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
     public class Diffindo : GenericSpell {
 
-        public override bool MeetsAdditionalPlayRequirements()
+        public override bool MeetsAdditionalInputRequirements()
         {
             return Player.OppositePlayer.InPlay.Cards.Count > 0;
         }

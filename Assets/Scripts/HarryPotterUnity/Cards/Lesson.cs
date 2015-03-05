@@ -12,8 +12,7 @@
         public override void OnClickAction()
         {
             Player.Hand.Remove(this);
-            Player.InPlay.Add(this);
-            Player.UseActions();
+            Player.InPlay.Add(this);            
         }
 
         public override bool MeetsAdditionalPlayRequirements()

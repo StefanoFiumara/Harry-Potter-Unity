@@ -17,7 +17,7 @@
 
         public override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.AmountLessonsInPlay > CostAmount && 
+            return Player.AmountLessonsInPlay >= CostAmount && 
                   Player.LessonTypesInPlay.Contains(CostType) &&
                   MeetsAdditionalCreatureRequirements();
         }

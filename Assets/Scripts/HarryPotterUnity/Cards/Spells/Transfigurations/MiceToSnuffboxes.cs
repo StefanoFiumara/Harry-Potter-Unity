@@ -11,7 +11,7 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
 
             return validCards;
         }
-        public override bool MeetsAdditionalPlayRequirements()
+        public override bool MeetsAdditionalInputRequirements()
         {
             //There must be at least 2 creatures in play
             var validCards = Player.InPlay.GetCreaturesInPlay();

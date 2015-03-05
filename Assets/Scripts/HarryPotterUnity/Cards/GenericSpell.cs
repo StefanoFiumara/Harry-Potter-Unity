@@ -15,15 +15,15 @@ namespace HarryPotterUnity.Cards
 
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
-        public override void OnClickAction()
+        public sealed override void OnClickAction()
         {
             AnimateAndDiscard();
             Player.Hand.Remove(this);
         }
 
-        public override bool MeetsAdditionalPlayRequirements()
+        public sealed override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.AmountLessonsInPlay > CostAmount &&
+            return Player.AmountLessonsInPlay >= CostAmount &&
                    Player.LessonTypesInPlay.Contains(CostType) &&
                    MeetsAdditionalInputRequirements();
         }

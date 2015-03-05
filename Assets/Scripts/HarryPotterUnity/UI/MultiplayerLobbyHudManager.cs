@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace HarryPotterUnity.UI
 {
-    public class HudManager : MonoBehaviour
+    public class MultiplayerLobbyHudManager : MonoBehaviour
     {
         private MultiplayerGameManager _multiplayerGameManager;
 
