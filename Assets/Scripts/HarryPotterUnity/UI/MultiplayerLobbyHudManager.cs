@@ -83,7 +83,7 @@ namespace HarryPotterUnity.UI
         {
             PhotonNetwork.LeaveRoom();
 
-            _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby";
+            _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby.";
             _titleText.gameObject.SetActive(true);
             _gameStatusText.gameObject.SetActive(true);
         }
