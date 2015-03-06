@@ -2,7 +2,6 @@
 using System.Collections;
 using HarryPotterUnity.Game;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace HarryPotterUnity.UI
 {
