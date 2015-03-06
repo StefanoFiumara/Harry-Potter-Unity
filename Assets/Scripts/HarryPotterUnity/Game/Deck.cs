@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -75,7 +74,7 @@ namespace HarryPotterUnity.Game
                 return;
             }
 
-            _player.Hand.Add(card, _player.IsLocalPlayer);
+            _player.Hand.Add(card);
         }
 
         public void Shuffle()

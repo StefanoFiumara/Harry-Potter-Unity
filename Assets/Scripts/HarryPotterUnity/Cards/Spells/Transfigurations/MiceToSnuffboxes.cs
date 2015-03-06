@@ -27,7 +27,7 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
         {
             foreach(var card in selectedCards) {
                 card.Player.InPlay.Remove(card);
-                card.Player.Hand.Add(card, card.Player.IsLocalPlayer, false);
+                card.Player.Hand.Add(card, false);
             }
         }
     }

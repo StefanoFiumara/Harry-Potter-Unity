@@ -11,6 +11,8 @@ namespace HarryPotterUnity.Game
         
         public List<GenericCard> Cards { get; private set; }
 
+        private Player _player;
+
         private static readonly Vector3 HandPreviewPosition = new Vector3(-80f, -13f, -336f);
 
         public static readonly Vector3 HandCardsOffset = new Vector3(-240f, -200f, 0f);
@@ -22,10 +24,16 @@ namespace HarryPotterUnity.Game
             Cards = new List<GenericCard>();
         }
 
-        public void Add(GenericCard card, bool flip = true, bool preview = true)
+        [UsedImplicitly]
+        public void Awake()
+        {
+            _player = transform.GetComponentInParent<Player>();
+        }
+
+        public void Add(GenericCard card, bool preview = true)
         {
             card.transform.parent = transform;
-            AnimateCardToHand(card, flip, preview);
+            AnimateCardToHand(card, _player.IsLocalPlayer, preview);
             Cards.Add(card);
 
             if (Cards.Count == 12) AdjustHandSpacing();
