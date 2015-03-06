@@ -58,18 +58,22 @@ namespace HarryPotterUnity.UI
         {
             if (PhotonNetwork.room.playerCount == 1)
             {
-                _multiplayerGameManager = PhotonNetwork.Instantiate("MultiplayerGameManager", Vector3.zero, Quaternion.identity, 0).GetComponent<MultiplayerGameManager>();
+                _multiplayerGameManager =
+                    PhotonNetwork.Instantiate("MultiplayerGameManager", Vector3.zero, Quaternion.identity, 0)
+                        .GetComponent<MultiplayerGameManager>();
+            }
+            else
+            {
+                var rotation = Quaternion.Euler(0f, 0f, 180f);
+
+                _mainCamera.transform.rotation = rotation;
+                _previewCamera.transform.rotation = rotation;
             }
         }
 
         [UsedImplicitly]
         public void OnPhotonPlayerConnected()
         {
-            var rotation = Quaternion.Euler(0f, 0f, 180f);
-
-            _mainCamera.transform.rotation = rotation;
-            _previewCamera.transform.rotation = rotation;
-
             var seed = Random.Range(int.MinValue, int.MaxValue);
             _multiplayerGameManager.photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
@@ -79,6 +83,7 @@ namespace HarryPotterUnity.UI
         {
             PhotonNetwork.LeaveRoom();
 
+            _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby";
             _titleText.gameObject.SetActive(true);
             _gameStatusText.gameObject.SetActive(true);
         }

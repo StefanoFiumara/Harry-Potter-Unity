@@ -14,7 +14,7 @@ namespace HarryPotterUnity.Utils
     {
         private static List<GenericCard> _cardLibrary;
 
-        private static IEnumerable<GenericCard> CardLibrary
+        private static List<GenericCard> CardLibrary
         {
             get {
                     if (_cardLibrary == null) LoadCardLibrary();

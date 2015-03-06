@@ -85,6 +85,7 @@ namespace HarryPotterUnity.Cards
         [UsedImplicitly]
         public void OnMouseUp()
         {
+            if (!Player.IsLocalPlayer) return;
             if (State != CardStates.InHand) return;
             if (!Player.CanUseActions(ActionCost)) return;
             if (!MeetsAdditionalPlayRequirements()) return;

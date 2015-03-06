@@ -24,6 +24,8 @@ namespace HarryPotterUnity.Game
         public int DamagePerTurn { get; set; }
         public int AmountLessonsInPlay { get; set; }
 
+        public bool IsLocalPlayer { get; set; }
+
         [UsedImplicitly]
         public void Awake()
         {
@@ -99,7 +101,7 @@ namespace HarryPotterUnity.Game
                 Hand.Cards.Add(card);
                 card.transform.parent = Hand.transform;
 
-                UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InHand, true, false);
+                UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InHand, IsLocalPlayer, false);
             }       
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Linq;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
@@ -30,6 +31,9 @@ namespace HarryPotterUnity.Utils
             var playerObject = Resources.Load("Player");
             _player1 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
             _player2 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
+
+            _player1.IsLocalPlayer = PhotonNetwork.player.isMasterClient;
+            _player2.IsLocalPlayer = !_player1.IsLocalPlayer;
         }
 
         [RPC, UsedImplicitly]

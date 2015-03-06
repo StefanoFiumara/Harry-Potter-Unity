@@ -75,7 +75,7 @@ namespace HarryPotterUnity.Game
                 return;
             }
 
-            _player.Hand.Add(card);
+            _player.Hand.Add(card, _player.IsLocalPlayer);
         }
 
         public void Shuffle()
