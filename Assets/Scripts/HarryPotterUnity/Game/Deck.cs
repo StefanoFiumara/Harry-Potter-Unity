@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
+using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -40,6 +41,9 @@ namespace HarryPotterUnity.Game
                 Cards[i].transform.position += i * Vector3.back * 0.2f;
 
                 Cards[i].Player = _player;
+
+                Cards[i].NetworkId = UtilManager.NetworkIdCounter++;
+                UtilManager.AllCards.Add(Cards[i]);
             }
         }
 	

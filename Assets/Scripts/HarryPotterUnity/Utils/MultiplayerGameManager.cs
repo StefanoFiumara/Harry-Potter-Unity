@@ -57,6 +57,9 @@ namespace HarryPotterUnity.Utils
             _player1.InitDeck();
             _player2.InitDeck();
 
+            _player1.MpGameManager = this;
+            _player2.MpGameManager = this;
+
             StartCoroutine(_beginGameSequence());
         }
 
@@ -76,6 +79,14 @@ namespace HarryPotterUnity.Utils
         {
             if(_player1) Destroy(_player1.gameObject);
             if(_player2) Destroy(_player2.gameObject);
+        }
+
+        [RPC, UsedImplicitly]
+        public void ExecutePlayActionById(int id)
+        {
+            var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
+
+            card.MouseUpAction();
         }
     }
 }

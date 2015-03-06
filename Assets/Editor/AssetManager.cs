@@ -1,12 +1,14 @@
 ﻿using System.Linq;
+using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
 
 namespace Assets.Editor
 {
+    [UsedImplicitly]
     public class AssetManager : MonoBehaviour 
     {
-        [MenuItem("HP-TCG Card Management/Add Photon Views To Cards")]
+        [MenuItem("HP-TCG Card Management/Add Photon Views To Cards"), UsedImplicitly]
         public static void AddPhotonViews()
         {
             var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
@@ -33,7 +35,7 @@ namespace Assets.Editor
             }
         }
 
-        [MenuItem("HP-TCG Card Management/Remove Photon Views from Cards")]
+        [MenuItem("HP-TCG Card Management/Remove Photon Views from Cards"), UsedImplicitly]
         public static void RemovePhotonViews()
         {
             var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));

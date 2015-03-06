@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Game;
+﻿using System;
+using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -48,6 +49,8 @@ namespace HarryPotterUnity.Cards
 
         private GameObject _frontPlane;
 
+        public int NetworkId { get; set; }
+
 
         [UsedImplicitly]
         public void Start()
@@ -90,14 +93,18 @@ namespace HarryPotterUnity.Cards
             if (!Player.CanUseActions(ActionCost)) return;
             if (!MeetsAdditionalPlayRequirements()) return;
 
+            Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+        }
+
+        public void MouseUpAction()
+        {
             OnClickAction();
 
             if (CardType != CardTypes.Spell)
             {
-                Player.UseActions(ActionCost);   
+                Player.UseActions(ActionCost);
             }
         }
-
         protected abstract void OnClickAction();
         protected abstract bool MeetsAdditionalPlayRequirements();
 

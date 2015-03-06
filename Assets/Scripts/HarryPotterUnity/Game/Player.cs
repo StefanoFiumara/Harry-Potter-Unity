@@ -25,6 +25,7 @@ namespace HarryPotterUnity.Game
         public int AmountLessonsInPlay { get; set; }
 
         public bool IsLocalPlayer { get; set; }
+        public MultiplayerGameManager MpGameManager { get; set; }
 
         [UsedImplicitly]
         public void Awake()

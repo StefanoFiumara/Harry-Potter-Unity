@@ -30,4 +30,5 @@ MonoBehaviour:
   - RequestForPickupTimes
   - StartGameRpc
   - DestroyPlayers
+  - ExecuteAction
   DisableAutoOpenWizard: 0

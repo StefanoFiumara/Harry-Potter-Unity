@@ -17,6 +17,8 @@ namespace HarryPotterUnity.Utils
         public GenericCard.CardStates StateAfterAnimation;
     }
 
+    
+
     public static class UtilManager {
 
         public const int PreviewLayer = 9;
@@ -24,6 +26,9 @@ namespace HarryPotterUnity.Utils
         public const int ValidChoiceLayer = 11;
         public const int IgnoreRaycastLayer = 2;
         public const int DeckLayer = 12;
+
+        public static int NetworkIdCounter = 0;
+        public static List<GenericCard> AllCards = new List<GenericCard>(); 
 
         public static Camera PreviewCamera;
         public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
