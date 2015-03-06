@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
+using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Spells
 {
     public class DirectDamageSpell : GenericSpell {
+        
+        [UsedImplicitly, SerializeField]
+        private int _damageAmount;
 
-        public int DamageAmount;
-
-        public override void OnPlayAction()
+        protected override void OnPlayAction()
         {
-            Player.OppositePlayer.TakeDamage(DamageAmount);
+            Player.OppositePlayer.TakeDamage(_damageAmount);
         }
     }
 }

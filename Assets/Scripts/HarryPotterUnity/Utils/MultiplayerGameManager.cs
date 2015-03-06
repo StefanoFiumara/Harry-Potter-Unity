@@ -2,19 +2,22 @@
 using System.Collections;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
+using JetBrains.Annotations;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Utils
 {
+    [UsedImplicitly]
     public class MultiplayerGameManager : MonoBehaviour
     {
-        public Player Player1 { get; set; }
-        public Player Player2 { get; set; }
+        private Player _player1;
+        private Player _player2;
 
         private MultiplayerLobbyHudManager _multiplayerLobbyHudManager;
 
+        [UsedImplicitly]
         public void Start()
         {
             _multiplayerLobbyHudManager = GameObject.Find("MultiplayerLobbyHudManager").GetComponent<MultiplayerLobbyHudManager>();
@@ -25,11 +28,11 @@ namespace HarryPotterUnity.Utils
         private void SpawnPlayers()
         {
             var playerObject = Resources.Load("Player");
-            Player1 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
-            Player2 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
+            _player1 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
+            _player2 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
         }
 
-        [RPC]
+        [RPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
             _multiplayerLobbyHudManager.DisableHud();
@@ -41,34 +44,35 @@ namespace HarryPotterUnity.Utils
 
         private void StartGame()
         {
-            if(!Player1 || !Player2) throw new Exception("Error: One of the players was not properly instantiated!");
+            if(!_player1 || !_player2) throw new Exception("Error: One of the players was not properly instantiated!");
 
-            Player1.OppositePlayer = Player2;
-            Player2.OppositePlayer = Player1;
+            _player1.OppositePlayer = _player2;
+            _player2.OppositePlayer = _player1;
 
-            Player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+            _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
 
-            Player1.InitDeck();
-            Player2.InitDeck();
+            _player1.InitDeck();
+            _player2.InitDeck();
 
             StartCoroutine(_beginGameSequence());
         }
 
         private IEnumerator _beginGameSequence()
         {
-            Player1.Deck.Shuffle();
-            Player2.Deck.Shuffle();
+            _player1.Deck.Shuffle();
+            _player2.Deck.Shuffle();
             yield return new WaitForSeconds(2.4f);
-            Player1.DrawInitialHand();
-            Player2.DrawInitialHand();
+            _player1.DrawInitialHand();
+            _player2.DrawInitialHand();
 
-            Player1.InitTurn();
+            _player1.InitTurn();
         }
 
+        [UsedImplicitly]
         public void OnDestroy()
         {
-            if(Player1) Destroy(Player1.gameObject);
-            if(Player2) Destroy(Player2.gameObject);
+            if(_player1) Destroy(_player1.gameObject);
+            if(_player2) Destroy(_player2.gameObject);
         }
     }
 }

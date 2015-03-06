@@ -9,7 +9,7 @@ namespace HarryPotterUnity.Utils
     {
         public GameObject Target;
         public Vector3 Position;
-        public ITween.EaseType EaseType;
+        public iTween.EaseType EaseType;
         public float Time;
         public float Delay;
         public bool Flip;
@@ -17,7 +17,7 @@ namespace HarryPotterUnity.Utils
         public GenericCard.CardStates StateAfterAnimation;
     }
 
-    public class UtilManager : MonoBehaviour {
+    public static class UtilManager {
 
         public const int PreviewLayer = 9;
         public const int CardLayer = 10;
@@ -27,11 +27,11 @@ namespace HarryPotterUnity.Utils
 
         public static Camera PreviewCamera;
         public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
-        public static Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
+        private static readonly Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
 
         private static bool _tweenQueueRunning;
 
-        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate, ITween.EaseType easeType = ITween.EaseType.EaseInOutSine)
+        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate, iTween.EaseType easeType = iTween.EaseType.EaseInOutSine)
         {
             var newTween = new TweenObject
             {
@@ -56,7 +56,6 @@ namespace HarryPotterUnity.Utils
 
         private static IEnumerator RunTweenQueue()
         {
-            //I might break the game here
             while (true)
             {
                 if (TweenQueue.Count == 0)
@@ -67,7 +66,7 @@ namespace HarryPotterUnity.Utils
                 {
                     var tween = TweenQueue.Dequeue();
 
-                    ITween.MoveTo(tween.Target, ITween.Hash("time", tween.Time,
+                    iTween.MoveTo(tween.Target, iTween.Hash("time", tween.Time,
                         "delay", tween.Delay,
                         "position", tween.Position,
                         "easetype", tween.EaseType,
@@ -83,11 +82,12 @@ namespace HarryPotterUnity.Utils
                     yield return new WaitForSeconds(tween.Time + tween.Delay);
                 }
             }
+            // ReSharper disable once FunctionNeverReturns
         }
 
-        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, GenericCard.CardStates stateAfterAnimation, float tweenDelay = 0f, ITween.EaseType easeType = ITween.EaseType.EaseInOutSine)
+        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, GenericCard.CardStates stateAfterAnimation, float tweenDelay = 0f, iTween.EaseType easeType = iTween.EaseType.EaseInOutSine)
         {
-            ITween.MoveTo(card.gameObject, ITween.Hash("time", 0.5f,
+            iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.5f,
                 "position", cardPosition,
                 "easetype", easeType,
                 "islocal", true,
@@ -97,17 +97,17 @@ namespace HarryPotterUnity.Utils
                 "oncompleteparams", stateAfterAnimation
                 ));
 
-            ITween.ScaleTo(card.gameObject, ITween.Hash("x", 1, "y", 1, "time", 0.5f));
+            iTween.ScaleTo(card.gameObject, iTween.Hash("x", 1, "y", 1, "time", 0.5f));
         }
 
         private static void RotateCard(GameObject card, float time)
         {
             //set target based on current rotation, use 20f as an epsilon value for comparison
-            Vector3 cardRotation = card.transform.localRotation.eulerAngles;
-            float target = cardRotation.z > 20f ? 0f : 270f;
-            ITween.RotateTo(card.gameObject, ITween.Hash("time", time,
+            var cardRotation = card.transform.localRotation.eulerAngles;
+            var target = cardRotation.z > 20f ? 0f : 270f;
+            iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
                 "z", target,
-                "easetype", ITween.EaseType.EaseInOutSine,
+                "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true
                 ));
         }
@@ -117,9 +117,9 @@ namespace HarryPotterUnity.Utils
             //set target based on current rotation, use 20f as an epsilon value for comparison
             Vector3 cardRotation = card.transform.localRotation.eulerAngles;
             float target = cardRotation.y > 20f ? 0f : 180f;
-            ITween.RotateTo(card.gameObject, ITween.Hash("time", time,
+            iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
                 "y", target,
-                "easetype", ITween.EaseType.EaseInOutSine,
+                "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true
                 ));
         }

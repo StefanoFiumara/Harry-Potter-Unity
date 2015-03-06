@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
+using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Lessontypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 
 namespace HarryPotterUnity.Utils
 {
+    [UsedImplicitly]
     public class DeckGenerator
     {
         private static List<GenericCard> _cardLibrary;
-        public static List<GenericCard> CardLibrary
+
+        private static IEnumerable<GenericCard> CardLibrary
         {
             get {
                     if (_cardLibrary == null) LoadCardLibrary();
@@ -36,7 +40,7 @@ namespace HarryPotterUnity.Utils
             }
         }
 
-        public static List<GenericCard> GenerateDeck(List<Lesson.LessonTypes> types)
+        public static IEnumerable<GenericCard> GenerateDeck(List<Lessontypes> types)
         {
             if (types.Count != 2 && types.Count != 3)
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Utils
@@ -12,24 +13,21 @@ namespace HarryPotterUnity.Utils
         {
             get
             {
-                if (_mInstance == null)
-                {
-                    _mInstance = FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine;
+                if (_mInstance != null) return _mInstance;
+                
+                _mInstance = FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine ??
+                             new GameObject("TweenQueueManager").AddComponent<StaticCoroutine>();
 
-                    if (_mInstance == null)
-                    {
-                        _mInstance = new GameObject("TweenQueueManager").AddComponent<StaticCoroutine>();
-                    }
-                }
                 return _mInstance;
             }
         }
 
+        [UsedImplicitly]
         void Awake()
         {
             if (_mInstance == null)
             {
-                _mInstance = this as StaticCoroutine;
+                _mInstance = this;
             }
         }
 
@@ -54,6 +52,7 @@ namespace HarryPotterUnity.Utils
             Destroy(gameObject);
         }
 
+        [UsedImplicitly]
         void OnApplicationQuit()
         {
             _mInstance = null;

@@ -2,43 +2,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
+
+using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 
 namespace HarryPotterUnity.Cards
 {
     public abstract class GenericSpell : GenericCard {
 
-        public Lesson.LessonTypes CostType;
-        public int CostAmount;
+        [UsedImplicitly, SerializeField]
+        private LessonTypes _costType;
 
-        public int InputRequired;
+        [UsedImplicitly, SerializeField]
+        private int _costAmount;
+
+        [UsedImplicitly, SerializeField]
+        private int _inputRequired;
 
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
-        public sealed override void OnClickAction()
+        protected sealed override void OnClickAction()
         {
             AnimateAndDiscard();
             Player.Hand.Remove(this);
         }
 
-        public sealed override bool MeetsAdditionalPlayRequirements()
+        protected sealed override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.AmountLessonsInPlay >= CostAmount &&
-                   Player.LessonTypesInPlay.Contains(CostType) &&
+            return Player.AmountLessonsInPlay >= _costAmount &&
+                   Player.LessonTypesInPlay.Contains(_costType) &&
                    MeetsAdditionalInputRequirements();
         }
 
-        protected void AnimateAndDiscard()
+        private void AnimateAndDiscard()
         {
             //TODO: Rotate if it's being played by the opponent
             UtilManager.AddTweenToQueue(this, SpellOffset, 0.5f, 0f, State, false, false);
             Invoke("ExecuteActionAndDiscard", 0.9f);
         }
 
+        [UsedImplicitly]
         protected void ExecuteActionAndDiscard()
         {
             Player.Discard.Add(this);
-            if (InputRequired == 0)
+            if (_inputRequired == 0)
             {
                 OnPlayAction();
                 Player.UseActions(ActionCost); //If the card requires input, the action will be used after the input is selected.
@@ -67,13 +75,13 @@ namespace HarryPotterUnity.Cards
             StartCoroutine(WaitForPlayerInput());
         }
 
-        protected IEnumerator WaitForPlayerInput()
+        private IEnumerator WaitForPlayerInput()
         {
-            if (InputRequired == 0) throw new Exception("This card does not require input!");
+            if (_inputRequired == 0) throw new Exception("This card does not require input!");
 
             var selectedCards = new List<GenericCard>();
 
-            while (selectedCards.Count < InputRequired)
+            while (selectedCards.Count < _inputRequired)
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
@@ -87,7 +95,7 @@ namespace HarryPotterUnity.Cards
 
                         target.SetSelected();
 
-                        if (selectedCards.Count == InputRequired)
+                        if (selectedCards.Count == _inputRequired)
                         {
                             AfterInputAction(selectedCards);
 
@@ -102,18 +110,18 @@ namespace HarryPotterUnity.Cards
             }
         }
 
-        public virtual bool MeetsAdditionalInputRequirements()
+        protected virtual bool MeetsAdditionalInputRequirements()
         {
             return true;
         }
 
-        protected virtual List<GenericCard> GetValidCards()
+        protected virtual IEnumerable<GenericCard> GetValidCards()
         {
             return null;
         }
 
-        public virtual void OnPlayAction() { }
-        public virtual void AfterInputAction(List<GenericCard> input) { }
+        protected virtual void OnPlayAction() { }
+        protected virtual void AfterInputAction(List<GenericCard> input) { }
 
 
     }

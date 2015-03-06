@@ -1,5 +1,9 @@
-﻿namespace HarryPotterUnity.Cards
+﻿using JetBrains.Annotations;
+using UnityEngine;
+
+namespace HarryPotterUnity.Cards
 {
+    [UsedImplicitly]
     public class Lesson : GenericCard, IPersistentCard {
 
         public enum LessonTypes
@@ -7,24 +11,30 @@
             Creatures = 0, Charms, Transfiguration, Potions, Quidditch
         }
 
-        public LessonTypes LessonType;
+        [UsedImplicitly, SerializeField]
+        private LessonTypes _lessonType;
 
-        public override void OnClickAction()
+        public LessonTypes LessonType
+        {
+            get { return _lessonType; }
+        }
+
+        protected override void OnClickAction()
         {
             Player.Hand.Remove(this);
             Player.InPlay.Add(this);            
         }
 
-        public override bool MeetsAdditionalPlayRequirements()
+        protected override bool MeetsAdditionalPlayRequirements()
         {
             return true;
         }
 
         public void OnEnterInPlayAction()
         {
-            if (!Player.LessonTypesInPlay.Contains(LessonType))
+            if (!Player.LessonTypesInPlay.Contains(_lessonType))
             {
-                Player.LessonTypesInPlay.Add(LessonType);
+                Player.LessonTypesInPlay.Add(_lessonType);
             }
         
             Player.AmountLessonsInPlay++;

@@ -1,17 +1,21 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
+    [UsedImplicitly]
     public class Hand : MonoBehaviour {
         
         public List<GenericCard> Cards { get; private set; }
 
-        public static readonly Vector3 HandPreviewPosition = new Vector3(-80f, -13f, -336f);
+        private static readonly Vector3 HandPreviewPosition = new Vector3(-80f, -13f, -336f);
+
         public static readonly Vector3 HandCardsOffset = new Vector3(-240f, -200f, 0f);
-        public static readonly float Spacing = 55f;
+
+        public const float Spacing = 55f;
 
         public Hand()
         {

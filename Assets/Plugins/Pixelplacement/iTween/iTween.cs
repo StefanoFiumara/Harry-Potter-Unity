@@ -44,7 +44,7 @@ using UnityEngine;
 /// <para>Author: Bob Berkebile (http://pixelplacement.com)</para>
 /// <para>Support: http://itween.pixelplacement.com</para>
 /// </summary>
-public class ITween : MonoBehaviour{
+public class iTween : MonoBehaviour{
 		
 	#region Variables
 	
@@ -56,7 +56,7 @@ public class ITween : MonoBehaviour{
 	
 	//status members (made public for visual troubleshooting in the inspector):
 	public string Id, Type, Method;
-	public ITween.EaseType easeType;
+	public iTween.EaseType easeType;
 	public float Time, Delay;
 	public LoopType loopType;
 	public bool IsRunning,IsPaused;
@@ -189,7 +189,7 @@ public class ITween : MonoBehaviour{
 		public static float Delay = 0f;	
 		public static NamedValueColor NamedColorValue = NamedValueColor.Color;
 		public static LoopType LoopType = LoopType.None;
-		public static EaseType EaseType = ITween.EaseType.EaseOutExpo;
+		public static EaseType EaseType = iTween.EaseType.EaseOutExpo;
 		public static float LookSpeed = 3f;
 		public static bool IsLocal = false;
 		public static Space Space = Space.Self;
@@ -423,7 +423,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ValueTo(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		if (!args.Contains("onupdate") || !args.Contains("from") || !args.Contains("to")) {
 			Debug.LogError("iTween Error: ValueTo() requires an 'onupdate' callback function and a 'from' and 'to' property.  The supplied 'onupdate' callback must accept a single argument that is the same type as the supplied 'from' and 'to' properties!");
@@ -682,7 +682,7 @@ public class ITween : MonoBehaviour{
 		Color tempColor = new Color();
 		
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//handle children:
 		if(!args.Contains("includechildren") || (bool)args["includechildren"]){
@@ -837,7 +837,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ColorTo(GameObject target, Hashtable args){	
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//handle children:
 		if(!args.Contains("includechildren") || (bool)args["includechildren"]){
@@ -935,7 +935,7 @@ public class ITween : MonoBehaviour{
 		AudioSource tempAudioSource;
 		
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//set tempAudioSource:
 		if(args.Contains("audiosource")){
@@ -1053,7 +1053,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void AudioTo(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//set a default easeType of linear if none is supplied since eased audio interpolation is nearly unrecognizable:
 		if (!args.Contains("easetype")) {
@@ -1129,7 +1129,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void Stab(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="stab";
@@ -1208,7 +1208,7 @@ public class ITween : MonoBehaviour{
 		Vector3 tempRestriction;
 		
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//set look:
 		tempRotation=target.transform.eulerAngles;
@@ -1318,7 +1318,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void LookTo(GameObject target, Hashtable args){		
 		//clean args:
-		args = ITween.CleanArgs(args);			
+		args = iTween.CleanArgs(args);			
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("looktarget")){
@@ -1434,7 +1434,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void MoveTo(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("position")){
@@ -1548,7 +1548,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void MoveFrom(GameObject target, Hashtable args){
 		//clean args:
-			args = ITween.CleanArgs(args);
+			args = iTween.CleanArgs(args);
 		
 		bool tempIsLocal;
 		
@@ -1730,7 +1730,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void MoveAdd(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="move";
@@ -1828,7 +1828,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void MoveBy(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="move";
@@ -1911,7 +1911,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ScaleTo(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("scale")){
@@ -2007,7 +2007,7 @@ public class ITween : MonoBehaviour{
 		Vector3 fromScale;
 	
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//set base fromScale:
 		tempScale=fromScale=target.transform.localScale;
@@ -2119,7 +2119,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ScaleAdd(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="scale";
@@ -2202,7 +2202,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ScaleBy(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="scale";
@@ -2288,7 +2288,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void RotateTo(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//additional property to ensure ConflictCheck can work correctly since Transforms are refrences:		
 		if(args.Contains("rotation")){
@@ -2388,7 +2388,7 @@ public class ITween : MonoBehaviour{
 		bool tempIsLocal;
 	
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//set tempIsLocal:
 		if(args.Contains("islocal")){
@@ -2518,7 +2518,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void RotateAdd(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween:
 		args["type"]="rotate";
@@ -2607,7 +2607,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void RotateBy(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="rotate";
@@ -2696,7 +2696,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ShakePosition(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="shake";
@@ -2773,7 +2773,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ShakeScale(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="shake";
@@ -2853,7 +2853,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void ShakeRotation(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="shake";
@@ -2939,7 +2939,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void PunchPosition(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="punch";
@@ -3020,7 +3020,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void PunchRotation(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="punch";
@@ -3098,7 +3098,7 @@ public class ITween : MonoBehaviour{
 	/// </param>
 	public static void PunchScale(GameObject target, Hashtable args){
 		//clean args:
-		args = ITween.CleanArgs(args);
+		args = iTween.CleanArgs(args);
 		
 		//establish iTween
 		args["type"]="punch";
@@ -5264,7 +5264,7 @@ public class ITween : MonoBehaviour{
 		
 		//look applications:
 		if(args.Contains("looktarget")){
-			ITween.LookUpdate(target,args);
+			iTween.LookUpdate(target,args);
 		}
 		
 		//apply:
@@ -6094,8 +6094,8 @@ public class ITween : MonoBehaviour{
 	/// Resume all iTweens on a GameObject.
 	/// </summary>
 	public static void Resume(GameObject target){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			item.enabled=true;
 		}
 	}
@@ -6119,8 +6119,8 @@ public class ITween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to resume.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Resume(GameObject target, string type){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6136,8 +6136,8 @@ public class ITween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to resume.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Resume(GameObject target, string type, bool includechildren){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6190,8 +6190,8 @@ public class ITween : MonoBehaviour{
 	/// Pause all iTweens on a GameObject.
 	/// </summary>
 	public static void Pause(GameObject target){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			if(item.Delay>0){
 				item.Delay-=UnityEngine.Time.time-item._delayStarted;
 				item.StopCoroutine("TweenDelay");
@@ -6220,8 +6220,8 @@ public class ITween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to pause.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Pause(GameObject target, string type){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6242,8 +6242,8 @@ public class ITween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to pause.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Pause(GameObject target, string type, bool includechildren){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6329,7 +6329,7 @@ public class ITween : MonoBehaviour{
 	/// Count all iTweens on a GameObject.
 	/// </summary>
 	public static int Count(GameObject target){
-		Component[] tweens = target.GetComponents<ITween>();
+		Component[] tweens = target.GetComponents<iTween>();
 		return(tweens.Length);
 	}
 	
@@ -6341,8 +6341,8 @@ public class ITween : MonoBehaviour{
 	/// </param>  
 	public static int Count(GameObject target, string type){
 		int tweenCount = 0;
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6414,8 +6414,8 @@ public class ITween : MonoBehaviour{
 	/// Stop and destroy all iTweens on a GameObject.
 	/// </summary>
 	public static void Stop(GameObject target){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			item.Dispose();
 		}
 	}
@@ -6439,8 +6439,8 @@ public class ITween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to stop.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Stop(GameObject target, string type){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6457,8 +6457,8 @@ public class ITween : MonoBehaviour{
 	/// The <see cref="System.String"/> name of iTween you would like to stop.
 	/// </param>	
 	public static void StopByName(GameObject target, string name){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			/*string targetType = item.type+item.method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6478,8 +6478,8 @@ public class ITween : MonoBehaviour{
 	/// A <see cref="System.String"/> name of the type of iTween you would like to stop.  Can be written as part of a name such as "mov" for all "MoveTo" iTweens.
 	/// </param>	
 	public static void Stop(GameObject target, string type, bool includechildren){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			string targetType = item.Type+item.Method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6501,8 +6501,8 @@ public class ITween : MonoBehaviour{
 	/// The <see cref="System.String"/> name of iTween you would like to stop.
 	/// </param>	
 	public static void StopByName(GameObject target, string name, bool includechildren){
-		Component[] tweens = target.GetComponents<ITween>();
-		foreach (ITween item in tweens){
+		Component[] tweens = target.GetComponents<iTween>();
+		foreach (iTween item in tweens){
 			/*string targetType = item.type+item.method;
 			targetType=targetType.Substring(0,type.Length);
 			if(targetType.ToLower() == type.ToLower()){
@@ -6549,7 +6549,7 @@ public class ITween : MonoBehaviour{
 
 	#region Component Segments
 	
-	private ITween(Hashtable h) {
+	private iTween(Hashtable h) {
 		_tweenArguments = h;	
 	}
 	
@@ -6751,7 +6751,7 @@ public class ITween : MonoBehaviour{
 		}		
 
 		Tweens.Insert (0, args);
-		target.AddComponent<ITween>();
+		target.AddComponent<iTween>();
 	}		
 	
 	//cast any accidentally supplied doubles and ints as floats as iTween only uses floats internally and unify parameter case:
@@ -6841,7 +6841,7 @@ public class ITween : MonoBehaviour{
 					_namedcolorvalue=(NamedValueColor)Enum.Parse(typeof(NamedValueColor),(string)_tweenArguments["namedcolorvalue"],true); 
 				} catch {
 					Debug.LogWarning("iTween: Unsupported namedcolorvalue supplied! Default will be used.");
-					_namedcolorvalue = ITween.NamedValueColor.Color;
+					_namedcolorvalue = iTween.NamedValueColor.Color;
 				}
 			}			
 		}else{
@@ -6857,11 +6857,11 @@ public class ITween : MonoBehaviour{
 					loopType=(LoopType)Enum.Parse(typeof(LoopType),(string)_tweenArguments["looptype"],true); 
 				} catch {
 					Debug.LogWarning("iTween: Unsupported loopType supplied! Default will be used.");
-					loopType = ITween.LoopType.None;	
+					loopType = iTween.LoopType.None;	
 				}
 			}			
 		}else{
-			loopType = ITween.LoopType.None;	
+			loopType = iTween.LoopType.None;	
 		}			
          
 		if(_tweenArguments.Contains("easetype")){
@@ -7082,8 +7082,8 @@ public class ITween : MonoBehaviour{
 	}	
 	
 	void ConflictCheck(){//if a new iTween is about to run and is of the same type as an in progress iTween this will destroy the previous if the new one is NOT identical in every way or it will destroy the new iTween if they are:	
-		Component[] tweens = GetComponents<ITween>();
-		foreach (ITween item in tweens) {
+		Component[] tweens = GetComponents<iTween>();
+		foreach (iTween item in tweens) {
 			if(item.Type == "value"){
 				return;
 			}else if(item.IsRunning && item.Type==Type){

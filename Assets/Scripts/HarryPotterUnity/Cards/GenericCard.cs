@@ -1,5 +1,6 @@
 ﻿using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards
@@ -12,36 +13,34 @@ namespace HarryPotterUnity.Cards
         }
         public enum CardTypes
         {
-            Lesson, Creature, Spell, Item, Location, Match, Adventure, Character
-        }
-        public enum CostTypes
-        {
-            CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch
+            Lesson, Creature, Spell // Item, Location, Match, Adventure, Character
         }
 
         public enum ClassificationTypes
         {
             CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch,
-            Lesson,
-            Character,
-            Adventure
+            Lesson
+           // Character,
+           // Adventure
         }
 
-        public int ActionCost = 1;
+        [UsedImplicitly, SerializeField]
+        protected int ActionCost = 1;
 
-        public CardStates State { get; set; }
+        public CardStates State { get; protected set; }
+
+        [UsedImplicitly] 
         public CardTypes CardType;
 
+        [UsedImplicitly] 
         public ClassificationTypes Classification;
-
+        
+        //Might need this later
+        /*
         [SerializeField]
-        // ReSharper disable once FieldCanBeMadeReadOnly.Local
-        // ReSharper disable once ConvertToConstant.Local
+        [UsedImplicitly]
         private string _cardName = "";
-        public string CardName
-        {
-            get { return _cardName; }
-        }
+        */
 
         public Player Player { get; set; }
 
@@ -50,6 +49,7 @@ namespace HarryPotterUnity.Cards
         private GameObject _frontPlane;
 
 
+        [UsedImplicitly]
         public void Start()
         {
             if(gameObject.GetComponent<Collider>() == null)
@@ -64,21 +64,25 @@ namespace HarryPotterUnity.Cards
             _frontPlane = transform.FindChild("Front").gameObject;
         }
 
+        [UsedImplicitly]
         public void SwitchState(CardStates newState)
         {
             State = newState;
         }
 
+        [UsedImplicitly]
         public void OnMouseOver()
         {
             ShowPreview();
         }
 
+        [UsedImplicitly]
         public void OnMouseExit()
         {
             HidePreview();
         }
 
+        [UsedImplicitly]
         public void OnMouseUp()
         {
             if (State != CardStates.InHand) return;
@@ -93,15 +97,15 @@ namespace HarryPotterUnity.Cards
             }
         }
 
-        public abstract void OnClickAction();
-        public abstract bool MeetsAdditionalPlayRequirements();
+        protected abstract void OnClickAction();
+        protected abstract bool MeetsAdditionalPlayRequirements();
 
         private void ShowPreview()
         {
             _frontPlane.layer = UtilManager.PreviewLayer;
             if (State == CardStates.InDeck || State == CardStates.Discarded) return;
 
-            if (ITween.Count(gameObject) == 0)
+            if (iTween.Count(gameObject) == 0)
             {
                 UtilManager.PreviewCamera.transform.rotation = transform.rotation;
                 UtilManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;

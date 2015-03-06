@@ -1,4 +1,5 @@
 ﻿using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,6 +7,7 @@ using UnityEngine.UI;
 
 namespace HarryPotterUnity.UI
 {
+    [UsedImplicitly]
     public class MultiplayerLobbyHudManager : MonoBehaviour
     {
         private MultiplayerGameManager _multiplayerGameManager;
@@ -29,16 +31,19 @@ namespace HarryPotterUnity.UI
         private Text _titleText;
         #endregion
 
+        [UsedImplicitly]
         public void Start ()
         {
             PhotonNetwork.ConnectUsingSettings("v0.1");
         }
 
+        [UsedImplicitly]
         public void Update()
         {
             _networkStatusText.text = string.Format("Network Status: {0}", PhotonNetwork.connectionStateDetailed);
         }
 
+        [UsedImplicitly]
         public void OnJoinedLobby()
         {
             _gameStatusText.text = "Connected to Photon Server!";
@@ -48,6 +53,7 @@ namespace HarryPotterUnity.UI
             _gameStatusText.gameObject.SetActive(true);
         }
 
+        [UsedImplicitly]
         public void OnJoinedRoom()
         {
             if (PhotonNetwork.room.playerCount == 1)
@@ -56,6 +62,7 @@ namespace HarryPotterUnity.UI
             }
         }
 
+        [UsedImplicitly]
         public void OnPhotonPlayerConnected()
         {
             var rotation = Quaternion.Euler(0f, 0f, 180f);
@@ -67,6 +74,7 @@ namespace HarryPotterUnity.UI
             _multiplayerGameManager.photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
 
+        [UsedImplicitly]
         public void OnPhotonPlayerDisconnected()
         {
             PhotonNetwork.LeaveRoom();
@@ -75,11 +83,13 @@ namespace HarryPotterUnity.UI
             _gameStatusText.gameObject.SetActive(true);
         }
 
+        [UsedImplicitly]
         public void FindMatch_Click()
         {
             PhotonNetwork.JoinRandomRoom();
         }
 
+        [UsedImplicitly]
         public void OnPhotonRandomJoinFailed()
         {
             var roomName = string.Format("Room {0}", PhotonNetwork.GetRoomList().Length);

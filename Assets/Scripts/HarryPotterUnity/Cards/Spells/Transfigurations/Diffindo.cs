@@ -1,21 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
+    [UsedImplicitly]
     public class Diffindo : GenericSpell {
-
-        public override bool MeetsAdditionalInputRequirements()
+        protected override bool MeetsAdditionalInputRequirements()
         {
             return Player.OppositePlayer.InPlay.Cards.Count > 0;
         }
 
-        protected override List<GenericCard> GetValidCards()
+        protected override IEnumerable<GenericCard> GetValidCards()
         {
             return Player.OppositePlayer.InPlay.Cards;
         }
 
-        public override void AfterInputAction(List<GenericCard> selectedCards)
+        protected override void AfterInputAction(List<GenericCard> selectedCards)
         {
             if (selectedCards.Count == 1)
             {

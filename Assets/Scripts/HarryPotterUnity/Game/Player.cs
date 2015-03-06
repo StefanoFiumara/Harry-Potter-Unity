@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
+    [UsedImplicitly]
     public class Player : MonoBehaviour {
 
         public Player OppositePlayer { get; set; }
@@ -15,16 +17,18 @@ namespace HarryPotterUnity.Game
 
         public List<Lesson.LessonTypes> LessonTypesInPlay { get; private set; }
 
-        public int ActionsAvailable { get; private set; }
+        [SerializeField]
+        private int _actionsAvailable;
 
         public int CreaturesInPlay { get; set; }
         public int DamagePerTurn { get; set; }
         public int AmountLessonsInPlay { get; set; }
 
+        [UsedImplicitly]
         public void Awake()
         {
             LessonTypesInPlay = new List<Lesson.LessonTypes>();
-            ActionsAvailable = 0;
+            _actionsAvailable = 0;
             AmountLessonsInPlay = 0;
 
             Hand = transform.GetComponentInChildren<Hand>();
@@ -46,19 +50,21 @@ namespace HarryPotterUnity.Game
 
         public void UseActions(int amount = 1)
         {
-            ActionsAvailable -= amount;
+            _actionsAvailable -= amount;
 
-            if (ActionsAvailable > 0) return;
-            ActionsAvailable = 0;
-            //AfterTurnAction happens here
+            if (_actionsAvailable > 0) return;
+            _actionsAvailable = 0;
+            
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
             OppositePlayer.InitTurn();
         }
 
+        /****** Will use later
         public void AddAction()
         {
-            ActionsAvailable++;
+            _actionsAvailable++;
         }
+        */
 
         public void InitTurn()
         {
@@ -66,17 +72,15 @@ namespace HarryPotterUnity.Game
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
 
             Deck.DrawCard();
-            ActionsAvailable += 2;
+            _actionsAvailable += 2;
 
             //Creatures do damage here
-            InPlay.GetCreaturesInPlay()
-                .ForEach(card => OppositePlayer
-                    .TakeDamage( ( (GenericCreature)card).DamagePerTurn) );
+            OppositePlayer.TakeDamage(DamagePerTurn);
         }
 
         public bool CanUseActions(int amount = 1)
         {
-            return ActionsAvailable >= amount;
+            return _actionsAvailable >= amount;
         }
 
         public void DrawInitialHand()

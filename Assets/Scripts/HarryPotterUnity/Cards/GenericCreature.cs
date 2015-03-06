@@ -1,31 +1,40 @@
-﻿namespace HarryPotterUnity.Cards
+﻿using JetBrains.Annotations;
+using UnityEngine;
+using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
+
+namespace HarryPotterUnity.Cards
 {
     public class GenericCreature : GenericCard, IPersistentCard {
 
-        public Lesson.LessonTypes CostType;
+        [UsedImplicitly, SerializeField]
+        private LessonTypes _costType;
 
-        public int CostAmount;
+        [UsedImplicitly, SerializeField]
+        private int _costAmount;
 
-        public int DamagePerTurn;
+        [UsedImplicitly, SerializeField]
+        private int _damagePerTurn;
+
+        [UsedImplicitly]
         public int Health;
 
-        public override void OnClickAction()
+        protected override void OnClickAction()
         {
             Player.Hand.Remove(this);
             Player.InPlay.Add(this);
         }
 
-        public override bool MeetsAdditionalPlayRequirements()
+        protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.AmountLessonsInPlay >= CostAmount && 
-                  Player.LessonTypesInPlay.Contains(CostType) &&
+            return Player.AmountLessonsInPlay >= _costAmount && 
+                  Player.LessonTypesInPlay.Contains(_costType) &&
                   MeetsAdditionalCreatureRequirements();
         }
 
         public void OnEnterInPlayAction()
         {
             Player.CreaturesInPlay++;
-            Player.DamagePerTurn += DamagePerTurn;
+            Player.DamagePerTurn += _damagePerTurn;
 
             State = CardStates.InPlay;
         }
@@ -33,7 +42,7 @@
         public void OnExitInPlayAction()
         {
             Player.CreaturesInPlay--;
-            Player.DamagePerTurn -= DamagePerTurn;
+            Player.DamagePerTurn -= _damagePerTurn;
         }
 
         protected virtual bool MeetsAdditionalCreatureRequirements()

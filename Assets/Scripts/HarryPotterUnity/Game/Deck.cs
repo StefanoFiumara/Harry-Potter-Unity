@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
+    [UsedImplicitly]
     public class Deck : MonoBehaviour
     {
-
-        public List<GenericCard> Cards;// { get; private set; }
+        private List<GenericCard> Cards { get; set; }
 
         private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
 
+        [UsedImplicitly]
         public void Awake()
         {
             _player = transform.GetComponentInParent<Player>();
@@ -24,7 +26,7 @@ namespace HarryPotterUnity.Game
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         }
 
-        public void InitDeck (List<GenericCard> cardList)
+        public void InitDeck (IEnumerable<GenericCard> cardList)
         {
             Cards = new List<GenericCard>(cardList);
 
@@ -32,7 +34,7 @@ namespace HarryPotterUnity.Game
             
             for (var i = 0; i < Cards.Count; i++)
             {
-                Cards[i] = (GenericCard)Instantiate(Cards[i]);
+                Cards[i] = Instantiate(Cards[i]);
                 Cards[i].transform.parent = transform;
                 Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
                 Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
@@ -49,11 +51,12 @@ namespace HarryPotterUnity.Game
                 return null;
             }
 
-            GenericCard card = Cards[Cards.Count - 1];
+            var card = Cards[Cards.Count - 1];
             Cards.RemoveAt(Cards.Count - 1);
             return card;
         }
 
+        [UsedImplicitly]
         public void OnMouseUp()
         {
             if (Cards.Count <= 0 || !_player.CanUseActions()) return;
@@ -90,14 +93,16 @@ namespace HarryPotterUnity.Game
                 var point1 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y + 80, Cards[i].transform.position.z);
                 var point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
 
-                ITween.MoveTo(Cards[i].gameObject, ITween.Hash("time", 0.5f, 
+                iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", 0.5f, 
                                                                "path", new[] {point1, point2}, 
-                                                               "easetype", ITween.EaseType.EaseInOutSine, 
+                                                               "easetype", iTween.EaseType.EaseInOutSine, 
                                                                "delay", Random.Range(0f,1.5f))
                                                                );
             }
         }
 
+        //Do we need these??
+        /*
         public void Disable()
         {
             gameObject.layer = UtilManager.IgnoreRaycastLayer;
@@ -107,5 +112,6 @@ namespace HarryPotterUnity.Game
         {
             gameObject.layer = UtilManager.DeckLayer;
         }
+         * */
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
+    [UsedImplicitly]
     public class InPlay : MonoBehaviour {
         public List<GenericCard> Cards { get; private set; }
 
