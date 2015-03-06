@@ -31,4 +31,5 @@ MonoBehaviour:
   - StartGameRpc
   - DestroyPlayers
   - ExecuteAction
+  - ExecutePlayActionById
   DisableAutoOpenWizard: 0
