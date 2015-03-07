@@ -50,7 +50,6 @@ namespace HarryPotterUnity.Utils
                 Rotate = rotate
             };
 
-
             TweenQueue.Enqueue(newTween);
 
             if (_tweenQueueRunning) return;
@@ -81,8 +80,10 @@ namespace HarryPotterUnity.Utils
                         "oncompleteparams", tween.StateAfterAnimation
                         ));
 
-                    if (tween.Flip) FlipCard(tween.Target, tween.Time);
-                    if (tween.Rotate) RotateCard(tween.Target, tween.Time);
+                    if (tween.Flip || tween.Rotate)
+                    {
+                        RotateAndFlipCard(tween.Target, tween.Time, tween.Flip, tween.Rotate);
+                    }
 
                     yield return new WaitForSeconds(tween.Time + tween.Delay);
                 }
@@ -105,30 +106,19 @@ namespace HarryPotterUnity.Utils
             iTween.ScaleTo(card.gameObject, iTween.Hash("x", 1, "y", 1, "time", 0.5f));
         }
 
-        private static void RotateCard(GameObject card, float time)
+        private static void RotateAndFlipCard(GameObject card, float time, bool flip, bool rotate)
         {
-            //set target based on current rotation, use 20f as an epsilon value for comparison
             var cardRotation = card.transform.localRotation.eulerAngles;
-            var target = cardRotation.z > 20f ? 0f : 270f;
+            var targetFlip = flip ? (cardRotation.y > 20f ? 0f : 180f) : cardRotation.y;
+            var targetRotate = rotate ? (cardRotation.z > 20f ? 0f : 270) : cardRotation.z;
+
             iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
-                "z", target,
+                "y", targetFlip,
+                "z", targetRotate,
                 "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true
                 ));
         }
-
-        private static void FlipCard(GameObject card, float time)
-        {
-            //set target based on current rotation, use 20f as an epsilon value for comparison
-            Vector3 cardRotation = card.transform.localRotation.eulerAngles;
-            float target = cardRotation.y > 20f ? 0f : 180f;
-            iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
-                "y", target,
-                "easetype", iTween.EaseType.EaseInOutSine,
-                "islocal", true
-                ));
-        }
-
         public static void DisableCards(List<GenericCard> cards)
         {
             cards.ForEach(card => card.Disable());

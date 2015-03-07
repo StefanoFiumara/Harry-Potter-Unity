@@ -62,11 +62,10 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnMouseUp()
         {
-            if (Cards.Count <= 0 || !_player.CanUseActions()) return;
             if (!_player.IsLocalPlayer) return;
+            if (Cards.Count <= 0 || !_player.CanUseActions()) return;
 
-            DrawCard();
-            _player.UseActions();
+            _player.MpGameManager.photonView.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
         }
 
         public void DrawCard()

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
@@ -60,6 +63,9 @@ namespace HarryPotterUnity.Utils
             _player1.MpGameManager = this;
             _player2.MpGameManager = this;
 
+            _player1.NetworkId = 0;
+            _player2.NetworkId = 1;
+
             StartCoroutine(_beginGameSequence());
         }
 
@@ -87,6 +93,30 @@ namespace HarryPotterUnity.Utils
             var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
 
             card.MouseUpAction();
+        }
+
+        [RPC, UsedImplicitly]
+        public void ExecuteDrawActionOnPlayer(int id)
+        {
+            var player = id == 0 ? _player1 : _player2;
+
+            player.Deck.DrawCard();
+            player.UseActions();
+        }
+
+        [RPC, UsedImplicitly]
+        public void ExecuteInputSpellById(int id, params int[] cardIds)
+        {
+            var card = (GenericSpell) UtilManager.AllCards.Find(c => c.NetworkId == id);
+            
+            var selectedCards = cardIds.Select(cardId => UtilManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
+
+            card.AfterInputAction(selectedCards);
+
+            card.Player.EnableAllCards();
+            card.Player.OppositePlayer.EnableAllCards();
+
+            card.Player.UseActions(card.ActionCost);
         }
     }
 }

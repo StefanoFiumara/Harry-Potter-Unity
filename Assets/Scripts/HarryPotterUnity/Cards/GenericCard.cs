@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Cards
         }
 
         [UsedImplicitly, SerializeField]
-        protected int ActionCost = 1;
+        public int ActionCost = 1;
 
         public CardStates State { get; protected set; }
 
@@ -93,7 +93,15 @@ namespace HarryPotterUnity.Cards
             if (!Player.CanUseActions(ActionCost)) return;
             if (!MeetsAdditionalPlayRequirements()) return;
 
-            Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+            if (!PhotonNetwork.connected)
+            {
+                MouseUpAction();
+            }
+            else
+            {
+
+                Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+            }
         }
 
         public void MouseUpAction()

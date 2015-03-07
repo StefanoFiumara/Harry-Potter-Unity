@@ -16,7 +16,7 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
             return Player.OppositePlayer.InPlay.Cards;
         }
 
-        protected override void AfterInputAction(List<GenericCard> selectedCards)
+        public override void AfterInputAction(List<GenericCard> selectedCards)
         {
             if (selectedCards.Count == 1)
             {

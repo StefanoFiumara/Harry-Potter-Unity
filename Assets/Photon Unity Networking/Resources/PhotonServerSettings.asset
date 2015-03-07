@@ -32,4 +32,6 @@ MonoBehaviour:
   - DestroyPlayers
   - ExecuteAction
   - ExecutePlayActionById
+  - ExecuteDrawActionOnPlayer
+  - ExecuteInputSpellById
   DisableAutoOpenWizard: 0

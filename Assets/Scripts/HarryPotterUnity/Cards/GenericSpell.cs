@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -38,7 +39,7 @@ namespace HarryPotterUnity.Cards
         private void AnimateAndDiscard()
         {
             //TODO: Rotate if it's being played by the opponent
-            UtilManager.AddTweenToQueue(this, SpellOffset, 0.5f, 0f, State, false, false);
+            UtilManager.AddTweenToQueue(this, SpellOffset, 0.5f, 0f, State, !Player.IsLocalPlayer, false);
             Invoke("ExecuteActionAndDiscard", 0.9f);
         }
 
@@ -83,7 +84,7 @@ namespace HarryPotterUnity.Cards
 
             while (selectedCards.Count < _inputRequired)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0))
+                if (Input.GetKeyDown(KeyCode.Mouse0) && Player.IsLocalPlayer)
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -97,12 +98,8 @@ namespace HarryPotterUnity.Cards
 
                         if (selectedCards.Count == _inputRequired)
                         {
-                            AfterInputAction(selectedCards);
-
-                            Player.EnableAllCards();
-                            Player.OppositePlayer.EnableAllCards();
-
-                            Player.UseActions(ActionCost);
+                            var selectedCardIds = selectedCards.Select(c => c.NetworkId);
+                            Player.MpGameManager.photonView.RPC("ExecuteInputSpellById", PhotonTargets.All, NetworkId, selectedCardIds);
                         }
                     }
                 }
@@ -121,7 +118,7 @@ namespace HarryPotterUnity.Cards
         }
 
         protected virtual void OnPlayAction() { }
-        protected virtual void AfterInputAction(List<GenericCard> input) { }
+        public virtual void AfterInputAction(List<GenericCard> input) { }
 
 
     }

@@ -23,7 +23,7 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
             return validCards.Count >= 2;
         }
 
-        protected override void AfterInputAction(List<GenericCard> selectedCards)
+        public override void AfterInputAction(List<GenericCard> selectedCards)
         {
             foreach(var card in selectedCards) {
                 card.Player.InPlay.Remove(card);

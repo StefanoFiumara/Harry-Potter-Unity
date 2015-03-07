@@ -16,6 +16,13 @@ namespace HarryPotterUnity.Game
         private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
 
+        private Player _player;
+
+        [UsedImplicitly]
+        public void Start()
+        {
+            _player = transform.GetComponentInParent<Player>();
+        }
         public InPlay()
         {
             Cards = new List<GenericCard>();
@@ -69,13 +76,13 @@ namespace HarryPotterUnity.Game
         private void AnimateCreatureToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, false, card.State == GenericCard.CardStates.InHand);
+            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
         }
 
         private void AnimateLessonToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, false, card.State == GenericCard.CardStates.InHand);
+            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
         }
 
         private void RearrangeLessons()
