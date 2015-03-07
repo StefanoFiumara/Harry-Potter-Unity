@@ -88,7 +88,7 @@ namespace HarryPotterUnity.Utils
         }
 
         [RPC, UsedImplicitly]
-        public void ExecutePlayActionById(int id)
+        public void ExecutePlayActionById(byte id)
         {
             var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
 
@@ -96,7 +96,7 @@ namespace HarryPotterUnity.Utils
         }
 
         [RPC, UsedImplicitly]
-        public void ExecuteDrawActionOnPlayer(int id)
+        public void ExecuteDrawActionOnPlayer(byte id)
         {
             var player = id == 0 ? _player1 : _player2;
 
@@ -105,7 +105,7 @@ namespace HarryPotterUnity.Utils
         }
 
         [RPC, UsedImplicitly]
-        public void ExecuteInputSpellById(int id, params int[] cardIds)
+        public void ExecuteInputSpellById(byte id, params byte[] cardIds)
         {
             var card = (GenericSpell) UtilManager.AllCards.Find(c => c.NetworkId == id);
             

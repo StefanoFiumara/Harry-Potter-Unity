@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Game
 
         public bool IsLocalPlayer { get; set; }
         public MultiplayerGameManager MpGameManager { get; set; }
-        public int NetworkId { get; set; }
+        public byte NetworkId { get; set; }
 
         [UsedImplicitly]
         public void Awake()

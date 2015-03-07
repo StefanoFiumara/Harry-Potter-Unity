@@ -32,8 +32,11 @@ namespace HarryPotterUnity.Game
 
         public void Add(GenericCard card, bool preview = true)
         {
+            var shouldFlip = card.FlipState == GenericCard.FlipStates.FaceUp && !_player.IsLocalPlayer || 
+                             card.FlipState == GenericCard.FlipStates.FaceDown && _player.IsLocalPlayer;
+
             card.transform.parent = transform;
-            AnimateCardToHand(card, _player.IsLocalPlayer, preview);
+            AnimateCardToHand(card, shouldFlip, preview);
             Cards.Add(card);
 
             if (Cards.Count == 12) AdjustHandSpacing();
@@ -75,7 +78,7 @@ namespace HarryPotterUnity.Game
                 UtilManager.AddTweenToQueue(card, HandPreviewPosition, 0.5f, 0f, card.State, flip, false);
             }
 
-            UtilManager.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, GenericCard.CardStates.InHand, false, card.State == GenericCard.CardStates.InPlay);
+            UtilManager.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, GenericCard.CardStates.InHand, !preview && flip, card.State == GenericCard.CardStates.InPlay);
         }
     }
 }

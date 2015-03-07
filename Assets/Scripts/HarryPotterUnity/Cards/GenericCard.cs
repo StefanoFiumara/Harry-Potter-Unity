@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards
 {
+    [SelectionBase]
     public abstract class GenericCard : MonoBehaviour {
 
         public enum CardStates
@@ -25,23 +26,23 @@ namespace HarryPotterUnity.Cards
            // Adventure
         }
 
-        [UsedImplicitly, SerializeField]
-        public int ActionCost = 1;
+        public enum FlipStates
+        {
+            FaceUp, FaceDown
+        }
 
         public CardStates State { get; protected set; }
+
+        public FlipStates FlipState;// { get; protected set; }
 
         [UsedImplicitly] 
         public CardTypes CardType;
 
         [UsedImplicitly] 
         public ClassificationTypes Classification;
-        
-        //Might need this later
-        /*
-        [SerializeField]
-        [UsedImplicitly]
-        private string _cardName = "";
-        */
+
+        [UsedImplicitly, SerializeField]
+        public int ActionCost = 1;
 
         public Player Player { get; set; }
 
@@ -49,12 +50,21 @@ namespace HarryPotterUnity.Cards
 
         private GameObject _frontPlane;
 
-        public int NetworkId { get; set; }
+        public byte NetworkId { get; set; }
 
+
+        //Might need this later
+        /*
+        [SerializeField]
+        [UsedImplicitly]
+        private string _cardName = "";
+        */
 
         [UsedImplicitly]
         public void Start()
         {
+            FlipState = FlipStates.FaceDown;
+
             if(gameObject.GetComponent<Collider>() == null)
             {
                 var col = gameObject.AddComponent<BoxCollider>();
@@ -71,6 +81,11 @@ namespace HarryPotterUnity.Cards
         public void SwitchState(CardStates newState)
         {
             State = newState;
+        }
+
+        public void SwitchFlipState()
+        {
+            FlipState = FlipState == FlipStates.FaceUp ? FlipStates.FaceDown : FlipStates.FaceUp;
         }
 
         [UsedImplicitly]

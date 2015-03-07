@@ -98,7 +98,7 @@ namespace HarryPotterUnity.Cards
 
                         if (selectedCards.Count == _inputRequired)
                         {
-                            var selectedCardIds = selectedCards.Select(c => c.NetworkId);
+                            var selectedCardIds = selectedCards.Select(c => c.NetworkId).ToArray();
                             Player.MpGameManager.photonView.RPC("ExecuteInputSpellById", PhotonTargets.All, NetworkId, selectedCardIds);
                         }
                     }
