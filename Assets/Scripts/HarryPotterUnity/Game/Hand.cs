@@ -36,10 +36,11 @@ namespace HarryPotterUnity.Game
                              card.FlipState == GenericCard.FlipStates.FaceDown && _player.IsLocalPlayer;
 
             card.transform.parent = transform;
-            AnimateCardToHand(card, shouldFlip, preview);
-            Cards.Add(card);
 
             if (Cards.Count == 12) AdjustHandSpacing();
+            AnimateCardToHand(card, shouldFlip, preview);
+
+            Cards.Add(card);
         }
 
         public void Remove(GenericCard card)
