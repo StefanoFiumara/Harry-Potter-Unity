@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Utils
         public const int DeckLayer = 12;
 
         public static byte NetworkIdCounter = 0;
-        public static List<GenericCard> AllCards = new List<GenericCard>(); 
+        public static readonly List<GenericCard> AllCards = new List<GenericCard>(); 
 
         public static Camera PreviewCamera;
         public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
@@ -108,11 +108,11 @@ namespace HarryPotterUnity.Utils
         {
             var cardRotation = card.transform.localRotation.eulerAngles;
             var targetFlip = flip ? (cardRotation.y > 20f ? 0f : 180f) : cardRotation.y;
-            var targetRotate = rotate ? (cardRotation.z > 20f ? 0f : 270) : cardRotation.z;
+            var targetRotate = rotate ? (cardRotation.z > 20f ? 0f : 270f) : cardRotation.z;
 
             if(flip) card.GetComponent<GenericCard>().SwitchFlipState();
 
-            iTween.RotateTo(card.gameObject, iTween.Hash("time", time,
+            iTween.RotateTo(card, iTween.Hash("time", time,
                 "y", targetFlip,
                 "z", targetRotate,
                 "easetype", iTween.EaseType.EaseInOutSine,
