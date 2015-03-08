@@ -28,7 +28,7 @@ namespace HarryPotterUnity.Cards
             Player.Hand.Remove(this);
         }
 
-        protected sealed override bool MeetsAdditionalPlayRequirements()
+        protected override bool MeetsAdditionalPlayRequirements()
         {
             return Player.AmountLessonsInPlay >= _costAmount &&
                    Player.LessonTypesInPlay.Contains(_costType) &&

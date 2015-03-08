@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -68,11 +69,20 @@ namespace HarryPotterUnity.Game
             return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Creature);
         }
 
-        public List<GenericCard> GetLessonsInPlay()
+        private IEnumerable<GenericCard> GetLessonsInPlay()
         {
             return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Lesson);
         }
 
+        public Lesson GetLessonOfType(Lesson.LessonTypes type)
+        {
+            return GetLessonsInPlay().First(x => ((Lesson)x).LessonType == type) as Lesson;
+        }
+
+        public int GetAmountOfLessonsOfType(Lesson.LessonTypes type)
+        {
+            return GetLessonsInPlay().Count(x => ((Lesson)x).LessonType == type);
+        }
         private void AnimateCreatureToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);

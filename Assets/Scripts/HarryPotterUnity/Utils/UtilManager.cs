@@ -17,8 +17,6 @@ namespace HarryPotterUnity.Utils
         public GenericCard.CardStates StateAfterAnimation;
     }
 
-    
-
     public static class UtilManager {
 
         public const int PreviewLayer = 9;
