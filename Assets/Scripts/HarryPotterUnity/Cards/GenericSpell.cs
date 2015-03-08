@@ -40,7 +40,7 @@ namespace HarryPotterUnity.Cards
             //TODO: Rotate if it's being played by the opponent
             State = CardStates.Discarded;
             UtilManager.AddTweenToQueue(this, SpellOffset, 0.5f, 0f, State, !Player.IsLocalPlayer, false);
-            Invoke("ExecuteActionAndDiscard", 0.9f);
+            Invoke("ExecuteActionAndDiscard", 1.5f);
         }
 
         [UsedImplicitly]
