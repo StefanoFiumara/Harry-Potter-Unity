@@ -50,7 +50,7 @@ namespace HarryPotterUnity.Cards
             if (_inputRequired == 0)
             {
                 OnPlayAction();
-                Player.UseActions(ActionCost); //If the card requires input, the action will be used after the input is selected.
+                Player.UseActions(ActionCost);
             }
             else
             {
@@ -60,13 +60,11 @@ namespace HarryPotterUnity.Cards
 
         private void BeginWaitForInput()
         {
-            //Move ALL invalid colliders to ignoreraycast layer
             Player.DisableAllCards();
             Player.OppositePlayer.DisableAllCards();
 
             var validCards = GetValidCards();
 
-            //place valid cards in valid layer
             foreach (var card in validCards)
             {
                 card.Enable();
