@@ -34,8 +34,8 @@ namespace HarryPotterUnity.UI
 
             Player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
 
-            Player1.InitDeck();
-            Player2.InitDeck();
+          //  Player1.InitDeck();
+          //  Player2.InitDeck();
 
             StartCoroutine(_beginGameSequence());
         }

@@ -41,15 +41,9 @@ namespace HarryPotterUnity.Game
             Discard = transform.GetComponentInChildren<Discard>();
         }
 
-        public void InitDeck()
+        public void InitDeck(List<Lesson.LessonTypes> selectedLessons)
         {
-            Deck.InitDeck(
-                DeckGenerator.GenerateDeck(new List<Lesson.LessonTypes>
-                {
-                    Lesson.LessonTypes.Creatures,
-                    Lesson.LessonTypes.Charms,
-                    Lesson.LessonTypes.Transfiguration
-                }));
+            Deck.InitDeck( DeckGenerator.GenerateDeck(selectedLessons) );
         }
 
         public void UseActions(int amount = 1)

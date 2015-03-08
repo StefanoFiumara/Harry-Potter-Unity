@@ -28,16 +28,6 @@ namespace HarryPotterUnity.Utils
             if(!_multiplayerLobbyHudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
         }
 
-        private void SpawnPlayers()
-        {
-            var playerObject = Resources.Load("Player");
-            _player1 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
-            _player2 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
-
-            _player1.IsLocalPlayer = PhotonNetwork.player.isMasterClient;
-            _player2.IsLocalPlayer = !_player1.IsLocalPlayer;
-        }
-
         [RPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
@@ -48,17 +38,26 @@ namespace HarryPotterUnity.Utils
             StartGame();
         }
 
-        private void StartGame()
+        private void SpawnPlayers()
         {
-            if(!_player1 || !_player2) throw new Exception("Error: One of the players was not properly instantiated!");
+            var playerObject = Resources.Load("Player");
+            _player1 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
+            _player2 = ((GameObject)Instantiate(playerObject)).GetComponent<Player>();
+
+            if (!_player1 || !_player2) throw new Exception("Error: One of the players was not properly instantiated!");
+
+            _player1.IsLocalPlayer = PhotonNetwork.player.isMasterClient;
+            _player2.IsLocalPlayer = !_player1.IsLocalPlayer;
 
             _player1.OppositePlayer = _player2;
             _player2.OppositePlayer = _player1;
 
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+        }
 
-            _player1.InitDeck();
-            _player2.InitDeck();
+        private void StartGame()
+        {
+            InitPlayerDecks();
 
             _player1.MpGameManager = this;
             _player2.MpGameManager = this;
@@ -67,6 +66,26 @@ namespace HarryPotterUnity.Utils
             _player2.NetworkId = 1;
 
             StartCoroutine(_beginGameSequence());
+        }
+
+        private void InitPlayerDecks()
+        {
+            var p1Id = PhotonNetwork.isMasterClient ? 0 : 1;
+            var p2Id = p1Id == 0 ? 1 : 0;
+
+            var p1LessonsBytes = PhotonNetwork.playerList[p1Id].customProperties["lessons"] as byte[];
+            var p2LessonsBytes = PhotonNetwork.playerList[p2Id].customProperties["lessons"] as byte[];
+
+            if (p1LessonsBytes == null || p2LessonsBytes == null)
+            {
+                throw new Exception("p1 or p2 lessons are null!");
+            }
+
+            var p1SelectedLessons = Array.ConvertAll(p1LessonsBytes, input => (Lesson.LessonTypes) input).ToList();
+            var p2SelectedLessons = Array.ConvertAll(p2LessonsBytes, input => (Lesson.LessonTypes) input).ToList();
+            
+            _player1.InitDeck(p1SelectedLessons);
+            _player2.InitDeck(p2SelectedLessons);
         }
 
         private IEnumerator _beginGameSequence()

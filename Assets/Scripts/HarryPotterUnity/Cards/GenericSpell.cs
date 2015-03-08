@@ -5,7 +5,6 @@ using System.Linq;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
-
 using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 
 namespace HarryPotterUnity.Cards
@@ -20,7 +19,7 @@ namespace HarryPotterUnity.Cards
 
         [UsedImplicitly, SerializeField]
         private int _inputRequired;
-
+ 
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
         protected sealed override void OnClickAction()
