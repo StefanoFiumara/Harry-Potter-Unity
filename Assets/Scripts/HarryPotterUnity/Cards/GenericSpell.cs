@@ -46,6 +46,7 @@ namespace HarryPotterUnity.Cards
         [UsedImplicitly]
         protected void ExecuteActionAndDiscard()
         {
+            //TODO: Try placing this if/else in AnimateAndDiscard so the actions execute in order
             Player.Discard.Add(this);
             if (_inputRequired == 0)
             {

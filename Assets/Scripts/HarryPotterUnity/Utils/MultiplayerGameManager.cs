@@ -55,6 +55,9 @@ namespace HarryPotterUnity.Utils
 
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
 
+            _player1.EndGamePanel = _multiplayerLobbyHudManager.EndGamePanel;
+            _player2.EndGamePanel = _multiplayerLobbyHudManager.EndGamePanel;
+
             if (_player1.IsLocalPlayer)
             {
                 _player1.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorLocal;
@@ -107,7 +110,9 @@ namespace HarryPotterUnity.Utils
 
             var p1SelectedLessons = Array.ConvertAll(p1LessonsBytes, input => (Lesson.LessonTypes) input).ToList();
             var p2SelectedLessons = Array.ConvertAll(p2LessonsBytes, input => (Lesson.LessonTypes) input).ToList();
-            
+
+            UtilManager.NetworkIdCounter = 0;
+
             _player1.InitDeck(p1SelectedLessons);
             _player2.InitDeck(p2SelectedLessons);
         }
@@ -122,6 +127,19 @@ namespace HarryPotterUnity.Utils
 
             _player1.InitTurn();
         }
+
+        public void ShowGameOverMessage(Player sender)
+        {
+            if (sender.IsLocalPlayer)
+            {
+                sender.ShowGameOverLoseMessage();
+            }
+            else
+            {
+                sender.ShowGameOverWinMesssage();
+            }
+        }
+
 
         [UsedImplicitly]
         public void OnDestroy()

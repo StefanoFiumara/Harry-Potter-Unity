@@ -51,6 +51,9 @@ namespace HarryPotterUnity.Game
         {
             if (Cards.Count <= 0)
             {
+                _player.DisableAllCards();
+                _player.OppositePlayer.DisableAllCards();
+                _player.MpGameManager.ShowGameOverMessage(_player);
                 return null;
             }
 

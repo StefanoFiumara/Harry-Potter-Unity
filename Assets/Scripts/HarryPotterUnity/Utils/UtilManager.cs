@@ -25,7 +25,7 @@ namespace HarryPotterUnity.Utils
         public const int IgnoreRaycastLayer = 2;
         public const int DeckLayer = 12;
 
-        public static byte NetworkIdCounter = 0;
+        public static byte NetworkIdCounter;
         public static readonly List<GenericCard> AllCards = new List<GenericCard>(); 
 
         public static Camera PreviewCamera;

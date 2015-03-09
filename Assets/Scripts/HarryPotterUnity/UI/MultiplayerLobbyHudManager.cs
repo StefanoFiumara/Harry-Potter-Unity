@@ -3,7 +3,6 @@ using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
-using HarryPotterUnity.Cards;
 using UnityEngine;
 using UnityEngine.UI;
 using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
@@ -72,6 +71,8 @@ namespace HarryPotterUnity.UI
         private Text _actionsLeftLocal;
         [SerializeField]
         private Text _actionsLeftRemote;
+        [SerializeField]
+        private RectTransform _endGamePanel;
         #endregion
 
         public Image TurnIndicatorLocal { get { return _turnIndicatorLocal;} }
@@ -82,6 +83,9 @@ namespace HarryPotterUnity.UI
 
         public Text ActionsLeftLocal { get { return _actionsLeftLocal;} }
         public Text ActionsLeftRemote { get { return _actionsLeftRemote;} }
+
+        public RectTransform EndGamePanel { get { return _endGamePanel; } }
+
 
 
         private List<LessonTypes> _selectedLessons;
@@ -143,6 +147,12 @@ namespace HarryPotterUnity.UI
         }
 
         [UsedImplicitly]
+        public void DisconnectFromGameRoom()
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+
+        [UsedImplicitly]
         public void FindMatch_Click()
         {
             UpdateLessonSelection();
@@ -188,7 +198,7 @@ namespace HarryPotterUnity.UI
             _mainMenuHudContainer.gameObject.SetActive(false);
         }
 
-        public void EnableMainMenuHud()
+        private void EnableMainMenuHud()
         {
             _mainMenuHudContainer.gameObject.SetActive(true);
         }
@@ -198,7 +208,7 @@ namespace HarryPotterUnity.UI
             _gameplayHudContainer.gameObject.SetActive(true);
         }
 
-        public void DisableGameplayHud()
+        private void DisableGameplayHud()
         {
             _gameplayHudContainer.gameObject.SetActive(false);
         }

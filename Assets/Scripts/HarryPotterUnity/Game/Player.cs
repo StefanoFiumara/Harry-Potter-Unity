@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
@@ -34,6 +35,8 @@ namespace HarryPotterUnity.Game
         public Text ActionsLeftLabel { private get; set; }
         public Image TurnIndicator { private get; set; }
         public Text CardsLeftLabel { get; set; }
+        public RectTransform EndGamePanel { get; set; }
+
 
         private MultiplayerLobbyHudManager _multiplayerLobbyHudManager;
 
@@ -118,6 +121,28 @@ namespace HarryPotterUnity.Game
             }       
         }
 
+        public void ShowGameOverLoseMessage()
+        {
+            var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
+            var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
+
+            titleLabel.text = "Sorry!";
+            messageLabel.text = "Your Opponent Defeated You!";
+
+            EndGamePanel.gameObject.SetActive(true);
+        }
+
+        public void ShowGameOverWinMesssage()
+        {
+            var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
+            var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
+
+            titleLabel.text = "Congratulations!";
+            messageLabel.text = "You won the game!";
+
+            EndGamePanel.gameObject.SetActive(true);
+        }
+
         public void TakeDamage(int amount)
         {
             if (amount <= 0) return;
@@ -128,7 +153,6 @@ namespace HarryPotterUnity.Game
 
                 if (card == null)
                 {
-                    //TODO: Show game over message here.
                     Debug.Log("Game Over");
                     break;
                 }
@@ -142,13 +166,10 @@ namespace HarryPotterUnity.Game
 
             var lessons = InPlay.Cards.FindAll(card => card is Lesson);
 
-            foreach (var genericCard in lessons)
+            foreach (var lessonCard in lessons.Cast<Lesson>()
+                                       .Where(lessonCard => !LessonTypesInPlay.Contains(lessonCard.LessonType)))
             {
-                var lessonCard = (Lesson) genericCard;
-                if (!LessonTypesInPlay.Contains(lessonCard.LessonType))
-                {
-                    LessonTypesInPlay.Add(lessonCard.LessonType);
-                }
+                LessonTypesInPlay.Add(lessonCard.LessonType);
             }
         }
 
