@@ -31,7 +31,8 @@ namespace HarryPotterUnity.Utils
         [RPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
-            _multiplayerLobbyHudManager.DisableHud();
+            _multiplayerLobbyHudManager.DisableMainMenuHud();
+            _multiplayerLobbyHudManager.EnableGameplayHud();
 
             Random.seed = rngSeed;
             SpawnPlayers();
@@ -53,6 +54,29 @@ namespace HarryPotterUnity.Utils
             _player2.OppositePlayer = _player1;
 
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+
+            if (_player1.IsLocalPlayer)
+            {
+                _player1.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorLocal;
+                _player2.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorRemote;
+
+                _player1.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftLocal;
+                _player2.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftRemote;
+
+                _player1.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftLocal;
+                _player2.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftRemote;
+            }
+            else
+            {
+                _player1.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorRemote;
+                _player2.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorLocal;
+
+                _player1.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftRemote;
+                _player2.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftLocal;
+
+                _player1.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftRemote;
+                _player2.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftLocal;
+            }
         }
 
         private void StartGame()
@@ -110,6 +134,11 @@ namespace HarryPotterUnity.Utils
         public void ExecutePlayActionById(byte id)
         {
             var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
+
+            if (card == null)
+            {
+                throw new Exception("ExecutePlayActionById could not find card with Id: " + id);
+            }
 
             card.MouseUpAction();
         }

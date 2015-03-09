@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HarryPotterUnity.Cards;
+using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HarryPotterUnity.Game
 {
@@ -28,6 +31,12 @@ namespace HarryPotterUnity.Game
         public MultiplayerGameManager MpGameManager { get; set; }
         public byte NetworkId { get; set; }
 
+        public Text ActionsLeftLabel { private get; set; }
+        public Image TurnIndicator { private get; set; }
+        public Text CardsLeftLabel { get; set; }
+
+        private MultiplayerLobbyHudManager _multiplayerLobbyHudManager;
+
         [UsedImplicitly]
         public void Awake()
         {
@@ -39,6 +48,10 @@ namespace HarryPotterUnity.Game
             Deck = transform.GetComponentInChildren<Deck>();
             InPlay = transform.GetComponentInChildren<InPlay>();
             Discard = transform.GetComponentInChildren<Discard>();
+
+            _multiplayerLobbyHudManager = GameObject.Find("MultiplayerLobbyHudManager").GetComponent<MultiplayerLobbyHudManager>();
+
+            if (!_multiplayerLobbyHudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
         }
 
         public void InitDeck(List<Lesson.LessonTypes> selectedLessons)
@@ -50,27 +63,31 @@ namespace HarryPotterUnity.Game
         {
             _actionsAvailable -= amount;
 
+            ActionsLeftLabel.text = string.Format("Actions Left: {0}", _actionsAvailable);
+
             if (_actionsAvailable > 0) return;
             _actionsAvailable = 0;
             
+            TurnIndicator.gameObject.SetActive(false);
+
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
             OppositePlayer.InitTurn();
         }
 
-        /****** Will use later
-        public void AddAction()
+        private void AddActions(int amount)
         {
-            _actionsAvailable++;
+            _actionsAvailable += amount;
+            ActionsLeftLabel.text = string.Format("Actions Left: {0}", _actionsAvailable);
         }
-        */
 
         public void InitTurn()
         {
+            TurnIndicator.gameObject.SetActive(true);
             //BeforeTurnAction happens here
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
 
             Deck.DrawCard();
-            _actionsAvailable += 2;
+            AddActions(2);
 
             //Creatures do damage here
             OppositePlayer.TakeDamage(DamagePerTurn);

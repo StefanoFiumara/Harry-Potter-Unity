@@ -24,6 +24,10 @@ namespace HarryPotterUnity.UI
         [SerializeField]
         private Camera _previewCamera;
 
+        [Header("Main Menu")]
+        [SerializeField]
+        private RectTransform _mainMenuHudContainer;
+
         [SerializeField]
         private Button _findMatchButton;
 
@@ -49,15 +53,44 @@ namespace HarryPotterUnity.UI
         private Toggle _selectPotions;
         [SerializeField]
         private Toggle _selectQuidditch;
+
+        [Header("Gameplay")]
+        [SerializeField]
+        private RectTransform _gameplayHudContainer;
+
+        [SerializeField] 
+        private Image _turnIndicatorLocal;
+        [SerializeField]
+        private Image _turnIndicatorRemote;
+
+        [SerializeField]
+        private Text _cardsLeftLocal;
+        [SerializeField]
+        private Text _cardsLeftRemote;
+
+        [SerializeField]
+        private Text _actionsLeftLocal;
+        [SerializeField]
+        private Text _actionsLeftRemote;
         #endregion
 
-        public List<LessonTypes> SelectedLessons;
+        public Image TurnIndicatorLocal { get { return _turnIndicatorLocal;} }
+        public Image TurnIndicatorRemote { get { return _turnIndicatorRemote; } }
+
+        public Text CardsLeftLocal { get { return _cardsLeftLocal;} }
+        public Text CardsLeftRemote { get { return _cardsLeftRemote;} }
+
+        public Text ActionsLeftLocal { get { return _actionsLeftLocal;} }
+        public Text ActionsLeftRemote { get { return _actionsLeftRemote;} }
+
+
+        private List<LessonTypes> _selectedLessons;
         
         [UsedImplicitly]
         public void Start()
         {
             PhotonNetwork.ConnectUsingSettings("v0.1");
-            SelectedLessons = new List<LessonTypes>();
+            _selectedLessons = new List<LessonTypes>();
         }
 
         [UsedImplicitly]
@@ -105,15 +138,15 @@ namespace HarryPotterUnity.UI
             PhotonNetwork.LeaveRoom();
 
             _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby.";
-            _titleText.gameObject.SetActive(true);
-            _gameStatusText.gameObject.SetActive(true);
+            DisableGameplayHud();
+            EnableMainMenuHud();
         }
 
         [UsedImplicitly]
         public void FindMatch_Click()
         {
             UpdateLessonSelection();
-            if (SelectedLessons.Count == 2 || SelectedLessons.Count == 3)
+            if (_selectedLessons.Count == 2 || _selectedLessons.Count == 3)
             {
                 _findMatchButton.gameObject.SetActive(false);
                 _gameStatusText.text = "Finding Match...";
@@ -130,15 +163,15 @@ namespace HarryPotterUnity.UI
 
         private void UpdateLessonSelection()
         {
-            SelectedLessons.Clear();
-            if (_selectCreatures.isOn) SelectedLessons.Add(LessonTypes.Creatures);
-            if (_selectCharms.isOn) SelectedLessons.Add(LessonTypes.Charms);
-            if (_selectTransfiguration.isOn) SelectedLessons.Add(LessonTypes.Transfiguration);
-            if (_selectPotions.isOn) SelectedLessons.Add(LessonTypes.Potions);
-            if (_selectQuidditch.isOn) SelectedLessons.Add(LessonTypes.Quidditch);
+            _selectedLessons.Clear();
+            if (_selectCreatures.isOn) _selectedLessons.Add(LessonTypes.Creatures);
+            if (_selectCharms.isOn) _selectedLessons.Add(LessonTypes.Charms);
+            if (_selectTransfiguration.isOn) _selectedLessons.Add(LessonTypes.Transfiguration);
+            if (_selectPotions.isOn) _selectedLessons.Add(LessonTypes.Potions);
+            if (_selectQuidditch.isOn) _selectedLessons.Add(LessonTypes.Quidditch);
 
             //Convert to byte array for serialization
-            var selectedLessons = Array.ConvertAll(SelectedLessons.ToArray(), input => (byte)input);
+            var selectedLessons = Array.ConvertAll(_selectedLessons.ToArray(), input => (byte)input);
             var selected = new Hashtable {{"lessons", selectedLessons}};
             PhotonNetwork.player.SetCustomProperties(selected);
         }
@@ -150,14 +183,27 @@ namespace HarryPotterUnity.UI
             PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions {maxPlayers =  2}, null);
         }
 
-        public void DisableHud()
+        public void DisableMainMenuHud()
         {
-            _titleText.gameObject.SetActive(false);
-            _gameStatusText.gameObject.SetActive(false);
-            _lessonSelectPanel.gameObject.SetActive(false);
+            _mainMenuHudContainer.gameObject.SetActive(false);
         }
 
-        public void DisableLessonSelect()
+        public void EnableMainMenuHud()
+        {
+            _mainMenuHudContainer.gameObject.SetActive(true);
+        }
+
+        public void EnableGameplayHud()
+        {
+            _gameplayHudContainer.gameObject.SetActive(true);
+        }
+
+        public void DisableGameplayHud()
+        {
+            _gameplayHudContainer.gameObject.SetActive(false);
+        }
+
+        private void DisableLessonSelect()
         {
             _selectCreatures.interactable = false;
             _selectCharms.interactable = false;
@@ -166,7 +212,7 @@ namespace HarryPotterUnity.UI
             _selectQuidditch.interactable = false;
         }
 
-        public void EnableLessonSelect()
+        private void EnableLessonSelect()
         {
             _selectCreatures.interactable = true;
             _selectCharms.interactable = true;

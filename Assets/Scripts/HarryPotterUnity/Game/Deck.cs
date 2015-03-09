@@ -56,6 +56,7 @@ namespace HarryPotterUnity.Game
 
             var card = Cards[Cards.Count - 1];
             Cards.RemoveAt(Cards.Count - 1);
+            _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", Cards.Count);
             return card;
         }
 
