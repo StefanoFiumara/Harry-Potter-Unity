@@ -100,6 +100,7 @@ namespace HarryPotterUnity.Cards
             if (State != CardStates.InHand) return;
             if (!Player.CanUseActions(ActionCost)) return;
             if (!MeetsAdditionalPlayRequirements()) return;
+            if (!UtilManager.TweenQueueIsEmpty) return;
 
             if (!PhotonNetwork.connected)
             {

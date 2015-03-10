@@ -33,6 +33,7 @@ namespace HarryPotterUnity.Utils
         public static readonly Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
 
         private static bool _tweenQueueRunning;
+        public static bool TweenQueueIsEmpty;
 
         public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate)
         {
@@ -49,6 +50,7 @@ namespace HarryPotterUnity.Utils
             };
 
             TweenQueue.Enqueue(newTween);
+            TweenQueueIsEmpty = false;
 
             if (_tweenQueueRunning) return;
 
@@ -62,6 +64,7 @@ namespace HarryPotterUnity.Utils
             {
                 if (TweenQueue.Count == 0)
                 {
+                    TweenQueueIsEmpty = true;
                     yield return null;
                 }
                 else
