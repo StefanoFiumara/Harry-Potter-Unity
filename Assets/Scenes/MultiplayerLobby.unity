@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 39236510}
   - 114: {fileID: 39236511}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Creatures
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   - 114: {fileID: 43134297}
   - 114: {fileID: 43134296}
   - 114: {fileID: 43134295}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -205,7 +205,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 842673350}
+  m_Father: {fileID: 800919482}
   m_RootOrder: 2
 --- !u!114 &43134295
 MonoBehaviour:
@@ -260,7 +260,7 @@ GameObject:
   - 224: {fileID: 116446448}
   - 222: {fileID: 116446450}
   - 114: {fileID: 116446449}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   - 224: {fileID: 144129062}
   - 222: {fileID: 144129064}
   - 114: {fileID: 144129063}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TurnIndicatorRemote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -384,8 +384,6 @@ GameObject:
   - 224: {fileID: 332823802}
   - 222: {fileID: 332823804}
   - 114: {fileID: 332823803}
-  - 223: {fileID: 332823806}
-  - 114: {fileID: 332823805}
   m_Layer: 5
   m_Name: EndGamePanel
   m_TagString: Untagged
@@ -440,39 +438,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 332823801}
---- !u!114 &332823805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 332823801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
---- !u!223 &332823806
-Canvas:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 332823801}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
 --- !u!1 &360676686
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +512,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 387548886}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: RemotePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,7 +546,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 395843217}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Gameplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +649,7 @@ GameObject:
   - 224: {fileID: 480315704}
   - 222: {fileID: 480315706}
   - 114: {fileID: 480315705}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ActionsLeftRemote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +715,7 @@ GameObject:
   - 224: {fileID: 555897870}
   - 222: {fileID: 555897872}
   - 114: {fileID: 555897871}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -813,7 +778,7 @@ GameObject:
   - 222: {fileID: 557488471}
   - 114: {fileID: 557488470}
   - 114: {fileID: 557488469}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Instructions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -893,7 +858,7 @@ GameObject:
   - 224: {fileID: 601575233}
   - 222: {fileID: 601575235}
   - 114: {fileID: 601575234}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -954,7 +919,7 @@ GameObject:
   - 224: {fileID: 640781039}
   - 222: {fileID: 640781041}
   - 114: {fileID: 640781040}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1015,7 +980,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 688363050}
   - 114: {fileID: 688363051}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Quidditch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1104,7 +1069,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 771504987}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkboxes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1145,7 +1110,7 @@ GameObject:
   - 223: {fileID: 800919483}
   - 114: {fileID: 800919486}
   - 114: {fileID: 800919485}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MultiplayerLobbyHudManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1164,6 +1129,7 @@ RectTransform:
   m_Children:
   - {fileID: 842673350}
   - {fileID: 395843217}
+  - {fileID: 43134294}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
@@ -1265,7 +1231,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 842673350}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1284,7 +1250,6 @@ RectTransform:
   m_Children:
   - {fileID: 1162014998}
   - {fileID: 1207306668}
-  - {fileID: 43134294}
   - {fileID: 1798404360}
   - {fileID: 1393717665}
   - {fileID: 1973944296}
@@ -1370,7 +1335,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 872491643}
   - 114: {fileID: 872491644}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Potions
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1450,7 +1415,7 @@ GameObject:
   - 224: {fileID: 965270249}
   - 222: {fileID: 965270251}
   - 114: {fileID: 965270250}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1510,7 +1475,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1016003354}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LocalPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1545,7 +1510,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 1073208363}
   - 114: {fileID: 1073208364}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Transfiguration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1710,7 +1675,7 @@ GameObject:
   - 222: {fileID: 1162015000}
   - 114: {fileID: 1162014999}
   - 114: {fileID: 1162015001}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1909,7 +1874,7 @@ GameObject:
   - 222: {fileID: 1207306670}
   - 114: {fileID: 1207306669}
   - 114: {fileID: 1207306671}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: NetworkStatus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2194,7 +2159,7 @@ GameObject:
   - 224: {fileID: 1364391346}
   - 222: {fileID: 1364391345}
   - 114: {fileID: 1364391344}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CardsLeftLocal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2258,7 +2223,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 224: {fileID: 1393717665}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: LessonSelectPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2278,7 +2243,7 @@ RectTransform:
   - {fileID: 771504987}
   - {fileID: 557488468}
   m_Father: {fileID: 842673350}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: 0, y: -185}
@@ -2294,7 +2259,7 @@ GameObject:
   - 224: {fileID: 1408228358}
   - 222: {fileID: 1408228360}
   - 114: {fileID: 1408228359}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2355,7 +2320,7 @@ GameObject:
   - 224: {fileID: 1440196727}
   - 222: {fileID: 1440196729}
   - 114: {fileID: 1440196728}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2445,7 +2410,7 @@ GameObject:
   - 224: {fileID: 1534156718}
   - 222: {fileID: 1534156720}
   - 114: {fileID: 1534156719}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TurnIndicatorLocal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2507,7 +2472,7 @@ GameObject:
   - 224: {fileID: 1595241884}
   - 222: {fileID: 1595241886}
   - 114: {fileID: 1595241885}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2568,7 +2533,7 @@ GameObject:
   - 224: {fileID: 1635987300}
   - 222: {fileID: 1635987302}
   - 114: {fileID: 1635987301}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CardsLeftRemote
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2635,7 +2600,7 @@ GameObject:
   - 222: {fileID: 1699569251}
   - 114: {fileID: 1699569250}
   - 114: {fileID: 1699569252}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2781,7 +2746,7 @@ GameObject:
   - 224: {fileID: 1774266468}
   - 222: {fileID: 1774266470}
   - 114: {fileID: 1774266469}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Checkmark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2844,7 +2809,7 @@ GameObject:
   - 222: {fileID: 1798404363}
   - 114: {fileID: 1798404362}
   - 114: {fileID: 1798404361}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: FindMatch_Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2863,7 +2828,7 @@ RectTransform:
   m_Children:
   - {fileID: 1699569249}
   m_Father: {fileID: 842673350}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
   m_AnchoredPosition: {x: -2.86102318e-06, y: 0}
@@ -2960,7 +2925,7 @@ GameObject:
   - 224: {fileID: 1805448737}
   - 222: {fileID: 1805448739}
   - 114: {fileID: 1805448738}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ActionsLeftLocal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3109,7 +3074,7 @@ GameObject:
   - 224: {fileID: 1969380712}
   - 222: {fileID: 1969380714}
   - 114: {fileID: 1969380713}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3191,7 +3156,7 @@ RectTransform:
   - {fileID: 1831636081}
   - {fileID: 1197568402}
   m_Father: {fileID: 842673350}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: .330009997, y: -9}
@@ -3312,7 +3277,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 1
       - m_Target: {fileID: 800919484}
-        m_MethodName: DisconnectFromGameRoom
+        m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3442,7 +3407,7 @@ GameObject:
   m_Component:
   - 224: {fileID: 2133337350}
   - 114: {fileID: 2133337351}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Charms
   m_TagString: Untagged
   m_Icon: {fileID: 0}

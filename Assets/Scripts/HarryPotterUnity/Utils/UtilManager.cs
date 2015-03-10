@@ -30,7 +30,7 @@ namespace HarryPotterUnity.Utils
 
         public static Camera PreviewCamera;
         public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
-        private static readonly Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
+        public static readonly Queue<TweenObject> TweenQueue = new Queue<TweenObject>();
 
         private static bool _tweenQueueRunning;
 

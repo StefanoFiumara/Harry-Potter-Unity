@@ -139,17 +139,17 @@ namespace HarryPotterUnity.UI
         [UsedImplicitly]
         public void OnPhotonPlayerDisconnected()
         {
+            BackToMainMenu();
+        }
+
+        [UsedImplicitly]
+        public void BackToMainMenu()
+        {
             PhotonNetwork.LeaveRoom();
 
             _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby.";
             DisableGameplayHud();
             EnableMainMenuHud();
-        }
-
-        [UsedImplicitly]
-        public void DisconnectFromGameRoom()
-        {
-            PhotonNetwork.LeaveRoom();
         }
 
         [UsedImplicitly]

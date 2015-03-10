@@ -53,13 +53,14 @@ namespace HarryPotterUnity.Game
             {
                 _player.DisableAllCards();
                 _player.OppositePlayer.DisableAllCards();
-                _player.MpGameManager.ShowGameOverMessage(_player);
+                StartCoroutine(_player.MpGameManager.WaitForGameOverMessage(_player));
                 return null;
             }
 
             var card = Cards[Cards.Count - 1];
             Cards.RemoveAt(Cards.Count - 1);
             _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", Cards.Count);
+
             return card;
         }
 
@@ -75,14 +76,10 @@ namespace HarryPotterUnity.Game
         public void DrawCard()
         {
             var card = TakeTopCard();
-            if (card == null)
+            if (card != null)
             {
-                //GameOver
-                Debug.Log("Game Over");
-                return;
+                _player.Hand.Add(card);
             }
-
-            _player.Hand.Add(card);
         }
 
         public void Shuffle()

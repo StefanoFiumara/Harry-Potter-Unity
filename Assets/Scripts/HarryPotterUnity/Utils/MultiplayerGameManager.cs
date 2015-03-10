@@ -128,8 +128,13 @@ namespace HarryPotterUnity.Utils
             _player1.InitTurn();
         }
 
-        public void ShowGameOverMessage(Player sender)
+        public IEnumerator WaitForGameOverMessage(Player sender)
         {
+            while (UtilManager.TweenQueue.Count > 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+
             if (sender.IsLocalPlayer)
             {
                 sender.ShowGameOverLoseMessage();
