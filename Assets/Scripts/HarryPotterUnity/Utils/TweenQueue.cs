@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Utils
 {
-    public class TweenObject
+    internal class TweenObject
     {
         public GameObject Target;
         public Vector3 Position;
@@ -19,19 +19,33 @@ namespace HarryPotterUnity.Utils
 
     public class TweenQueue
     {
-        private readonly Queue<TweenObject> _queue = new Queue<TweenObject>();
+        private readonly Queue<TweenObject> _queue;
 
         private static bool _tweenQueueRunning;
         public bool TweenQueueIsEmpty { get; private set; }
 
-        public void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate)
+        public TweenQueue()
+        {
+            _queue = new Queue<TweenObject>();    
+        }
+
+        /// <summary>
+        /// Add a tween to the queue, the tween will not execute until all other tweens in the queue have finished executing.
+        /// </summary>
+        /// <param name="target">The target card</param>
+        /// <param name="position">The target position</param>
+        /// <param name="time">Time in seconds the tween should take to complete</param>
+        /// <param name="stateAfterAnimation">The CardState of the card after the animation has finished</param>
+        /// <param name="flip">Whether the card should be flipped from FaceUp to FaceDown or vice-versa</param>
+        /// <param name="rotate">Whether the card should be rotated from vertical to horizontal or vice-versa</param>
+        public void AddTweenToQueue(GenericCard target, Vector3 position, float time, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate)
         {
             var newTween = new TweenObject
             {
                 Target = target.gameObject,
                 Position = position,
                 Time = time,
-                Delay = delay,
+                Delay = 0.1f,
                 EaseType = iTween.EaseType.EaseInOutSine,
                 StateAfterAnimation = stateAfterAnimation,
                 Flip = flip,

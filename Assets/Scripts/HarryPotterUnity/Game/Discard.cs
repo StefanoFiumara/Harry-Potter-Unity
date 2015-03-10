@@ -42,8 +42,8 @@ namespace HarryPotterUnity.Game
             var shouldFlip = card.State == GenericCard.CardStates.InDeck;
             var shouldRotate = card.State == GenericCard.CardStates.InPlay;
 
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, 0f, GenericCard.CardStates.Discarded, shouldFlip, shouldRotate);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, 0f, GenericCard.CardStates.Discarded, false, false);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, GenericCard.CardStates.Discarded, shouldFlip, shouldRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, false, false);
         }
 
         //TODO: OnMouseUp: View cards in discard pile
