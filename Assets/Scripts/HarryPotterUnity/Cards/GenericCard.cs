@@ -52,14 +52,6 @@ namespace HarryPotterUnity.Cards
 
         public byte NetworkId { get; set; }
 
-
-        //Might need this later
-        /*
-        [SerializeField]
-        [UsedImplicitly]
-        private string _cardName = "";
-        */
-
         [UsedImplicitly]
         public void Start()
         {
