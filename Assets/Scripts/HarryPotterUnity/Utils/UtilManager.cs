@@ -34,7 +34,7 @@ namespace HarryPotterUnity.Utils
 
         private static bool _tweenQueueRunning;
 
-        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate, iTween.EaseType easeType = iTween.EaseType.EaseInOutSine)
+        public static void AddTweenToQueue(GenericCard target, Vector3 position, float time, float delay, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate)
         {
             var newTween = new TweenObject
             {
@@ -42,7 +42,7 @@ namespace HarryPotterUnity.Utils
                 Position = position,
                 Time = time,
                 Delay = delay,
-                EaseType = easeType,
+                EaseType = iTween.EaseType.EaseInOutSine,
                 StateAfterAnimation = stateAfterAnimation,
                 Flip = flip,
                 Rotate = rotate
@@ -68,7 +68,8 @@ namespace HarryPotterUnity.Utils
                 {
                     var tween = TweenQueue.Dequeue();
 
-                    iTween.MoveTo(tween.Target, iTween.Hash("time", tween.Time,
+                    iTween.MoveTo(tween.Target, iTween.Hash(
+                        "time", tween.Time,
                         "delay", tween.Delay,
                         "position", tween.Position,
                         "easetype", tween.EaseType,
@@ -89,19 +90,16 @@ namespace HarryPotterUnity.Utils
             // ReSharper disable once FunctionNeverReturns
         }
 
-        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, GenericCard.CardStates stateAfterAnimation, float tweenDelay = 0f, iTween.EaseType easeType = iTween.EaseType.EaseInOutSine)
+        public static void TweenCardToPosition(GenericCard card, Vector3 cardPosition, GenericCard.CardStates stateAfterAnimation)
         {
             iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.5f,
                 "position", cardPosition,
-                "easetype", easeType,
+                "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true,
-                "delay", tweenDelay,
                 "oncomplete", "SwitchState",
                 "oncompletetarget", card.gameObject,
                 "oncompleteparams", stateAfterAnimation
                 ));
-
-            iTween.ScaleTo(card.gameObject, iTween.Hash("x", 1, "y", 1, "time", 0.5f));
         }
 
         private static void RotateAndFlipCard(GameObject card, float time, bool flip, bool rotate)

@@ -21,12 +21,10 @@ namespace HarryPotterUnity.Game
 
         public List<Lesson.LessonTypes> LessonTypesInPlay { get; private set; }
 
-        [SerializeField]
-        private int _actionsAvailable;
-
         public int CreaturesInPlay { get; set; }
         public int DamagePerTurn { get; set; }
         public int AmountLessonsInPlay { get; set; }
+        private int ActionsAvailable { get; set; }
 
         public bool IsLocalPlayer { get; set; }
         public MultiplayerGameManager MpGameManager { get; set; }
@@ -44,7 +42,7 @@ namespace HarryPotterUnity.Game
         public void Awake()
         {
             LessonTypesInPlay = new List<Lesson.LessonTypes>();
-            _actionsAvailable = 0;
+            ActionsAvailable = 0;
             AmountLessonsInPlay = 0;
 
             Hand = transform.GetComponentInChildren<Hand>();
@@ -64,12 +62,12 @@ namespace HarryPotterUnity.Game
 
         public void UseActions(int amount = 1)
         {
-            _actionsAvailable -= amount;
+            ActionsAvailable -= amount;
 
-            ActionsLeftLabel.text = string.Format("Actions Left: {0}", _actionsAvailable);
+            ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
 
-            if (_actionsAvailable > 0) return;
-            _actionsAvailable = 0;
+            if (ActionsAvailable > 0) return;
+            ActionsAvailable = 0;
             
             TurnIndicator.gameObject.SetActive(false);
 
@@ -79,8 +77,8 @@ namespace HarryPotterUnity.Game
 
         private void AddActions(int amount)
         {
-            _actionsAvailable += amount;
-            ActionsLeftLabel.text = string.Format("Actions Left: {0}", _actionsAvailable);
+            ActionsAvailable += amount;
+            ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
         }
 
         public void InitTurn()
@@ -98,7 +96,7 @@ namespace HarryPotterUnity.Game
 
         public bool CanUseActions(int amount = 1)
         {
-            return _actionsAvailable >= amount;
+            return ActionsAvailable >= amount;
         }
 
         public void DrawInitialHand()
