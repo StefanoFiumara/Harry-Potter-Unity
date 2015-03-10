@@ -33,7 +33,7 @@ namespace HarryPotterUnity.Cards
 
         public CardStates State { get; protected set; }
 
-        public FlipStates FlipState;// { get; protected set; }
+        public FlipStates FlipState { get; private set; }
 
         [UsedImplicitly] 
         public CardTypes CardType;

@@ -94,14 +94,16 @@ namespace HarryPotterUnity.Game
 
                 var newZ = (transform.position.z + 16f) - i * 0.2f;
 
-                var point1 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y + 80, Cards[i].transform.position.z);
+                var offset = Cards[i].Player.IsLocalPlayer ? -80f : 80f;
+
+                var point1 = new Vector3(Cards[i].transform.position.x + offset, Cards[i].transform.position.y, Cards[i].transform.position.z);
                 var point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
 
                 iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", 0.5f, 
                                                                "path", new[] {point1, point2}, 
                                                                "easetype", iTween.EaseType.EaseInOutSine, 
-                                                               "delay", Random.Range(0f,1.5f))
-                                                               );
+                                                               "delay", Random.Range(0f,1.5f)
+                                                               ));
             }
         }
 
