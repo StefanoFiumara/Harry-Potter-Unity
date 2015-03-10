@@ -98,6 +98,7 @@ namespace HarryPotterUnity.Utils
 
         private static void RotateAndFlipCard(GameObject card, float time, bool flip, bool rotate)
         {
+            //TODO: IDEA: bool rotate -> rotate type enum? rotate90, rotate180, noRotate?
             var cardRotation = card.transform.localRotation.eulerAngles;
             var targetFlip = flip ? (cardRotation.y > 20f ? 0f : 180f) : cardRotation.y;
             var targetRotate = rotate ? (cardRotation.z > 20f ? 0f : 270f) : cardRotation.z;
