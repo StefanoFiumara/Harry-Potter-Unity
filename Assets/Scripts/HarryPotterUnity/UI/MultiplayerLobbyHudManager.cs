@@ -148,6 +148,8 @@ namespace HarryPotterUnity.UI
             PhotonNetwork.LeaveRoom();
 
             _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby.";
+            _mainCamera.transform.rotation = Quaternion.identity;
+            _previewCamera.transform.rotation = Quaternion.identity;
             DisableGameplayHud();
             EnableMainMenuHud();
         }
