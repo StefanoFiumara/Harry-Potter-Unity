@@ -53,7 +53,7 @@ namespace HarryPotterUnity.Game
             {
                 _player.DisableAllCards();
                 _player.OppositePlayer.DisableAllCards();
-                StartCoroutine(_player.MpGameManager.WaitForGameOverMessage(_player));
+                StartCoroutine(MultiplayerGameManager.WaitForGameOverMessage(_player));
                 return null;
             }
 

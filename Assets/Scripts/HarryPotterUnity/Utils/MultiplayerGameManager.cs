@@ -1,19 +1,18 @@
-﻿using System;
+﻿using UnityEngine;
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
-using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
-using Random = UnityEngine.Random;
+
+using Lessontypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 
 namespace HarryPotterUnity.Utils
 {
     [UsedImplicitly]
-    public class MultiplayerGameManager : MonoBehaviour
+    public class MultiplayerGameManager : Photon.MonoBehaviour
     {
         private Player _player1;
         private Player _player2;
@@ -34,7 +33,7 @@ namespace HarryPotterUnity.Utils
             _multiplayerLobbyHudManager.DisableMainMenuHud();
             _multiplayerLobbyHudManager.EnableGameplayHud();
 
-            Random.seed = rngSeed;
+            UnityEngine.Random.seed = rngSeed;
             SpawnPlayers();
             StartGame();
         }
@@ -47,6 +46,11 @@ namespace HarryPotterUnity.Utils
 
             if (!_player1 || !_player2) throw new Exception("Error: One of the players was not properly instantiated!");
 
+            SetPlayerProperties();
+        }
+
+        private void SetPlayerProperties()
+        {
             _player1.IsLocalPlayer = PhotonNetwork.player.isMasterClient;
             _player2.IsLocalPlayer = !_player1.IsLocalPlayer;
 
@@ -60,26 +64,36 @@ namespace HarryPotterUnity.Utils
 
             if (_player1.IsLocalPlayer)
             {
-                _player1.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorLocal;
-                _player2.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorRemote;
-
-                _player1.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftLocal;
-                _player2.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftRemote;
-
-                _player1.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftLocal;
-                _player2.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftRemote;
+                SetPlayer1Local();
             }
             else
             {
-                _player1.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorRemote;
-                _player2.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorLocal;
-
-                _player1.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftRemote;
-                _player2.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftLocal;
-
-                _player1.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftRemote;
-                _player2.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftLocal;
+                SetPlayer2Local();
             }
+        }
+
+        private void SetPlayer2Local()
+        {
+            _player1.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorRemote;
+            _player2.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorLocal;
+
+            _player1.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftRemote;
+            _player2.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftLocal;
+
+            _player1.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftRemote;
+            _player2.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftLocal;
+        }
+
+        private void SetPlayer1Local()
+        {
+            _player1.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorLocal;
+            _player2.TurnIndicator = _multiplayerLobbyHudManager.TurnIndicatorRemote;
+
+            _player1.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftLocal;
+            _player2.ActionsLeftLabel = _multiplayerLobbyHudManager.ActionsLeftRemote;
+
+            _player1.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftLocal;
+            _player2.CardsLeftLabel = _multiplayerLobbyHudManager.CardsLeftRemote;
         }
 
         private void StartGame()
@@ -105,11 +119,11 @@ namespace HarryPotterUnity.Utils
 
             if (p1LessonsBytes == null || p2LessonsBytes == null)
             {
-                throw new Exception("p1 or p2 lessons are null!");
+                throw new Exception("p1 or p2 selected lessons are null!");
             }
 
-            var p1SelectedLessons = Array.ConvertAll(p1LessonsBytes, input => (Lesson.LessonTypes) input).ToList();
-            var p2SelectedLessons = Array.ConvertAll(p2LessonsBytes, input => (Lesson.LessonTypes) input).ToList();
+            var p1SelectedLessons = Array.ConvertAll(p1LessonsBytes, input => (Lessontypes) input).ToList();
+            var p2SelectedLessons = Array.ConvertAll(p2LessonsBytes, input => (Lessontypes) input).ToList();
 
             UtilManager.NetworkIdCounter = 0;
 
@@ -127,24 +141,6 @@ namespace HarryPotterUnity.Utils
 
             _player1.InitTurn();
         }
-
-        public IEnumerator WaitForGameOverMessage(Player sender)
-        {
-            while (UtilManager.TweenQueue.Count > 0)
-            {
-                yield return new WaitForSeconds(0.5f);
-            }
-
-            if (sender.IsLocalPlayer)
-            {
-                sender.ShowGameOverLoseMessage();
-            }
-            else
-            {
-                sender.ShowGameOverWinMesssage();
-            }
-        }
-
 
         [UsedImplicitly]
         public void OnDestroy()
@@ -176,11 +172,11 @@ namespace HarryPotterUnity.Utils
         }
 
         [RPC, UsedImplicitly]
-        public void ExecuteInputSpellById(byte id, params byte[] cardIds)
+        public void ExecuteInputSpellById(byte id, params byte[] selectedCardIds)
         {
             var card = (GenericSpell) UtilManager.AllCards.Find(c => c.NetworkId == id);
             
-            var selectedCards = cardIds.Select(cardId => UtilManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
+            var selectedCards = selectedCardIds.Select(cardId => UtilManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
 
             card.AfterInputAction(selectedCards);
 
@@ -188,6 +184,23 @@ namespace HarryPotterUnity.Utils
             card.Player.OppositePlayer.EnableAllCards();
 
             card.Player.UseActions(card.ActionCost);
+        }
+
+        public static IEnumerator WaitForGameOverMessage(Player sender)
+        {
+            while (UtilManager.TweenQueue.Count > 0)
+            {
+                yield return new WaitForSeconds(0.5f);
+            }
+
+            if (sender.IsLocalPlayer)
+            {
+                sender.ShowGameOverLoseMessage();
+            }
+            else
+            {
+                sender.ShowGameOverWinMesssage();
+            }
         }
     }
 }
