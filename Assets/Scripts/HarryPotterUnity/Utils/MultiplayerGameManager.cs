@@ -189,9 +189,9 @@ namespace HarryPotterUnity.Utils
 
         public static IEnumerator WaitForGameOverMessage(Player sender)
         {
-            while (UtilManager.TweenQueue.Count > 0)
+            while (UtilManager.TweenQueue.TweenQueueIsEmpty)
             {
-                yield return new WaitForSeconds(0.5f);
+                yield return null;
             }
 
             if (sender.IsLocalPlayer)

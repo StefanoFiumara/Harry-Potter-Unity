@@ -61,7 +61,7 @@ namespace HarryPotterUnity.Game
                 cardPosition.x += i * Spacing * shrinkFactor;
                 cardPosition.z -= i;
 
-                UtilManager.TweenCardToPosition(Cards[i], cardPosition, GenericCard.CardStates.InHand);
+                TweenQueue.MoveCardWithoutQueue(Cards[i], cardPosition, GenericCard.CardStates.InHand);
             }
         }
 
@@ -76,10 +76,10 @@ namespace HarryPotterUnity.Game
 
             if (preview)
             {
-                UtilManager.AddTweenToQueue(card, HandPreviewPosition, 0.5f, 0f, card.State, flip, false);
+                UtilManager.TweenQueue.AddTweenToQueue(card, HandPreviewPosition, 0.5f, 0f, card.State, flip, false);
             }
 
-            UtilManager.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, GenericCard.CardStates.InHand, !preview && flip, card.State == GenericCard.CardStates.InPlay);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.5f, 0.15f, GenericCard.CardStates.InHand, !preview && flip, card.State == GenericCard.CardStates.InPlay);
         }
     }
 }

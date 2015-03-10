@@ -86,13 +86,13 @@ namespace HarryPotterUnity.Game
         private void AnimateCreatureToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
         }
 
         private void AnimateLessonToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, 0f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
         }
 
         private void RearrangeLessons()
@@ -100,7 +100,7 @@ namespace HarryPotterUnity.Game
             Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Lesson).ForEach(card => 
             {
                 var cardPosition = GetTargetPositionForCard(card);
-                UtilManager.TweenCardToPosition(card, cardPosition, GenericCard.CardStates.InPlay);
+                TweenQueue.MoveCardWithoutQueue(card, cardPosition, GenericCard.CardStates.InPlay);
             });
         }
 
@@ -109,7 +109,7 @@ namespace HarryPotterUnity.Game
             Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Creature).ForEach(card => 
             {
                 var cardPosition = GetTargetPositionForCard(card);
-                UtilManager.TweenCardToPosition(card, cardPosition, GenericCard.CardStates.InPlay);
+                TweenQueue.MoveCardWithoutQueue(card, cardPosition, GenericCard.CardStates.InPlay);
             });
         }
 
