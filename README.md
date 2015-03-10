@@ -18,7 +18,9 @@ Planned Features
 
 To Test the Project
 -------------------
-**A public release should be out in the next few weeks!** You can wait for the official client to be released or you can follow the instructions below to compile and run the program yourself.
+**A public release should be out in the next few weeks!** 
+You can wait for the official client to be released or you can follow the instructions below to compile and run the program yourself.
+
 You will need to download the Unity3D Game Engine [here](http://unity3d.com/) (This game has been upgraded to Unity 5.0, so make sure you grab that version). Open the scene located in **/Assets/Scenes/MultiplayerLobby.unity** and hit the play button at the top of the unity window. The game will automatically connect to the Photon Server and wait for another player to join, you can open up multiple instances of the game by creating a build (ctrl-B) and running it alongside the unity editor. Once two clients are connected the decks will appear and automatically shuffle, each player will draw 7 cards and the first turn will begin.
 
 Basic functionality has been implemented and you should be able to complete a game against another player, you will probably notice that there aren't that many cards implemented, I have spent the past few months doing the multiplayer conversion and haven't been implementing new cards until all the basic functionality is in, you can expect the card pool to grow massively in the next few months once all the multiplayer kinks get worked out.
