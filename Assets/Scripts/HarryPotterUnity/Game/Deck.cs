@@ -94,9 +94,9 @@ namespace HarryPotterUnity.Game
 
                 var newZ = (transform.position.z + 16f) - i * 0.2f;
 
-                var offset = Cards[i].Player.IsLocalPlayer ? -80f : 80f;
+                var point1 = Vector3.MoveTowards(Cards[i].transform.position, Camera.main.transform.position, 80f);
+                point1.z = Cards[i].transform.position.z;
 
-                var point1 = new Vector3(Cards[i].transform.position.x + offset, Cards[i].transform.position.y, Cards[i].transform.position.z);
                 var point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
 
                 iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", 0.5f, 
@@ -106,18 +106,5 @@ namespace HarryPotterUnity.Game
                                                                ));
             }
         }
-
-        //Do we need these??
-        /*
-        public void Disable()
-        {
-            gameObject.layer = UtilManager.IgnoreRaycastLayer;
-        }
-
-        public void Enable()
-        {
-            gameObject.layer = UtilManager.DeckLayer;
-        }
-         * */
     }
 }
