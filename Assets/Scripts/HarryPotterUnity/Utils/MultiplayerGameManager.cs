@@ -126,6 +126,7 @@ namespace HarryPotterUnity.Utils
             var p2SelectedLessons = Array.ConvertAll(p2LessonsBytes, input => (Lessontypes) input).ToList();
 
             UtilManager.NetworkIdCounter = 0;
+            UtilManager.AllCards.Clear();
 
             _player1.InitDeck(p1SelectedLessons);
             _player2.InitDeck(p2SelectedLessons);
