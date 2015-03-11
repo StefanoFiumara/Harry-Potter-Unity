@@ -115,7 +115,7 @@ namespace HarryPotterUnity.Utils
                     targetRotate = (cardRotation.z > 20f ? 0f : 270f);
                     break;
                 case RotationType.Rotate180:
-                    targetRotate = 180f;
+                    targetRotate = (cardRotation.z > 20f ? 0f : 180f);
                     break;
             }
 
