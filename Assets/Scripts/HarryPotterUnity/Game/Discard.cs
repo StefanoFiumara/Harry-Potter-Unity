@@ -40,10 +40,10 @@ namespace HarryPotterUnity.Game
             cardPreviewPos.z -= 20f;
 
             var shouldFlip = card.State == GenericCard.CardStates.InDeck;
-            var shouldRotate = card.State == GenericCard.CardStates.InPlay;
+            var shouldRotate = card.State == GenericCard.CardStates.InPlay ? TweenQueue.RotationType.Rotate90 : TweenQueue.RotationType.NoRotate;
 
             UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, GenericCard.CardStates.Discarded, shouldFlip, shouldRotate);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, false, false);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, false, TweenQueue.RotationType.NoRotate);
         }
 
         //TODO: OnMouseUp: View cards in discard pile

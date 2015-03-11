@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using CardStates = HarryPotterUnity.Cards.GenericCard.CardStates;
 
 namespace HarryPotterUnity.Utils
 {
@@ -13,12 +14,17 @@ namespace HarryPotterUnity.Utils
         public float Time;
         public float Delay;
         public bool Flip;
-        public bool Rotate;
-        public GenericCard.CardStates StateAfterAnimation;
+        public TweenQueue.RotationType Rotate;
+        public CardStates StateAfterAnimation;
     }
 
     public class TweenQueue
     {
+        public enum RotationType
+        {
+            NoRotate, Rotate90, Rotate180
+        }
+
         private readonly Queue<TweenObject> _queue;
 
         private static bool _tweenQueueRunning;
@@ -37,8 +43,8 @@ namespace HarryPotterUnity.Utils
         /// <param name="time">Time in seconds the tween should take to complete</param>
         /// <param name="stateAfterAnimation">The CardState of the card after the animation has finished</param>
         /// <param name="flip">Whether the card should be flipped from FaceUp to FaceDown or vice-versa</param>
-        /// <param name="rotate">Whether the card should be rotated from vertical to horizontal or vice-versa</param>
-        public void AddTweenToQueue(GenericCard target, Vector3 position, float time, GenericCard.CardStates stateAfterAnimation, bool flip, bool rotate)
+        /// <param name="rotate">the type of rotation the card should perform, if any</param>
+        public void AddTweenToQueue(GenericCard target, Vector3 position, float time, CardStates stateAfterAnimation, bool flip, RotationType rotate)
         {
             var newTween = new TweenObject
             {
@@ -85,7 +91,7 @@ namespace HarryPotterUnity.Utils
                         "oncompleteparams", tween.StateAfterAnimation
                         ));
 
-                    if (tween.Flip || tween.Rotate)
+                    if (tween.Flip || tween.Rotate != RotationType.NoRotate)
                     {
                         RotateAndFlipCard(tween.Target, tween.Time, tween.Flip, tween.Rotate);
                     }
@@ -96,12 +102,22 @@ namespace HarryPotterUnity.Utils
             // ReSharper disable once FunctionNeverReturns
         }
 
-        private static void RotateAndFlipCard(GameObject card, float time, bool flip, bool rotate)
+        private static void RotateAndFlipCard(GameObject card, float time, bool flip, RotationType rotate)
         {
             //TODO: IDEA: bool rotate -> rotate type enum? rotate90, rotate180, noRotate?
             var cardRotation = card.transform.localRotation.eulerAngles;
             var targetFlip = flip ? (cardRotation.y > 20f ? 0f : 180f) : cardRotation.y;
-            var targetRotate = rotate ? (cardRotation.z > 20f ? 0f : 270f) : cardRotation.z;
+            var targetRotate = cardRotation.z;
+
+            switch (rotate)
+            {
+                case RotationType.Rotate90:
+                    targetRotate = (cardRotation.z > 20f ? 0f : 270f);
+                    break;
+                case RotationType.Rotate180:
+                    targetRotate = 180f;
+                    break;
+            }
 
             if (flip) card.GetComponent<GenericCard>().SwitchFlipState();
 
@@ -119,7 +135,7 @@ namespace HarryPotterUnity.Utils
         /// <param name="card">The target card</param>
         /// <param name="cardPosition">The target position</param>
         /// <param name="stateAfterAnimation">The CardState of the card after the animation has finished</param>
-        public static void MoveCardWithoutQueue(GenericCard card, Vector3 cardPosition, GenericCard.CardStates stateAfterAnimation)
+        public static void MoveCardWithoutQueue(GenericCard card, Vector3 cardPosition, CardStates stateAfterAnimation)
         {
             iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.5f,
                 "position", cardPosition,

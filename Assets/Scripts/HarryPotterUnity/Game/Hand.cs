@@ -4,6 +4,10 @@ using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
+using CardStates = HarryPotterUnity.Cards.GenericCard.CardStates;
+using FlipStates = HarryPotterUnity.Cards.GenericCard.FlipStates;
+using RotationType = HarryPotterUnity.Utils.TweenQueue.RotationType;
+
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
@@ -32,8 +36,8 @@ namespace HarryPotterUnity.Game
 
         public void Add(GenericCard card, bool preview = true)
         {
-            var shouldFlip = card.FlipState == GenericCard.FlipStates.FaceUp && !_player.IsLocalPlayer || 
-                             card.FlipState == GenericCard.FlipStates.FaceDown && _player.IsLocalPlayer;
+            var shouldFlip = card.FlipState == FlipStates.FaceUp && !_player.IsLocalPlayer || 
+                             card.FlipState == FlipStates.FaceDown && _player.IsLocalPlayer;
 
             card.transform.parent = transform;
 
@@ -61,7 +65,7 @@ namespace HarryPotterUnity.Game
                 cardPosition.x += i * Spacing * shrinkFactor;
                 cardPosition.z -= i;
 
-                TweenQueue.MoveCardWithoutQueue(Cards[i], cardPosition, GenericCard.CardStates.InHand);
+                TweenQueue.MoveCardWithoutQueue(Cards[i], cardPosition, CardStates.InHand);
             }
         }
 
@@ -76,10 +80,12 @@ namespace HarryPotterUnity.Game
 
             if (preview)
             {
-                UtilManager.TweenQueue.AddTweenToQueue(card, HandPreviewPosition, 0.5f, card.State, flip, false);
+                UtilManager.TweenQueue.AddTweenToQueue(card, HandPreviewPosition, 0.5f, card.State, flip, RotationType.NoRotate);
             }
 
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.5f, GenericCard.CardStates.InHand, !preview && flip, card.State == GenericCard.CardStates.InPlay);
+            var shouldRotate = card.State == CardStates.InPlay ? RotationType.Rotate90 : RotationType.NoRotate;
+
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.5f, CardStates.InHand, !preview && flip, shouldRotate);
         }
     }
 }

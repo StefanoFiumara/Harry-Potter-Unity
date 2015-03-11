@@ -5,6 +5,10 @@ using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
+using CardStates = HarryPotterUnity.Cards.GenericCard.CardStates;
+using CardTypes = HarryPotterUnity.Cards.GenericCard.CardTypes;
+using RotationType = HarryPotterUnity.Utils.TweenQueue.RotationType;
+
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
@@ -36,10 +40,10 @@ namespace HarryPotterUnity.Game
 
             switch (card.CardType)
             {
-                case GenericCard.CardTypes.Lesson:
+                case CardTypes.Lesson:
                     AnimateLessonToBoard(card);
                     break;
-                case GenericCard.CardTypes.Creature:
+                case CardTypes.Creature:
                     AnimateCreatureToBoard(card);
                     break;
             }
@@ -53,10 +57,10 @@ namespace HarryPotterUnity.Game
 
             switch (card.CardType)
             {
-                case GenericCard.CardTypes.Lesson:
+                case CardTypes.Lesson:
                     RearrangeLessons();
                     break;
-                case GenericCard.CardTypes.Creature:
+                case CardTypes.Creature:
                     RearrangeCreatures();
                     break;
             }
@@ -66,12 +70,12 @@ namespace HarryPotterUnity.Game
 
         public List<GenericCard> GetCreaturesInPlay()
         {
-            return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Creature);
+            return Cards.FindAll(c => c.CardType == CardTypes.Creature);
         }
 
         private IEnumerable<GenericCard> GetLessonsInPlay()
         {
-            return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Lesson);
+            return Cards.FindAll(c => c.CardType == CardTypes.Lesson);
         }
 
         public Lesson GetLessonOfType(Lesson.LessonTypes type)
@@ -86,30 +90,36 @@ namespace HarryPotterUnity.Game
         private void AnimateCreatureToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
+            var shouldRotate = card.State == CardStates.InHand
+                ? RotationType.Rotate90
+                : RotationType.NoRotate;
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, CardStates.InPlay, !_player.IsLocalPlayer, shouldRotate);
         }
 
         private void AnimateLessonToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, card.State == GenericCard.CardStates.InHand);
+            var shouldRotate = card.State == CardStates.InHand
+                ? RotationType.Rotate90
+                : RotationType.NoRotate;
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, CardStates.InPlay, !_player.IsLocalPlayer, shouldRotate);
         }
 
         private void RearrangeLessons()
         {
-            Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Lesson).ForEach(card => 
+            Cards.FindAll(card => card.CardType == CardTypes.Lesson).ForEach(card => 
             {
                 var cardPosition = GetTargetPositionForCard(card);
-                TweenQueue.MoveCardWithoutQueue(card, cardPosition, GenericCard.CardStates.InPlay);
+                TweenQueue.MoveCardWithoutQueue(card, cardPosition, CardStates.InPlay);
             });
         }
 
         private void RearrangeCreatures()
         {
-            Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Creature).ForEach(card => 
+            Cards.FindAll(card => card.CardType == CardTypes.Creature).ForEach(card => 
             {
                 var cardPosition = GetTargetPositionForCard(card);
-                TweenQueue.MoveCardWithoutQueue(card, cardPosition, GenericCard.CardStates.InPlay);
+                TweenQueue.MoveCardWithoutQueue(card, cardPosition, CardStates.InPlay);
             });
         }
 
@@ -122,12 +132,12 @@ namespace HarryPotterUnity.Game
             //TODO: Violates OCP!
             switch (card.CardType)
             {
-                case GenericCard.CardTypes.Lesson:
+                case CardTypes.Lesson:
                     cardPosition = LessonPositionOffset;
                     cardPosition.x += (position % 3) * LessonSpacing.x;
                     cardPosition.y -= (int)(position / 3) * LessonSpacing.y;
                     break;
-                case GenericCard.CardTypes.Creature:
+                case CardTypes.Creature:
                     cardPosition = CreaturePositionOffset;
                     cardPosition.x += (position % 3) * CreatureSpacing.x;
                     cardPosition.y -= (int)(position / 3) * CreatureSpacing.y;
