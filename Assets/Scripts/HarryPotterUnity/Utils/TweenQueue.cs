@@ -53,7 +53,7 @@ namespace HarryPotterUnity.Utils
                 Target = target.gameObject,
                 Position = position,
                 Time = time,
-                Delay = 0.1f,
+                Delay = 0.05f,
                 EaseType = iTween.EaseType.EaseInOutSine,
                 StateAfterAnimation = stateAfterAnimation,
                 Flip = flip,
