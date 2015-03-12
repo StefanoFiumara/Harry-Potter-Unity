@@ -90,19 +90,13 @@ namespace HarryPotterUnity.Game
         private void AnimateCreatureToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            var shouldRotate = card.State == CardStates.InHand
-                ? RotationType.Rotate90
-                : RotationType.NoRotate;
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, CardStates.InPlay, !_player.IsLocalPlayer, shouldRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, CardStates.InPlay, !_player.IsLocalPlayer, RotationType.Rotate90);
         }
 
         private void AnimateLessonToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            var shouldRotate = card.State == CardStates.InHand
-                ? RotationType.Rotate90
-                : RotationType.NoRotate;
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, CardStates.InPlay, !_player.IsLocalPlayer, shouldRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, CardStates.InPlay, !_player.IsLocalPlayer, RotationType.Rotate90);
         }
 
         private void RearrangeLessons()

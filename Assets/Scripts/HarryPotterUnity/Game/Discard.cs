@@ -43,13 +43,8 @@ namespace HarryPotterUnity.Game
             cardPreviewPos.z -= 20f;
 
             var shouldFlip = card.State == CardStates.InDeck;
-            var shouldRotate = card.State == CardStates.InPlay ? RotationType.Rotate90 : RotationType.NoRotate;
 
-            shouldRotate = !card.Player.IsLocalPlayer
-                ? RotationType.Rotate180
-                : shouldRotate;
-
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, CardStates.Discarded, shouldFlip, shouldRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, CardStates.Discarded, shouldFlip, RotationType.NoRotate);
             UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, CardStates.Discarded, false, RotationType.NoRotate);
         }
 
