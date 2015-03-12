@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -43,6 +44,18 @@ namespace HarryPotterUnity.Game
 
             UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, GenericCard.CardStates.Discarded, shouldFlip, TweenQueue.RotationType.NoRotate);
             UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, false, TweenQueue.RotationType.NoRotate);
+        }
+
+        public void Remove(GenericCard card)
+        {
+            _cards.Remove(card);
+            //TODO: Adjust spacing
+        }
+
+        public IEnumerable<GenericCard> GetCardsOfType(GenericCard.CardTypes type, int amount)
+        {
+            //TODO: Randomize this
+            return _cards.FindAll(card => card.CardType == type).Take(amount);
         }
 
         //TODO: OnMouseUp: View cards in discard pile
