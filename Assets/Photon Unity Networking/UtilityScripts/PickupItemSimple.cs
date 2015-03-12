@@ -1,11 +1,11 @@
 using UnityEngine;
-using System.Collections;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 /// <summary>
 /// Makes a scene object pickup-able. Needs a PhotonView which belongs to the scene.
 /// </summary>
 [RequireComponent(typeof(PhotonView))]
-public class PickupItemSimple : Photon.MonoBehaviour
+public class PickupItemSimple : MonoBehaviour
 {
     public float SecondsBeforeRespawn = 2;
     public bool PickupOnCollide;

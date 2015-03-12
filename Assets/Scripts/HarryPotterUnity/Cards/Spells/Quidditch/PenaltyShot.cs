@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using HarryPotterUnity.Cards.Generic;
+using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Spells.Quidditch
 {

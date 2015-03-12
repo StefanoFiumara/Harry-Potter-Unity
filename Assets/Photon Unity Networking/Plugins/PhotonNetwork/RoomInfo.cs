@@ -12,7 +12,6 @@
 using System;
 using ExitGames.Client.Photon;
 
-
 /// <summary>
 /// A simplified room with just the info required to list and join, used for the room listing in the lobby.
 /// The properties are not settable (open, maxPlayers, etc).

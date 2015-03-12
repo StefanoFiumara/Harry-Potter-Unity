@@ -8,14 +8,12 @@ using System;
 using System.Collections;
 using ExitGames.Client.Photon;
 using UnityEngine;
-
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
+using MonoBehaviour = Photon.MonoBehaviour;
 
 /// <summary>
 /// Internal Monobehaviour that allows Photon to run an Update loop.
 /// </summary>
-internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
+internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
 {
     public static PhotonHandler SP;
 
@@ -36,7 +34,7 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
     {
         if (SP != null && SP != this && SP.gameObject != null)
         {
-            GameObject.DestroyImmediate(SP.gameObject);
+            DestroyImmediate(SP.gameObject);
         }
 
         SP = this;
@@ -45,14 +43,14 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
         this.updateInterval = 1000 / PhotonNetwork.sendRate;
         this.updateIntervalOnSerialize = 1000 / PhotonNetwork.sendRateOnSerialize;
 
-        PhotonHandler.StartFallbackSendAckThread();
+        StartFallbackSendAckThread();
     }
 
     /// <summary>Called by Unity when the application is closed. Tries to disconnect.</summary>
     protected void OnApplicationQuit()
     {
-        PhotonHandler.AppQuits = true;
-        PhotonHandler.StopFallbackSendAckThread();
+        AppQuits = true;
+        StopFallbackSendAckThread();
         PhotonNetwork.Disconnect();
     }
 
@@ -276,8 +274,8 @@ internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
 
 
         Region best = pingManager.BestRegion;
-        PhotonHandler.BestRegionCodeCurrently = best.Code;
-        PhotonHandler.BestRegionCodeInPreferences = best.Code;
+        BestRegionCodeCurrently = best.Code;
+        BestRegionCodeInPreferences = best.Code;
 
         Debug.Log("Found best region: " + best.Code + " ping: " + best.Ping + ". Calling ConnectToRegionMaster() is: " + connectToBest);
 

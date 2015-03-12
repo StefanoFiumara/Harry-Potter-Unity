@@ -14,8 +14,8 @@
 #pragma warning restore 1587
 
 
+using System;
 using ExitGames.Client.Photon;
-
 
 /// <summary>
 /// This enum defines the set of MonoMessages Photon Unity Networking is using as callbacks. Implemented by PunBehaviour.
@@ -584,7 +584,7 @@ public enum DisconnectCause
 
     /// <summary>Connection timed out.
     /// Possible cause: Remote server not running or required ports blocked (due to router or firewall).</summary>
-    [System.Obsolete("Replaced by clearer: DisconnectByClientTimeout")]
+    [Obsolete("Replaced by clearer: DisconnectByClientTimeout")]
     TimeoutDisconnect = StatusCode.TimeoutDisconnect,
 
     /// <summary>Timeout disconnect by client (which decided an ACK was missing for too long).</summary>
@@ -595,7 +595,7 @@ public enum DisconnectCause
     InternalReceiveException = StatusCode.ExceptionOnReceive,
 
     /// <summary>Server actively disconnected this client.</summary>
-    [System.Obsolete("Replaced by clearer: DisconnectByServerTimeout")]
+    [Obsolete("Replaced by clearer: DisconnectByServerTimeout")]
     DisconnectByServer = StatusCode.DisconnectByServer,
 
     /// <summary>Timeout disconnect by server (which decided an ACK was missing for too long).</summary>

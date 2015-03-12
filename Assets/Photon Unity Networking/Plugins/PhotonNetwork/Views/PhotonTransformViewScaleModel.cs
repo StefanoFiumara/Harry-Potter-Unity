@@ -1,7 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 
-[System.Serializable]
+[Serializable]
 public class PhotonTransformViewScaleModel 
 {
     public enum InterpolateOptions

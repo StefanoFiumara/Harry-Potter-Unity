@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 /// <summary>
 /// This component makes it easy to switch scenes or open webpages on click.

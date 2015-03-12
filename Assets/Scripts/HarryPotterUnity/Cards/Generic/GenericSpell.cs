@@ -1,14 +1,13 @@
 ﻿using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
-using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 
-namespace HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards.Generic
 {
     public abstract class GenericSpell : GenericCard {
 
         [UsedImplicitly, SerializeField]
-        protected LessonTypes CostType;
+        protected Lesson.LessonTypes CostType;
 
         [UsedImplicitly, SerializeField]
         protected int CostAmount;

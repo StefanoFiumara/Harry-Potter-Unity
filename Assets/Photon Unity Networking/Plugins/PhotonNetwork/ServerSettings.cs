@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-
 public class Region
 {
     public CloudRegionCode Code;

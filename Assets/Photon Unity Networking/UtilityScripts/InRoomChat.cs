@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 [RequireComponent(typeof(PhotonView))]
-public class InRoomChat : Photon.MonoBehaviour 
+public class InRoomChat : MonoBehaviour 
 {
     public Rect GuiRect = new Rect(0,0, 250,300);
     public bool IsVisible = true;

@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using HarryPotterUnity.Cards.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Spells

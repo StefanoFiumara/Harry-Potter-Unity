@@ -1,8 +1,7 @@
-﻿using HarryPotterUnity.Cards;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using HarryPotterUnity.Cards.Generic;
 using UnityEngine;
-using CardStates = HarryPotterUnity.Cards.GenericCard.CardStates;
 
 namespace HarryPotterUnity.Utils
 {
@@ -15,7 +14,7 @@ namespace HarryPotterUnity.Utils
         public float Delay;
         public bool Flip;
         public TweenQueue.RotationType Rotate;
-        public CardStates StateAfterAnimation;
+        public GenericCard.CardStates StateAfterAnimation;
     }
 
     public class TweenQueue
@@ -46,7 +45,7 @@ namespace HarryPotterUnity.Utils
         /// <param name="stateAfterAnimation">The CardState of the card after the animation has finished</param>
         /// <param name="flip">Whether the card should be flipped from FaceUp to FaceDown or vice-versa</param>
         /// <param name="rotate">the type of rotation the card should perform, if any</param>
-        public void AddTweenToQueue(GenericCard target, Vector3 position, float time, CardStates stateAfterAnimation, bool flip, RotationType rotate)
+        public void AddTweenToQueue(GenericCard target, Vector3 position, float time, GenericCard.CardStates stateAfterAnimation, bool flip, RotationType rotate)
         {
             var newTween = new TweenObject
             {
@@ -134,7 +133,7 @@ namespace HarryPotterUnity.Utils
         /// <param name="card">The target card</param>
         /// <param name="cardPosition">The target position</param>
         /// <param name="stateAfterAnimation">The CardState of the card after the animation has finished</param>
-        public static void MoveCardWithoutQueue(GenericCard card, Vector3 cardPosition, CardStates stateAfterAnimation)
+        public static void MoveCardWithoutQueue(GenericCard card, Vector3 cardPosition, GenericCard.CardStates stateAfterAnimation)
         {
             iTween.MoveTo(card.gameObject, iTween.Hash("time", 0.5f,
                 "position", cardPosition,

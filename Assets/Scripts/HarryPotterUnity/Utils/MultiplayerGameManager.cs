@@ -1,18 +1,19 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
 using System.Collections;
 using System.Linq;
-using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
-
-using Lessontypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
+using UnityEngine;
+using Lessontypes = HarryPotterUnity.Cards.Generic.Lesson.LessonTypes;
+using MonoBehaviour = Photon.MonoBehaviour;
+using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Utils
 {
     [UsedImplicitly]
-    public class MultiplayerGameManager : Photon.MonoBehaviour
+    public class MultiplayerGameManager : MonoBehaviour
     {
         private Player _player1;
         private Player _player2;
@@ -33,7 +34,7 @@ namespace HarryPotterUnity.Utils
             _multiplayerLobbyHudManager.DisableMainMenuHud();
             _multiplayerLobbyHudManager.EnableGameplayHud();
 
-            UnityEngine.Random.seed = rngSeed;
+            Random.seed = rngSeed;
             SpawnPlayers();
             StartGame();
         }

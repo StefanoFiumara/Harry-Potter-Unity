@@ -1,11 +1,11 @@
 ﻿using System;
-using HarryPotterUnity.Utils;
-using JetBrains.Annotations;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
+using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Utils;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
-using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 using Random = UnityEngine.Random;
 
 #pragma warning disable 649
@@ -91,13 +91,13 @@ namespace HarryPotterUnity.UI
 
 
 
-        private List<LessonTypes> _selectedLessons;
+        private List<Lesson.LessonTypes> _selectedLessons;
         
         [UsedImplicitly]
         public void Start()
         {
             PhotonNetwork.ConnectUsingSettings("v0.1");
-            _selectedLessons = new List<LessonTypes>();
+            _selectedLessons = new List<Lesson.LessonTypes>();
         }
 
         [UsedImplicitly]
@@ -192,11 +192,11 @@ namespace HarryPotterUnity.UI
         private void UpdateLessonSelection()
         {
             _selectedLessons.Clear();
-            if (_selectCreatures.isOn) _selectedLessons.Add(LessonTypes.Creatures);
-            if (_selectCharms.isOn) _selectedLessons.Add(LessonTypes.Charms);
-            if (_selectTransfiguration.isOn) _selectedLessons.Add(LessonTypes.Transfiguration);
-            if (_selectPotions.isOn) _selectedLessons.Add(LessonTypes.Potions);
-            if (_selectQuidditch.isOn) _selectedLessons.Add(LessonTypes.Quidditch);
+            if (_selectCreatures.isOn) _selectedLessons.Add(Lesson.LessonTypes.Creatures);
+            if (_selectCharms.isOn) _selectedLessons.Add(Lesson.LessonTypes.Charms);
+            if (_selectTransfiguration.isOn) _selectedLessons.Add(Lesson.LessonTypes.Transfiguration);
+            if (_selectPotions.isOn) _selectedLessons.Add(Lesson.LessonTypes.Potions);
+            if (_selectQuidditch.isOn) _selectedLessons.Add(Lesson.LessonTypes.Quidditch);
 
             //Convert to byte array for serialization
             var selectedLessons = Array.ConvertAll(_selectedLessons.ToArray(), input => (byte)input);

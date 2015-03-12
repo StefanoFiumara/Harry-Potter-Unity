@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
 

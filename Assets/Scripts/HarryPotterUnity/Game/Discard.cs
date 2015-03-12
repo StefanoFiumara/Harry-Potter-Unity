@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
-
-using CardStates = HarryPotterUnity.Cards.GenericCard.CardStates;
-using RotationType = HarryPotterUnity.Utils.TweenQueue.RotationType;
 
 namespace HarryPotterUnity.Game
 {
@@ -42,10 +39,10 @@ namespace HarryPotterUnity.Game
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
 
-            var shouldFlip = card.State == CardStates.InDeck;
+            var shouldFlip = card.State == GenericCard.CardStates.InDeck;
 
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, CardStates.Discarded, shouldFlip, RotationType.NoRotate);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, CardStates.Discarded, false, RotationType.NoRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, GenericCard.CardStates.Discarded, shouldFlip, TweenQueue.RotationType.NoRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, false, TweenQueue.RotationType.NoRotate);
         }
 
         //TODO: OnMouseUp: View cards in discard pile

@@ -21,14 +21,10 @@
 #pragma warning restore 1587
 
 
-using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using ExitGames.Client.Photon.Lite;
 using UnityEngine;
-
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
 
 /// <summary>Defines the OnPhotonSerializeView method to make it easy to implement correctly for observable scripts.</summary>
 /// \ingroup publicApi
@@ -362,8 +358,6 @@ public interface IPunCallbacks
 
 namespace Photon
 {
-    using Hashtable = ExitGames.Client.Photon.Hashtable;
-
     /// <summary>
     /// This class adds the property photonView, while logging a warning when your game still uses the networkView.
     /// </summary>
@@ -399,7 +393,7 @@ namespace Photon
     /// </remarks>
     /// \ingroup publicApi
     // the documentation for the interface methods becomes inherited when Doxygen builds it.
-    public class PunBehaviour : Photon.MonoBehaviour, IPunCallbacks
+    public class PunBehaviour : MonoBehaviour, IPunCallbacks
     {
         /// <summary>
         /// Called when the initial connection got established but before you can use the server. OnJoinedLobby() or OnConnectedToMaster() are called when PUN is ready.

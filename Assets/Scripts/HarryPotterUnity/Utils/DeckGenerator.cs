@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
+using Lessontypes = HarryPotterUnity.Cards.Generic.Lesson.LessonTypes;
 using Random = UnityEngine.Random;
-using Lessontypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 
 namespace HarryPotterUnity.Utils
 {
@@ -72,21 +72,21 @@ namespace HarryPotterUnity.Utils
             return deck;
         }
 
-        private static GenericCard.ClassificationTypes MapLessonType(Lesson.LessonTypes type)
+        private static GenericCard.ClassificationTypes MapLessonType(Lessontypes type)
         {
             switch (type)
             {
-                    case Lesson.LessonTypes.Creatures: return GenericCard.ClassificationTypes.CareOfMagicalCreatures;
-                    case Lesson.LessonTypes.Charms: return GenericCard.ClassificationTypes.Charms;
-                    case Lesson.LessonTypes.Transfiguration: return  GenericCard.ClassificationTypes.Transfiguration;
-                    case Lesson.LessonTypes.Quidditch: return  GenericCard.ClassificationTypes.Quidditch;
-                    case Lesson.LessonTypes.Potions: return GenericCard.ClassificationTypes.Potions;
+                    case Lessontypes.Creatures: return GenericCard.ClassificationTypes.CareOfMagicalCreatures;
+                    case Lessontypes.Charms: return GenericCard.ClassificationTypes.Charms;
+                    case Lessontypes.Transfiguration: return  GenericCard.ClassificationTypes.Transfiguration;
+                    case Lessontypes.Quidditch: return  GenericCard.ClassificationTypes.Quidditch;
+                    case Lessontypes.Potions: return GenericCard.ClassificationTypes.Potions;
             }
             
             throw new ArgumentException("Unable to map lesson type");
         }
 
-        private static void AddLessonsToDeck(ref List<GenericCard> deck, Lesson.LessonTypes lessonType, int amount)
+        private static void AddLessonsToDeck(ref List<GenericCard> deck, Lessontypes lessonType, int amount)
         {
             var card = CardLibrary.Where(c => c.Classification == GenericCard.ClassificationTypes.Lesson)
                 .First(l => ((Lesson) l).LessonType == lessonType);

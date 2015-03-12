@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using HarryPotterUnity.Cards;
+﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards.Generic;
 using UnityEngine;
 
 namespace HarryPotterUnity.Utils

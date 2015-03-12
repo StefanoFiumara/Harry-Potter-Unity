@@ -3,7 +3,7 @@ using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards.Generic
 {
     [SelectionBase]
     public abstract class GenericCard : MonoBehaviour {

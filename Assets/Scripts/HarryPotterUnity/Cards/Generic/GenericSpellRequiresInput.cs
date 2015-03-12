@@ -2,12 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards.Generic
 {
     public abstract class GenericSpellRequiresInput : GenericSpell
     {

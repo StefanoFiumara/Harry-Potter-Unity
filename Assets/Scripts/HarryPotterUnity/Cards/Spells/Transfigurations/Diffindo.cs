@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Spells.Transfigurations

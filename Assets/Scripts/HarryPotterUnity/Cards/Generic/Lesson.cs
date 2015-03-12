@@ -1,7 +1,8 @@
-﻿using JetBrains.Annotations;
+﻿using HarryPotterUnity.Cards.Interfaces;
+using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards.Generic
 {
     [UsedImplicitly]
     public class Lesson : GenericCard, IPersistentCard {

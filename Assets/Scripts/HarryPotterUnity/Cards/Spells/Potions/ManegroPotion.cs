@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
-using LessonType = HarryPotterUnity.Cards.Lesson.LessonTypes;
+using LessonType = HarryPotterUnity.Cards.Generic.Lesson.LessonTypes;
 
 namespace HarryPotterUnity.Cards.Spells.Potions
 {

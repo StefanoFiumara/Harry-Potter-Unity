@@ -1,13 +1,13 @@
-﻿using JetBrains.Annotations;
+﻿using HarryPotterUnity.Cards.Interfaces;
+using JetBrains.Annotations;
 using UnityEngine;
-using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
 
-namespace HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards.Generic
 {
     public class GenericCreature : GenericCard, IPersistentCard {
 
         [UsedImplicitly, SerializeField]
-        private LessonTypes _costType;
+        private Lesson.LessonTypes _costType;
 
         [UsedImplicitly, SerializeField]
         private int _costAmount;

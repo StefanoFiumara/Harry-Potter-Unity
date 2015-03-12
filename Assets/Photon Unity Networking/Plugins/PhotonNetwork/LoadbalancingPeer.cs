@@ -8,12 +8,9 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
-using ExitGames.Client.Photon;
-using ExitGames.Client.Photon.Lite;
 using System;
 using System.Collections.Generic;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
+using ExitGames.Client.Photon.Lite;
 
 namespace ExitGames.Client.Photon
 {
@@ -945,7 +942,7 @@ public class AuthenticationValues
     /// <param name="token">Token provided by authentication service to be used on initial "login" to Photon.</param>
     public virtual void SetAuthParameters(string user, string token)
     {
-        this.AuthParameters = "username=" + System.Uri.EscapeDataString(user) + "&token=" + System.Uri.EscapeDataString(token);
+        this.AuthParameters = "username=" + Uri.EscapeDataString(user) + "&token=" + Uri.EscapeDataString(token);
     }
 
     public override string ToString()

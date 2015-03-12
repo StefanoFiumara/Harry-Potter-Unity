@@ -1,4 +1,4 @@
-﻿namespace HarryPotterUnity.Cards
+﻿namespace HarryPotterUnity.Cards.Interfaces
 {
     public interface IPersistentCard {
 

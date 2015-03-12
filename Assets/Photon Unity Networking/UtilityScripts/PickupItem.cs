@@ -1,15 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
+using MonoBehaviour = Photon.MonoBehaviour;
 
 /// <summary>
 /// Makes a scene object pickup-able. Needs a PhotonView which belongs to the scene.
 /// </summary>
 /// <remarks>Includes a OnPhotonSerializeView implementation that </remarks>
 [RequireComponent(typeof(PhotonView))]
-public class PickupItem : Photon.MonoBehaviour, IPunObservable
+public class PickupItem : MonoBehaviour, IPunObservable
 {
     ///<summary>Enables you to define a timeout when the picked up item should re-spawn at the same place it was before.</summary>
     /// <remarks>
@@ -39,7 +37,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     /// Implement OnPickedUp(PickupItem item) {} in some script on the linked game object.
     /// The item will be "this" and item.PickupIsMine will help you to find if this pickup was done by "this player".
     /// </remarks>
-    public MonoBehaviour OnPickedUpCall;
+    public UnityEngine.MonoBehaviour OnPickedUpCall;
 
 
     // these values are internally used. they are public for debugging only
@@ -172,7 +170,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
     {
         // this script simply disables the GO for a while until it respawns. 
         this.gameObject.SetActive(false);
-        PickupItem.DisabledPickupItems.Add(this);
+        DisabledPickupItems.Add(this);
         this.TimeOfRespawn = 0;
 
         if (timeUntilRespawn > 0)
@@ -202,7 +200,7 @@ public class PickupItem : Photon.MonoBehaviour, IPunObservable
 
 
         // if this is called from another thread, we might want to do this in OnEnable() instead of here (depends on Invoke's implementation)
-        PickupItem.DisabledPickupItems.Remove(this);
+        DisabledPickupItems.Remove(this);
         this.TimeOfRespawn = 0;
         this.PickupIsMine = false;
 
