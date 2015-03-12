@@ -137,6 +137,7 @@ namespace HarryPotterUnity.Game
             var shouldFlip = card.FlipState == GenericCard.FlipStates.FaceUp;
 
             UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, shouldFlip, TweenQueue.RotationType.NoRotate);
+            //TODO: Adjust spacing
         }
     }
 }
