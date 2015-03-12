@@ -37,7 +37,6 @@ namespace HarryPotterUnity.Cards
 
         private void AnimateAndDiscard()
         {
-            //TODO: Rotate if it's being played by the opponent
             State = CardStates.Discarded;
             var rotate180 = Player.OppositePlayer.IsLocalPlayer ? TweenQueue.RotationType.Rotate180 : TweenQueue.RotationType.NoRotate;
             UtilManager.TweenQueue.AddTweenToQueue(this, SpellOffset, 0.5f, State, !Player.IsLocalPlayer, rotate180);
