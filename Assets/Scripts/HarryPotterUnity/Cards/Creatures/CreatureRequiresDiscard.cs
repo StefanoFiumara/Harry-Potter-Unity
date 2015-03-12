@@ -7,7 +7,7 @@ namespace HarryPotterUnity.Cards.Creatures
 {
     public class CreatureRequiresDiscard : GenericCreature, IPersistentCard {
         
-        [UsedImplicitly, SerializeField]
+        [UsedImplicitly, SerializeField, Space(10)]
         private int _lessonsToDiscard;
 
         protected override bool MeetsAdditionalCreatureRequirements()

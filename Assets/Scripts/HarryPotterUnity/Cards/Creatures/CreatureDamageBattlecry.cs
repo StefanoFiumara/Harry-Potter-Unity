@@ -7,7 +7,7 @@ namespace HarryPotterUnity.Cards.Creatures
 {
     class CreatureDamageBattlecry : GenericCreature, IPersistentCard
     {
-        [UsedImplicitly, SerializeField] 
+        [UsedImplicitly, SerializeField, Space(10)]
         private int _battlecryDamage;
 
         public new void OnEnterInPlayAction()
