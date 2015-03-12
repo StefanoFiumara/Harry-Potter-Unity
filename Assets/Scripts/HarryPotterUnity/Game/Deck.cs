@@ -49,7 +49,6 @@ namespace HarryPotterUnity.Game
 	
         public GenericCard TakeTopCard()
         {
-            //TODO: Test this
             GenericCard card = null;
 
             if (Cards.Count > 0)
@@ -75,6 +74,7 @@ namespace HarryPotterUnity.Game
         {
             if (!_player.IsLocalPlayer) return;
             if (Cards.Count <= 0 || !_player.CanUseActions()) return;
+            if (!UtilManager.TweenQueue.TweenQueueIsEmpty) return;
 
             _player.MpGameManager.photonView.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
         }
