@@ -17,7 +17,6 @@ namespace HarryPotterUnity.Utils
         public static readonly List<GenericCard> AllCards = new List<GenericCard>(); 
 
         public static Camera PreviewCamera;
-        public static readonly Vector3 DefaultPreviewCameraPos = new Vector3(-400, 255, -70);
         
         public static readonly TweenQueue TweenQueue = new TweenQueue();
 

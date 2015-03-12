@@ -46,6 +46,7 @@ namespace HarryPotterUnity.Cards
         public Player Player { get; set; }
 
         private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
+        private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
 
         private GameObject _cardFace;
 
