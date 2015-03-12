@@ -33,8 +33,8 @@ namespace HarryPotterUnity.Game
 
         public Text ActionsLeftLabel { private get; set; }
         public Image TurnIndicator { private get; set; }
+        public RectTransform EndGamePanel { private get; set; }
         public Text CardsLeftLabel { get; set; }
-        public RectTransform EndGamePanel { get; set; }
 
 
         private MultiplayerLobbyHudManager _multiplayerLobbyHudManager;
