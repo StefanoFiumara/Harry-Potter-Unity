@@ -102,21 +102,10 @@ namespace HarryPotterUnity.Game
 
         public void DrawInitialHand()
         {
-            //TODO: Needs cleanup
             for (var i = 0; i < 7; i++)
             {
                 var card = Deck.TakeTopCard();
-                var cardPosition = Hand.HandCardsOffset;
-
-                var shrinkFactor = Hand.Cards.Count >= 12 ? 0.5f : 1f;
-
-                cardPosition.x += Hand.Cards.Count * Hand.Spacing * shrinkFactor;
-                cardPosition.z -= Hand.Cards.Count;
-
-                Hand.Cards.Add(card);
-                card.transform.parent = Hand.transform;
-
-                UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, GenericCard.CardStates.InHand, IsLocalPlayer, TweenQueue.RotationType.NoRotate);
+                Hand.Add(card, false);
             }       
         }
 
