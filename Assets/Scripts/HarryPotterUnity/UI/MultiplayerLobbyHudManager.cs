@@ -33,6 +33,9 @@ namespace HarryPotterUnity.UI
         [SerializeField] 
         private Text _gameStatusText;
 
+        [SerializeField]
+        private Text _playersOnlineText;
+
         [SerializeField] 
         private Text _titleText;
 
@@ -95,6 +98,12 @@ namespace HarryPotterUnity.UI
         {
             PhotonNetwork.ConnectUsingSettings("v0.1");
             _selectedLessons = new List<LessonTypes>();
+        }
+
+        [UsedImplicitly]
+        public void Update()
+        {
+            _playersOnlineText.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
         }
 
         [UsedImplicitly]
