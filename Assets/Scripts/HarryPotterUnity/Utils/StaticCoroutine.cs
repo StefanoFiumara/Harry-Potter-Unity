@@ -48,6 +48,7 @@ namespace HarryPotterUnity.Utils
 
         public static void Die()
         {
+            _mInstance.StopAllCoroutines();
             Destroy(_mInstance.gameObject);
             _mInstance = null;
         }
