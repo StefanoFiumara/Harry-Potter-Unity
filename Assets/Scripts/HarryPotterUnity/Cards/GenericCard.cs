@@ -32,7 +32,6 @@ namespace HarryPotterUnity.Cards
         }
 
         public CardStates State { get; protected set; }
-
         public FlipStates FlipState { get; private set; }
 
         [UsedImplicitly] 
@@ -46,9 +45,9 @@ namespace HarryPotterUnity.Cards
 
         public Player Player { get; set; }
 
-        private readonly Vector2 _colliderSize = new Vector2(50f, 70f);
+        private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
 
-        private GameObject _frontPlane;
+        private GameObject _cardFace;
 
         public byte NetworkId { get; set; }
 
@@ -61,12 +60,12 @@ namespace HarryPotterUnity.Cards
             {
                 var col = gameObject.AddComponent<BoxCollider>();
                 col.isTrigger = true;
-                col.size = new Vector3(_colliderSize.x, _colliderSize.y, 0.2f);
+                col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
             }
 
             gameObject.layer = UtilManager.CardLayer;
 
-            _frontPlane = transform.FindChild("Front").gameObject;
+            _cardFace = transform.FindChild("Front").gameObject;
         }
 
         [UsedImplicitly]
@@ -96,11 +95,7 @@ namespace HarryPotterUnity.Cards
         [UsedImplicitly]
         public void OnMouseUp()
         {
-            if (!Player.IsLocalPlayer) return;
-            if (State != CardStates.InHand) return;
-            if (!Player.CanUseActions(ActionCost)) return;
-            if (!MeetsAdditionalPlayRequirements()) return;
-            if (!UtilManager.TweenQueue.TweenQueueIsEmpty) return;
+            if (!IsPlayable()) return;
 
             if (!PhotonNetwork.connected)
             {
@@ -113,6 +108,16 @@ namespace HarryPotterUnity.Cards
             }
         }
 
+        private bool IsPlayable()
+        {
+            if (!Player.IsLocalPlayer) return false;
+            if (State != CardStates.InHand) return false;
+            if (!Player.CanUseActions(ActionCost)) return false;
+            if (!MeetsAdditionalPlayRequirements()) return false;
+            if (!UtilManager.TweenQueue.TweenQueueIsEmpty) return false;
+            return true;
+        }
+
         public void MouseUpAction()
         {
             OnClickAction();
@@ -122,13 +127,15 @@ namespace HarryPotterUnity.Cards
                 Player.UseActions(ActionCost);
             }
         }
+
         protected abstract void OnClickAction();
         protected abstract bool MeetsAdditionalPlayRequirements();
 
         private void ShowPreview()
         {
-            _frontPlane.layer = UtilManager.PreviewLayer;
-            if (State == CardStates.InDeck || State == CardStates.Discarded) return;
+            _cardFace.layer = UtilManager.PreviewLayer;
+            //if (State == CardStates.InDeck || State == CardStates.Discarded) return;
+            if (FlipState == FlipStates.FaceDown) return;
 
             if (iTween.Count(gameObject) == 0)
             {
@@ -143,27 +150,26 @@ namespace HarryPotterUnity.Cards
     
         private void HidePreview()
         {
-            _frontPlane.layer = UtilManager.CardLayer;
-            UtilManager.PreviewCamera.transform.position = UtilManager.DefaultPreviewCameraPos;
+            _cardFace.layer = UtilManager.CardLayer;
+            UtilManager.PreviewCamera.transform.position = DefaultPreviewCameraPosition;
         }
 
         public void Disable()
         {
             gameObject.layer = UtilManager.IgnoreRaycastLayer;
-            _frontPlane.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.35f);
+            _cardFace.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.35f);
         }
 
         public void Enable()
         {
             gameObject.layer = UtilManager.CardLayer;
-            _frontPlane.GetComponent<Renderer>().material.color = Color.white;
+            _cardFace.GetComponent<Renderer>().material.color = Color.white;
         }
 
         public void SetSelected()
         {
             gameObject.layer = UtilManager.CardLayer;
-            _frontPlane.GetComponent<Renderer>().material.color = Color.yellow;
+            _cardFace.GetComponent<Renderer>().material.color = Color.yellow;
         }
-    
     }
 }
