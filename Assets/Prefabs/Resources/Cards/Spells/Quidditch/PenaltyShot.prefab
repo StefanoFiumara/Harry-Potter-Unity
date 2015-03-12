@@ -187,13 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4807ef24ca610444a961f5dbfec7f14b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FlipState: 1
   CardType: 2
   Classification: 4
   ActionCost: 1
-  _costType: 4
-  _costAmount: 5
-  _inputRequired: 0
+  CostType: 4
+  CostAmount: 5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
