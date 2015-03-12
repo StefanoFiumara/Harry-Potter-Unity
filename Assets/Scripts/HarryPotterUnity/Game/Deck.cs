@@ -49,16 +49,22 @@ namespace HarryPotterUnity.Game
 	
         public GenericCard TakeTopCard()
         {
+            //TODO: Test this
+            GenericCard card = null;
+
+            if (Cards.Count > 0)
+            {
+                card = Cards[Cards.Count - 1];
+                Cards.RemoveAt(Cards.Count - 1);
+            }
+
             if (Cards.Count <= 0)
             {
                 _player.DisableAllCards();
                 _player.OppositePlayer.DisableAllCards();
                 StartCoroutine(MultiplayerGameManager.WaitForGameOverMessage(_player));
-                return null;
             }
 
-            var card = Cards[Cards.Count - 1];
-            Cards.RemoveAt(Cards.Count - 1);
             _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", Cards.Count);
 
             return card;
