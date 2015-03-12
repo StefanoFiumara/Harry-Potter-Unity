@@ -25,14 +25,16 @@ namespace HarryPotterUnity.Utils
             NoRotate, Rotate90, Rotate180
         }
 
-        private readonly Queue<TweenObject> _queue;
+        private Queue<TweenObject> _queue;
 
-        private static bool _tweenQueueRunning;
+        private bool _tweenQueueRunning;
         public bool TweenQueueIsEmpty { get; private set; }
 
         public TweenQueue()
         {
-            _queue = new Queue<TweenObject>();    
+            _queue = new Queue<TweenObject>();
+            _tweenQueueRunning = false;
+            TweenQueueIsEmpty = true;
         }
 
         /// <summary>
@@ -91,10 +93,8 @@ namespace HarryPotterUnity.Utils
                         "oncompleteparams", tween.StateAfterAnimation
                         ));
 
-                    if (tween.Flip || tween.Rotate != RotationType.NoRotate)
-                    {
-                        RotateAndFlipCard(tween.Target, tween.Time, tween.Flip, tween.Rotate);
-                    }
+                    RotateAndFlipCard(tween.Target, tween.Time, tween.Flip, tween.Rotate);
+                    
 
                     yield return new WaitForSeconds(tween.Time + tween.Delay);
                 }
@@ -144,6 +144,14 @@ namespace HarryPotterUnity.Utils
                 "oncompletetarget", card.gameObject,
                 "oncompleteparams", stateAfterAnimation
                 ));
+        }
+
+        public void Reset()
+        {
+            _queue = new Queue<TweenObject>();
+            _tweenQueueRunning = false;
+            TweenQueueIsEmpty = true;
+            StaticCoroutine.Die();
         }
     }
 }

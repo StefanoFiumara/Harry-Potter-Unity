@@ -155,6 +155,8 @@ namespace HarryPotterUnity.UI
             _turnIndicatorLocal.gameObject.SetActive(false);
             _turnIndicatorRemote.gameObject.SetActive(false);
 
+            UtilManager.TweenQueue.Reset();
+
             DisableGameplayHud();
             EnableMainMenuHud();
         }

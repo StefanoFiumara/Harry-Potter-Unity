@@ -46,10 +46,10 @@ namespace HarryPotterUnity.Utils
             Instance.StartCoroutine(Instance.Perform(coroutine)); //this will launch the coroutine on our instance
         }
 
-        void Die()
+        public static void Die()
         {
+            Destroy(_mInstance.gameObject);
             _mInstance = null;
-            Destroy(gameObject);
         }
 
         [UsedImplicitly]
