@@ -16,7 +16,7 @@ namespace HarryPotterUnity.Utils
                 if (_mInstance != null) return _mInstance;
                 
                 _mInstance = FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine ??
-                             new GameObject("StaticCoroutineManager").AddComponent<StaticCoroutine>();
+                             new GameObject("TweenQueueManager").AddComponent<StaticCoroutine>();
 
                 return _mInstance;
             }
