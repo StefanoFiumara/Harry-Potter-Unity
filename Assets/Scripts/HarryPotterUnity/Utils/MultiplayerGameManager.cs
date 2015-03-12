@@ -175,7 +175,7 @@ namespace HarryPotterUnity.Utils
         [RPC, UsedImplicitly]
         public void ExecuteInputSpellById(byte id, params byte[] selectedCardIds)
         {
-            var card = (GenericSpell) UtilManager.AllCards.Find(c => c.NetworkId == id);
+            var card = (GenericSpellRequiresInput) UtilManager.AllCards.Find(c => c.NetworkId == id);
             
             var selectedCards = selectedCardIds.Select(cardId => UtilManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
 

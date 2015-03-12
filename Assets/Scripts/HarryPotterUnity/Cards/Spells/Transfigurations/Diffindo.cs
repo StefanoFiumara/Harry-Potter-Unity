@@ -5,7 +5,7 @@ using JetBrains.Annotations;
 namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
     [UsedImplicitly]
-    public class Diffindo : GenericSpell {
+    public class Diffindo : GenericSpellRequiresInput {
         protected override bool MeetsAdditionalInputRequirements()
         {
             return Player.OppositePlayer.InPlay.Cards.Count > 0;

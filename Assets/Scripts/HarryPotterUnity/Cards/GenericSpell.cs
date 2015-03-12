@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using HarryPotterUnity.Utils;
+﻿using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using LessonTypes = HarryPotterUnity.Cards.Lesson.LessonTypes;
@@ -12,15 +8,18 @@ namespace HarryPotterUnity.Cards
     public abstract class GenericSpell : GenericCard {
 
         [UsedImplicitly, SerializeField]
-        private LessonTypes _costType;
+        protected LessonTypes CostType;
 
         [UsedImplicitly, SerializeField]
-        private int _costAmount;
+        protected int CostAmount;
 
-        [UsedImplicitly, SerializeField]
-        private int _inputRequired;
- 
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
+
+        /// <summary>
+        /// Describe the actions that happen when this card is played.
+        /// For example: Magical Mishap deals 3 damage to the opponent by calling Player.OppositePlayer.TakeDamage(3);
+        /// </summary>
+        protected abstract void OnPlayAction();
 
         protected sealed override void OnClickAction()
         {
@@ -30,9 +29,8 @@ namespace HarryPotterUnity.Cards
 
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.AmountLessonsInPlay >= _costAmount &&
-                   Player.LessonTypesInPlay.Contains(_costType) &&
-                   MeetsAdditionalInputRequirements();
+            return Player.AmountLessonsInPlay >= CostAmount &&
+                   Player.LessonTypesInPlay.Contains(CostType);
         }
 
         private void AnimateAndDiscard()
@@ -43,82 +41,16 @@ namespace HarryPotterUnity.Cards
             Invoke("ExecuteActionAndDiscard", 1.5f);
         }
 
+        /// <summary>
+        /// Warning: Do not override this when implementing individual cards. 
+        /// This method is not sealed because it serves a different purpose in GenericSpellRequiresInput.
+        /// </summary>
         [UsedImplicitly]
-        protected void ExecuteActionAndDiscard()
+        protected virtual void ExecuteActionAndDiscard()
         {
-            //TODO: Try placing this if/else in AnimateAndDiscard so the actions execute in order
             Player.Discard.Add(this);
-            if (_inputRequired == 0)
-            {
-                OnPlayAction();
-                Player.UseActions(ActionCost);
-            }
-            else
-            {
-                BeginWaitForInput();
-            }
+            OnPlayAction();
+            Player.UseActions(ActionCost);
         }
-
-        private void BeginWaitForInput()
-        {
-            Player.DisableAllCards();
-            Player.OppositePlayer.DisableAllCards();
-
-            var validCards = GetValidCards();
-
-            foreach (var card in validCards)
-            {
-                card.Enable();
-                card.gameObject.layer = UtilManager.ValidChoiceLayer;
-            }
-
-            StartCoroutine(WaitForPlayerInput());
-        }
-
-        private IEnumerator WaitForPlayerInput()
-        {
-            if (_inputRequired == 0) throw new Exception("This card does not require input!");
-
-            var selectedCards = new List<GenericCard>();
-
-            while (selectedCards.Count < _inputRequired)
-            {
-                if (Input.GetKeyDown(KeyCode.Mouse0) && Player.IsLocalPlayer)
-                {
-                    var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                    RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000f, 1 << 11))
-                    {
-                        var target = hit.transform.gameObject.GetComponent<GenericCard>();
-                        selectedCards.Add(target);
-
-                        target.SetSelected();
-
-                        if (selectedCards.Count == _inputRequired)
-                        {
-                            var selectedCardIds = selectedCards.Select(c => c.NetworkId).ToArray();
-                            Player.MpGameManager.photonView.RPC("ExecuteInputSpellById", PhotonTargets.All, NetworkId, selectedCardIds);
-                        }
-                    }
-                }
-                yield return null;
-            }
-        }
-
-        protected virtual bool MeetsAdditionalInputRequirements()
-        {
-            return true;
-        }
-
-        protected virtual IEnumerable<GenericCard> GetValidCards()
-        {
-            return null;
-        }
-
-        protected virtual void OnPlayAction() { }
-        public virtual void AfterInputAction(List<GenericCard> input) { }
-
-
     }
 }

@@ -187,11 +187,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583fe6f527c51af4585eefce7884e6a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionCost: 1
   CardType: 2
   Classification: 2
-  _costType: 2
-  _costAmount: 5
+  ActionCost: 1
+  CostType: 2
+  CostAmount: 5
   _inputRequired: 2
 --- !u!1001 &100100000
 Prefab:

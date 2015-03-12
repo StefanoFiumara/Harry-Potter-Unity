@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
     [UsedImplicitly]
-    public class MiceToSnuffboxes : GenericSpell {
+    public class MiceToSnuffboxes : GenericSpellRequiresInput {
 
         protected override IEnumerable<GenericCard> GetValidCards()
         {
