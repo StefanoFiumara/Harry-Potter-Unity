@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Game;
+﻿using System.Collections.Generic;
+using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -17,6 +18,14 @@ namespace HarryPotterUnity.Cards.Generic
             Lesson, Creature, Spell // Item, Location, Match, Adventure, Character
         }
 
+        public enum Tag
+        {
+            Healing, Unique
+        }
+
+        [UsedImplicitly]
+        public List<Tag> Tags;
+
         public enum ClassificationTypes
         {
             CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch,
@@ -33,7 +42,8 @@ namespace HarryPotterUnity.Cards.Generic
         public CardStates State { get; protected set; }
         public FlipStates FlipState { get; private set; }
 
-        [UsedImplicitly] 
+
+        [UsedImplicitly, Space(10)] 
         public CardTypes CardType;
 
         [UsedImplicitly] 

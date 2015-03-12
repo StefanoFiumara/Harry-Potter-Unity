@@ -10,7 +10,7 @@ namespace HarryPotterUnity.Cards.Spells.Charms
         protected override void OnPlayAction()
         {
             //TODO: Implement it with input instead?
-            var lessons = Player.Discard.GetCardsOfType(CardTypes.Lesson, 2);
+            var lessons = Player.Discard.GetCardsOfType(card => card.CardType == CardTypes.Lesson, 2);
             foreach (var lesson in lessons)
             {
                 Player.Discard.Remove(lesson);

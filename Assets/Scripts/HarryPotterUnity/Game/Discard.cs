@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Utils;
@@ -52,10 +53,10 @@ namespace HarryPotterUnity.Game
             //TODO: Adjust spacing
         }
 
-        public IEnumerable<GenericCard> GetCardsOfType(GenericCard.CardTypes type, int amount)
+        public IEnumerable<GenericCard> GetCardsOfType(Predicate<GenericCard> predicate, int amount)
         {
             //TODO: Randomize this
-            return _cards.FindAll(card => card.CardType == type).Take(amount);
+            return _cards.FindAll(predicate).Take(amount);
         }
 
         //TODO: OnMouseUp: View cards in discard pile
