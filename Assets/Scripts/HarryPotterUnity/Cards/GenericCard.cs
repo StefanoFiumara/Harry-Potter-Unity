@@ -1,5 +1,4 @@
-﻿using System;
-using HarryPotterUnity.Game;
+﻿using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -97,26 +96,17 @@ namespace HarryPotterUnity.Cards
         public void OnMouseUp()
         {
             if (!IsPlayable()) return;
-
-            if (!PhotonNetwork.connected)
-            {
-                MouseUpAction();
-            }
-            else
-            {
-
-                Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
-            }
+            
+            Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
         }
 
         private bool IsPlayable()
         {
-            if (!Player.IsLocalPlayer) return false;
-            if (State != CardStates.InHand) return false;
-            if (!Player.CanUseActions(ActionCost)) return false;
-            if (!MeetsAdditionalPlayRequirements()) return false;
-            if (!UtilManager.TweenQueue.TweenQueueIsEmpty) return false;
-            return true;
+            return Player.IsLocalPlayer && 
+                   State == CardStates.InHand && 
+                   Player.CanUseActions(ActionCost) &&
+                   MeetsAdditionalPlayRequirements() &&
+                   UtilManager.TweenQueue.TweenQueueIsEmpty;
         }
 
         public void MouseUpAction()
@@ -135,7 +125,7 @@ namespace HarryPotterUnity.Cards
         private void ShowPreview()
         {
             _cardFace.layer = UtilManager.PreviewLayer;
-            //if (State == CardStates.InDeck || State == CardStates.Discarded) return;
+            
             if (FlipState == FlipStates.FaceDown) return;
 
             if (iTween.Count(gameObject) == 0)
