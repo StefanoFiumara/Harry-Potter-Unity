@@ -23,8 +23,8 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
             {
                 selectedCards[0].Enable();
 
-                Player.OppositePlayer.InPlay.Remove(selectedCards[0]);
                 Player.OppositePlayer.Discard.Add(selectedCards[0]);
+                Player.OppositePlayer.InPlay.Remove(selectedCards[0]);
             }
             else
             {

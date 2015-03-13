@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -136,7 +137,8 @@ namespace HarryPotterUnity.Game
 
             var shouldFlip = card.FlipState == GenericCard.FlipStates.FaceUp;
 
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, shouldFlip, TweenQueue.RotationType.NoRotate);
+            //UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, shouldFlip, TweenQueue.RotationType.NoRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, shouldFlip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
             //TODO: Adjust spacing
         }
     }

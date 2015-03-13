@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Utils;
+﻿using HarryPotterUnity.Tween;
+using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -36,8 +37,8 @@ namespace HarryPotterUnity.Cards.Generic
         {
             State = CardStates.Discarded;
             var rotate180 = Player.OppositePlayer.IsLocalPlayer ? TweenQueue.RotationType.Rotate180 : TweenQueue.RotationType.NoRotate;
-            UtilManager.TweenQueue.AddTweenToQueue(this, SpellOffset, 0.5f, State, !Player.IsLocalPlayer, rotate180);
-            Invoke("ExecuteActionAndDiscard", 1.5f);
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, !Player.IsLocalPlayer, rotate180, State));
+            Invoke("ExecuteActionAndDiscard", 0.9f);
         }
 
         /// <summary>

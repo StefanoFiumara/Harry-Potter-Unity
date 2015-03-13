@@ -112,11 +112,10 @@ namespace HarryPotterUnity.Cards.Generic
 
         private bool IsPlayable()
         {
-            return Player.IsLocalPlayer && 
-                   State == CardStates.InHand && 
+            return Player.IsLocalPlayer &&
+                   State == CardStates.InHand &&
                    Player.CanUseActions(ActionCost) &&
-                   MeetsAdditionalPlayRequirements() &&
-                   UtilManager.TweenQueue.TweenQueueIsEmpty;
+                   MeetsAdditionalPlayRequirements();
         }
 
         public void MouseUpAction()

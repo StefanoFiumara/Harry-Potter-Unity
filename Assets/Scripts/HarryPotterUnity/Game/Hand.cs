@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -52,17 +53,19 @@ namespace HarryPotterUnity.Game
 
         private void AdjustHandSpacing()
         {
+            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards, GetTargetPositionForCard));
+        }
+
+        private Vector3 GetTargetPositionForCard(GenericCard card)
+        {
             var shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
-        
-            for (var i = 0; i < Cards.Count; i++)
-            {
-                var cardPosition = HandCardsOffset;
+            var cardPosition = HandCardsOffset;
 
-                cardPosition.x += i * Spacing * shrinkFactor;
-                cardPosition.z -= i;
+            var index = Cards.IndexOf(card);
+            cardPosition.x += index * Spacing * shrinkFactor;
+            cardPosition.z -= index;
 
-                TweenQueue.MoveCardWithoutQueue(Cards[i], cardPosition, GenericCard.CardStates.InHand);
-            }
+            return cardPosition;
         }
 
         private void AnimateCardToHand(GenericCard card, bool flip = true, bool preview = true)
@@ -76,10 +79,10 @@ namespace HarryPotterUnity.Game
 
             if (preview)
             {
-                UtilManager.TweenQueue.AddTweenToQueue(card, HandPreviewPosition, 0.5f, card.State, flip, TweenQueue.RotationType.NoRotate);
+                UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flip, TweenQueue.RotationType.NoRotate, card.State));
             }
 
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, GenericCard.CardStates.InHand, !preview && flip, TweenQueue.RotationType.NoRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPosition, 0.3f, 0.1f, !preview && flip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.InHand));
         }
     }
 }

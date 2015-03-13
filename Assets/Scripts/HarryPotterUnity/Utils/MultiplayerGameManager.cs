@@ -147,6 +147,7 @@ namespace HarryPotterUnity.Utils
         [UsedImplicitly]
         public void OnDestroy()
         {
+            _multiplayerLobbyHudManager.BackToMainMenu();
             if(_player1) Destroy(_player1.gameObject);
             if(_player2) Destroy(_player2.gameObject);
         }

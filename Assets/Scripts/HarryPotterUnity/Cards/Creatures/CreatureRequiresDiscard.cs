@@ -23,8 +23,8 @@ namespace HarryPotterUnity.Cards.Creatures
             {
                 var lesson = Player.InPlay.GetLessonOfType(Lesson.LessonTypes.Creatures);
 
-                Player.InPlay.Remove(lesson);
                 Player.Discard.Add(lesson);
+                Player.InPlay.Remove(lesson);
             }
         }
     }

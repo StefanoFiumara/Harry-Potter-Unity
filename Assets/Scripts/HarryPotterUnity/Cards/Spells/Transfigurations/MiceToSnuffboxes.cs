@@ -27,8 +27,8 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
         public override void AfterInputAction(List<GenericCard> selectedCards)
         {
             foreach(var card in selectedCards) {
-                card.Player.InPlay.Remove(card);
                 card.Player.Hand.Add(card, false);
+                card.Player.InPlay.Remove(card);
             }
         }
     }

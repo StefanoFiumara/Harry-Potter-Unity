@@ -2,6 +2,7 @@
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -84,34 +85,40 @@ namespace HarryPotterUnity.Game
         {
             return GetLessonsInPlay().Count(x => ((Lesson)x).LessonType == type);
         }
+
+        //TODO: AnimateCreature and Lesson to board have the exact same code, can we simplify this?
         private void AnimateCreatureToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, TweenQueue.RotationType.Rotate90);
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, 
+                                                                 cardPosition, 
+                                                                 0.3f, 
+                                                                 0f, 
+                                                                 !_player.IsLocalPlayer, 
+                                                                 TweenQueue.RotationType.Rotate90, 
+                                                                 GenericCard.CardStates.InPlay));
         }
 
         private void AnimateLessonToBoard(GenericCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPosition, 0.3f, GenericCard.CardStates.InPlay, !_player.IsLocalPlayer, TweenQueue.RotationType.Rotate90);
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject,
+                                                                 cardPosition,
+                                                                 0.3f,
+                                                                 0f,
+                                                                 !_player.IsLocalPlayer,
+                                                                 TweenQueue.RotationType.Rotate90,
+                                                                 GenericCard.CardStates.InPlay));
         }
 
+        //TODO: Again, these two functions are very similar and could be combined by passing the type.
         private void RearrangeLessons()
         {
-            Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Lesson).ForEach(card => 
-            {
-                var cardPosition = GetTargetPositionForCard(card);
-                TweenQueue.MoveCardWithoutQueue(card, cardPosition, GenericCard.CardStates.InPlay);
-            });
+            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Lesson), GetTargetPositionForCard));
         }
-
         private void RearrangeCreatures()
         {
-            Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Creature).ForEach(card => 
-            {
-                var cardPosition = GetTargetPositionForCard(card);
-                TweenQueue.MoveCardWithoutQueue(card, cardPosition, GenericCard.CardStates.InPlay);
-            });
+            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.CardType == GenericCard.CardTypes.Creature), GetTargetPositionForCard));
         }
 
         private Vector3 GetTargetPositionForCard(GenericCard card)

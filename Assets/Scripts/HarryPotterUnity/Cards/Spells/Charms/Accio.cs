@@ -13,8 +13,8 @@ namespace HarryPotterUnity.Cards.Spells.Charms
             var lessons = Player.Discard.GetCardsOfType(card => card.CardType == CardTypes.Lesson, 2);
             foreach (var lesson in lessons)
             {
-                Player.Discard.Remove(lesson);
                 Player.Hand.Add(lesson);
+                Player.Discard.Remove(lesson);
             }
 
         }

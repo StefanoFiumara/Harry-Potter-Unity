@@ -20,8 +20,8 @@ namespace HarryPotterUnity.Cards.Generic
 
         protected override void OnClickAction()
         {
-            Player.Hand.Remove(this);
             Player.InPlay.Add(this);
+            Player.Hand.Remove(this);
         }
 
         protected override bool MeetsAdditionalPlayRequirements()

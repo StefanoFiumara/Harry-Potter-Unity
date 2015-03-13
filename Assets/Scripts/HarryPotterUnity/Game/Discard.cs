@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -43,8 +44,8 @@ namespace HarryPotterUnity.Game
 
             var shouldFlip = card.State == GenericCard.CardStates.InDeck;
 
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPreviewPos, 0.35f, GenericCard.CardStates.Discarded, shouldFlip, TweenQueue.RotationType.NoRotate);
-            UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, false, TweenQueue.RotationType.NoRotate);
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, shouldFlip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, false, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
         }
 
         public void Remove(GenericCard card)

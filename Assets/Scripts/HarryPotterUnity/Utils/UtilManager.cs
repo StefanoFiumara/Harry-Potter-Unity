@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Tween;
 using UnityEngine;
 
 namespace HarryPotterUnity.Utils
