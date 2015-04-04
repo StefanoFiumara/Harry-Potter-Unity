@@ -51,7 +51,7 @@ namespace HarryPotterUnity.Game
         public void Remove(GenericCard card)
         {
             _cards.Remove(card);
-            //TODO: Adjust spacing
+            AdjustCardSpacing();
         }
 
         public IEnumerable<GenericCard> GetCardsOfType(Predicate<GenericCard> predicate, int amount)
@@ -60,6 +60,20 @@ namespace HarryPotterUnity.Game
             return _cards.FindAll(predicate).Take(amount);
         }
 
+        private void AdjustCardSpacing()
+        {
+            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(_cards, GetTargetPositionForCard));
+        }
+
+        private Vector3 GetTargetPositionForCard(GenericCard card)
+        {
+            var position = _cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
+
+            var cardPos = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 16f);
+            cardPos.z -= position * 0.2f;
+
+            return cardPos;
+        }
         //TODO: OnMouseUp: View cards in discard pile
     }
 }
