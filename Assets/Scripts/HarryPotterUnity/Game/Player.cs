@@ -28,7 +28,7 @@ namespace HarryPotterUnity.Game
         private int ActionsAvailable { get; set; }
 
         public bool IsLocalPlayer { get; set; }
-        public MultiplayerGameManager MpGameManager { get; set; }
+        public NetworkManager MpGameManager { get; set; }
         public byte NetworkId { get; set; }
 
         public Text ActionsLeftLabel { private get; set; }
@@ -37,7 +37,7 @@ namespace HarryPotterUnity.Game
         public Text CardsLeftLabel { get; set; }
 
 
-        private MultiplayerLobbyHudManager _multiplayerLobbyHudManager;
+        private HudManager _hudManager;
 
         [UsedImplicitly]
         public void Awake()
@@ -51,9 +51,9 @@ namespace HarryPotterUnity.Game
             InPlay = transform.GetComponentInChildren<InPlay>();
             Discard = transform.GetComponentInChildren<Discard>();
 
-            _multiplayerLobbyHudManager = GameObject.Find("MultiplayerLobbyHudManager").GetComponent<MultiplayerLobbyHudManager>();
+            _hudManager = FindObjectOfType<HudManager>();
 
-            if (!_multiplayerLobbyHudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
+            if (!_hudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
         }
 
         public void InitDeck(List<Lesson.LessonTypes> selectedLessons)

@@ -9,73 +9,72 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-#pragma warning disable 649
 
 namespace HarryPotterUnity.UI
 {
     [UsedImplicitly]
-    public class MultiplayerLobbyHudManager : MonoBehaviour
+    public class HudManager : MonoBehaviour
     {
-        private MultiplayerGameManager _multiplayerGameManager;
+        private NetworkManager _networkManager;
 
         #region HUD Elements
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Camera _mainCamera;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Camera _previewCamera;
 
         [Header("Main Menu")]
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private RectTransform _mainMenuHudContainer;
 
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Button _findMatchButton;
 
-        [SerializeField] 
+        [SerializeField, UsedImplicitly] 
         private Text _gameStatusText;
 
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Text _playersOnlineText;
 
-        [SerializeField] 
+        [SerializeField, UsedImplicitly] 
         private Text _titleText;
 
-        [SerializeField] 
+        [SerializeField, UsedImplicitly] 
         private RectTransform _errorPanel;
 
-        [SerializeField] 
+        [SerializeField, UsedImplicitly] 
         private RectTransform _lessonSelectPanel;
 
-        [SerializeField] 
+        [SerializeField, UsedImplicitly] 
         private Toggle _selectCreatures;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Toggle _selectCharms;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Toggle _selectTransfiguration;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Toggle _selectPotions;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Toggle _selectQuidditch;
 
         [Header("Gameplay")]
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private RectTransform _gameplayHudContainer;
 
-        [SerializeField] 
+        [SerializeField, UsedImplicitly] 
         private Image _turnIndicatorLocal;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Image _turnIndicatorRemote;
 
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Text _cardsLeftLocal;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Text _cardsLeftRemote;
 
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Text _actionsLeftLocal;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private Text _actionsLeftRemote;
-        [SerializeField]
+        [SerializeField, UsedImplicitly]
         private RectTransform _endGamePanel;
         #endregion
 
@@ -97,8 +96,7 @@ namespace HarryPotterUnity.UI
         [UsedImplicitly]
         public void Start()
         {
-            PhotonNetwork.ConnectUsingSettings("v0.1");
-            _multiplayerGameManager = FindObjectsOfType<MultiplayerGameManager>().First();
+            _networkManager = FindObjectsOfType<NetworkManager>().First();
             _selectedLessons = new List<Lesson.LessonTypes>();
         }
 
@@ -137,15 +135,9 @@ namespace HarryPotterUnity.UI
         {
             int seed = Random.Range(int.MinValue, int.MaxValue);
 
-            _multiplayerGameManager.photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
+            _networkManager.photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
-
-        [UsedImplicitly]
-        public void OnPhotonPlayerDisconnected()
-        {
-            BackToMainMenu();
-        }
-
+        
         [UsedImplicitly]
         public void BackToMainMenu()
         {
@@ -154,6 +146,7 @@ namespace HarryPotterUnity.UI
                 PhotonNetwork.LeaveRoom();
             }
             
+            _networkManager.DestroyPlayerObjects();
 
             _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby.";
 
