@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ExitGames.Client.Photon;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Utils;
@@ -97,6 +98,7 @@ namespace HarryPotterUnity.UI
         public void Start()
         {
             PhotonNetwork.ConnectUsingSettings("v0.1");
+            _multiplayerGameManager = FindObjectsOfType<MultiplayerGameManager>().First();
             _selectedLessons = new List<Lesson.LessonTypes>();
         }
 
@@ -122,25 +124,18 @@ namespace HarryPotterUnity.UI
         [UsedImplicitly]
         public void OnJoinedRoom()
         {
-            if (PhotonNetwork.room.playerCount == 1)
-            {
-                _multiplayerGameManager =
-                    PhotonNetwork.Instantiate("MultiplayerGameManager", Vector3.zero, Quaternion.identity, 0)
-                        .GetComponent<MultiplayerGameManager>();
-            }
-            else
-            {
-                var rotation = Quaternion.Euler(0f, 0f, 180f);
+            if (PhotonNetwork.room.playerCount == 1) return;
 
-                _mainCamera.transform.rotation = rotation;
-                _previewCamera.transform.rotation = rotation;
-            }
+            var p2Rotation = Quaternion.Euler(0f, 0f, 180f);
+
+            _mainCamera.transform.rotation = p2Rotation;
+            _previewCamera.transform.rotation = p2Rotation;
         }
 
         [UsedImplicitly]
         public void OnPhotonPlayerConnected()
         {
-            var seed = Random.Range(int.MinValue, int.MaxValue);
+            int seed = Random.Range(int.MinValue, int.MaxValue);
 
             _multiplayerGameManager.photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
@@ -154,12 +149,16 @@ namespace HarryPotterUnity.UI
         [UsedImplicitly]
         public void BackToMainMenu()
         {
-            PhotonNetwork.LeaveRoom();
+            if (PhotonNetwork.inRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+            
 
             _gameStatusText.text = "Disconnected from Match...\nReturning to Lobby.";
 
-            _mainCamera.transform.rotation = Quaternion.identity;
-            _previewCamera.transform.rotation = Quaternion.identity;
+            if    (_mainCamera != null)  _mainCamera.transform.rotation    = Quaternion.identity;
+            if (_previewCamera != null)  _previewCamera.transform.rotation = Quaternion.identity;
 
             _turnIndicatorLocal.gameObject.SetActive(false);
             _turnIndicatorRemote.gameObject.SetActive(false);

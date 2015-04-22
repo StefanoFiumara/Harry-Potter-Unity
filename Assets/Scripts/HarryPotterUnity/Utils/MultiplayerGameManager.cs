@@ -23,7 +23,7 @@ namespace HarryPotterUnity.Utils
         [UsedImplicitly]
         public void Start()
         {
-            _multiplayerLobbyHudManager = GameObject.Find("MultiplayerLobbyHudManager").GetComponent<MultiplayerLobbyHudManager>();
+            _multiplayerLobbyHudManager = FindObjectOfType<MultiplayerLobbyHudManager>();
 
             if(!_multiplayerLobbyHudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
         }
