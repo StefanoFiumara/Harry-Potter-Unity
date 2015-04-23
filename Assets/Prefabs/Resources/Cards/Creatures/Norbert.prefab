@@ -220,7 +220,7 @@ MonoBehaviour:
   Classification: 0
   ActionCost: 1
   _damagePerTurn: 5
-  _health: 0
+  _health: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

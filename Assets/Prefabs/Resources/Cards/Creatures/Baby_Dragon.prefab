@@ -207,7 +207,7 @@ MonoBehaviour:
   Classification: 0
   ActionCost: 1
   _damagePerTurn: 3
-  _health: 0
+  _health: 2
 --- !u!114 &11449396
 MonoBehaviour:
   m_ObjectHideFlags: 1

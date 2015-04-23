@@ -206,7 +206,7 @@ MonoBehaviour:
   Classification: 0
   ActionCost: 1
   _damagePerTurn: 2
-  _health: 0
+  _health: 1
   _battlecryDamage: 2
 --- !u!1001 &100100000
 Prefab:

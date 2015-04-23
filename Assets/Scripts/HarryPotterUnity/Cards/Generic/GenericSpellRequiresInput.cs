@@ -13,18 +13,14 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly, SerializeField]
         private int _inputRequired;
 
-        /// <summary>
-        /// Describe any additional requirements that the card must meet in order to be played.
-        /// For example: Diffindo requires the opposite player to have at least 1 card in play, otherwise there will be no target.
-        /// </summary>
-        /// <returns>A boolean describing whether or not the requirements were met.</returns>
-        protected abstract bool MeetsAdditionalInputRequirements();
+        public int InputRequired { get { return _inputRequired; } }
+
         /// <summary>
         /// Get a list of in-play cards that can be targeted by this card.
         /// For example: Mice to Snuffboxes returns a list of all creatures in play.
         /// </summary>
         /// <returns>An enumerable list of valid targets for this card</returns>
-        protected abstract IEnumerable<GenericCard> GetValidCards();
+        public abstract List<GenericCard> GetValidCards();
         /// <summary>
         /// Describe the actions that happen after the player has made a selection.
         /// For example: Diffindo will simply discard the selected card.
@@ -32,12 +28,6 @@ namespace HarryPotterUnity.Cards.Generic
         /// <param name="input">The list of cards that the player has selected to target with this card</param>
         public abstract void AfterInputAction(List<GenericCard> input);
         protected sealed override void OnPlayAction() { }
-
-        protected sealed override bool MeetsAdditionalPlayRequirements()
-        {
-            return base.MeetsAdditionalPlayRequirements() &&
-                   MeetsAdditionalInputRequirements();
-        }
 
         protected sealed override void ExecuteActionAndDiscard()
         {
