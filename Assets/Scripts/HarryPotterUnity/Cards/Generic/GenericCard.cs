@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -49,6 +51,9 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly] 
         public ClassificationTypes Classification;
 
+        
+        private List<ICardPlayRequirement> _playRequirements;
+            
         [UsedImplicitly, SerializeField]
         public int ActionCost = 1;
 
@@ -73,8 +78,15 @@ namespace HarryPotterUnity.Cards.Generic
                 col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
             }
 
-            gameObject.layer = UtilManager.CardLayer;
+            _playRequirements = new List<ICardPlayRequirement>();
 
+            var components = GetComponents<MonoBehaviour>();
+            foreach (var requirement in components.OfType<ICardPlayRequirement>())
+            {
+                _playRequirements.Add(requirement);
+            }
+
+            gameObject.layer = UtilManager.CardLayer;
             _cardFace = transform.FindChild("Front").gameObject;
         }
 
@@ -112,16 +124,25 @@ namespace HarryPotterUnity.Cards.Generic
 
         private bool IsPlayable()
         {
+            bool meetsRequirements = _playRequirements.Count == 0 ||
+                                     _playRequirements.TrueForAll(req => req.MeetsRequirement());
+
             return Player.IsLocalPlayer &&
                    State == CardStates.InHand &&
                    Player.CanUseActions(ActionCost) &&
-                   MeetsAdditionalPlayRequirements();
+                   meetsRequirements;
         }
 
         public void MouseUpAction()
         {
             OnClickAction();
 
+            foreach (var requirement in _playRequirements)
+            {
+                requirement.OnRequirementMet();
+            }
+
+            //This can probably be improved
             if (CardType != CardTypes.Spell)
             {
                 Player.UseActions(ActionCost);
@@ -129,7 +150,6 @@ namespace HarryPotterUnity.Cards.Generic
         }
 
         protected abstract void OnClickAction();
-        protected abstract bool MeetsAdditionalPlayRequirements();
 
         private void ShowPreview()
         {
