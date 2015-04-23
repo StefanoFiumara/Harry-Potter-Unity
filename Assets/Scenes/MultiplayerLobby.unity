@@ -1037,6 +1037,10 @@ Prefab:
       propertyPath: instantiationId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 1aefae0b0e05ccd43ad115c37a0a0cb2, type: 2}
+      propertyPath: m_Name
+      value: NetworkManager
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1aefae0b0e05ccd43ad115c37a0a0cb2, type: 2}
   m_IsPrefabParent: 0
@@ -1242,7 +1246,7 @@ GameObject:
   - 114: {fileID: 800919486}
   - 114: {fileID: 800919485}
   m_Layer: 5
-  m_Name: MultiplayerLobbyHudManager
+  m_Name: HudManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

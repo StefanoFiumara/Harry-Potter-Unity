@@ -49,7 +49,14 @@ namespace HarryPotterUnity.Tween
                 {
                     var tween = _queue.Dequeue();
                     tween.ExecuteTween();
-                    yield return new WaitForSeconds(tween.CompletionTime);
+                    if (tween.WaitForCompletion)
+                    {
+                        yield return new WaitForSeconds(tween.CompletionTime);
+                    }
+                    else
+                    {
+                        yield return null;
+                    }
                 }
             }
             // ReSharper disable once FunctionNeverReturns

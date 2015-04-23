@@ -63,7 +63,7 @@ namespace HarryPotterUnity.Game
             {
                 _player.DisableAllCards();
                 _player.OppositePlayer.DisableAllCards();
-                StartCoroutine(MultiplayerGameManager.WaitForGameOverMessage(_player));
+                StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
             }
 
             _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", _cards.Count);

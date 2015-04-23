@@ -62,7 +62,9 @@ namespace HarryPotterUnity.Game
 
         private void AdjustCardSpacing()
         {
-            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(_cards, GetTargetPositionForCard));
+            ITweenObject tween = new AsyncMoveTween(_cards, GetTargetPositionForCard);
+            tween.WaitForCompletion = false;
+            UtilManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(GenericCard card)

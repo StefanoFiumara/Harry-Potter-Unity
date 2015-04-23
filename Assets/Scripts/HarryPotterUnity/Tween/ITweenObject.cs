@@ -4,6 +4,8 @@
     {
         float CompletionTime { get; }
 
+        bool WaitForCompletion { get; set; }
+
         void ExecuteTween();
     }
 }

@@ -106,8 +106,7 @@ namespace HarryPotterUnity.UI
             _playersOnlineText.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
         }
 
-        [UsedImplicitly]
-        public void OnJoinedLobby()
+        public void InitMainMenu()
         {
             _gameStatusText.text = "Connected to Photon Server!";
             _findMatchButton.gameObject.SetActive(true);
@@ -119,25 +118,14 @@ namespace HarryPotterUnity.UI
             _lessonSelectPanel.gameObject.SetActive(true);
         }
 
-        [UsedImplicitly]
-        public void OnJoinedRoom()
+        public void SetPlayer2CameraRotation()
         {
-            if (PhotonNetwork.room.playerCount == 1) return;
+            var rotation = Quaternion.Euler(0f, 0f, 180f);
 
-            var p2Rotation = Quaternion.Euler(0f, 0f, 180f);
-
-            _mainCamera.transform.rotation = p2Rotation;
-            _previewCamera.transform.rotation = p2Rotation;
+            _mainCamera.transform.rotation = rotation;
+            _previewCamera.transform.rotation = rotation;
         }
 
-        [UsedImplicitly]
-        public void OnPhotonPlayerConnected()
-        {
-            int seed = Random.Range(int.MinValue, int.MaxValue);
-
-            _networkManager.photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
-        }
-        
         [UsedImplicitly]
         public void BackToMainMenu()
         {
@@ -170,6 +158,7 @@ namespace HarryPotterUnity.UI
             {
                 _findMatchButton.gameObject.SetActive(false);
                 _gameStatusText.text = "Finding Match...";
+
                 PhotonNetwork.JoinRandomRoom();
                 
                 DisableLessonSelect();
@@ -194,13 +183,6 @@ namespace HarryPotterUnity.UI
             var selectedLessons = Array.ConvertAll(_selectedLessons.ToArray(), input => (byte)input);
             var selected = new Hashtable {{"lessons", selectedLessons}};
             PhotonNetwork.player.SetCustomProperties(selected);
-        }
-
-        [UsedImplicitly]
-        public void OnPhotonRandomJoinFailed()
-        {
-            var roomName = string.Format("Room {0}", PhotonNetwork.GetRoomList().Length);
-            PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions {maxPlayers =  2}, null);
         }
 
         public void DisableMainMenuHud()

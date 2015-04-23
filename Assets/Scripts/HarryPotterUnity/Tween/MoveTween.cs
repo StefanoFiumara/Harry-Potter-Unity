@@ -23,6 +23,8 @@ namespace HarryPotterUnity.Tween
             _flip = flip;
             _rotate = rotate;
             _stateAfterAnimation = stateAfterAnimation;
+
+            WaitForCompletion = true;
         }
 
 
@@ -30,6 +32,8 @@ namespace HarryPotterUnity.Tween
         {
             get { return _time + _delay; }
         }
+
+        public bool WaitForCompletion { get; set; }
 
         public void ExecuteTween()
         {
