@@ -15,18 +15,10 @@ namespace HarryPotterUnity.Cards.Generic
 
         public int InputRequired { get { return _inputRequired; } }
 
-        /// <summary>
-        /// Get a list of in-play cards that can be targeted by this card.
-        /// For example: Mice to Snuffboxes returns a list of all creatures in play.
-        /// </summary>
-        /// <returns>An enumerable list of valid targets for this card</returns>
         public abstract List<GenericCard> GetValidCards();
-        /// <summary>
-        /// Describe the actions that happen after the player has made a selection.
-        /// For example: Diffindo will simply discard the selected card.
-        /// </summary>
-        /// <param name="input">The list of cards that the player has selected to target with this card</param>
+      
         public abstract void AfterInputAction(List<GenericCard> input);
+
         protected sealed override void OnPlayAction() { }
 
         protected sealed override void ExecuteActionAndDiscard()
