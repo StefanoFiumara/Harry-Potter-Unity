@@ -9,6 +9,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 465610}
   - 114: {fileID: 11439946}
+  - 114: {fileID: 11449396}
+  - 114: {fileID: 11404006}
   m_Layer: 10
   m_Name: Baby_Dragon
   m_TagString: Untagged
@@ -176,6 +178,19 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11404006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534c1ecbac847fc42a9e7c676a1b8346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 3
+  _lessonType: 0
 --- !u!114 &11439946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,17 +199,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 111346}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f95443fbc30063248bd7acffb6173e16, type: 3}
+  m_Script: {fileID: 11500000, guid: cc1957cf7fba8544a92144e06e1d409a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Tags: 
   CardType: 1
   Classification: 0
   ActionCost: 1
-  _costType: 0
-  _costAmount: 3
   _damagePerTurn: 3
-  Health: 2
-  _lessonsToDiscard: 1
+  _health: 0
+--- !u!114 &11449396
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0caeccd82450d04cbdf9f1137c9af3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 1
+  _lessonType: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

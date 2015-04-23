@@ -27,6 +27,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 485590}
   - 114: {fileID: 11480668}
+  - 114: {fileID: 11402314}
+  - 114: {fileID: 11421696}
   m_Layer: 10
   m_Name: Norbert
   m_TagString: Untagged
@@ -176,6 +178,32 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11402314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0caeccd82450d04cbdf9f1137c9af3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 2
+  _lessonType: 0
+--- !u!114 &11421696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 165550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 534c1ecbac847fc42a9e7c676a1b8346, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 4
+  _lessonType: 0
 --- !u!114 &11480668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -184,18 +212,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 165550}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f95443fbc30063248bd7acffb6173e16, type: 3}
+  m_Script: {fileID: 11500000, guid: cc1957cf7fba8544a92144e06e1d409a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Tags: 01000000
   CardType: 1
   Classification: 0
   ActionCost: 1
-  _costType: 0
-  _costAmount: 4
   _damagePerTurn: 5
-  Health: 3
-  _lessonsToDiscard: 2
+  _health: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
