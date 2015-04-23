@@ -7,8 +7,6 @@ using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
-
 
 namespace HarryPotterUnity.UI
 {
