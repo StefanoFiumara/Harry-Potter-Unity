@@ -26,11 +26,6 @@ namespace HarryPotterUnity.Cards.Generic
             Player.Hand.Remove(this);
         }
 
-        protected override bool MeetsAdditionalPlayRequirements()
-        {
-            return true;
-        }
-
         public void OnEnterInPlayAction()
         {
             if (!Player.LessonTypesInPlay.Contains(_lessonType))
