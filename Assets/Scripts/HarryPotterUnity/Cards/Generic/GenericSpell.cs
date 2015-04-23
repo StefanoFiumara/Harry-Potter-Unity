@@ -7,12 +7,6 @@ namespace HarryPotterUnity.Cards.Generic
 {
     public abstract class GenericSpell : GenericCard {
 
-        [UsedImplicitly, SerializeField]
-        protected Lesson.LessonTypes CostType;
-
-        [UsedImplicitly, SerializeField]
-        protected int CostAmount;
-
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
         /// <summary>
@@ -25,12 +19,6 @@ namespace HarryPotterUnity.Cards.Generic
         {
             AnimateAndDiscard();
             Player.Hand.Remove(this);
-        }
-
-        protected override bool MeetsAdditionalPlayRequirements()
-        {
-            return Player.AmountLessonsInPlay >= CostAmount &&
-                   Player.LessonTypesInPlay.Contains(CostType);
         }
 
         private void AnimateAndDiscard()
