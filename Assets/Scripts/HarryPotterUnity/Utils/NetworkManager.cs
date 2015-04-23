@@ -59,7 +59,8 @@ namespace HarryPotterUnity.Utils
         [UsedImplicitly]
         public void OnPhotonRandomJoinFailed()
         {
-            PhotonNetwork.JoinOrCreateRoom(null, new RoomOptions { maxPlayers = 2 }, null);
+            string roomName = "Room " + PhotonNetwork.GetRoomList().Length;
+            PhotonNetwork.JoinOrCreateRoom(roomName, new RoomOptions { maxPlayers = 2 }, null);
         }
 
         [UsedImplicitly]
