@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Cards.Generic;
+﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -9,8 +10,9 @@ namespace HarryPotterUnity.Cards.Spells
         [UsedImplicitly, SerializeField]
         private int _damageAmount;
 
-        protected override void OnPlayAction()
+        protected override void OnClickAction(List<GenericCard> targets)
         {
+            base.OnClickAction(null);
             Player.OppositePlayer.TakeDamage(_damageAmount);
         }
     }

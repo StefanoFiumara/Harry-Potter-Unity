@@ -220,18 +220,16 @@ namespace HarryPotterUnity.Utils
         }
 
         [RPC, UsedImplicitly]
-        public void ExecuteInputSpellById(byte id, params byte[] selectedCardIds)
+        public void ExecuteInputCardById(byte id, params byte[] selectedCardIds)
         {
-            var card = (GenericSpellRequiresInput) UtilManager.AllCards.Find(c => c.NetworkId == id);
+            var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
             
             var selectedCards = selectedCardIds.Select(cardId => UtilManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
 
-            card.AfterInputAction(selectedCards);
+            card.MouseUpAction(selectedCards);
 
             card.Player.EnableAllCards();
             card.Player.OppositePlayer.EnableAllCards();
-
-            card.Player.UseActions(card.ActionCost);
         }
 
         public static IEnumerator WaitForGameOverMessage(Player sender)

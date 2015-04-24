@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -57,6 +59,9 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly, SerializeField]
         public int ActionCost = 1;
 
+        private InputGatherer _inputGatherer;
+        private int _inputRequired = 0;
+
         public Player Player { get; set; }
 
         private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
@@ -78,11 +83,19 @@ namespace HarryPotterUnity.Cards.Generic
                 col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
             }
 
+            _inputGatherer = GetComponent<InputGatherer>();
+
+
             _playRequirements = new List<ICardPlayRequirement>();
 
             var components = GetComponents<MonoBehaviour>();
             foreach (var requirement in components.OfType<ICardPlayRequirement>())
             {
+                if (requirement is InputRequirement)
+                {
+                    _inputRequired = (requirement as InputRequirement).InputRequired;
+                }
+
                 _playRequirements.Add(requirement);
             }
 
@@ -118,8 +131,15 @@ namespace HarryPotterUnity.Cards.Generic
         public void OnMouseUp()
         {
             if (!IsPlayable()) return;
+            if (_inputRequired > 0)
+            {
+                _inputGatherer.GatherInput();
+            }
+            else
+            {
+                Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+            }
             
-            Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
         }
 
         private bool IsPlayable()
@@ -133,23 +153,20 @@ namespace HarryPotterUnity.Cards.Generic
                    meetsRequirements;
         }
 
-        public void MouseUpAction()
-        {
-            OnClickAction();
-
+        public void MouseUpAction(List<GenericCard> targets = null)
+        {   
+            OnClickAction(targets);
+                
             foreach (var requirement in _playRequirements)
             {
                 requirement.OnRequirementMet();
             }
 
-            //This can probably be improved
-            if (CardType != CardTypes.Spell)
-            {
-                Player.UseActions(ActionCost);
-            }
+            Player.UseActions(ActionCost);
+            
         }
 
-        protected abstract void OnClickAction();
+        protected abstract void OnClickAction(List<GenericCard> targets);
 
         private void ShowPreview()
         {
@@ -190,6 +207,11 @@ namespace HarryPotterUnity.Cards.Generic
         {
             gameObject.layer = UtilManager.CardLayer;
             _cardFace.GetComponent<Renderer>().material.color = Color.yellow;
+        }
+
+        public virtual List<GenericCard> GetValidTargets()
+        {
+            return  new List<GenericCard>();
         }
     }
 }

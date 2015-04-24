@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Tween
         {
             _targets = targets;
             _getPosition = getPositionFunction;
-            WaitForCompletion = true;
+            WaitForCompletion = false;
         }
 
         public float CompletionTime

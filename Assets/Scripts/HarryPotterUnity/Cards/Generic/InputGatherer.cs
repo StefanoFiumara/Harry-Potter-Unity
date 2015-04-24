@@ -2,37 +2,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Generic
 {
-    public abstract class GenericSpellRequiresInput : GenericSpell
+    [UsedImplicitly]
+    class InputGatherer : MonoBehaviour
     {
-        [UsedImplicitly, SerializeField]
+        private GenericCard _cardInfo;
+        private InputRequirement _requirement;
+
         private int _inputRequired;
 
-        public int InputRequired { get { return _inputRequired; } }
-
-        public abstract List<GenericCard> GetValidCards();
-      
-        public abstract void AfterInputAction(List<GenericCard> input);
-
-        protected sealed override void OnPlayAction() { }
-
-        protected sealed override void ExecuteActionAndDiscard()
+        [UsedImplicitly]
+        private void Start()
         {
-            Player.Discard.Add(this);
-            BeginWaitForInput();
+            _cardInfo = GetComponent<GenericCard>();
+            _requirement = GetComponent<InputRequirement>();
+
+            if (_requirement == null)
+            {
+                Debug.LogError("No Input Requirement Attached to this card");
+                return;
+            }
+
+            _inputRequired = _requirement.InputRequired;
+
         }
 
-        private void BeginWaitForInput()
+        public void GatherInput()
         {
-            Player.DisableAllCards();
-            Player.OppositePlayer.DisableAllCards();
+            _cardInfo.Player.DisableAllCards();
+            _cardInfo.Player.OppositePlayer.DisableAllCards();
 
-            var validCards = GetValidCards();
+            var validCards = _cardInfo.GetValidTargets();
 
             foreach (var card in validCards)
             {
@@ -51,7 +57,7 @@ namespace HarryPotterUnity.Cards.Generic
 
             while (selectedCards.Count < _inputRequired)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0) && Player.IsLocalPlayer)
+                if (Input.GetKeyDown(KeyCode.Mouse0) && _cardInfo.Player.IsLocalPlayer)
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -66,7 +72,7 @@ namespace HarryPotterUnity.Cards.Generic
                         if (selectedCards.Count == _inputRequired)
                         {
                             var selectedCardIds = selectedCards.Select(c => c.NetworkId).ToArray();
-                            Player.MpGameManager.photonView.RPC("ExecuteInputSpellById", PhotonTargets.All, NetworkId, selectedCardIds);
+                            _cardInfo.Player.MpGameManager.photonView.RPC("ExecuteInputCardById", PhotonTargets.All, _cardInfo.NetworkId, selectedCardIds);
                         }
                     }
                 }

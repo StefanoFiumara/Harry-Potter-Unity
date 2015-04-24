@@ -193,7 +193,6 @@ MonoBehaviour:
   CardType: 2
   Classification: 2
   ActionCost: 1
-  _inputRequired: 1
 --- !u!114 &11415482
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -218,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044252d760427a541a54447a12e253ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputRequired: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

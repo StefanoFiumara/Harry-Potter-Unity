@@ -11,18 +11,26 @@ namespace HarryPotterUnity.Cards.PlayRequirements
     [UsedImplicitly]
     public class InputRequirement : MonoBehaviour, ICardPlayRequirement
     {
+        private GenericCard _cardInfo;
 
-        private GenericSpellRequiresInput _cardInfo;
+        [SerializeField, UsedImplicitly]
+        private int _inputRequired;
+
+        public int InputRequired { get { return _inputRequired; } }
 
         [UsedImplicitly]
-        void Start()
+        void Awake()
         {
-            _cardInfo = GetComponent<GenericSpellRequiresInput>();
+            _cardInfo = GetComponent<GenericCard>();
+            if (GetComponent<InputGatherer>() == null)
+            {
+                gameObject.AddComponent<InputGatherer>();   
+            }
         }
 
         public bool MeetsRequirement()
         {
-            return _cardInfo.GetValidCards().Count >= _cardInfo.InputRequired;
+            return _cardInfo.GetValidTargets().Count >= _inputRequired;
         }
 
         public void OnRequirementMet() { }

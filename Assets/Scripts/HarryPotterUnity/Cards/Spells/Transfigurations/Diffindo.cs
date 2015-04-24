@@ -6,14 +6,16 @@ using JetBrains.Annotations;
 namespace HarryPotterUnity.Cards.Spells.Transfigurations
 {
     [UsedImplicitly]
-    public class Diffindo : GenericSpellRequiresInput {
-        public override List<GenericCard> GetValidCards()
+    public class Diffindo : GenericSpell {
+        public override List<GenericCard> GetValidTargets()
         {
             return Player.OppositePlayer.InPlay.Cards;
         }
 
-        public override void AfterInputAction(List<GenericCard> selectedCards)
+        protected override void OnClickAction(List<GenericCard> selectedCards)
         {
+            base.OnClickAction(null);
+
             if (selectedCards.Count == 1)
             {
                 selectedCards[0].Enable();

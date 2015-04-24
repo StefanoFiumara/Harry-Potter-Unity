@@ -16,9 +16,9 @@ namespace HarryPotterUnity.Game
 
         private static readonly Vector3 HandPreviewPosition = new Vector3(-80f, -13f, -336f);
 
-        public static readonly Vector3 HandCardsOffset = new Vector3(-240f, -200f, 0f);
+        private static readonly Vector3 HandCardsOffset = new Vector3(-240f, -200f, 0f);
 
-        public const float Spacing = 55f;
+        private const float Spacing = 55f;
 
         public Hand()
         {
@@ -33,7 +33,7 @@ namespace HarryPotterUnity.Game
 
         public void Add(GenericCard card, bool preview = true)
         {
-            var shouldFlip = card.FlipState == GenericCard.FlipStates.FaceUp && !_player.IsLocalPlayer || 
+            bool shouldFlip = card.FlipState == GenericCard.FlipStates.FaceUp && !_player.IsLocalPlayer || 
                              card.FlipState == GenericCard.FlipStates.FaceDown && _player.IsLocalPlayer;
 
             card.transform.parent = transform;
@@ -76,7 +76,7 @@ namespace HarryPotterUnity.Game
         {
             var cardPosition = HandCardsOffset;
 
-            var shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
+            float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
 
             cardPosition.x += Cards.Count * Spacing * shrinkFactor;
             cardPosition.z -= Cards.Count;

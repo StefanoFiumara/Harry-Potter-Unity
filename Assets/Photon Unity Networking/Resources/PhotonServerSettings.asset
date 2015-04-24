@@ -34,4 +34,5 @@ MonoBehaviour:
   - ExecutePlayActionById
   - ExecuteDrawActionOnPlayer
   - ExecuteInputSpellById
+  - ExecuteInputCardById
   DisableAutoOpenWizard: 0

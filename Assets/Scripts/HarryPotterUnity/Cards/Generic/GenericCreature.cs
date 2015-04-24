@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Cards.Interfaces;
+﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace HarryPotterUnity.Cards.Generic
         [SerializeField, UsedImplicitly]
         private int _health;
 
-        protected override void OnClickAction()
+        protected override void OnClickAction(List<GenericCard> targets)
         {
             Player.InPlay.Add(this);
             Player.Hand.Remove(this);
