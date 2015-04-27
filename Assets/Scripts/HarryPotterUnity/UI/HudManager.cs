@@ -74,6 +74,9 @@ namespace HarryPotterUnity.UI
         private Text _actionsLeftRemote;
         [SerializeField, UsedImplicitly]
         private RectTransform _endGamePanel;
+
+        [SerializeField, UsedImplicitly]
+        private GameObject _skipActionButton;
         #endregion
 
         public Image TurnIndicatorLocal { get { return _turnIndicatorLocal;} }
@@ -90,7 +93,7 @@ namespace HarryPotterUnity.UI
 
 
         private List<Lesson.LessonTypes> _selectedLessons;
-        
+
         [UsedImplicitly]
         public void Start()
         {
@@ -124,7 +127,6 @@ namespace HarryPotterUnity.UI
             _previewCamera.transform.rotation = rotation;
         }
 
-        [UsedImplicitly]
         public void BackToMainMenu()
         {
             if (PhotonNetwork.inRoom)
@@ -141,6 +143,8 @@ namespace HarryPotterUnity.UI
 
             _turnIndicatorLocal.gameObject.SetActive(false);
             _turnIndicatorRemote.gameObject.SetActive(false);
+
+            _skipActionButton.SetActive(true);
 
             UtilManager.TweenQueue.Reset();
 
@@ -166,6 +170,12 @@ namespace HarryPotterUnity.UI
                 _errorPanel.gameObject.SetActive(true);
             }
 
+        }
+
+        [UsedImplicitly]
+        public void SkipAction_Click()
+        {
+            _networkManager.photonView.RPC("ExecuteSkipAction", PhotonTargets.All);
         }
 
         private void UpdateLessonSelection()
@@ -196,11 +206,14 @@ namespace HarryPotterUnity.UI
         public void EnableGameplayHud()
         {
             _gameplayHudContainer.gameObject.SetActive(true);
+
+            _skipActionButton.SetActive(PhotonNetwork.isMasterClient);
         }
 
         private void DisableGameplayHud()
         {
             _gameplayHudContainer.gameObject.SetActive(false);
+
         }
 
         private void DisableLessonSelect()
@@ -219,6 +232,11 @@ namespace HarryPotterUnity.UI
             _selectTransfiguration.interactable = true;
             _selectPotions.interactable = true;
             _selectQuidditch.interactable = true;
+        }
+
+        public void ToggleSkipActionButton()
+        {
+            _skipActionButton.SetActive(!_skipActionButton.activeSelf);
         }
     }
 }

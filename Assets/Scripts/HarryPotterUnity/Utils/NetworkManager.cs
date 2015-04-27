@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
@@ -187,10 +185,9 @@ namespace HarryPotterUnity.Utils
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
-            _player1.InitTurn();
+            _player1.InitTurn(true);
         }
 
-        [UsedImplicitly]
         public void DestroyPlayerObjects()
         {
             Destroy(_player1.gameObject);
@@ -230,6 +227,23 @@ namespace HarryPotterUnity.Utils
 
             card.Player.EnableAllCards();
             card.Player.OppositePlayer.EnableAllCards();
+        }
+
+        [RPC, UsedImplicitly]
+        public void ExecuteSkipAction()
+        {
+            if (_player1.CanUseActions())
+            {
+                _player1.UseActions();
+            }
+            else if (_player2.CanUseActions())
+            {
+                _player2.UseActions();
+            }
+            else
+            {
+                Debug.LogError("ExecuteSkipAction() failed to identify which player wants to skip their Action!");
+            }
         }
 
         public static IEnumerator WaitForGameOverMessage(Player sender)

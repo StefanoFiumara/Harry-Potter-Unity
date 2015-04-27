@@ -82,7 +82,7 @@ namespace HarryPotterUnity.Game
             ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
         }
 
-        public void InitTurn()
+        public void InitTurn(bool firstTurn = false)
         {
             TurnIndicator.gameObject.SetActive(true);
             //BeforeTurnAction happens here
@@ -90,6 +90,8 @@ namespace HarryPotterUnity.Game
 
             Deck.DrawCard();
             AddActions(2);
+
+            if( !firstTurn ) _hudManager.ToggleSkipActionButton();
 
             //Creatures do damage here
             OppositePlayer.TakeDamage(DamagePerTurn);
