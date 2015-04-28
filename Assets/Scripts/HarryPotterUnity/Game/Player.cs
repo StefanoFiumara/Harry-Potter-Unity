@@ -86,7 +86,7 @@ namespace HarryPotterUnity.Game
         public void InitTurn(bool firstTurn = false)
         {
             TurnIndicator.gameObject.SetActive(true);
-            //BeforeTurnAction happens here
+            
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
 
             Deck.DrawCard();
@@ -108,7 +108,7 @@ namespace HarryPotterUnity.Game
 
         public void DrawInitialHand()
         {
-            for (var i = 0; i < 7; i++)
+            for (int i = 0; i < 7; i++)
             {
                 var card = Deck.TakeTopCard();
                 Hand.Add(card, false);
