@@ -191,7 +191,7 @@ MonoBehaviour:
   Tags: 
   CardType: 2
   Classification: 1
-  ActionCost: 1
+  ActionCost: 12
 --- !u!114 &11474052
 MonoBehaviour:
   m_ObjectHideFlags: 1
