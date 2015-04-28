@@ -8,8 +8,8 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 437274}
-  - 114: {fileID: 11411456}
   - 114: {fileID: 11466670}
+  - 114: {fileID: 11410154}
   m_Layer: 10
   m_Name: Sandstone_Gargoyle
   m_TagString: Untagged
@@ -125,7 +125,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 8c2af53d70742d946ad11ec0401817ff, type: 2}
+  - {fileID: 2100000, guid: feab542936d3d994ea4ac70560782e8c, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -177,7 +177,7 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11411456
+--- !u!114 &11410154
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -185,15 +185,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 128022}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b79d7e5b36ff004d82d38fa22832679, type: 3}
+  m_Script: {fileID: 11500000, guid: e437ccc817518ea4685f208dcf1ea759, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Tags: 
   CardType: 1
   Classification: 0
   ActionCost: 1
-  _damagePerTurn: 2
-  _health: 3
+  _damagePerTurn: 1
+  _health: 2
 --- !u!114 &11466670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -205,7 +205,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534c1ecbac847fc42a9e7c676a1b8346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountRequired: 5
+  _amountRequired: 3
   _lessonType: 0
 --- !u!1001 &100100000
 Prefab:
