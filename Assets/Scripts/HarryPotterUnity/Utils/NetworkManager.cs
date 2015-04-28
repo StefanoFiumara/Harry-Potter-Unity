@@ -144,8 +144,8 @@ namespace HarryPotterUnity.Utils
         {
             InitPlayerDecks();
 
-            _player1.MpGameManager = this;
-            _player2.MpGameManager = this;
+            _player1.NetworkManager = this;
+            _player2.NetworkManager = this;
 
             _player1.NetworkId = 0;
             _player2.NetworkId = 1;

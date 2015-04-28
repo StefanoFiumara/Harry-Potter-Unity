@@ -137,7 +137,7 @@ namespace HarryPotterUnity.Cards.Generic
             }
             else
             {
-                Player.MpGameManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+                Player.NetworkManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
             }
             
         }
