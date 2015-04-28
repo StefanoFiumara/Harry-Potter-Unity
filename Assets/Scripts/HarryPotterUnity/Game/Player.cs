@@ -24,6 +24,7 @@ namespace HarryPotterUnity.Game
 
         public int CreaturesInPlay { get; set; }
         public int DamagePerTurn { get; set; }
+        public int DamageBuffer { get; set; }
         public int AmountLessonsInPlay { get; set; }
         private int ActionsAvailable { get; set; }
 
@@ -95,6 +96,9 @@ namespace HarryPotterUnity.Game
 
             //Creatures do damage here
             OppositePlayer.TakeDamage(DamagePerTurn);
+
+            //reset the damage buffer in case it was set last turn.
+            OppositePlayer.DamageBuffer = 0;
         }
 
         public bool CanUseActions(int amount = 1)
@@ -137,8 +141,14 @@ namespace HarryPotterUnity.Game
         {
             if (amount <= 0) return;
 
-            for (var i = 0; i < amount; i++)
+            for (int i = 0; i < amount; i++)
             {
+                if (DamageBuffer > 0)
+                {
+                    DamageBuffer--;
+                    continue;
+                }
+
                 var card = Deck.TakeTopCard();
 
                 if (card == null)
