@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Spells.Charms
 {
