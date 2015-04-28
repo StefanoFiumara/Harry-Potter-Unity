@@ -42,7 +42,7 @@ namespace HarryPotterUnity.Game
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
 
-            var shouldFlip = card.State == GenericCard.CardStates.InDeck;
+            bool shouldFlip = card.FlipState == GenericCard.FlipStates.FaceDown;
 
             UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, shouldFlip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
             UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, false, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
