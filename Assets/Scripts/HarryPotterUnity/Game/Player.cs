@@ -76,7 +76,7 @@ namespace HarryPotterUnity.Game
             OppositePlayer.InitTurn();
         }
 
-        private void AddActions(int amount)
+        public void AddActions(int amount)
         {
             ActionsAvailable += amount;
             ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
