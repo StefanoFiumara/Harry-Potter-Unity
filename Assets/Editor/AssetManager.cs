@@ -40,7 +40,7 @@ namespace Assets.Editor
         {
             var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
 
-            foreach (var path in assetFolderPaths)
+            foreach (string path in assetFolderPaths)
             {
                 var obj = (GameObject)AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
                 var view = obj.GetComponent<PhotonView>();
