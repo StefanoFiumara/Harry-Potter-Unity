@@ -11,19 +11,24 @@ namespace HarryPotterUnity.Cards.Generic
 
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected sealed override void OnClickAction(List<GenericCard> targets)
         {
             Enable();
-            AnimateAndDiscard();
+            PreviewSpell();
+            SpellAction(targets);
+
             Player.Hand.Remove(this);
+            Player.Discard.Add(this);
         }
 
-        private void AnimateAndDiscard()
+        protected abstract void SpellAction(List<GenericCard> targets);
+
+        private void PreviewSpell()
         {
             State = CardStates.Discarded;
             var rotate180 = Player.OppositePlayer.IsLocalPlayer ? TweenQueue.RotationType.Rotate180 : TweenQueue.RotationType.NoRotate;
             UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, !Player.IsLocalPlayer, rotate180, State));
-            StartCoroutine(DiscardAfterCooldown());
+            //StartCoroutine(DiscardAfterCooldown());
         }
 
         [UsedImplicitly]

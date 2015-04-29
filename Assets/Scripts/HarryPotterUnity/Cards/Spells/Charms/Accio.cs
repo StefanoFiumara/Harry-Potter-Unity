@@ -8,9 +8,8 @@ namespace HarryPotterUnity.Cards.Spells.Charms
     [UsedImplicitly]
     public class Accio : GenericSpell {
 
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void SpellAction(List<GenericCard> targets)
         {
-            base.OnClickAction(null);
             //TODO: Implement it with input instead?
             var lessons = Player.Discard.GetCardsOfType(card => card.CardType == CardTypes.Lesson, 2);
             foreach (var lesson in lessons)

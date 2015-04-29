@@ -10,9 +10,8 @@ namespace HarryPotterUnity.Cards.Spells
         [UsedImplicitly, SerializeField]
         private int _damageAmount;
 
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void SpellAction(List<GenericCard> targets)
         {
-            base.OnClickAction(null);
             Player.OppositePlayer.TakeDamage(_damageAmount);
         }
     }

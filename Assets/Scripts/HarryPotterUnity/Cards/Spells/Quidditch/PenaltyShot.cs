@@ -7,9 +7,8 @@ namespace HarryPotterUnity.Cards.Spells.Quidditch
     [UsedImplicitly]
     public class PenaltyShot : GenericSpell 
     {
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void SpellAction(List<GenericCard> targets)
         {
-            base.OnClickAction(null);
             Player.Deck.DrawCard();
             Player.Deck.DrawCard();
             Player.Deck.DrawCard();

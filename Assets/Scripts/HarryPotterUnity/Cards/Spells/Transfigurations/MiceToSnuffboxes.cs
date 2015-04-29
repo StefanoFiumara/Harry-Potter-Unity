@@ -14,9 +14,8 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
             return validCards;
         }
 
-        protected override void OnClickAction(List<GenericCard> selectedCards)
+        protected override void SpellAction(List<GenericCard> selectedCards)
         {
-            base.OnClickAction(null);
             foreach(var card in selectedCards) {
                 card.Player.Hand.Add(card, false);
                 card.Player.InPlay.Remove(card);

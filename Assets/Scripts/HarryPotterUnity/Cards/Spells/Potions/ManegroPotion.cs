@@ -8,10 +8,8 @@ namespace HarryPotterUnity.Cards.Spells.Potions
     [UsedImplicitly]
     public class ManegroPotion : GenericSpell {
 
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void SpellAction(List<GenericCard> targets)
         {
-            base.OnClickAction(null);
-
             int damage = Player.InPlay.GetAmountOfLessonsOfType(LessonType.Potions);
             var lesson = Player.InPlay.GetLessonOfType(LessonType.Potions);
 

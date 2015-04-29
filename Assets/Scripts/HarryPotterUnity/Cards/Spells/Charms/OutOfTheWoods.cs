@@ -6,10 +6,8 @@ namespace HarryPotterUnity.Cards.Spells.Charms
 {
     [UsedImplicitly]
     public class OutOfTheWoods : GenericSpell {
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void SpellAction(List<GenericCard> targets)
         {
-            base.OnClickAction(targets);
-
             int handCount = Player.OppositePlayer.Hand.Cards.Count;
 
             for (int i = handCount - 1; i >= 0; i--)

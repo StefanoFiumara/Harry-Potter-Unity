@@ -62,10 +62,10 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(GenericCard card)
         {
-            var shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
+            float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
             var cardPosition = HandCardsOffset;
 
-            var index = Cards.IndexOf(card);
+            int index = Cards.IndexOf(card);
             cardPosition.x += index * Spacing * shrinkFactor;
             cardPosition.z -= index;
 
@@ -83,7 +83,7 @@ namespace HarryPotterUnity.Game
 
             if (preview)
             {
-                UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flip, TweenQueue.RotationType.NoRotate, card.State));
+                UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.InHand));
             }
 
             UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPosition, 0.3f, 0.1f, !preview && flip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.InHand));

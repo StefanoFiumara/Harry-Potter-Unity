@@ -12,10 +12,8 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
             return Player.OppositePlayer.InPlay.Cards;
         }
 
-        protected override void OnClickAction(List<GenericCard> selectedCards)
+        protected override void SpellAction(List<GenericCard> selectedCards)
         {
-            base.OnClickAction(null);
-
             if (selectedCards.Count == 1)
             {
                 selectedCards[0].Enable();
