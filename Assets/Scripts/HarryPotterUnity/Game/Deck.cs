@@ -34,7 +34,7 @@ namespace HarryPotterUnity.Game
 
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
             
-            for (var i = 0; i < _cards.Count; i++)
+            for (int i = 0; i < _cards.Count; i++)
             {
                 _cards[i] = Instantiate(_cards[i]);
                 _cards[i].transform.parent = transform;
