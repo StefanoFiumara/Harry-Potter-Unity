@@ -24,7 +24,7 @@ namespace HarryPotterUnity.Game
 
         public int CreaturesInPlay { get; set; }
         public int DamagePerTurn { get; set; }
-        public int DamageBuffer { get; set; }
+        public int DamageBuffer { private get; set; }
         public int AmountLessonsInPlay { get; set; }
         private int ActionsAvailable { get; set; }
 
