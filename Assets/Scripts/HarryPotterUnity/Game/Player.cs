@@ -90,7 +90,9 @@ namespace HarryPotterUnity.Game
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
 
             Deck.DrawCard();
+
             AddActions(2);
+            if (ActionsAvailable < 1) ActionsAvailable = 1;
 
             if( !firstTurn ) _hudManager.ToggleSkipActionButton();
 
