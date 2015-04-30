@@ -91,9 +91,9 @@ namespace HarryPotterUnity.Game
 
         public void Shuffle()
         {
-            for (var i = _cards.Count-1; i >= 0; i--)
+            for (int i = _cards.Count-1; i >= 0; i--)
             {
-                var random = Random.Range(0, i);
+                int random = Random.Range(0, i);
 
                 var temp = _cards[i];
                 _cards[i] = _cards[random];
