@@ -28,6 +28,7 @@ GameObject:
   - 4: {fileID: 401472}
   - 114: {fileID: 11478092}
   - 114: {fileID: 11433974}
+  - 114: {fileID: 11418266}
   m_Layer: 10
   m_Name: Hover_Charm
   m_TagString: Untagged
@@ -177,6 +178,18 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11418266
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044252d760427a541a54447a12e253ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputRequired: 1
 --- !u!114 &11433974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -188,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 534c1ecbac847fc42a9e7c676a1b8346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _amountRequired: 2
+  _amountRequired: 4
   _lessonType: 1
 --- !u!114 &11478092
 MonoBehaviour:
@@ -198,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 118722}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c79e23acfffc20c499545960821befe9, type: 3}
+  m_Script: {fileID: 11500000, guid: 89e73061128171a4892d52238a7c46eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Tags: 
