@@ -142,7 +142,17 @@ namespace HarryPotterUnity.Game
             UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, GenericCard.FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
         }
 
-        public void AdjustCardSpacing()
+        public void AddAll(IEnumerable<GenericCard> cards)
+        {
+            foreach (var card in cards)
+            {
+                Add(card);
+            }
+
+            AdjustCardSpacing();
+        }
+
+        private void AdjustCardSpacing()
         {
             UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(_cards, GetTargetPositionForCard));
         }
@@ -161,5 +171,7 @@ namespace HarryPotterUnity.Game
 
             return result;
         }
+
+        
     }
 }

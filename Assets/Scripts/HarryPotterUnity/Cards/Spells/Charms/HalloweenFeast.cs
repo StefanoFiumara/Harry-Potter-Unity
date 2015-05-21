@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -10,15 +11,10 @@ namespace HarryPotterUnity.Cards.Spells.Charms
         protected override void SpellAction(List<GenericCard> targets)
         {
             //TODO: Implement it with input instead?
-            var creatures = Player.Discard.GetCardsOfType(card => card.CardType == CardTypes.Creature, 4);
+            var creatures = Player.Discard.GetCardsOfType(card => card.CardType == CardTypes.Creature, 4).ToList();
 
-            foreach (var creature in creatures)
-            {
-                Player.Hand.Add(creature);
-                Player.Discard.Remove(creature);
-            }
-
-            Player.Discard.AdjustCardSpacing();
+            Player.Discard.RemoveAll(creatures);
+            Player.Hand.AddAll(creatures);
         }
     }
 }

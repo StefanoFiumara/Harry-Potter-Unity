@@ -42,12 +42,27 @@ namespace HarryPotterUnity.Game
 
             Cards.Add(card);
         }
+        public void AddAll(IEnumerable<GenericCard> cards)
+        {
+            foreach (var card in cards)
+            {
+                Add(card);
+            }
+        }
+
+        public void RemoveAll(IEnumerable<GenericCard> cardsToRemove)
+        {
+            foreach (var card in cardsToRemove)
+            {
+                Cards.Remove(card);
+            }
+
+            AdjustHandSpacing();
+        }
 
         public void Remove(GenericCard card)
         {
-            Cards.Remove(card);
-
-            AdjustHandSpacing();
+            RemoveAll(new List<GenericCard> { card });
         }
 
         private void AdjustHandSpacing()

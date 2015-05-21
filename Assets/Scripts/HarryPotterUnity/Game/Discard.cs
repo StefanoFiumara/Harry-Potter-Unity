@@ -51,13 +51,23 @@ namespace HarryPotterUnity.Game
             _cards.Remove(card);
         }
 
+        public void RemoveAll(IEnumerable<GenericCard> cards)
+        {
+            foreach (var card in cards)
+            {
+                _cards.Remove(card);
+            }
+
+            AdjustCardSpacing();
+        }
+
         public IEnumerable<GenericCard> GetCardsOfType(Predicate<GenericCard> predicate, int amount)
         {
             //TODO: Randomize this
             return _cards.FindAll(predicate).Take(amount);
         }
 
-        public void AdjustCardSpacing()
+        private void AdjustCardSpacing()
         {
             ITweenObject tween = new AsyncMoveTween(_cards, GetTargetPositionForCard);
             tween.WaitForCompletion = false;
@@ -74,5 +84,6 @@ namespace HarryPotterUnity.Game
             return cardPos;
         }
         //TODO: OnMouseUp: View cards in discard pile
+        
     }
 }
