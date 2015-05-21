@@ -34,8 +34,8 @@ namespace HarryPotterUnity.Cards.PlayRequirements
             {
                 var lesson = _player.InPlay.GetLessonOfType( _lessonType );
 
-                _player.Discard.Add(lesson);
                 _player.InPlay.Remove(lesson);
+                _player.Discard.Add(lesson);
             }
         }
     }

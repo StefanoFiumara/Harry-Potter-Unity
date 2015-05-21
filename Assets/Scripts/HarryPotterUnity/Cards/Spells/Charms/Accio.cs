@@ -18,6 +18,8 @@ namespace HarryPotterUnity.Cards.Spells.Charms
                 Player.Discard.Remove(lesson);
             }
 
+            Player.Discard.AdjustCardSpacing();
+
         }
     }
 }

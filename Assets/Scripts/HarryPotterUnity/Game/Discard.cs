@@ -42,16 +42,13 @@ namespace HarryPotterUnity.Game
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
 
-            bool shouldFlip = card.FlipState == GenericCard.FlipStates.FaceDown;
-
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, shouldFlip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, false, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
         }
 
         public void Remove(GenericCard card)
         {
             _cards.Remove(card);
-            AdjustCardSpacing();
         }
 
         public IEnumerable<GenericCard> GetCardsOfType(Predicate<GenericCard> predicate, int amount)
@@ -60,7 +57,7 @@ namespace HarryPotterUnity.Game
             return _cards.FindAll(predicate).Take(amount);
         }
 
-        private void AdjustCardSpacing()
+        public void AdjustCardSpacing()
         {
             ITweenObject tween = new AsyncMoveTween(_cards, GetTargetPositionForCard);
             tween.WaitForCompletion = false;

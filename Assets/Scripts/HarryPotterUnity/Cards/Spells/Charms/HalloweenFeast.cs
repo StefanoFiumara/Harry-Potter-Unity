@@ -17,6 +17,8 @@ namespace HarryPotterUnity.Cards.Spells.Charms
                 Player.Hand.Add(creature);
                 Player.Discard.Remove(creature);
             }
+
+            Player.Discard.AdjustCardSpacing();
         }
     }
 }

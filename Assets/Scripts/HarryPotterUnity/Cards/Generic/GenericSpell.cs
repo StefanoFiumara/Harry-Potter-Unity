@@ -15,10 +15,11 @@ namespace HarryPotterUnity.Cards.Generic
         {
             Enable();
             PreviewSpell();
-            SpellAction(targets);
 
             Player.Hand.Remove(this);
             Player.Discard.Add(this);
+
+            SpellAction(targets);
         }
 
         protected abstract void SpellAction(List<GenericCard> targets);
@@ -27,15 +28,7 @@ namespace HarryPotterUnity.Cards.Generic
         {
             State = CardStates.Discarded;
             var rotate180 = Player.OppositePlayer.IsLocalPlayer ? TweenQueue.RotationType.Rotate180 : TweenQueue.RotationType.NoRotate;
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, !Player.IsLocalPlayer, rotate180, State));
-            //StartCoroutine(DiscardAfterCooldown());
-        }
-
-        [UsedImplicitly]
-        protected IEnumerator DiscardAfterCooldown()
-        {
-            yield return new WaitForSeconds(0.9f);
-            Player.Discard.Add(this);
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, FlipStates.FaceUp, rotate180, State));
         }
     }
 }

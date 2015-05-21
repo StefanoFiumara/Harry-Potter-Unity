@@ -10,11 +10,11 @@ namespace HarryPotterUnity.Tween
         private readonly Vector3 _position;
         private readonly float _time;
         private readonly float _delay;
-        private readonly bool _flip;
+        private readonly GenericCard.FlipStates _flip;
         private readonly TweenQueue.RotationType _rotate;
         private readonly GenericCard.CardStates _stateAfterAnimation;
 
-        public MoveTween(GameObject target, Vector3 position, float time, float delay, bool flip, TweenQueue.RotationType rotate, GenericCard.CardStates stateAfterAnimation)
+        public MoveTween(GameObject target, Vector3 position, float time, float delay, GenericCard.FlipStates flip, TweenQueue.RotationType rotate, GenericCard.CardStates stateAfterAnimation)
         {
             _target = target;
             _position = position;
@@ -53,10 +53,7 @@ namespace HarryPotterUnity.Tween
 
         private void RotateAndFlipCard()
         {
-            var cardRotation = _target.transform.localRotation.eulerAngles;
-            var targetFlip = _flip ? (cardRotation.y > 20f ? 0f : 180f) : cardRotation.y;
-
-            var targetRotate = 0f;
+            float targetRotate = 0f;
             switch (_rotate)
             {
                 case TweenQueue.RotationType.Rotate90:
@@ -67,7 +64,18 @@ namespace HarryPotterUnity.Tween
                     break;
             }
 
-            if (_flip) _target.GetComponent<GenericCard>().SwitchFlipState();
+            float targetFlip = 0f;
+            switch (_flip)
+            {
+                    case GenericCard.FlipStates.FaceUp:
+                        targetFlip = 0f;
+                        break;
+                    case GenericCard.FlipStates.FaceDown:
+                        targetFlip = 180f;
+                        break;
+            }
+
+            _target.GetComponent<GenericCard>().FlipState = _flip;
 
             iTween.RotateTo(_target, iTween.Hash("time", _time,
                 "y", targetFlip,

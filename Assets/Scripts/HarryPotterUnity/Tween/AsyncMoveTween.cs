@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Tween
         {
             _targets = targets;
             _getPosition = getPositionFunction;
-            WaitForCompletion = false;
+            WaitForCompletion = true;
         }
 
         public float CompletionTime
@@ -29,7 +29,7 @@ namespace HarryPotterUnity.Tween
         {
             foreach (var target in _targets)
             {
-                iTween.Stop(target.gameObject);
+                //iTween.Stop(target.gameObject);
 
                 iTween.MoveTo(target.gameObject, iTween.Hash(
                 "time", 0.5f,

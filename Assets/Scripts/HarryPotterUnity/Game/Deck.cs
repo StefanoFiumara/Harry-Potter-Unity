@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
@@ -61,14 +62,19 @@ namespace HarryPotterUnity.Game
 
             if (_cards.Count <= 0)
             {
-                _player.DisableAllCards();
-                _player.OppositePlayer.DisableAllCards();
-                StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
+                GameOver();
             }
 
             _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", _cards.Count);
 
             return card;
+        }
+
+        private void GameOver()
+        {
+            _player.DisableAllCards();
+            _player.OppositePlayer.DisableAllCards();
+            StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
         }
 
         [UsedImplicitly]
@@ -123,7 +129,6 @@ namespace HarryPotterUnity.Game
         public void Remove(GenericCard card)
         {
             _cards.Remove(card);
-            //TODO: Adjust spacing
         }
 
         public void Add(GenericCard card)
@@ -134,11 +139,27 @@ namespace HarryPotterUnity.Game
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
             cardPos.z -= _cards.IndexOf(card) * 0.2f;
 
-            var shouldFlip = card.FlipState == GenericCard.FlipStates.FaceUp;
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, GenericCard.FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+        }
 
-            //UtilManager.TweenQueue.AddTweenToQueue(card, cardPos, 0.25f, GenericCard.CardStates.Discarded, shouldFlip, TweenQueue.RotationType.NoRotate);
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, shouldFlip, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
-            //TODO: Adjust spacing
+        public void AdjustCardSpacing()
+        {
+            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(_cards, GetTargetPositionForCard));
+        }
+
+        private Vector3 GetTargetPositionForCard(GenericCard card)
+        {
+            if (!_cards.Contains(card))
+            {
+                Debug.LogError("GetTargetPositionForCard cannot find given card in deck.");
+                return Vector3.zero;
+            }
+
+            int index = _cards.IndexOf(card);
+            var result = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
+            result += index * Vector3.back * 0.2f;
+
+            return result;
         }
     }
 }

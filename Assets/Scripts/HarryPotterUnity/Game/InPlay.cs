@@ -78,7 +78,7 @@ namespace HarryPotterUnity.Game
                 cardPosition,
                 0.3f,
                 0f,
-                card.FlipState == GenericCard.FlipStates.FaceDown,
+                GenericCard.FlipStates.FaceUp, 
                 TweenQueue.RotationType.Rotate90,
                 GenericCard.CardStates.InPlay));
         }
@@ -90,7 +90,7 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(GenericCard card)
         {
-            var position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
+            int position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
 
             var cardPosition = new Vector3();
 

@@ -44,7 +44,7 @@ namespace HarryPotterUnity.Cards.Generic
         }
 
         public CardStates State { get; protected set; }
-        public FlipStates FlipState { get; private set; }
+        public FlipStates FlipState { get; set; }
 
 
         [UsedImplicitly, Space(10)] 
@@ -60,7 +60,7 @@ namespace HarryPotterUnity.Cards.Generic
         public int ActionCost = 1;
 
         private InputGatherer _inputGatherer;
-        private int _inputRequired = 0;
+        private int _inputRequired;
 
         public Player Player { get; set; }
 
@@ -107,11 +107,6 @@ namespace HarryPotterUnity.Cards.Generic
         public void SwitchState(CardStates newState)
         {
             State = newState;
-        }
-
-        public void SwitchFlipState()
-        {
-            FlipState = FlipState == FlipStates.FaceUp ? FlipStates.FaceDown : FlipStates.FaceUp;
         }
 
         [UsedImplicitly]
