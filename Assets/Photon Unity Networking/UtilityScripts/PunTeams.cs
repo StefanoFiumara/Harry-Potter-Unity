@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 /// <summary>
 /// Implements teams in a room/game with help of player properties. Access them by PhotonPlayer.GetTeam extension.

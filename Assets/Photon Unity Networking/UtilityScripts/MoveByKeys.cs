@@ -1,5 +1,4 @@
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
 
 /// <summary>
 /// Very basic component to move a GameObject by WASD and Space.
@@ -13,7 +12,7 @@ using MonoBehaviour = Photon.MonoBehaviour;
 /// JumpTimeout defines after how many seconds you can jump again.
 /// </remarks>
 [RequireComponent(typeof (PhotonView))]
-public class MoveByKeys : MonoBehaviour
+public class MoveByKeys : Photon.MonoBehaviour
 {
     public float Speed = 10f;
     public float JumpForce = 200f;

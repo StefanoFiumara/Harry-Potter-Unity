@@ -7,6 +7,7 @@
 using ExitGames.Client.Photon;
 using UnityEngine;
 
+
 /// <summary>
 /// Basic GUI to show traffic and health statistics of the connection to Photon, 
 /// toggled by shift+tab.

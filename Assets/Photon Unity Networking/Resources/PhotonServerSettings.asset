@@ -15,12 +15,16 @@ MonoBehaviour:
   Protocol: 0
   ServerAddress: 
   ServerPort: 5055
-  PreferredRegion: 1
   AppID: e90422b0-1605-4f24-af5d-96c49b543ec9
-  PingCloudServersOnAwake: 0
+  PreferredRegion: 0
+  EnabledRegions: -1
   RpcList:
   - Chat
   - DestroyRpc
+  - ExecuteDrawActionOnPlayer
+  - ExecuteInputCardById
+  - ExecutePlayActionById
+  - ExecuteSkipAction
   - InstantiateRpc
   - OnAwakeRPC
   - PickupItemInit
@@ -29,11 +33,4 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupTimes
   - StartGameRpc
-  - DestroyPlayers
-  - ExecuteAction
-  - ExecutePlayActionById
-  - ExecuteDrawActionOnPlayer
-  - ExecuteInputSpellById
-  - ExecuteInputCardById
-  - ExecuteSkipAction
-  DisableAutoOpenWizard: 0
+  DisableAutoOpenWizard: 1

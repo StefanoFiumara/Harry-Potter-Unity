@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+using System.Collections;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 /// <summary>Finds out which PickupItems are not spawned at the moment and send this to new players.</summary>
 /// <remarks>Attach this component to a single GameObject in the scene, not to all PickupItems.</remarks>
 [RequireComponent(typeof(PhotonView))]
-public class PickupItemSyncer : MonoBehaviour
+public class PickupItemSyncer : Photon.MonoBehaviour
 {
     public bool IsWaitingForPickupInit;
     private const float TimeDeltaToIgnore = 0.2f;
@@ -67,7 +69,7 @@ public class PickupItemSyncer : MonoBehaviour
         }
     }
 
-    [RPC]
+    [PunRPC]
     public void RequestForPickupTimes(PhotonMessageInfo msgInfo)
     {
         if (msgInfo.sender == null)
@@ -124,7 +126,7 @@ public class PickupItemSyncer : MonoBehaviour
     }
 
 
-    [RPC]
+    [PunRPC]
     public void PickupItemInit(double timeBase, float[] inactivePickupsAndTimes)
     {
         this.IsWaitingForPickupInit = false;

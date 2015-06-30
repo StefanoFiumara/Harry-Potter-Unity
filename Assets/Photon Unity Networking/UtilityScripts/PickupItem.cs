@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+using System.Collections;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 /// <summary>
 /// Makes a scene object pickup-able. Needs a PhotonView which belongs to the scene.
 /// </summary>
 /// <remarks>Includes a OnPhotonSerializeView implementation that </remarks>
 [RequireComponent(typeof(PhotonView))]
-public class PickupItem : MonoBehaviour, IPunObservable
+public class PickupItem : Photon.MonoBehaviour, IPunObservable
 {
     ///<summary>Enables you to define a timeout when the picked up item should re-spawn at the same place it was before.</summary>
     /// <remarks>
@@ -37,7 +39,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
     /// Implement OnPickedUp(PickupItem item) {} in some script on the linked game object.
     /// The item will be "this" and item.PickupIsMine will help you to find if this pickup was done by "this player".
     /// </remarks>
-    public UnityEngine.MonoBehaviour OnPickedUpCall;
+    public MonoBehaviour OnPickedUpCall;
 
 
     // these values are internally used. they are public for debugging only
@@ -118,7 +120,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
     }
 
 
-    [RPC]
+    [PunRPC]
     public void PunPickup(PhotonMessageInfo msgInfo)
     {
         // when this client's RPC gets executed, this client no longer waits for a sent pickup and can try again
@@ -170,7 +172,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
     {
         // this script simply disables the GO for a while until it respawns. 
         this.gameObject.SetActive(false);
-        DisabledPickupItems.Add(this);
+        PickupItem.DisabledPickupItems.Add(this);
         this.TimeOfRespawn = 0;
 
         if (timeUntilRespawn > 0)
@@ -181,7 +183,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
     }
 
 
-    [RPC]
+    [PunRPC]
     internal void PunRespawn(Vector3 pos)
     {
         Debug.Log("PunRespawn with Position.");
@@ -189,7 +191,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
         this.gameObject.transform.position = pos;
     }
 
-    [RPC]
+    [PunRPC]
     internal void PunRespawn()
     {
         #if DEBUG
@@ -200,7 +202,7 @@ public class PickupItem : MonoBehaviour, IPunObservable
 
 
         // if this is called from another thread, we might want to do this in OnEnable() instead of here (depends on Invoke's implementation)
-        DisabledPickupItems.Remove(this);
+        PickupItem.DisabledPickupItems.Remove(this);
         this.TimeOfRespawn = 0;
         this.PickupIsMine = false;
 

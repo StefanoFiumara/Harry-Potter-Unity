@@ -1,8 +1,10 @@
+using ExitGames.Client.Photon;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+using System.Collections;
+
 
 [RequireComponent(typeof(PhotonView))]
-public class OnAwakeUsePhotonView : MonoBehaviour {
+public class OnAwakeUsePhotonView : Photon.MonoBehaviour {
 
     // tries to send an RPC as soon as this script awakes (e.g. immediately when instantiated)
 	void Awake() 
@@ -28,13 +30,13 @@ public class OnAwakeUsePhotonView : MonoBehaviour {
         this.photonView.RPC("OnAwakeRPC", PhotonTargets.All, (byte)1);
     }
 	
-    [RPC]
+    [PunRPC]
     public void OnAwakeRPC()
     {
         Debug.Log("RPC: 'OnAwakeRPC' PhotonView: " + this.photonView);
     }
 
-    [RPC]
+    [PunRPC]
     public void OnAwakeRPC(byte myParameter)
     {
         Debug.Log("RPC: 'OnAwakeRPC' Parameter: " + myParameter + " PhotonView: " + this.photonView);

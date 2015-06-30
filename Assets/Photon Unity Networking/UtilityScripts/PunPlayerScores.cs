@@ -1,5 +1,8 @@
-using ExitGames.Client.Photon;
+using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 public class PunPlayerScores : MonoBehaviour
 {

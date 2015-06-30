@@ -1,7 +1,7 @@
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+using System.Collections;
 
-public class SmoothSyncMovement : MonoBehaviour
+public class SmoothSyncMovement : Photon.MonoBehaviour
 {
     public float SmoothingDelay = 5;
     public void Awake()

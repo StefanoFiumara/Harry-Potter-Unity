@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+using System.Collections;
 
 [RequireComponent(typeof(PhotonView))]
-public class InRoomChat : MonoBehaviour 
+public class InRoomChat : Photon.MonoBehaviour 
 {
     public Rect GuiRect = new Rect(0,0, 250,300);
     public bool IsVisible = true;
@@ -68,7 +68,7 @@ public class InRoomChat : MonoBehaviour
         GUILayout.EndArea();
     }
 
-    [RPC]
+    [PunRPC]
     public void Chat(string newLine, PhotonMessageInfo mi)
     {
         string senderName = "anonymous";

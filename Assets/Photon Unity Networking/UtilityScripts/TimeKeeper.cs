@@ -8,10 +8,10 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-
 namespace ExitGames.Client.DemoParticle
 {
+    using System;
+
     /// <summary>
     /// A utility class that turns it's ShouldExecute property to true after a set interval time has passed.
     /// </summary>

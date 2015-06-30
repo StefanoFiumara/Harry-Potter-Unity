@@ -1,11 +1,11 @@
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+using System.Collections;
 
 /// <summary>
 /// Makes a scene object pickup-able. Needs a PhotonView which belongs to the scene.
 /// </summary>
 [RequireComponent(typeof(PhotonView))]
-public class PickupItemSimple : MonoBehaviour
+public class PickupItemSimple : Photon.MonoBehaviour
 {
     public float SecondsBeforeRespawn = 2;
     public bool PickupOnCollide;
@@ -36,7 +36,7 @@ public class PickupItemSimple : MonoBehaviour
         this.photonView.RPC("PunPickupSimple", PhotonTargets.AllViaServer);
     }
 
-    [RPC]
+    [PunRPC]
     public void PunPickupSimple(PhotonMessageInfo msgInfo)
     {
         // one of the messages might be ours

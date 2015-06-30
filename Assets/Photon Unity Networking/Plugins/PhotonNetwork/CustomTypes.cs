@@ -15,8 +15,12 @@
 
 
 using System.IO;
+using System.Runtime.InteropServices;
 using ExitGames.Client.Photon;
+using System;
 using UnityEngine;
+
+
 
 /// <summary>
 /// Internally used class, containing de/serialization methods for various Unity-specific classes.

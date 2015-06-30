@@ -8,12 +8,14 @@ using System;
 using System.Collections;
 using ExitGames.Client.Photon;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+
+using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 
 /// <summary>
 /// Internal Monobehaviour that allows Photon to run an Update loop.
 /// </summary>
-internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
+internal class PhotonHandler : Photon.MonoBehaviour, IPhotonPeerListener
 {
     public static PhotonHandler SP;
 
@@ -34,7 +36,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
     {
         if (SP != null && SP != this && SP.gameObject != null)
         {
-            DestroyImmediate(SP.gameObject);
+            GameObject.DestroyImmediate(SP.gameObject);
         }
 
         SP = this;
@@ -43,14 +45,14 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
         this.updateInterval = 1000 / PhotonNetwork.sendRate;
         this.updateIntervalOnSerialize = 1000 / PhotonNetwork.sendRateOnSerialize;
 
-        StartFallbackSendAckThread();
+        PhotonHandler.StartFallbackSendAckThread();
     }
 
     /// <summary>Called by Unity when the application is closed. Tries to disconnect.</summary>
     protected void OnApplicationQuit()
     {
-        AppQuits = true;
-        StopFallbackSendAckThread();
+        PhotonHandler.AppQuits = true;
+        PhotonHandler.StopFallbackSendAckThread();
         PhotonNetwork.Disconnect();
     }
 
@@ -125,6 +127,7 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
 
     public static void StartFallbackSendAckThread()
     {
+#if !UNITY_WEBGL
         if (sendThreadShouldRun)
         {
             return;
@@ -132,11 +135,14 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
 
         sendThreadShouldRun = true;
         SupportClass.CallInBackground(FallbackSendAckThread);   // thread will call this every 100ms until method returns false
+#endif
     }
 
     public static void StopFallbackSendAckThread()
     {
+#if !UNITY_WEBGL
         sendThreadShouldRun = false;
+#endif
     }
 
     public static bool FallbackSendAckThread()
@@ -274,8 +280,8 @@ internal class PhotonHandler : MonoBehaviour, IPhotonPeerListener
 
 
         Region best = pingManager.BestRegion;
-        BestRegionCodeCurrently = best.Code;
-        BestRegionCodeInPreferences = best.Code;
+        PhotonHandler.BestRegionCodeCurrently = best.Code;
+        PhotonHandler.BestRegionCodeInPreferences = best.Code;
 
         Debug.Log("Found best region: " + best.Code + " ping: " + best.Ping + ". Calling ConnectToRegionMaster() is: " + connectToBest);
 

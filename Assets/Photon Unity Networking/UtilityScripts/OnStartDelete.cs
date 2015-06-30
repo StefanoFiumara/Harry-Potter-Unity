@@ -5,6 +5,6 @@ public class OnStartDelete : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		DestroyObject(this.gameObject);
+		Component.DestroyObject(this.gameObject);
 	}
 }

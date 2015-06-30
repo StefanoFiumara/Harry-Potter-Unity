@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [RequireComponent(typeof(PhotonView))]
 public class ManualPhotonViewAllocator : MonoBehaviour
@@ -18,10 +19,10 @@ public class ManualPhotonViewAllocator : MonoBehaviour
         pv.RPC("InstantiateRpc", PhotonTargets.AllBuffered, viewID);
     }
 
-    [RPC]
+    [PunRPC]
     public void InstantiateRpc(int viewID)
     {
-        GameObject go = Instantiate(Prefab, InputToEvent.inputHitPos + new Vector3(0, 5f, 0), Quaternion.identity) as GameObject;
+        GameObject go = GameObject.Instantiate(Prefab, InputToEvent.inputHitPos + new Vector3(0, 5f, 0), Quaternion.identity) as GameObject;
         go.GetPhotonView().viewID = viewID;
 
         OnClickDestroy ocd = go.GetComponent<OnClickDestroy>();

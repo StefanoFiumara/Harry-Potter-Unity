@@ -12,6 +12,7 @@
 using System;
 using ExitGames.Client.Photon;
 
+
 /// <summary>
 /// A simplified room with just the info required to list and join, used for the room listing in the lobby.
 /// The properties are not settable (open, maxPlayers, etc).
@@ -43,6 +44,11 @@ public class RoomInfo
 
     /// <summary>Backing field for property.</summary>
     protected string nameField;
+
+    /// <summary>Backing field for master client id (actorNumber). defined by server in room props and ev leave.</summary>
+    protected internal int masterClientIdField;
+
+    protected internal bool serverSideMasterClient { get; private set; }
 
     /// <summary>Read-only "cache" of custom properties of a room. Set via Room.SetCustomProperties (not available for RoomInfo class!).</summary>
     /// <remarks>All keys are string-typed and the values depend on the game/application.</remarks>
@@ -215,6 +221,17 @@ public class RoomInfo
         if (propertiesToCache.ContainsKey(GameProperties.CleanupCacheOnLeave))
         {
             this.autoCleanUpField = (bool)propertiesToCache[GameProperties.CleanupCacheOnLeave];
+        }
+
+        if (propertiesToCache.ContainsKey(GameProperties.MasterClientId))
+        {
+            this.serverSideMasterClient = true;
+            bool isUpdate = this.masterClientIdField != 0;
+            this.masterClientIdField = (int) propertiesToCache[GameProperties.MasterClientId];
+            if (isUpdate)
+            {
+                PhotonNetwork.networkingPeer.UpdateMasterClient();
+            }
         }
 
         //if (propertiesToCache.ContainsKey(GameProperties.PropsListedInLobby))

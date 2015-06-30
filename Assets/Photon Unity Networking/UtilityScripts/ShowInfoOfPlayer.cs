@@ -1,6 +1,6 @@
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
-
+using System.Collections;
+using ExitGames.Client.Photon;
 /// <summary>
 /// Can be attached to a GameObject to show info about the owner of the PhotonView.
 /// </summary>
@@ -8,7 +8,7 @@ using MonoBehaviour = Photon.MonoBehaviour;
 /// This is a Photon.Monobehaviour, which adds the property photonView (that's all).
 /// </remarks>
 [RequireComponent(typeof(PhotonView))]
-public class ShowInfoOfPlayer : MonoBehaviour
+public class ShowInfoOfPlayer : Photon.MonoBehaviour
 {
     private GameObject textGo;
     private TextMesh tm;

@@ -8,8 +8,10 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+using System;
 using ExitGames.Client.Photon;
 using UnityEngine;
+
 
 /// <summary>
 /// This class resembles a room that PUN joins (or joined).
@@ -64,18 +66,18 @@ public class Room : RoomInfo
         {
             if (!this.Equals(PhotonNetwork.room))
             {
-                Debug.LogWarning("Can't set maxPlayers when not in that room.");
+                UnityEngine.Debug.LogWarning("Can't set maxPlayers when not in that room.");
             }
 
             if (value > 255)
             {
-                Debug.LogWarning("Can't set Room.maxPlayers to: " + value + ". Using max value: 255.");
+                UnityEngine.Debug.LogWarning("Can't set Room.maxPlayers to: " + value + ". Using max value: 255.");
                 value = 255;
             }
 
             if (value != this.maxPlayersField && !PhotonNetwork.offlineMode)
             {
-                PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(new Hashtable() { { GameProperties.MaxPlayers, (byte)value } }, true, (byte)0);
+                PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(new Hashtable() { { GameProperties.MaxPlayers, (byte)value } }, true, (byte)0, null);
             }
 
             this.maxPlayersField = (byte)value;
@@ -101,12 +103,12 @@ public class Room : RoomInfo
         {
             if (!this.Equals(PhotonNetwork.room))
             {
-                Debug.LogWarning("Can't set open when not in that room.");
+                UnityEngine.Debug.LogWarning("Can't set open when not in that room.");
             }
 
             if (value != this.openField && !PhotonNetwork.offlineMode)
             {
-                PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(new Hashtable() { { GameProperties.IsOpen, value } }, true, (byte)0);
+                PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(new Hashtable() { { GameProperties.IsOpen, value } }, true, (byte)0, null);
             }
 
             this.openField = value;
@@ -129,12 +131,12 @@ public class Room : RoomInfo
         {
             if (!this.Equals(PhotonNetwork.room))
             {
-                Debug.LogWarning("Can't set visible when not in that room.");
+                UnityEngine.Debug.LogWarning("Can't set visible when not in that room.");
             }
 
             if (value != this.visibleField && !PhotonNetwork.offlineMode)
             {
-                PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(new Hashtable() { { GameProperties.IsVisible, value } }, true, (byte)0);
+                PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(new Hashtable() { { GameProperties.IsVisible, value } }, true, (byte)0, null);
             }
 
             this.visibleField = value;
@@ -156,6 +158,21 @@ public class Room : RoomInfo
             return this.autoCleanUpField;
         }
     }
+
+	/// <summary>The ID (actorNumber) of the current Master Client of this room.</summary>
+    /// <remarks>See also: PhotonNetwork.masterClient.</remarks>
+    protected internal int masterClientId
+    {
+        get
+        {
+            return this.masterClientIdField;
+        }
+        set
+        {
+            this.masterClientIdField = value;
+        }
+    }
+
 
     internal Room(string roomName, RoomOptions options) : base(roomName, null)
     {
@@ -213,6 +230,43 @@ public class Room : RoomInfo
     }
 
     /// <summary>
+    /// Will update properties on the server, if the expectedValues are matching the current (property)values on the server.
+    /// </summary>
+    /// <remarks>
+    /// This variant of SetCustomProperties uses server side Check-And-Swap (CAS) to update valuzes only if the expected values are correct.
+    /// The expectedValues can't be null or empty, but they can be different key/values than the propertiesToSet.
+    /// 
+    /// If the client's knowledge of properties is wrong or outdated, it can't set values (with CAS).
+    /// This can be useful to keep players from concurrently setting values. For example: If all players
+    /// try to pickup some card or item, only one should get it. With CAS, only the first SetProperties 
+    /// gets executed server-side and any other (sent at the same time) fails.
+    /// 
+    /// The server will broadcast successfully changed values and the local "cache" of customProperties 
+    /// only gets updated after a roundtrip (if anything changed).
+    /// </remarks>
+    /// <param name="propertiesToSet">The new properties to be set. </param>
+    /// <param name="expectedValues">At least one property key/value set to check server-side. Key and value must be correct.</param>
+    public void SetCustomProperties(Hashtable propertiesToSet, Hashtable expectedValues)
+    {
+        if (propertiesToSet == null)
+        {
+            return;
+        }
+        if (expectedValues == null || expectedValues.Count == 0)
+        {
+            Debug.LogWarning("SetCustomProperties(props, expected) requires some expectedValues. Use SetCustomProperties(props) to simply set some without check.");
+            return;
+        }
+
+        if (!PhotonNetwork.offlineMode)
+        {
+            Hashtable customProps = propertiesToSet.StripToStringKeys() as Hashtable;
+            Hashtable customPropsToCheck = expectedValues.StripToStringKeys() as Hashtable;
+            PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(customProps, false, 0, customPropsToCheck);  // broadcast is always on for CAS
+        }
+    }
+
+    /// <summary>
     /// Enables you to define the properties available in the lobby if not all properties are needed to pick a room.
     /// </summary>
     /// <remarks>
@@ -223,7 +277,7 @@ public class Room : RoomInfo
     {
         Hashtable customProps = new Hashtable();
         customProps[GameProperties.PropsListedInLobby] = propsListedInLobby;
-        PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(customProps, false, 0);
+        PhotonNetwork.networkingPeer.OpSetPropertiesOfRoom(customProps, false, 0, null);
 
         this.propertiesListedInLobby = propsListedInLobby;
     }

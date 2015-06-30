@@ -8,18 +8,18 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Security;
-using System.Threading;
-
 #if UNITY_EDITOR || (!UNITY_ANDROID && !UNITY_IPHONE && !UNITY_PS3 && !UNITY_WINRT && !UNITY_WP8)
 
 namespace ExitGames.Client.Photon
 {
+    using System;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Security;
+    using System.Threading;
+
     /// <summary> Internal class to encapsulate the network i/o functionality for the realtime libary.</summary>
-    internal class SocketUdp : IPhotonSocket
+    internal class SocketUdp : IPhotonSocket, IDisposable
     {
         private Socket sock;
 
@@ -34,6 +34,26 @@ namespace ExitGames.Client.Photon
 
             this.Protocol = ConnectionProtocol.Udp;
             this.PollReceive = false;
+        }
+
+        public void Dispose()
+        {
+            this.State = PhotonSocketState.Disconnecting;
+
+            if (this.sock != null)
+            {
+                try
+                {
+                    if (this.sock.Connected) this.sock.Close();
+                }
+                catch (Exception ex)
+                {
+                    this.EnqueueDebugReturn(DebugLevel.INFO, "Exception in Dispose(): " + ex);
+                }
+            }
+
+            this.sock = null;
+            this.State = PhotonSocketState.Disconnected;
         }
 
         public override bool Connect()
@@ -124,7 +144,7 @@ namespace ExitGames.Client.Photon
                 {
                     this.sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                    IPAddress ep = GetIpAddress(this.ServerAddress);
+                    IPAddress ep = IPhotonSocket.GetIpAddress(this.ServerAddress);
                     this.sock.Connect(ep, this.ServerPort);
 
                     this.State = PhotonSocketState.Connected;

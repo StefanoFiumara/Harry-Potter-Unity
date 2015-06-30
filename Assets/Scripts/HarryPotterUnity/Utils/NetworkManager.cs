@@ -67,7 +67,7 @@ namespace HarryPotterUnity.Utils
             _hudManager.BackToMainMenu();
         }
 
-        [RPC, UsedImplicitly]
+        [PunRPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
             _hudManager.DisableMainMenuHud();
@@ -194,7 +194,7 @@ namespace HarryPotterUnity.Utils
             Destroy(_player2.gameObject);
         }
 
-        [RPC, UsedImplicitly]
+        [PunRPC, UsedImplicitly]
         public void ExecutePlayActionById(byte id)
         {
             var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
@@ -207,7 +207,7 @@ namespace HarryPotterUnity.Utils
             card.MouseUpAction();
         }
 
-        [RPC, UsedImplicitly]
+        [PunRPC, UsedImplicitly]
         public void ExecuteDrawActionOnPlayer(byte id)
         {
             var player = id == 0 ? _player1 : _player2;
@@ -216,7 +216,7 @@ namespace HarryPotterUnity.Utils
             player.UseActions();
         }
 
-        [RPC, UsedImplicitly]
+        [PunRPC, UsedImplicitly]
         public void ExecuteInputCardById(byte id, params byte[] selectedCardIds)
         {
             var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
@@ -229,7 +229,7 @@ namespace HarryPotterUnity.Utils
             card.Player.OppositePlayer.EnableAllCards();
         }
 
-        [RPC, UsedImplicitly]
+        [PunRPC, UsedImplicitly]
         public void ExecuteSkipAction()
         {
             if (_player1.CanUseActions())
