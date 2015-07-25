@@ -31,14 +31,15 @@ namespace HarryPotterUnity.Game
             _player = transform.GetComponentInParent<Player>();
         }
 
-        public void Add(GenericCard card, bool preview = true)
+        public void Add(GenericCard card, bool preview = true, bool adjustSpacing = true)
         {
             card.transform.parent = transform;
 
-            if (Cards.Count == 12) AdjustHandSpacing();
-
             var flipState = _player.IsLocalPlayer ? GenericCard.FlipStates.FaceUp : GenericCard.FlipStates.FaceDown;
+
             AnimateCardToHand(card, flipState, preview);
+
+            if (adjustSpacing) AdjustHandSpacing();
 
             Cards.Add(card);
         }
@@ -46,8 +47,10 @@ namespace HarryPotterUnity.Game
         {
             foreach (var card in cards)
             {
-                Add(card);
+                Add(card, adjustSpacing: false);
             }
+
+            AdjustHandSpacing();
         }
 
         public void RemoveAll(IEnumerable<GenericCard> cardsToRemove)
@@ -56,8 +59,6 @@ namespace HarryPotterUnity.Game
             {
                 Cards.Remove(card);
             }
-
-            AdjustHandSpacing();
         }
 
         public void Remove(GenericCard card)
@@ -65,12 +66,9 @@ namespace HarryPotterUnity.Game
             RemoveAll(new List<GenericCard> { card });
         }
 
-        private void AdjustHandSpacing()
+        public void AdjustHandSpacing()
         {
             ITweenObject tween = new AsyncMoveTween(Cards, GetTargetPositionForCard);
-
-            tween.WaitForCompletion = false;
-
             UtilManager.TweenQueue.AddTweenToQueue(tween);
         }
 

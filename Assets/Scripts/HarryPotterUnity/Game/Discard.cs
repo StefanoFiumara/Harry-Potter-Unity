@@ -46,6 +46,16 @@ namespace HarryPotterUnity.Game
             UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
         }
 
+        public void AddAll(IEnumerable<GenericCard> cards)
+        {
+            foreach (var card in cards)
+            {
+                Add(card);
+            }
+
+            AdjustCardSpacing();
+        }
+
         public void Remove(GenericCard card)
         {
             _cards.Remove(card);
@@ -57,8 +67,6 @@ namespace HarryPotterUnity.Game
             {
                 _cards.Remove(card);
             }
-
-            AdjustCardSpacing();
         }
 
         public IEnumerable<GenericCard> GetCardsOfType(Predicate<GenericCard> predicate, int amount)
@@ -70,7 +78,6 @@ namespace HarryPotterUnity.Game
         private void AdjustCardSpacing()
         {
             ITweenObject tween = new AsyncMoveTween(_cards, GetTargetPositionForCard);
-            tween.WaitForCompletion = false;
             UtilManager.TweenQueue.AddTweenToQueue(tween);
         }
 
@@ -84,6 +91,5 @@ namespace HarryPotterUnity.Game
             return cardPos;
         }
         //TODO: OnMouseUp: View cards in discard pile
-        
     }
 }

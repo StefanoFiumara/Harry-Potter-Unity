@@ -13,12 +13,7 @@ namespace HarryPotterUnity.Cards.Spells.Charms
         {
             //TODO: Implement it with input instead?
             var lessons = Player.Discard.GetCardsOfType(card => card.CardType == CardTypes.Lesson, 2).ToList();
-            foreach (var lesson in lessons)
-            {
-                Player.Hand.Add(lesson);
-                Player.Discard.Remove(lesson);
-            }
-
+           
             Player.Hand.AddAll(lessons);
             Player.Discard.RemoveAll(lessons);
         }

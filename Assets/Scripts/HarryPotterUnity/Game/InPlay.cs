@@ -19,13 +19,7 @@ namespace HarryPotterUnity.Game
         private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
 
-        private Player _player;
 
-        [UsedImplicitly]
-        public void Start()
-        {
-            _player = transform.GetComponentInParent<Player>();
-        }
         public InPlay()
         {
             Cards = new List<GenericCard>();

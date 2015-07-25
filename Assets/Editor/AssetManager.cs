@@ -8,29 +8,23 @@ namespace Assets.Editor
     [UsedImplicitly]
     public class AssetManager : MonoBehaviour 
     {
-        [MenuItem("HP-TCG Card Management/Add Photon Views To Cards"), UsedImplicitly]
+        [MenuItem("HP-TCG Card Management/Add Outline Prefabs"), UsedImplicitly]
         public static void AddPhotonViews()
         {
             var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
 
-            foreach (var path in assetFolderPaths)
+            string outlinePath = AssetDatabase.GetAllAssetPaths().FirstOrDefault(path => path.Contains("Outline.prefab"));
+
+            var outlinePrefab = (GameObject) AssetDatabase.LoadAssetAtPath(outlinePath, typeof (GameObject));
+
+            
+            foreach (string path in assetFolderPaths)
             {
                 var obj = (GameObject) AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
-                var view = obj.GetComponent<PhotonView>();
-                if (view)
-                {
-                    if (!view.ObservedComponents.Contains(obj.transform))
-                    {
-                        view.ObservedComponents.Add(obj.transform);
-                        Debug.Log("View already created but Observed was not set");
-                    }
-                }
-                else
-                {
-                    obj.AddComponent<PhotonView>();
-                    obj.GetComponent<PhotonView>().ObservedComponents.Add(obj.transform);
-                    Debug.Log("Created View and Set Observed");
-                }
+                var outlineInstance = (GameObject) Instantiate(outlinePrefab, new Vector3(0f, 0f, 0.1f), Quaternion.Euler(90f, -180f, 0));
+
+                outlineInstance.transform.parent = obj.transform;
+
                 AssetDatabase.SaveAssets();
             }
         }

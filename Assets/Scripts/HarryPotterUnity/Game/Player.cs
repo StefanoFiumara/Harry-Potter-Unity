@@ -74,6 +74,9 @@ namespace HarryPotterUnity.Game
             TurnIndicator.gameObject.SetActive(false);
 
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
+
+            Hand.AdjustHandSpacing();
+
             OppositePlayer.InitTurn();
         }
 
@@ -92,6 +95,7 @@ namespace HarryPotterUnity.Game
             Deck.DrawCard();
 
             AddActions(2);
+
             if (ActionsAvailable < 1) ActionsAvailable = 1;
 
             if( !firstTurn ) _hudManager.ToggleSkipActionButton();
@@ -113,7 +117,7 @@ namespace HarryPotterUnity.Game
             for (int i = 0; i < 7; i++)
             {
                 var card = Deck.TakeTopCard();
-                Hand.Add(card, false);
+                Hand.Add(card, preview: false, adjustSpacing: false);
             }       
         }
 
@@ -143,6 +147,8 @@ namespace HarryPotterUnity.Game
         {
             if (amount <= 0) return;
 
+            var cards = new List<GenericCard>();
+
             for (int i = 0; i < amount; i++)
             {
                 if (DamageBuffer > 0)
@@ -158,8 +164,10 @@ namespace HarryPotterUnity.Game
                     Debug.Log("Game Over");
                     break;
                 }
-                Discard.Add(card);
+                cards.Add(card);
             }
+
+            Discard.AddAll(cards);
         }
 
         public void UpdateLessonTypesInPlay()
