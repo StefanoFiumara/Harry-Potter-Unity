@@ -21,9 +21,9 @@ namespace Assets.Editor
             foreach (string path in assetFolderPaths)
             {
                 var obj = (GameObject) AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
-                var outlineInstance = (GameObject) Instantiate(outlinePrefab, new Vector3(0f, 0f, 0.1f), Quaternion.Euler(90f, -180f, 0));
+                //var outlineInstance = (GameObject) Instantiate(outlinePrefab, new Vector3(0f, 0f, 0.1f), Quaternion.Euler(90f, -180f, 0));
 
-                outlineInstance.transform.parent = obj.transform;
+                outlinePrefab.transform.parent = obj.transform;
 
                 AssetDatabase.SaveAssets();
             }
