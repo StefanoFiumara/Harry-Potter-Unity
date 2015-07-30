@@ -44,6 +44,7 @@ namespace HarryPotterUnity.Cards.Generic
         }
 
         public CardStates State { get; protected set; }
+
         public FlipStates FlipState { get; set; }
 
 
@@ -68,6 +69,7 @@ namespace HarryPotterUnity.Cards.Generic
         private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
 
         private GameObject _cardFace;
+        private GameObject _outline;
 
         public byte NetworkId { get; set; }
 
@@ -75,17 +77,34 @@ namespace HarryPotterUnity.Cards.Generic
         public void Start()
         {
             FlipState = FlipStates.FaceDown;
+            
+            gameObject.layer = UtilManager.CardLayer;
+            _cardFace = transform.FindChild("Front").gameObject;
 
-            if(gameObject.GetComponent<Collider>() == null)
-            {
-                var col = gameObject.AddComponent<BoxCollider>();
-                col.isTrigger = true;
-                col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
-            }
+            AddCollider();
 
             _inputGatherer = GetComponent<InputGatherer>();
 
+            GetPlayRequirements();
 
+            AddOutlineComponent();
+        }
+
+        private void AddOutlineComponent()
+        {
+            var tmp = Resources.Load("Outline");
+
+            _outline = (GameObject) Instantiate(tmp);
+            _outline.transform.position = transform.position + Vector3.back*0.3f;
+            _outline.transform.rotation = _cardFace.transform.rotation;
+            _outline.transform.parent = transform;
+
+            _outline.SetActive(false);
+
+        }
+
+        private void GetPlayRequirements()
+        {
             _playRequirements = new List<ICardPlayRequirement>();
 
             var components = GetComponents<MonoBehaviour>();
@@ -98,9 +117,15 @@ namespace HarryPotterUnity.Cards.Generic
 
                 _playRequirements.Add(requirement);
             }
+        }
 
-            gameObject.layer = UtilManager.CardLayer;
-            _cardFace = transform.FindChild("Front").gameObject;
+        private void AddCollider()
+        {
+            if (gameObject.GetComponent<Collider>() != null) return;
+
+            var col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+            col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
         }
 
         [UsedImplicitly]
@@ -114,12 +139,18 @@ namespace HarryPotterUnity.Cards.Generic
         {
             //TODO: enable highlight if playable
             ShowPreview();
+
+            if (IsPlayable())
+            {
+                _outline.SetActive(true);
+            }
         }
 
         [UsedImplicitly]
         public void OnMouseExit()
         {
             HidePreview();
+            _outline.SetActive(false);
         }
 
         [UsedImplicitly]
