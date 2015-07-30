@@ -69,10 +69,9 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public IEnumerable<GenericCard> GetCardsOfType(Predicate<GenericCard> predicate, int amount)
+        public List<GenericCard> GetCards(Predicate<GenericCard> predicate)
         {
-            //TODO: Randomize this
-            return _cards.FindAll(predicate).Take(amount);
+            return _cards.FindAll(predicate).ToList();
         }
 
         private void AdjustCardSpacing()
