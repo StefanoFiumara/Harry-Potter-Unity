@@ -91,7 +91,7 @@ namespace HarryPotterUnity.Utils
             var card = CardLibrary.Where(c => c.Classification == GenericCard.ClassificationTypes.Lesson)
                 .First(l => ((Lesson) l).LessonType == lessonType);
 
-            for (var i = 0; i < amount; i++)
+            for (int i = 0; i < amount; i++)
             {
                 deck.Add(card);
             }
@@ -101,11 +101,11 @@ namespace HarryPotterUnity.Utils
         {
             var potentialCards = CardLibrary.Where(c => c.Classification == classification).ToList();
 
-            var cardsAdded = 0;
+            int cardsAdded = 0;
 
             while (cardsAdded < amount)
             {
-                var selected = Random.Range(0, potentialCards.Count);
+                int selected = Random.Range(0, potentialCards.Count);
                 var card = potentialCards[selected];
 
                 //TODO: Enable this check when enough cards are implemented
