@@ -137,7 +137,6 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly]
         public void OnMouseOver()
         {
-            //TODO: enable highlight if playable
             ShowPreview();
 
             if (IsPlayable())
