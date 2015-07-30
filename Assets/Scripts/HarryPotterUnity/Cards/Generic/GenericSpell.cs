@@ -28,7 +28,7 @@ namespace HarryPotterUnity.Cards.Generic
         {
             State = CardStates.Discarded;
             var rotate180 = Player.OppositePlayer.IsLocalPlayer ? TweenQueue.RotationType.Rotate180 : TweenQueue.RotationType.NoRotate;
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, FlipStates.FaceUp, rotate180, State));
+            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, FlipStates.FaceUp, rotate180, State, 0.6f));
         }
     }
 }
