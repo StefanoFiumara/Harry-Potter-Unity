@@ -16,9 +16,11 @@ namespace HarryPotterUnity.Cards.Spells.Transfigurations
 
         protected override void SpellAction(List<GenericCard> selectedCards)
         {
+            int i = 0;
             foreach(var card in selectedCards) {
-                card.Player.Hand.Add(card, false);
+                card.Player.Hand.Add(card, preview: false, adjustSpacing: card.Player.IsLocalPlayer && i == 1);
                 card.Player.InPlay.Remove(card);
+                i++;
             }
         }
     }
