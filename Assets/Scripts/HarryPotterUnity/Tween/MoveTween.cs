@@ -10,11 +10,12 @@ namespace HarryPotterUnity.Tween
         private readonly Vector3 _position;
         private readonly float _time;
         private readonly float _delay;
+        private readonly float _timeUntilNextTween;
         private readonly GenericCard.FlipStates _flip;
         private readonly TweenQueue.RotationType _rotate;
         private readonly GenericCard.CardStates _stateAfterAnimation;
 
-        public MoveTween(GameObject target, Vector3 position, float time, float delay, GenericCard.FlipStates flip, TweenQueue.RotationType rotate, GenericCard.CardStates stateAfterAnimation)
+        public MoveTween(GameObject target, Vector3 position, float time, float delay, GenericCard.FlipStates flip, TweenQueue.RotationType rotate, GenericCard.CardStates stateAfterAnimation, float timeUntilNextTween = 0f)
         {
             _target = target;
             _position = position;
@@ -23,8 +24,7 @@ namespace HarryPotterUnity.Tween
             _flip = flip;
             _rotate = rotate;
             _stateAfterAnimation = stateAfterAnimation;
-
-            WaitForCompletion = true;
+            _timeUntilNextTween = timeUntilNextTween;
         }
 
 
@@ -33,7 +33,10 @@ namespace HarryPotterUnity.Tween
             get { return _time + _delay; }
         }
 
-        public bool WaitForCompletion { get; set; }
+        public float TimeUntilNextTween
+        {
+            get { return _timeUntilNextTween; }
+        }
 
         public void ExecuteTween()
         {

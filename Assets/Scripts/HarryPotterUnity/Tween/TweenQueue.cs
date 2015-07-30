@@ -15,12 +15,16 @@ namespace HarryPotterUnity.Tween
         private Queue<ITweenObject> _queue;
 
         private bool _tweenQueueRunning;
+
+        private float _timeUntilNextTween;
+
         public bool TweenQueueIsEmpty { get; private set; }
 
         public TweenQueue()
         {
             _queue = new Queue<ITweenObject>();
             _tweenQueueRunning = false;
+            _timeUntilNextTween = 0f;
             TweenQueueIsEmpty = true;
         }
 
@@ -47,8 +51,10 @@ namespace HarryPotterUnity.Tween
                 }
                 else
                 {
+                    yield return new WaitForSeconds(_timeUntilNextTween);
                     var tween = _queue.Dequeue();
                     tween.ExecuteTween();
+                    _timeUntilNextTween = tween.TimeUntilNextTween;
                     yield return new WaitForSeconds(tween.CompletionTime);
                     
                 }

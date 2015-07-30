@@ -9,17 +9,24 @@ namespace HarryPotterUnity.Tween
     {
 
         private readonly List<GenericCard> _targets;
-        private readonly Func<GenericCard, Vector3> _getPosition; 
+        private readonly Func<GenericCard, Vector3> _getPosition;
+        private readonly float _timeUntilNextTween;
 
-        public AsyncMoveTween(List<GenericCard> targets, Func<GenericCard, Vector3> getPositionFunction)
+        public AsyncMoveTween(List<GenericCard> targets, Func<GenericCard, Vector3> getPositionFunction, float timeUntilNextTween = 0f)
         {
             _targets = targets;
             _getPosition = getPositionFunction;
+            _timeUntilNextTween = timeUntilNextTween;
         }
 
         public float CompletionTime
         {
             get { return 0.5f; }
+        }
+
+        public float TimeUntilNextTween
+        {
+            get { return _timeUntilNextTween; }
         }
 
         public void ExecuteTween()
