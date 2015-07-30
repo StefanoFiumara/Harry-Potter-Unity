@@ -8,10 +8,15 @@ namespace HarryPotterUnity.Cards.Spells.Charms
     public class EndlessSandwiches : GenericSpell {
         protected override void SpellAction(List<GenericCard> targets)
         {
-            while (Player.Hand.Cards.Count < 7)
+            int amountCardsToDraw = 7 - Player.Hand.Cards.Count;
+            var cardsToDraw = new List<GenericCard>();
+
+            while (amountCardsToDraw-- > 0)
             {
-                Player.Deck.DrawCard();
+                cardsToDraw.Add( Player.Deck.TakeTopCard() );
             }
+
+            Player.Hand.AddAll(cardsToDraw);
         }
     }
 }
