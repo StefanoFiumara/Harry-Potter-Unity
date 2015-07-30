@@ -11,7 +11,7 @@ namespace HarryPotterUnity.Cards.Spells.Charms
         protected override void SpellAction(List<GenericCard> targets)
         {
             //TODO: Implement it with input instead?
-            var creatures = Player.Discard.GetCardsOfType(card => card.CardType == CardTypes.Creature, 4).ToList();
+            var creatures = Player.Discard.GetCards(card => card.CardType == CardTypes.Creature).Take(4).ToList();
 
             Player.Discard.RemoveAll(creatures);
             Player.Hand.AddAll(creatures);

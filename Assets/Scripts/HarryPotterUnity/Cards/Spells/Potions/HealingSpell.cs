@@ -18,7 +18,7 @@ namespace HarryPotterUnity.Cards.Spells.Potions
 
         protected override void SpellAction(List<GenericCard> targets)
         {
-            var cards = Player.Discard.GetCardsOfType(card => !card.Tags.Contains(Tag.Healing), _healingAmount).ToList();
+            var cards = Player.Discard.GetCards(card => !card.Tags.Contains(Tag.Healing)).Take(_healingAmount).ToList();
             /*
             foreach (var card in cards)
             {
