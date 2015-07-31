@@ -1,4 +1,6 @@
-﻿using HarryPotterUnity.Cards.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
+using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
@@ -30,13 +32,10 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public void OnRequirementMet()
         {
-            for (int i = 0; i < _amountRequired; i++)
-            {
-                var lesson = _player.InPlay.GetLessonOfType( _lessonType );
+            var lessons = _player.InPlay.GetLessonsOfType(_lessonType, _amountRequired).ToList();
 
-                _player.InPlay.Remove(lesson);
-                _player.Discard.Add(lesson);
-            }
+            _player.Discard.AddAll(lessons);
+            _player.InPlay.RemoveAll(lessons);
         }
     }
 }

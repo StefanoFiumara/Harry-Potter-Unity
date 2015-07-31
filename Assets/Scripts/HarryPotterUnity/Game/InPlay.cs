@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Tween;
@@ -44,6 +45,20 @@ namespace HarryPotterUnity.Game
             ((IPersistentCard) card).OnExitInPlayAction();
         }
 
+        public void RemoveAll(List<GenericCard> cards)
+        {
+            foreach (var card in cards)
+            {
+                Cards.Remove(card);
+                ((IPersistentCard)card).OnExitInPlayAction();
+            }
+
+            foreach (var type in cards.GroupBy(c => c.CardType))
+            {
+                RearrangeCardsOfType(type.Key);
+            }
+        }
+
         public List<GenericCard> GetCreaturesInPlay()
         {
             return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Creature);
@@ -54,9 +69,9 @@ namespace HarryPotterUnity.Game
             return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Lesson);
         }
 
-        public Lesson GetLessonOfType(Lesson.LessonTypes type)
+        public IEnumerable<GenericCard> GetLessonsOfType(Lesson.LessonTypes type, int amount = 1)
         {
-            return GetLessonsInPlay().First(x => ((Lesson)x).LessonType == type) as Lesson;
+            return GetLessonsInPlay().Where(x => ((Lesson)x).LessonType == type).Take(amount);
         }
 
         public int GetAmountOfLessonsOfType(Lesson.LessonTypes type)
@@ -69,7 +84,7 @@ namespace HarryPotterUnity.Game
             var cardPosition = GetTargetPositionForCard(card);
 
             UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject,
-                cardPosition,
+                cardPosition, 
                 0.3f,
                 0f,
                 GenericCard.FlipStates.FaceUp, 

@@ -36,7 +36,7 @@ namespace HarryPotterUnity.Tween
                 //iTween.Stop(target.gameObject);
 
                 iTween.MoveTo(target.gameObject, iTween.Hash(
-                "time", 0.5f,
+                "time", 0.3f,
                 "position", _getPosition(target),
                 "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true

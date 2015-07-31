@@ -16,9 +16,6 @@ namespace HarryPotterUnity.Game
 
         private static readonly Vector2 DiscardPositionOffset = new Vector2(-355f, -30f);
 
-        //Will use later??
-        //public static readonly Vector3 PreviewOffset = new Vector3(-300f, -30f, -6f);
-
         [UsedImplicitly]
         public void Start () {
             _cards = new List<GenericCard>();
@@ -48,17 +45,12 @@ namespace HarryPotterUnity.Game
 
         public void AddAll(IEnumerable<GenericCard> cards)
         {
+            AdjustCardSpacing();
+
             foreach (var card in cards)
             {
                 Add(card);
             }
-
-            AdjustCardSpacing();
-        }
-
-        public void Remove(GenericCard card)
-        {
-            _cards.Remove(card);
         }
 
         public void RemoveAll(IEnumerable<GenericCard> cards)
@@ -76,7 +68,7 @@ namespace HarryPotterUnity.Game
 
         private void AdjustCardSpacing()
         {
-            ITweenObject tween = new AsyncMoveTween(_cards, GetTargetPositionForCard);
+            ITweenObject tween = new AsyncMoveTween(new List<GenericCard>(_cards), GetTargetPositionForCard);
             UtilManager.TweenQueue.AddTweenToQueue(tween);
         }
 
