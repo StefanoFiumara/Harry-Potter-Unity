@@ -18,7 +18,7 @@ namespace HarryPotterUnity.Game
 
         private static readonly Vector3 HandCardsOffset = new Vector3(-240f, -200f, 0f);
 
-        private const float Spacing = 55f;
+        private const float SPACING = 55f;
 
         public Hand()
         {
@@ -45,6 +45,8 @@ namespace HarryPotterUnity.Game
         }
         public void AddAll(IEnumerable<GenericCard> cards)
         {
+            AdjustHandSpacing();
+
             foreach (var card in cards)
             {
                 Add(card, adjustSpacing: false);
@@ -78,7 +80,7 @@ namespace HarryPotterUnity.Game
             var cardPosition = HandCardsOffset;
 
             int index = Cards.IndexOf(card);
-            cardPosition.x += index * Spacing * shrinkFactor;
+            cardPosition.x += index * SPACING * shrinkFactor;
             cardPosition.z -= index;
 
             return cardPosition;
@@ -90,7 +92,7 @@ namespace HarryPotterUnity.Game
 
             float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
 
-            cardPosition.x += Cards.Count * Spacing * shrinkFactor;
+            cardPosition.x += Cards.Count * SPACING * shrinkFactor;
             cardPosition.z -= Cards.Count;
 
             if (preview)
