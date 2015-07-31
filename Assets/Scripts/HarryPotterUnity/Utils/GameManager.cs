@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Utils
 {
-    public static class UtilManager {
+    public static class GameManager {
 
         public const int PreviewLayer = 9;
         public const int CardLayer = 10;

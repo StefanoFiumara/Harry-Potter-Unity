@@ -20,12 +20,14 @@ namespace HarryPotterUnity.Game
         public void Start () {
             _cards = new List<GenericCard>();
 
+            /*
             if (gameObject.GetComponent<Collider>() != null) return;
-
+            
             var col = gameObject.AddComponent<BoxCollider>();
             col.isTrigger = true;
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 0f);
+             * */
         }
 
         public void Add(GenericCard card) 
@@ -39,8 +41,8 @@ namespace HarryPotterUnity.Game
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
 
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
         }
 
         public void AddAll(IEnumerable<GenericCard> cards)
@@ -69,7 +71,7 @@ namespace HarryPotterUnity.Game
         private void AdjustCardSpacing()
         {
             ITweenObject tween = new AsyncMoveTween(new List<GenericCard>(_cards), GetTargetPositionForCard);
-            UtilManager.TweenQueue.AddTweenToQueue(tween);
+            GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(GenericCard card)

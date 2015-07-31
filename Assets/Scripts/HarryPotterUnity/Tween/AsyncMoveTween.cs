@@ -21,7 +21,7 @@ namespace HarryPotterUnity.Tween
 
         public float CompletionTime
         {
-            get { return 0.5f; }
+            get { return 0.2f; }
         }
 
         public float TimeUntilNextTween
@@ -33,10 +33,8 @@ namespace HarryPotterUnity.Tween
         {
             foreach (var target in _targets)
             {
-                //iTween.Stop(target.gameObject);
-
                 iTween.MoveTo(target.gameObject, iTween.Hash(
-                "time", 0.3f,
+                "time", 0.2f,
                 "position", _getPosition(target),
                 "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true

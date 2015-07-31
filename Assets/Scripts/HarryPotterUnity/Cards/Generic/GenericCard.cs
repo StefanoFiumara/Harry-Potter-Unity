@@ -77,7 +77,7 @@ namespace HarryPotterUnity.Cards.Generic
         {
             FlipState = FlipStates.FaceDown;
             
-            gameObject.layer = UtilManager.CardLayer;
+            gameObject.layer = GameManager.CardLayer;
             _cardFace = transform.FindChild("Front").gameObject;
 
             AddCollider();
@@ -194,14 +194,14 @@ namespace HarryPotterUnity.Cards.Generic
 
         private void ShowPreview()
         {
-            _cardFace.layer = UtilManager.PreviewLayer;
+            _cardFace.layer = GameManager.PreviewLayer;
             
             if (FlipState == FlipStates.FaceDown) return;
 
             if (iTween.Count(gameObject) == 0)
             {
-                UtilManager.PreviewCamera.transform.rotation = transform.rotation;
-                UtilManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
+                GameManager.PreviewCamera.transform.rotation = transform.rotation;
+                GameManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
             }
             else
             {
@@ -211,25 +211,25 @@ namespace HarryPotterUnity.Cards.Generic
     
         private void HidePreview()
         {
-            _cardFace.layer = UtilManager.CardLayer;
-            UtilManager.PreviewCamera.transform.position = DefaultPreviewCameraPosition;
+            _cardFace.layer = GameManager.CardLayer;
+            GameManager.PreviewCamera.transform.position = DefaultPreviewCameraPosition;
         }
 
         public void Disable()
         {
-            gameObject.layer = UtilManager.IgnoreRaycastLayer;
+            gameObject.layer = GameManager.IgnoreRaycastLayer;
             _cardFace.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.35f);
         }
 
         public void Enable()
         {
-            gameObject.layer = UtilManager.CardLayer;
+            gameObject.layer = GameManager.CardLayer;
             _cardFace.GetComponent<Renderer>().material.color = Color.white;
         }
 
         public void SetSelected()
         {
-            gameObject.layer = UtilManager.CardLayer;
+            gameObject.layer = GameManager.CardLayer;
             _cardFace.GetComponent<Renderer>().material.color = Color.yellow;
         }
 

@@ -16,7 +16,7 @@ namespace HarryPotterUnity.Cards.Spells.Charms
 
             var enemyHand = Player.OppositePlayer.Hand.Cards.Select(card => card.gameObject).ToList();
 
-            if(Player.IsLocalPlayer) UtilManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(new List<GameObject>(enemyHand), 
+            if(Player.IsLocalPlayer) GameManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(new List<GameObject>(enemyHand), 
                                                                                                FlipStates.FaceUp, 
                                                                                                timeUntilNextTween: 1f));
 
@@ -32,7 +32,7 @@ namespace HarryPotterUnity.Cards.Spells.Charms
                 enemyHand.Remove(card.gameObject);
             }
 
-            if(Player.IsLocalPlayer) UtilManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(enemyHand, FlipStates.FaceDown));
+            if(Player.IsLocalPlayer) GameManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(enemyHand, FlipStates.FaceDown));
         }
     }
 }

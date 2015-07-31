@@ -147,7 +147,7 @@ namespace HarryPotterUnity.UI
             _skipActionButton.SetActive(true);
 
             _endGamePanel.gameObject.SetActive(false);
-            UtilManager.TweenQueue.Reset();
+            GameManager.TweenQueue.Reset();
 
             DisableGameplayHud();
             EnableMainMenuHud();

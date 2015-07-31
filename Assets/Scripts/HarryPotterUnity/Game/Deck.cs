@@ -45,8 +45,8 @@ namespace HarryPotterUnity.Game
 
                 _cards[i].Player = _player;
 
-                _cards[i].NetworkId = UtilManager.NetworkIdCounter++;
-                UtilManager.AllCards.Add(_cards[i]);
+                _cards[i].NetworkId = GameManager.NetworkIdCounter++;
+                GameManager.AllCards.Add(_cards[i]);
             }
         }
 	
@@ -139,7 +139,7 @@ namespace HarryPotterUnity.Game
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
             cardPos.z -= _cards.IndexOf(card) * 0.2f;
 
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, GenericCard.FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, GenericCard.FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
         }
 
         public void AddAll(IEnumerable<GenericCard> cards)
@@ -154,7 +154,7 @@ namespace HarryPotterUnity.Game
 
         private void AdjustCardSpacing()
         {
-            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(_cards, GetTargetPositionForCard));
+            GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(_cards, GetTargetPositionForCard));
         }
 
         private Vector3 GetTargetPositionForCard(GenericCard card)

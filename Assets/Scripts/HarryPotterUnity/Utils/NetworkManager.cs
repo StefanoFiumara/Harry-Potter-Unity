@@ -170,8 +170,8 @@ namespace HarryPotterUnity.Utils
             var p1SelectedLessons = p1LessonsBytes.Select(n => (Lessontypes) n).ToList();
             var p2SelectedLessons = p2LessonsBytes.Select(n => (Lessontypes) n).ToList();
 
-            UtilManager.NetworkIdCounter = 0;
-            UtilManager.AllCards.Clear();
+            GameManager.NetworkIdCounter = 0;
+            GameManager.AllCards.Clear();
 
             _player1.InitDeck(p1SelectedLessons);
             _player2.InitDeck(p2SelectedLessons);
@@ -197,7 +197,7 @@ namespace HarryPotterUnity.Utils
         [PunRPC, UsedImplicitly]
         public void ExecutePlayActionById(byte id)
         {
-            var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
+            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
 
             if (card == null)
             {
@@ -219,9 +219,9 @@ namespace HarryPotterUnity.Utils
         [PunRPC, UsedImplicitly]
         public void ExecuteInputCardById(byte id, params byte[] selectedCardIds)
         {
-            var card = UtilManager.AllCards.Find(c => c.NetworkId == id);
+            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
             
-            var selectedCards = selectedCardIds.Select(cardId => UtilManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
+            var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
 
             card.MouseUpAction(selectedCards);
 
@@ -248,7 +248,7 @@ namespace HarryPotterUnity.Utils
 
         public static IEnumerator WaitForGameOverMessage(Player sender)
         {
-            while (UtilManager.TweenQueue.TweenQueueIsEmpty)
+            while (GameManager.TweenQueue.TweenQueueIsEmpty)
             {
                 yield return null;
             }

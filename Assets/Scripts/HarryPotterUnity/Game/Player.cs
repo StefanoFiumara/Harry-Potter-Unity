@@ -185,16 +185,16 @@ namespace HarryPotterUnity.Game
 
         public void DisableAllCards()
         {
-            Deck.gameObject.layer = UtilManager.IgnoreRaycastLayer;
-            UtilManager.DisableCards(Hand.Cards);
-            UtilManager.DisableCards(InPlay.Cards);
+            Deck.gameObject.layer = GameManager.IgnoreRaycastLayer;
+            GameManager.DisableCards(Hand.Cards);
+            GameManager.DisableCards(InPlay.Cards);
         }
 
         public void EnableAllCards()
         {
-            Deck.gameObject.layer = UtilManager.DeckLayer;
-            UtilManager.EnableCards(Hand.Cards);
-            UtilManager.EnableCards(InPlay.Cards);
+            Deck.gameObject.layer = GameManager.DeckLayer;
+            GameManager.EnableCards(Hand.Cards);
+            GameManager.EnableCards(InPlay.Cards);
         }
     }
 }

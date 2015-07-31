@@ -83,7 +83,7 @@ namespace HarryPotterUnity.Game
         {
             var cardPosition = GetTargetPositionForCard(card);
 
-            UtilManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject,
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject,
                 cardPosition, 
                 0.3f,
                 0f,
@@ -94,7 +94,7 @@ namespace HarryPotterUnity.Game
 
         private void RearrangeCardsOfType(GenericCard.CardTypes type)
         {
-            UtilManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.CardType == type), GetTargetPositionForCard));
+            GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.CardType == type), GetTargetPositionForCard));
         }
 
         private Vector3 GetTargetPositionForCard(GenericCard card)
