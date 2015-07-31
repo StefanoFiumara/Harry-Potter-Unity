@@ -152,7 +152,7 @@ MonoBehaviour:
 
 
     Potions class allows you to use cauldrons to get ahead in your lessons, brew delicious
-    concoctions to heal yourself while in battle and poison your opponent to ensure
+    concoctions to heal yourself while in battle, and poison your opponent to ensure
     your victory.'
 --- !u!222 &19883667
 CanvasRenderer:
@@ -1182,7 +1182,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Select the classes you would like to take:'
+  m_Text: 'Welcome to Hogwarts!
+
+    Select the classes you would like to take:'
 --- !u!222 &557488471
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1620,7 +1622,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: .5, y: .5}
   m_AnchorMax: {x: .5, y: .5}
-  m_AnchoredPosition: {x: 0, y: .400000006}
+  m_AnchoredPosition: {x: 0, y: -23.25}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: .5, y: .5}
 --- !u!1 &800919481
