@@ -16,10 +16,7 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly, SerializeField]
         private LessonTypes _lessonType;
 
-        public LessonTypes LessonType
-        {
-            get { return _lessonType; }
-        }
+        public LessonTypes LessonType => _lessonType;
 
         protected override void OnClickAction(List<GenericCard> targets)
         {

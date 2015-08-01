@@ -154,7 +154,16 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly]
         public void OnMouseUp()
         {
+            //TODO: Execute OnSelectedAction if card is InPlay
+            if (State == CardStates.InPlay && Player.IsLocalPlayer)
+            {
+                //TODO: Gather input here as needed and call execute action via photonview
+
+                return;
+            }
+
             if (!IsPlayable()) return;
+
             if (_inputRequired > 0)
             {
                 _inputGatherer.GatherInput();
