@@ -9,22 +9,21 @@
 // ----------------------------------------------------------------------------
 
 using System.Collections;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-using SupportClass = ExitGames.Client.Photon.SupportClass;
-
 
 /// <summary>
 /// This static class defines some useful extension methods for several existing classes (e.g. Vector3, float and others).
 /// </summary>
 public static class Extensions
 {
-    public static PhotonView[] GetPhotonViewsInChildren(this UnityEngine.GameObject go)
+    public static PhotonView[] GetPhotonViewsInChildren(this GameObject go)
     {
         return go.GetComponentsInChildren<PhotonView>(true) as PhotonView[];
     }
 
-    public static PhotonView GetPhotonView(this UnityEngine.GameObject go)
+    public static PhotonView GetPhotonView(this GameObject go)
     {
         return go.GetComponent<PhotonView>() as PhotonView;
     }

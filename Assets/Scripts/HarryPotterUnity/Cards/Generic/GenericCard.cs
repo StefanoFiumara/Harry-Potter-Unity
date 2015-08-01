@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Interfaces;
-using HarryPotterUnity.Cards.PlayRequirements;
+using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Cards.Generic.PlayRequirements;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -26,6 +26,7 @@ namespace HarryPotterUnity.Cards.Generic
             Healing, Unique
         }
 
+        //TODO: Turn into [Flags] and implement bitmasking? YAGNI?
         [UsedImplicitly]
         public List<Tag> Tags;
 

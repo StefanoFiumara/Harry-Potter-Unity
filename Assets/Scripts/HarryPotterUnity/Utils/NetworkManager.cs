@@ -5,14 +5,14 @@ using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
 using UnityEngine;
-
 using Lessontypes = HarryPotterUnity.Cards.Generic.Lesson.LessonTypes;
+using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Utils
 {
     [UsedImplicitly]
-    public class NetworkManager : Photon.MonoBehaviour
+    public class NetworkManager : MonoBehaviour
     {
         private Player _player1;
         private Player _player2;

@@ -8,11 +8,9 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
-using ExitGames.Client.Photon;
 using System;
 using System.Collections.Generic;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
+using UnityEngine;
 
 namespace ExitGames.Client.Photon
 {
@@ -402,7 +400,7 @@ namespace ExitGames.Client.Photon
             {
                 if (!string.IsNullOrEmpty(authValues.UserId))
                 {
-                    UnityEngine.Debug.LogWarning("UserId sent: " + authValues.UserId);
+                    Debug.LogWarning("UserId sent: " + authValues.UserId);
                     opParameters[ParameterCode.UserId] = authValues.UserId;
                 }
 
@@ -1195,7 +1193,7 @@ public class AuthenticationValues
     public virtual void AddAuthParameter(string key, string value)
     {
         string ampersand = string.IsNullOrEmpty(this.AuthGetParameters) ? "" : "&";
-        this.AuthGetParameters = string.Format("{0}{1}{2}={3}", this.AuthGetParameters, ampersand, System.Uri.EscapeDataString(key), System.Uri.EscapeDataString(value));
+        this.AuthGetParameters = string.Format("{0}{1}{2}={3}", this.AuthGetParameters, ampersand, Uri.EscapeDataString(key), Uri.EscapeDataString(value));
     }
 
     public override string ToString()

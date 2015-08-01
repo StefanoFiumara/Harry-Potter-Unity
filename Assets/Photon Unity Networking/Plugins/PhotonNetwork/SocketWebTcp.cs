@@ -8,9 +8,6 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections;
-using UnityEngine;
 
 #if UNITY_WEBGL
 

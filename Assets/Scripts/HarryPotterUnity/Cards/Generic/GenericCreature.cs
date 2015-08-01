@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.Cards.Generic.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
 

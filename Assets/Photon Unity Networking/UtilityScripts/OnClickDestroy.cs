@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 /// <summary>
 /// Implements OnClick to destroy the GameObject it's attached to. Optionally a RPC is sent to do this.
@@ -19,7 +20,7 @@ using System.Collections;
 /// Gets OnClick() calls by InputToEvent class attached to a camera.
 /// </remarks>
 [RequireComponent(typeof(PhotonView))]
-public class OnClickDestroy : Photon.MonoBehaviour
+public class OnClickDestroy : MonoBehaviour
 {
     public bool DestroyByRpc;
 
@@ -38,7 +39,7 @@ public class OnClickDestroy : Photon.MonoBehaviour
     [PunRPC]
     public IEnumerator DestroyRpc()
     {
-        GameObject.Destroy(this.gameObject);
+        Destroy(this.gameObject);
         yield return 0; // if you allow 1 frame to pass, the object's OnDestroy() method gets called and cleans up references.
         PhotonNetwork.UnAllocateViewID(this.photonView.viewID);
     }

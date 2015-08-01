@@ -1,12 +1,11 @@
-using System;
 using UnityEngine;
-using System.Collections;
+using MonoBehaviour = Photon.MonoBehaviour;
 
 /// <summary>
 /// This script automatically connects to Photon (using the settings file),
 /// tries to join a random room and creates one if none was found (which is ok).
 /// </summary>
-public class ConnectAndJoinRandom : Photon.MonoBehaviour
+public class ConnectAndJoinRandom : MonoBehaviour
 {
     /// <summary>Connect automatically? If false you can set this to true later on or call ConnectUsingSettings in your own scripts.</summary>
     public bool AutoConnect = true;

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Serialization;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
@@ -105,7 +104,7 @@ namespace HarryPotterUnity.Game
                 _cards[i] = _cards[random];
                 _cards[random] = temp;
 
-                var newZ = (transform.position.z + 16f) - i * 0.2f;
+                float newZ = (transform.position.z + 16f) - i * 0.2f;
 
                 var point1 = Vector3.MoveTowards(_cards[i].transform.position, Camera.main.transform.position, 80f);
                 point1.z = _cards[i].transform.position.z;
@@ -131,7 +130,7 @@ namespace HarryPotterUnity.Game
             _cards.Remove(card);
         }
 
-        public void Add(GenericCard card)
+        private void Add(GenericCard card)
         {
             _cards.Insert(0, card);
             card.transform.parent = transform;

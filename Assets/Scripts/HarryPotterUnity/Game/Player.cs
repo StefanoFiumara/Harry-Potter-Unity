@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.Cards.Generic.Interfaces;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;

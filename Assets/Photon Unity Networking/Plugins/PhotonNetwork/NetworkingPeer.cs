@@ -4,14 +4,13 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using ExitGames.Client.Photon;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using ExitGames.Client.Photon;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-
 
 /// <summary>
 /// Implements Photon LoadBalancing used in PUN.
@@ -213,7 +212,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         #endif
 
         #pragma warning disable 0162    // the library variant defines if we should use PUN's SocketUdp variant (at all)
-        if (PhotonPeer.NoSocket)
+        if (NoSocket)
         {
             #if !UNITY_EDITOR && (UNITY_PS3 || UNITY_ANDROID)
             Debug.Log("Using class SocketUdpNativeDynamic");
@@ -1194,7 +1193,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                             else
                             {
                                 this.State = global::PeerState.ConnectedToMaster;
-                                NetworkingPeer.SendMonoMessage(PhotonNetworkingMessage.OnConnectedToMaster);
+                                SendMonoMessage(PhotonNetworkingMessage.OnConnectedToMaster);
                             }
                         }
                         else if (this.server == ServerConnection.GameServer)
@@ -2440,12 +2439,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         // load prefab, if it wasn't loaded before (calling methods might do this)
         if (resourceGameObject == null)
         {
-            if (!NetworkingPeer.UsePrefabCache || !NetworkingPeer.PrefabCache.TryGetValue(prefabName, out resourceGameObject))
+            if (!UsePrefabCache || !PrefabCache.TryGetValue(prefabName, out resourceGameObject))
             {
                 resourceGameObject = (GameObject)Resources.Load(prefabName, typeof(GameObject));
-                if (NetworkingPeer.UsePrefabCache)
+                if (UsePrefabCache)
                 {
-                    NetworkingPeer.PrefabCache.Add(prefabName, resourceGameObject);
+                    PrefabCache.Add(prefabName, resourceGameObject);
                 }
             }
 
@@ -2680,7 +2679,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         }
 
         if (PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
-            UnityEngine.Debug.Log("GetInstantiatedObjectsId failed for GO: " + go);
+            Debug.Log("GetInstantiatedObjectsId failed for GO: " + go);
 
 
         return id;
@@ -3740,13 +3739,13 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         }
 
         // check if "current level" is set in props
-        if (!PhotonNetwork.room.customProperties.ContainsKey(NetworkingPeer.CurrentSceneProperty))
+        if (!PhotonNetwork.room.customProperties.ContainsKey(CurrentSceneProperty))
         {
             return;
         }
 
         // if loaded level is not the one defined my master in props, load that level
-        object sceneId = PhotonNetwork.room.customProperties[NetworkingPeer.CurrentSceneProperty];
+        object sceneId = PhotonNetwork.room.customProperties[CurrentSceneProperty];
         if (sceneId is int)
         {
             if (Application.loadedLevel != (int)sceneId)
@@ -3772,9 +3771,9 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         }
 
         // check if "current level" is already set in props
-        if (PhotonNetwork.room.customProperties.ContainsKey(NetworkingPeer.CurrentSceneProperty))
+        if (PhotonNetwork.room.customProperties.ContainsKey(CurrentSceneProperty))
         {
-            object levelIdInProps = PhotonNetwork.room.customProperties[NetworkingPeer.CurrentSceneProperty];
+            object levelIdInProps = PhotonNetwork.room.customProperties[CurrentSceneProperty];
             if (levelIdInProps is int && Application.loadedLevel == (int)levelIdInProps)
             {
                 return;
@@ -3787,8 +3786,8 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
         // current level is not yet in props, so this client has to set it
         Hashtable setScene = new Hashtable();
-        if (levelId is int) setScene[NetworkingPeer.CurrentSceneProperty] = (int)levelId;
-        else if (levelId is string) setScene[NetworkingPeer.CurrentSceneProperty] = (string)levelId;
+        if (levelId is int) setScene[CurrentSceneProperty] = (int)levelId;
+        else if (levelId is string) setScene[CurrentSceneProperty] = (string)levelId;
         else Debug.LogError("Parameter levelId must be int or string!");
 
         PhotonNetwork.room.SetCustomProperties(setScene);

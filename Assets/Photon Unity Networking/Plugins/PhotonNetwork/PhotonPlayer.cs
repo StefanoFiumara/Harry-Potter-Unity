@@ -12,8 +12,6 @@
 using System.Collections.Generic;
 using ExitGames.Client.Photon;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable;
-
 
 /// <summary>
 /// Summarizes a "player" within a room, identified (in that room) by actorID.
@@ -266,7 +264,7 @@ public class PhotonPlayer
 
     public PhotonPlayer Get(int id)
     {
-        return PhotonPlayer.Find(id);
+        return Find(id);
     }
 
     public PhotonPlayer GetNext()

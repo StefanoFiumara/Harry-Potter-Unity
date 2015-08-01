@@ -1,6 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// This class helps you to synchronize Mecanim animations
@@ -28,7 +28,7 @@ public class PhotonAnimatorView : MonoBehaviour
         Continuous = 2,
     }
 
-    [System.Serializable]
+    [Serializable]
     public class SynchronizedParameter
     {
         public ParameterType Type;
@@ -36,7 +36,7 @@ public class PhotonAnimatorView : MonoBehaviour
         public string Name;
     }
 
-    [System.Serializable]
+    [Serializable]
     public class SynchronizedLayer
     {
         public SynchronizeType SynchronizeType;

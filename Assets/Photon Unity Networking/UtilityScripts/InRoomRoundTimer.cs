@@ -1,7 +1,6 @@
 using ExitGames.Client.Photon;
 using UnityEngine;
 
-
 /// <summary>
 /// Simple script that uses a property to sync a start time for a multiplayer game.
 /// </summary>
@@ -39,7 +38,7 @@ public class InRoomRoundTimer : MonoBehaviour
 
         
 
-        ExitGames.Client.Photon.Hashtable startTimeProp = new Hashtable();  // only use ExitGames.Client.Photon.Hashtable for Photon
+        Hashtable startTimeProp = new Hashtable();  // only use ExitGames.Client.Photon.Hashtable for Photon
         startTimeProp[StartTimeKey] = PhotonNetwork.time;
         PhotonNetwork.room.SetCustomProperties(startTimeProp);              // implement OnPhotonCustomRoomPropertiesChanged(Hashtable propertiesThatChanged) to get this change everywhere
     }

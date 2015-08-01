@@ -8,16 +8,16 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
+using System.Net;
+using System.Net.Sockets;
+using System.Security;
+using System.Threading;
+
 #if UNITY_EDITOR || (!UNITY_ANDROID && !UNITY_IPHONE && !UNITY_PS3 && !UNITY_WINRT && !UNITY_WP8)
 
 namespace ExitGames.Client.Photon
 {
-    using System;
-    using System.Net;
-    using System.Net.Sockets;
-    using System.Security;
-    using System.Threading;
-
     /// <summary> Internal class to encapsulate the network i/o functionality for the realtime libary.</summary>
     internal class SocketUdp : IPhotonSocket, IDisposable
     {
@@ -144,7 +144,7 @@ namespace ExitGames.Client.Photon
                 {
                     this.sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                    IPAddress ep = IPhotonSocket.GetIpAddress(this.ServerAddress);
+                    IPAddress ep = GetIpAddress(this.ServerAddress);
                     this.sock.Connect(ep, this.ServerPort);
 
                     this.State = PhotonSocketState.Connected;

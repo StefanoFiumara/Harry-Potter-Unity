@@ -8,10 +8,8 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
-using System;
 using ExitGames.Client.Photon;
 using UnityEngine;
-
 
 /// <summary>
 /// This class resembles a room that PUN joins (or joined).
@@ -66,12 +64,12 @@ public class Room : RoomInfo
         {
             if (!this.Equals(PhotonNetwork.room))
             {
-                UnityEngine.Debug.LogWarning("Can't set maxPlayers when not in that room.");
+                Debug.LogWarning("Can't set maxPlayers when not in that room.");
             }
 
             if (value > 255)
             {
-                UnityEngine.Debug.LogWarning("Can't set Room.maxPlayers to: " + value + ". Using max value: 255.");
+                Debug.LogWarning("Can't set Room.maxPlayers to: " + value + ". Using max value: 255.");
                 value = 255;
             }
 
@@ -103,7 +101,7 @@ public class Room : RoomInfo
         {
             if (!this.Equals(PhotonNetwork.room))
             {
-                UnityEngine.Debug.LogWarning("Can't set open when not in that room.");
+                Debug.LogWarning("Can't set open when not in that room.");
             }
 
             if (value != this.openField && !PhotonNetwork.offlineMode)
@@ -131,7 +129,7 @@ public class Room : RoomInfo
         {
             if (!this.Equals(PhotonNetwork.room))
             {
-                UnityEngine.Debug.LogWarning("Can't set visible when not in that room.");
+                Debug.LogWarning("Can't set visible when not in that room.");
             }
 
             if (value != this.visibleField && !PhotonNetwork.offlineMode)

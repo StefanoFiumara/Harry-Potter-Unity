@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// The PhotonStreamQueue helps you poll object states at higher frequencies then what

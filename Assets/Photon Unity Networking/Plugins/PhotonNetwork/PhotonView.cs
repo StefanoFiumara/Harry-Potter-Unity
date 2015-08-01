@@ -8,12 +8,10 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
-using System;
-using UnityEngine;
-using System.Reflection;
 using System.Collections.Generic;
-using ExitGames.Client.Photon;
-
+using System.Reflection;
+using UnityEngine;
+using MonoBehaviour = Photon.MonoBehaviour;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -52,7 +50,7 @@ public enum OwnershipOption
 /// </summary>
 /// \ingroup publicApi
 [AddComponentMenu("Photon Networking/Photon View &v")]
-public class PhotonView : Photon.MonoBehaviour
+public class PhotonView : MonoBehaviour
 {
     #if UNITY_EDITOR
     [ContextMenu("Open PUN Wizard")]
@@ -362,7 +360,7 @@ public class PhotonView : Photon.MonoBehaviour
         }
 
         // Use incoming data according to observed type
-        if (component is MonoBehaviour)
+        if (component is UnityEngine.MonoBehaviour)
         {
             ExecuteComponentOnSerialize(component, stream, info);
         }
@@ -441,7 +439,7 @@ public class PhotonView : Photon.MonoBehaviour
             return;
         }
 
-        if (component is MonoBehaviour)
+        if (component is UnityEngine.MonoBehaviour)
         {
             ExecuteComponentOnSerialize(component, stream, info);
         }
@@ -520,7 +518,7 @@ public class PhotonView : Photon.MonoBehaviour
             if (this.m_OnSerializeMethodInfos.ContainsKey(component) == false)
             {
                 MethodInfo newMethod = null;
-                bool foundMethod = NetworkingPeer.GetMethod(component as MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out newMethod);
+                bool foundMethod = NetworkingPeer.GetMethod(component as UnityEngine.MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out newMethod);
 
                 if (foundMethod == false)
                 {
@@ -539,7 +537,7 @@ public class PhotonView : Photon.MonoBehaviour
     }
 
 
-    internal MonoBehaviour[] RpcMonoBehaviours;
+    internal UnityEngine.MonoBehaviour[] RpcMonoBehaviours;
 
     /// <summary>
     /// Can be used to refesh the list of MonoBehaviours on this GameObject while PhotonNetwork.UseRpcMonoBehaviourCache is true.
@@ -553,7 +551,7 @@ public class PhotonView : Photon.MonoBehaviour
     /// </remarks>
     public void RefreshRpcMonoBehaviourCache()
     {
-        this.RpcMonoBehaviours = this.GetComponents<MonoBehaviour>();
+        this.RpcMonoBehaviours = this.GetComponents<UnityEngine.MonoBehaviour>();
     }
 
 
