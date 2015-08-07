@@ -14,9 +14,11 @@ namespace HarryPotterUnity.Game
         public List<GenericCard> Cards { get; private set; }
 
         private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
+        private static readonly Vector3 ItemPositionOffset = new Vector3(-255f, 0f, 15f);
         private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);
 
         private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
+        private static readonly Vector2 ItemSpacing = new Vector2(80f, 0f);
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
 
 
@@ -114,6 +116,11 @@ namespace HarryPotterUnity.Game
                     cardPosition = CreaturePositionOffset;
                     cardPosition.x += (position % 3) * CreatureSpacing.x;
                     cardPosition.y -= (int)(position / 3) * CreatureSpacing.y;
+                    break;
+                case GenericCard.CardTypes.Item:
+                    //TODO: Set up Item Position Offsets
+                    cardPosition = ItemPositionOffset;
+                    cardPosition.x += (position % 9) * ItemSpacing.x;
                     break;
                 default:
                     Debug.Log("Warning: GetTargetPositionForCard could not identify cardType");

@@ -18,12 +18,12 @@ namespace HarryPotterUnity.Cards.Generic
         }
         public enum CardTypes
         {
-            Lesson, Creature, Spell // Item, Location, Match, Adventure, Character
+            Lesson, Creature, Spell, Item //, Location, Match, Adventure, Character
         }
 
         public enum Tag
         {
-            Healing, Unique
+            Unique, Healing, Wand, Cauldron, Broom
         }
 
         //TODO: Turn into [Flags] and implement bitmasking? YAGNI?
@@ -48,7 +48,8 @@ namespace HarryPotterUnity.Cards.Generic
         public FlipStates FlipState { get; set; }
 
 
-        [UsedImplicitly, Space(10)] 
+        [Header("Generic Card Settings")]
+        [UsedImplicitly] 
         public CardTypes CardType;
 
         [UsedImplicitly] 
@@ -188,13 +189,13 @@ namespace HarryPotterUnity.Cards.Generic
         }
 
         public void MouseUpAction(List<GenericCard> targets = null)
-        {   
-            OnClickAction(targets);
-                
+        {       
             foreach (var requirement in _playRequirements)
             {
                 requirement.OnRequirementMet();
             }
+
+            OnClickAction(targets);
 
             Player.UseActions(ActionCost);
             

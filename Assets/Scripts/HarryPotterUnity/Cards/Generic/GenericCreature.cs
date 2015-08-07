@@ -7,6 +7,7 @@ namespace HarryPotterUnity.Cards.Generic
 {
     public class GenericCreature : GenericCard, IPersistentCard {
 
+        [Header("Creature Settings")]
         [SerializeField, UsedImplicitly]
         private int _damagePerTurn;
 
