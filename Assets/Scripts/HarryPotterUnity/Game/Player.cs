@@ -174,12 +174,11 @@ namespace HarryPotterUnity.Game
         {
             LessonTypesInPlay = new List<Lesson.LessonTypes>();
 
-            var lessons = InPlay.Cards.FindAll(card => card is Lesson);
+            var lessonProviders = InPlay.Cards.FindAll(card => card is ILessonProvider).Cast<ILessonProvider>();
 
-            foreach (var lessonCard in lessons.Cast<Lesson>()
-                                       .Where(lessonCard => !LessonTypesInPlay.Contains(lessonCard.LessonType)))
+            foreach (var lessonProvider in lessonProviders.Where(provider => !LessonTypesInPlay.Contains(provider.LessonType)))
             {
-                LessonTypesInPlay.Add(lessonCard.LessonType);
+                LessonTypesInPlay.Add(lessonProvider.LessonType);
             }
         }
 
