@@ -85,7 +85,7 @@ namespace HarryPotterUnity.Cards.Generic
 
         public byte NetworkId { get; set; }
 
-        public string CardName { get; private set; }
+        public string CardName { get { return transform.name; } }
 
         [UsedImplicitly]
         public void Start()
@@ -102,8 +102,6 @@ namespace HarryPotterUnity.Cards.Generic
             GetPlayRequirements();
 
             AddOutlineComponent();
-
-            CardName = transform.name.Replace("(Clone)", "");
         }
 
         private void AddOutlineComponent()
@@ -122,18 +120,14 @@ namespace HarryPotterUnity.Cards.Generic
         private void GetPlayRequirements()
         {
             _playRequirements = GetComponents<MonoBehaviour>().OfType<ICardPlayRequirement>().ToList();
-            
-            foreach (var requirement in _playRequirements)
-            {
-                if (requirement is InputRequirement)
-                {
-                    _inputRequired = (requirement as InputRequirement).InputRequired;
-                }
 
-                _playRequirements.Add(requirement);
-            }
+            var inputRequirement = _playRequirements.OfType<InputRequirement>().SingleOrDefault();
+
+            if (inputRequirement == null) return;
+
+            _inputRequired = inputRequirement.InputRequired;
         }
-        
+
         private void AddCollider()
         {
             if (gameObject.GetComponent<Collider>() != null) return;
