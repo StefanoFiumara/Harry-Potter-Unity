@@ -58,7 +58,7 @@ namespace HarryPotterUnity.Cards.Generic
         
         private List<ICardPlayRequirement> _playRequirements;
             
-        [UsedImplicitly, SerializeField]
+        [UsedImplicitly, SerializeField, Range(0, 2)]
         public int ActionCost = 1;
 
         private InputGatherer _inputGatherer;
