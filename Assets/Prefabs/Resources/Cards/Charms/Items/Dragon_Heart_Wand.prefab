@@ -30,6 +30,7 @@ GameObject:
   - 114: {fileID: 11445366}
   - 114: {fileID: 11445780}
   - 114: {fileID: 11421842}
+  - 114: {fileID: 11448344}
   m_Layer: 10
   m_Name: Dragon_Heart_Wand
   m_TagString: Untagged
@@ -223,6 +224,18 @@ MonoBehaviour:
   _lessonType: 1
   _amountLessonsProvided: 3
   _removeExistingCardWithTag: 2
+--- !u!114 &11448344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21cc4ca2411d8be40b6f6258ee5aabb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardName: Borrowed_Wand
 --- !u!114 &11478128
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,7 +254,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _cardName
+      value: Borrowed_Wand
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 132464}

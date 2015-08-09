@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11407040}
   - 114: {fileID: 11415990}
   m_Layer: 10
-  m_Name: BorrowedWand
+  m_Name: Borrowed_Wand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
