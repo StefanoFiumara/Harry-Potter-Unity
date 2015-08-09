@@ -16,6 +16,7 @@ namespace HarryPotterUnity.Cards.Generic
         {
             InDeck, InHand, InPlay, Discarded
         }
+
         public enum CardTypes
         {
             Lesson, Creature, Spell, Item //, Location, Match, Adventure, Character
@@ -57,8 +58,18 @@ namespace HarryPotterUnity.Cards.Generic
 
         
         private List<ICardPlayRequirement> _playRequirements;
+        private List<IDeckGenerationRequirement> _deckGenerationRequirements;
+
+        public List<IDeckGenerationRequirement> DeckGenerationRequirements
+        {
+            get {
+                return _deckGenerationRequirements ??
+                       (_deckGenerationRequirements =
+                           GetComponents<MonoBehaviour>().OfType<IDeckGenerationRequirement>().ToList());
+            }
+        }
             
-        [UsedImplicitly, SerializeField, Range(0, 2)]
+       [UsedImplicitly, SerializeField, Range(0, 2)]
         public int ActionCost = 1;
 
         private InputGatherer _inputGatherer;
@@ -73,6 +84,8 @@ namespace HarryPotterUnity.Cards.Generic
         private GameObject _outline;
 
         public byte NetworkId { get; set; }
+
+        public string CardName { get; private set; }
 
         [UsedImplicitly]
         public void Start()
@@ -89,6 +102,8 @@ namespace HarryPotterUnity.Cards.Generic
             GetPlayRequirements();
 
             AddOutlineComponent();
+
+            CardName = transform.name.Replace("(Clone)", "");
         }
 
         private void AddOutlineComponent()
@@ -106,10 +121,9 @@ namespace HarryPotterUnity.Cards.Generic
 
         private void GetPlayRequirements()
         {
-            _playRequirements = new List<ICardPlayRequirement>();
-
-            var components = GetComponents<MonoBehaviour>();
-            foreach (var requirement in components.OfType<ICardPlayRequirement>())
+            _playRequirements = GetComponents<MonoBehaviour>().OfType<ICardPlayRequirement>().ToList();
+            
+            foreach (var requirement in _playRequirements)
             {
                 if (requirement is InputRequirement)
                 {
@@ -119,7 +133,7 @@ namespace HarryPotterUnity.Cards.Generic
                 _playRequirements.Add(requirement);
             }
         }
-
+        
         private void AddCollider()
         {
             if (gameObject.GetComponent<Collider>() != null) return;

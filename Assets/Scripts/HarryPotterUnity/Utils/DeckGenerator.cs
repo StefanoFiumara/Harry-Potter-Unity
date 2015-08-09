@@ -108,9 +108,14 @@ namespace HarryPotterUnity.Utils
                 int selected = Random.Range(0, potentialCards.Count);
                 var card = potentialCards[selected];
 
-                //TODO: Enable this check when enough cards are implemented
-                //if (deck.Count(c => c.Equals(card)) >= 4) continue;
+                var deckCopy = deck.ToList();
                 
+                bool canBeAdded = card.DeckGenerationRequirements.Count == 0 ||
+                                  card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy));
+
+                //TODO: Enabled the second check when enough cards have been implemented
+                if (canBeAdded == false /* || deck.Count(c => c.Equals(card)) >= 4 */ ) continue;
+
                 deck.Add(card);
                 cardsAdded++;
             }
