@@ -6,6 +6,7 @@ namespace HarryPotterUnity.Cards.Generic
 {
     public class DirectDamageSpell : GenericSpell {
         
+        [Header("Direct Damage Spell Settings"), Space(10)]
         [UsedImplicitly, SerializeField]
         private int _damageAmount;
 

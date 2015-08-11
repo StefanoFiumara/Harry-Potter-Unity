@@ -13,6 +13,7 @@ namespace HarryPotterUnity.Cards.Generic
             Creatures = 0, Charms, Transfiguration, Potions, Quidditch
         }
         
+        [Header("Lesson Settings"), Space(10)]
         [UsedImplicitly, SerializeField]
         private LessonTypes _lessonType;
 

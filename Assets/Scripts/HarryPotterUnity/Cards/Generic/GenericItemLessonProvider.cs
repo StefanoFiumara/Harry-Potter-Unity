@@ -8,20 +8,25 @@ namespace HarryPotterUnity.Cards.Generic {
     [UsedImplicitly]
     public class GenericItemLessonProvider : GenericCard, IPersistentCard, ILessonProvider
     {
-
+        #region Inspector Settings
         [Header("Lesson Provider Settings")]
-        [Space(10), SerializeField, UsedImplicitly]
-        private Lesson.LessonTypes _lessonType;
+        [SerializeField, UsedImplicitly] private Lesson.LessonTypes _lessonType;
 
-        [SerializeField, UsedImplicitly]
-        private int _amountLessonsProvided;
+        [SerializeField, UsedImplicitly] private int _amountLessonsProvided;
+        #endregion
 
-        [SerializeField, UsedImplicitly]
-        private Tag _removeExistingCardWithTag;
+        #region Properties
+        public Lesson.LessonTypes LessonType
+        {
+            get { return _lessonType; }
+        }
 
-        public Lesson.LessonTypes LessonType { get { return _lessonType; } }
-        public int AmountLessonsProvided { get { return _amountLessonsProvided; } }
-
+        public int AmountLessonsProvided
+        {
+            get { return _amountLessonsProvided; }
+        }
+        #endregion
+        
         protected override void OnClickAction(List<GenericCard> targets)
         {
             Player.InPlay.Add(this);

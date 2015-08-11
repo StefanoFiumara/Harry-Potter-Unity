@@ -50,11 +50,10 @@ namespace HarryPotterUnity.Cards.Generic
         #region Inspector Layout
         [Header("Deck Generation Options")]
         [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
-        
         [SerializeField, UsedImplicitly] private Rarity _rarity;
 
         [Header("Basic Card Settings")]
-        [UsedImplicitly] private CardTypes _cardType;
+        [SerializeField,UsedImplicitly] private CardTypes _cardType;
 
         //TODO: Turn into [Flags] and implement bitmasking? YAGNI?
         [UsedImplicitly] public List<Tag> Tags;
