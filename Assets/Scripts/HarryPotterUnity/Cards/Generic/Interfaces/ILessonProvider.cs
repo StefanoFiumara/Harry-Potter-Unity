@@ -1,8 +1,12 @@
-﻿namespace HarryPotterUnity.Cards.Generic.Interfaces
+﻿    public enum LessonTypes
+    {
+        Creatures = 0, Charms, Transfiguration, Potions, Quidditch
+    }
+namespace HarryPotterUnity.Cards.Generic.Interfaces
 {
     public interface ILessonProvider
     {
-        Lesson.LessonTypes LessonType { get; }
+        LessonTypes LessonType { get; }
 
         int AmountLessonsProvided { get; }
     }

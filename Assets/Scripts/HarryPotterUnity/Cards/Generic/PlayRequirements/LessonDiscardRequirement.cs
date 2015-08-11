@@ -14,7 +14,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
         private int _amountRequired;
 
         [SerializeField, UsedImplicitly]
-        private Lesson.LessonTypes _lessonType;
+        private LessonTypes _lessonType;
 
         private Player _player;
 

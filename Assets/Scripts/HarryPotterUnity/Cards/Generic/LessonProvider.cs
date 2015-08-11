@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -6,17 +7,19 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Generic {
 
     [UsedImplicitly]
-    public class GenericItemLessonProvider : GenericCard, IPersistentCard, ILessonProvider
+    public class LessonProvider : GenericCard, IPersistentCard, ILessonProvider
     {
+        
+
         #region Inspector Settings
         [Header("Lesson Provider Settings")]
-        [SerializeField, UsedImplicitly] private Lesson.LessonTypes _lessonType;
+        [SerializeField, UsedImplicitly] private LessonTypes _lessonType;
 
         [SerializeField, UsedImplicitly] private int _amountLessonsProvided;
         #endregion
 
         #region Properties
-        public Lesson.LessonTypes LessonType
+        public LessonTypes LessonType
         {
             get { return _lessonType; }
         }
@@ -26,7 +29,7 @@ namespace HarryPotterUnity.Cards.Generic {
             get { return _amountLessonsProvided; }
         }
         #endregion
-        
+
         protected override void OnClickAction(List<GenericCard> targets)
         {
             Player.InPlay.Add(this);

@@ -70,14 +70,14 @@ namespace HarryPotterUnity.Game
             return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Lesson);
         }
 
-        public IEnumerable<GenericCard> GetLessonsOfType(Lesson.LessonTypes type, int amount = 1)
+        public IEnumerable<GenericCard> GetLessonsOfType(LessonTypes type, int amount = 1)
         {
-            return GetLessonsInPlay().Where(x => ((Lesson)x).LessonType == type).Take(amount);
+            return GetLessonsInPlay().Where(x => ((ILessonProvider)x).LessonType == type).Take(amount);
         }
 
-        public int GetAmountOfLessonsOfType(Lesson.LessonTypes type)
+        public int GetAmountOfLessonsOfType(LessonTypes type)
         {
-            return GetLessonsInPlay().Count(x => ((Lesson)x).LessonType == type);
+            return GetLessonsInPlay().Count(x => ((ILessonProvider)x).LessonType == type);
         }
 
         private void TweenCardToPosition(GenericCard card)

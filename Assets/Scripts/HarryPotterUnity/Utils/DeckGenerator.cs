@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards.Generic.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
-using Lessontypes = HarryPotterUnity.Cards.Generic.Lesson.LessonTypes;
 using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Utils
@@ -40,7 +40,7 @@ namespace HarryPotterUnity.Utils
             }
         }
 
-        public static IEnumerable<GenericCard> GenerateDeck(List<Lessontypes> types)
+        public static IEnumerable<GenericCard> GenerateDeck(List<LessonTypes> types)
         {
             if (types.Count != 2 && types.Count != 3)
             {
@@ -72,24 +72,24 @@ namespace HarryPotterUnity.Utils
             return deck;
         }
 
-        private static GenericCard.ClassificationTypes MapLessonType(Lessontypes type)
+        private static GenericCard.ClassificationTypes MapLessonType(LessonTypes type)
         {
             switch (type)
             {
-                    case Lessontypes.Creatures: return GenericCard.ClassificationTypes.CareOfMagicalCreatures;
-                    case Lessontypes.Charms: return GenericCard.ClassificationTypes.Charms;
-                    case Lessontypes.Transfiguration: return  GenericCard.ClassificationTypes.Transfiguration;
-                    case Lessontypes.Quidditch: return  GenericCard.ClassificationTypes.Quidditch;
-                    case Lessontypes.Potions: return GenericCard.ClassificationTypes.Potions;
+                    case LessonTypes.Creatures: return GenericCard.ClassificationTypes.CareOfMagicalCreatures;
+                    case LessonTypes.Charms: return GenericCard.ClassificationTypes.Charms;
+                    case LessonTypes.Transfiguration: return  GenericCard.ClassificationTypes.Transfiguration;
+                    case LessonTypes.Quidditch: return  GenericCard.ClassificationTypes.Quidditch;
+                    case LessonTypes.Potions: return GenericCard.ClassificationTypes.Potions;
             }
             
             throw new ArgumentException("Unable to map lesson type");
         }
 
-        private static void AddLessonsToDeck(ref List<GenericCard> deck, Lessontypes lessonType, int amount)
+        private static void AddLessonsToDeck(ref List<GenericCard> deck, LessonTypes lessonType, int amount)
         {
             var card = CardLibrary.Where(c => c.Classification == GenericCard.ClassificationTypes.Lesson)
-                .First(l => ((Lesson) l).LessonType == lessonType);
+                .First(l => ((ILessonProvider) l).LessonType == lessonType);
 
             for (int i = 0; i < amount; i++)
             {

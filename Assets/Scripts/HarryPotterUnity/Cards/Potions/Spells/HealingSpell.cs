@@ -10,26 +10,20 @@ namespace HarryPotterUnity.Cards.Potions.Spells
     class HealingSpell : GenericSpell
     {
 
+        [Header("Healing Spell Settings")]
         [SerializeField, UsedImplicitly]
         private int _healingAmount;
 
         [SerializeField, UsedImplicitly]
-        private bool _shuffleDeck;
+        private bool _shuffleDeckAfterHeal;
 
         protected override void SpellAction(List<GenericCard> targets)
         {
             var cards = Player.Discard.GetCards(card => !card.Tags.Contains(Tag.Healing)).Take(_healingAmount).ToList();
-            /*
-            foreach (var card in cards)
-            {
-                Player.Discard.Remove(card);
-                Player.Deck.Add(card);
-            }
-            */
-
+            
             Player.Discard.RemoveAll(cards);
             Player.Deck.AddAll(cards);
-            if (_shuffleDeck)
+            if (_shuffleDeckAfterHeal)
             {
                 Player.Deck.Shuffle();
             }

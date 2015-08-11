@@ -2,7 +2,6 @@
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
-using LessonType = HarryPotterUnity.Cards.Generic.Lesson.LessonTypes;
 
 namespace HarryPotterUnity.Cards.Potions.Spells
 {
@@ -11,8 +10,8 @@ namespace HarryPotterUnity.Cards.Potions.Spells
 
         protected override void SpellAction(List<GenericCard> targets)
         {
-            int damage = Player.InPlay.GetAmountOfLessonsOfType(LessonType.Potions);
-            var lesson = Player.InPlay.GetLessonsOfType(LessonType.Potions).First();
+            int damage = Player.InPlay.GetAmountOfLessonsOfType(LessonTypes.Potions);
+            var lesson = Player.InPlay.GetLessonsOfType(LessonTypes.Potions).First();
 
             Player.Discard.Add(lesson);
             Player.InPlay.Remove(lesson);

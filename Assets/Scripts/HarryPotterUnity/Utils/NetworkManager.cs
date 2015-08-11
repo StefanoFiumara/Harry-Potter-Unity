@@ -5,7 +5,6 @@ using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
 using UnityEngine;
-using Lessontypes = HarryPotterUnity.Cards.Generic.Lesson.LessonTypes;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
@@ -167,8 +166,8 @@ namespace HarryPotterUnity.Utils
                 return;
             }
 
-            var p1SelectedLessons = p1LessonsBytes.Select(n => (Lessontypes) n).ToList();
-            var p2SelectedLessons = p2LessonsBytes.Select(n => (Lessontypes) n).ToList();
+            var p1SelectedLessons = p1LessonsBytes.Select(n => (LessonTypes) n).ToList();
+            var p2SelectedLessons = p2LessonsBytes.Select(n => (LessonTypes) n).ToList();
 
             GameManager.NetworkIdCounter = 0;
             GameManager.AllCards.Clear();

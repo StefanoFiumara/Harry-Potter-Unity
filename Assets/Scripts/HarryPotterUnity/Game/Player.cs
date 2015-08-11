@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Game
         public InPlay InPlay { get; private set; }
         public Discard Discard { get; private set; }
 
-        public List<Lesson.LessonTypes> LessonTypesInPlay { get; private set; }
+        public List<LessonTypes> LessonTypesInPlay { get; private set; }
 
         public int CreaturesInPlay { get; set; }
         public int DamagePerTurn { get; set; }
@@ -43,7 +43,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void Awake()
         {
-            LessonTypesInPlay = new List<Lesson.LessonTypes>();
+            LessonTypesInPlay = new List<LessonTypes>();
             ActionsAvailable = 0;
             AmountLessonsInPlay = 0;
 
@@ -57,7 +57,7 @@ namespace HarryPotterUnity.Game
             if (!_hudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
         }
 
-        public void InitDeck(List<Lesson.LessonTypes> selectedLessons)
+        public void InitDeck(List<LessonTypes> selectedLessons)
         {
             Deck.InitDeck( DeckGenerator.GenerateDeck(selectedLessons) );
         }
@@ -172,7 +172,7 @@ namespace HarryPotterUnity.Game
 
         public void UpdateLessonTypesInPlay()
         {
-            LessonTypesInPlay = new List<Lesson.LessonTypes>();
+            LessonTypesInPlay = new List<LessonTypes>();
 
             var lessonProviders = InPlay.Cards.FindAll(card => card is ILessonProvider).Cast<ILessonProvider>();
 

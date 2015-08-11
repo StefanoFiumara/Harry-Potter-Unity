@@ -184,20 +184,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84927fa802d65014baaf987d6a2b727b, type: 3}
+  m_Script: {fileID: 11500000, guid: 67cade98edaf7d541aa503fdf620a068, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ActionCost: 1
-  CardType: 0
-  Classification: 5
+  _classification: 5
+  _rarity: 0
+  _cardType: 0
+  Tags: 
+  _actionCost: 1
   _lessonType: 1
+  _amountLessonsProvided: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _classification
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _amountLessonsProvided
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 100000}

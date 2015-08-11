@@ -188,10 +188,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f1c07b6d92266648ae12c242de86081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _classification: 1
+  _rarity: 2
+  _cardType: 2
   Tags: 
-  CardType: 2
-  Classification: 1
-  ActionCost: 1
+  _actionCost: 1
 --- !u!114 &11474052
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,7 +212,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _classification
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _rarity
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _cardType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 166244}
