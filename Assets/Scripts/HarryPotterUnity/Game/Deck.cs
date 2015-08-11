@@ -119,10 +119,10 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public IEnumerable<GenericCard> GetCardsOfType(GenericCard.CardTypes type, int amount)
+        public IEnumerable<GenericCard> GetCardsOfType(GenericCard.CardType type, int amount)
         {
             //TODO: Randomize this
-            return _cards.FindAll(card => card.CardType == type).Take(amount);
+            return _cards.FindAll(card => card.Type == type).Take(amount);
         }
 
         public void Remove(GenericCard card)

@@ -11,7 +11,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         {
             var card = Player.Deck.TakeTopCard();
 
-            if (card.CardType == CardTypes.Lesson)
+            if (card.Type == CardType.Lesson)
             {
                 Player.InPlay.Add(card);
             }

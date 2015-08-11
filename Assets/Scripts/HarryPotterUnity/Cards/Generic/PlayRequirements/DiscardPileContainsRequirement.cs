@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
     class DiscardPileContainsRequirement : MonoBehaviour, ICardPlayRequirement
     {
         [SerializeField, UsedImplicitly]
-        private GenericCard.CardTypes _type;
+        private GenericCard.CardType _type;
 
         [SerializeField, UsedImplicitly]
         private int _minimumAmount;
@@ -17,7 +17,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
         {
             var player = GetComponent<GenericCard>().Player;
 
-            return player.Discard.GetCards(card => card.CardType == _type).Count >= _minimumAmount;
+            return player.Discard.GetCards(card => card.Type == _type).Count >= _minimumAmount;
         }
 
         public void OnRequirementMet() { }

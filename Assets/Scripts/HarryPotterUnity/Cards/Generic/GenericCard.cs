@@ -18,7 +18,7 @@ namespace HarryPotterUnity.Cards.Generic
             InDeck, InHand, InPlay, Discarded
         }
 
-        public enum CardTypes
+        public enum CardType
         {
             Lesson, Creature, Spell, Item //, Location, Match, Adventure, Character
         }
@@ -53,7 +53,7 @@ namespace HarryPotterUnity.Cards.Generic
         [SerializeField, UsedImplicitly] private Rarity _rarity;
 
         [Header("Basic Card Settings")]
-        [SerializeField,UsedImplicitly] private CardTypes _cardType;
+        [SerializeField,UsedImplicitly] private CardType _cardType;
 
         //TODO: Turn into [Flags] and implement bitmasking? YAGNI?
         [UsedImplicitly] public List<Tag> Tags;
@@ -65,7 +65,7 @@ namespace HarryPotterUnity.Cards.Generic
         #region Properties
         protected CardStates State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
-        public CardTypes CardType { get { return _cardType; } }
+        public CardType Type { get { return _cardType; } }
         public FlipStates FlipState { get; set; }
         public Player Player { get; set; }
 

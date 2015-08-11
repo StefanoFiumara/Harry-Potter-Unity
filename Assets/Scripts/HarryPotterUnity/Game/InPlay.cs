@@ -41,7 +41,7 @@ namespace HarryPotterUnity.Game
         {
             Cards.Remove(card);
 
-            RearrangeCardsOfType(card.CardType);
+            RearrangeCardsOfType(card.Type);
 
             ((IPersistentCard) card).OnExitInPlayAction();
         }
@@ -54,7 +54,7 @@ namespace HarryPotterUnity.Game
                 ((IPersistentCard)card).OnExitInPlayAction();
             }
 
-            foreach (var type in cards.GroupBy(c => c.CardType))
+            foreach (var type in cards.GroupBy(c => c.Type))
             {
                 RearrangeCardsOfType(type.Key);
             }
@@ -62,12 +62,12 @@ namespace HarryPotterUnity.Game
 
         public List<GenericCard> GetCreaturesInPlay()
         {
-            return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Creature);
+            return Cards.FindAll(c => c.Type == GenericCard.CardType.Creature);
         }
 
         private IEnumerable<GenericCard> GetLessonsInPlay()
         {
-            return Cards.FindAll(c => c.CardType == GenericCard.CardTypes.Lesson);
+            return Cards.FindAll(c => c.Type == GenericCard.CardType.Lesson);
         }
 
         public IEnumerable<GenericCard> GetLessonsOfType(LessonTypes type, int amount = 1)
@@ -93,31 +93,31 @@ namespace HarryPotterUnity.Game
                 GenericCard.CardStates.InPlay));
         }
 
-        private void RearrangeCardsOfType(GenericCard.CardTypes type)
+        private void RearrangeCardsOfType(GenericCard.CardType type)
         {
-            GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.CardType == type), GetTargetPositionForCard));
+            GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.Type == type), GetTargetPositionForCard));
         }
 
         private Vector3 GetTargetPositionForCard(GenericCard card)
         {
-            int position = Cards.FindAll(c => c.CardType == card.CardType).IndexOf(card);
+            int position = Cards.FindAll(c => c.Type == card.Type).IndexOf(card);
 
             var cardPosition = new Vector3();
 
             //TODO: Violates OCP!
-            switch (card.CardType)
+            switch (card.Type)
             {
-                case GenericCard.CardTypes.Lesson:
+                case GenericCard.CardType.Lesson:
                     cardPosition = LessonPositionOffset;
                     cardPosition.x += (position % 3) * LessonSpacing.x;
                     cardPosition.y -= (int)(position / 3) * LessonSpacing.y;
                     break;
-                case GenericCard.CardTypes.Creature:
+                case GenericCard.CardType.Creature:
                     cardPosition = CreaturePositionOffset;
                     cardPosition.x += (position % 3) * CreatureSpacing.x;
                     cardPosition.y -= (int)(position / 3) * CreatureSpacing.y;
                     break;
-                case GenericCard.CardTypes.Item:
+                case GenericCard.CardType.Item:
                     //TODO: Set up Item Position Offsets
                     cardPosition = ItemPositionOffset;
                     cardPosition.x += (position % 9) * ItemSpacing.x;
