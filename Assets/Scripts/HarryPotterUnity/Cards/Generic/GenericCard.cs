@@ -12,6 +12,7 @@ namespace HarryPotterUnity.Cards.Generic
     [SelectionBase]
     public abstract class GenericCard : MonoBehaviour {
 
+        #region Enums
         public enum CardStates
         {
             InDeck, InHand, InPlay, Discarded
@@ -27,10 +28,11 @@ namespace HarryPotterUnity.Cards.Generic
             Unique, Healing, Wand, Cauldron, Broom
         }
 
-        //TODO: Turn into [Flags] and implement bitmasking? YAGNI?
-        [UsedImplicitly]
-        public List<Tag> Tags;
-
+        private enum Rarity
+        {
+            Common, Uncommon, Rare, UltraRare
+        }
+        
         public enum ClassificationTypes
         {
             CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch,
@@ -43,49 +45,58 @@ namespace HarryPotterUnity.Cards.Generic
         {
             FaceUp, FaceDown
         }
+        #endregion
 
-        public CardStates State { get; protected set; }
-
-        public FlipStates FlipState { get; set; }
-
-
-        [Header("Generic Card Settings")]
-        [UsedImplicitly] 
-        public CardTypes CardType;
-
-        [UsedImplicitly] 
-        public ClassificationTypes Classification;
-
+        #region Inspector Layout
+        [Header("Deck Generation Options")]
+        [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
         
-        private List<ICardPlayRequirement> _playRequirements;
-        private List<IDeckGenerationRequirement> _deckGenerationRequirements;
+        [SerializeField, UsedImplicitly] private Rarity _rarity;
+
+        [Header("Basic Card Settings")]
+        [UsedImplicitly] private CardTypes _cardType;
+
+        //TODO: Turn into [Flags] and implement bitmasking? YAGNI?
+        [UsedImplicitly] public List<Tag> Tags;
+
+        [UsedImplicitly, SerializeField, Range(0, 2)]
+        private int _actionCost = 1;
+        #endregion
+        
+        #region Properties
+        protected CardStates State { get; set; }
+        public ClassificationTypes Classification { get { return _classification; } }
+        public CardTypes CardType { get { return _cardType; } }
+        public FlipStates FlipState { get; set; }
+        public Player Player { get; set; }
 
         public List<IDeckGenerationRequirement> DeckGenerationRequirements
         {
-            get {
+            get
+            {
                 return _deckGenerationRequirements ??
                        (_deckGenerationRequirements =
                            GetComponents<MonoBehaviour>().OfType<IDeckGenerationRequirement>().ToList());
             }
         }
-            
-       [UsedImplicitly, SerializeField, Range(0, 2)]
-        public int ActionCost = 1;
 
+        public byte NetworkId { get; set; }
+        public string CardName { get { return transform.name; } }
+        #endregion
+
+        #region Private Variables
         private InputGatherer _inputGatherer;
         private int _inputRequired;
-
-        public Player Player { get; set; }
-
+        
         private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
         private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
 
         private GameObject _cardFace;
         private GameObject _outline;
 
-        public byte NetworkId { get; set; }
-
-        public string CardName { get { return transform.name; } }
+        private List<ICardPlayRequirement> _playRequirements;
+        private List<IDeckGenerationRequirement> _deckGenerationRequirements;
+        #endregion
 
         [UsedImplicitly]
         public void Start()
@@ -192,7 +203,7 @@ namespace HarryPotterUnity.Cards.Generic
 
             return Player.IsLocalPlayer &&
                    State == CardStates.InHand &&
-                   Player.CanUseActions(ActionCost) &&
+                   Player.CanUseActions(_actionCost) &&
                    meetsRequirements;
         }
 
@@ -205,7 +216,7 @@ namespace HarryPotterUnity.Cards.Generic
 
             OnClickAction(targets);
 
-            Player.UseActions(ActionCost);
+            Player.UseActions(_actionCost);
             
         }
 
