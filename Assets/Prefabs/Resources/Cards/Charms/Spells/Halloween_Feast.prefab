@@ -47,6 +47,7 @@ GameObject:
   - 114: {fileID: 11463140}
   - 114: {fileID: 11424002}
   - 114: {fileID: 11431822}
+  - 114: {fileID: 11497760}
   m_Layer: 10
   m_Name: Halloween_Feast
   m_TagString: Untagged
@@ -220,6 +221,18 @@ MonoBehaviour:
   _cardType: 2
   Tags: 
   _actionCost: 1
+--- !u!114 &11497760
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f712df5aab2ff4fb74ac9294bf9480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
