@@ -28,7 +28,7 @@ namespace HarryPotterUnity.Cards.Generic
             Unique, Healing, Wand, Cauldron, Broom
         }
 
-        private enum Rarity
+        public enum CardRarity
         {
             Common, Uncommon, Rare, UltraRare
         }
@@ -50,12 +50,12 @@ namespace HarryPotterUnity.Cards.Generic
         #region Inspector Layout
         [Header("Deck Generation Options")]
         [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
-        [SerializeField, UsedImplicitly] private Rarity _rarity;
+        [SerializeField, UsedImplicitly] private CardRarity _rarity;
 
         [Header("Basic Card Settings")]
         [SerializeField,UsedImplicitly] private CardType _cardType;
 
-        //TODO: Turn into [Flags] and implement bitmasking? YAGNI?
+        //TODO: Turn into [Flags] and implement bitmasking? YAGNI? Make private and Serialize?
         [UsedImplicitly] public List<Tag> Tags;
 
         [UsedImplicitly, SerializeField, Range(0, 2)]
@@ -67,6 +67,7 @@ namespace HarryPotterUnity.Cards.Generic
         public ClassificationTypes Classification { get { return _classification; } }
         public CardType Type { get { return _cardType; } }
         public FlipStates FlipState { get; set; }
+        public CardRarity Rarity { get { return _rarity; } }
         public Player Player { get; set; }
 
         public List<IDeckGenerationRequirement> DeckGenerationRequirements
@@ -178,7 +179,7 @@ namespace HarryPotterUnity.Cards.Generic
             if (State == CardStates.InPlay && Player.IsLocalPlayer)
             {
                 //TODO: Gather input here as needed and call execute action via photonview
-
+                Debug.Log("Called OnSelected");
                 return;
             }
 

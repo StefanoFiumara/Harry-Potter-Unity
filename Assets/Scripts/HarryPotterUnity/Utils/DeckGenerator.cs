@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 namespace HarryPotterUnity.Utils
 {
     [UsedImplicitly]
-    public class DeckGenerator
+    public static class DeckGenerator
     {
         private static List<GenericCard> _cardLibrary;
 
@@ -110,15 +110,41 @@ namespace HarryPotterUnity.Utils
 
                 var deckCopy = deck.ToList();
                 
-                bool canBeAdded = card.DeckGenerationRequirements.Count == 0 ||
-                                  card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy));
-
+                bool canBeAdded = (card.DeckGenerationRequirements.Count == 0 ||
+                                  card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) &&
+                                  card.MeetsRarityRequirements();
+                
                 //TODO: Enabled the second check when enough cards have been implemented
                 if (canBeAdded == false /* || deck.Count(c => c.Equals(card)) >= 4 */ ) continue;
 
                 deck.Add(card);
                 cardsAdded++;
             }
+        }
+
+        private static bool MeetsRarityRequirements(this GenericCard card)
+        {
+            float chanceToAdd = 1f;
+
+            float rng = Random.Range(0f, 1f);
+
+            switch (card.Rarity)
+            {
+                case GenericCard.CardRarity.Common:
+                    chanceToAdd = 1f;
+                    break;
+                case GenericCard.CardRarity.Uncommon:
+                    chanceToAdd = 0.7f;
+                    break;
+                case GenericCard.CardRarity.Rare:
+                    chanceToAdd = 0.5f;
+                    break;
+                case GenericCard.CardRarity.UltraRare:
+                    chanceToAdd = 0.3f;
+                    break;
+            }
+            
+            return rng <= chanceToAdd;
         }
     }
 }
