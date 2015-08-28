@@ -91,7 +91,7 @@ namespace HarryPotterUnity.Cards.Generic
         private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
         private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
 
-        protected GameObject _cardFace;
+        private GameObject _cardFace;
         private GameObject _outline;
 
         private List<ICardPlayRequirement> _playRequirements;

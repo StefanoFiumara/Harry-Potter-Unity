@@ -16,6 +16,9 @@ namespace HarryPotterUnity.Game
         private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
+        private readonly Vector3 _outlinePosition = new Vector3(-359.5f, -125.9f, 16f);
+        
+        private GameObject _outline;
 
         [UsedImplicitly]
         public void Awake()
@@ -26,13 +29,26 @@ namespace HarryPotterUnity.Game
             col.isTrigger = true;
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
+
+            LoadOutlineComponent();
+        }
+
+        private void LoadOutlineComponent()
+        {
+            var resource = Resources.Load("DeckOutline");
+
+            _outline = (GameObject) Instantiate(resource);
+            _outline.transform.localPosition = _outlinePosition;
+            _outline.transform.rotation = Quaternion.Euler(new Vector3(90f, 180f, _player.transform.rotation.eulerAngles.z));
+            _outline.transform.parent = transform;
+            _outline.SetActive(false);
         }
 
         public void InitDeck (IEnumerable<GenericCard> cardList)
         {
             _cards = new List<GenericCard>(cardList);
 
-            var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
+            var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y);
             
             for (int i = 0; i < _cards.Count; i++)
             {
@@ -68,7 +84,7 @@ namespace HarryPotterUnity.Game
 
             return card;
         }
-
+        
         private void GameOver()
         {
             _player.DisableAllCards();
@@ -79,10 +95,31 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnMouseUp()
         {
-            if (!_player.IsLocalPlayer) return;
-            if (_cards.Count <= 0 || !_player.CanUseActions()) return;
+            if (!CanDrawCard()) return;
 
             _player.NetworkManager.photonView.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
+        }
+
+        [UsedImplicitly]
+        private void OnMouseOver()
+        {
+            if (CanDrawCard())
+            {
+                _outline.SetActive(true);
+            }
+        }
+
+        [UsedImplicitly]
+        private void OnMouseExit()
+        {
+            _outline.SetActive(false);
+        }
+
+        private bool CanDrawCard()
+        {
+            if (!_player.IsLocalPlayer) return false;
+
+            return _cards.Count > 0 && _player.CanUseActions();
         }
 
         public void DrawCard()
