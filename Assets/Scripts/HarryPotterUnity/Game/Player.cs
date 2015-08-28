@@ -36,8 +36,7 @@ namespace HarryPotterUnity.Game
         public Image TurnIndicator { private get; set; }
         public RectTransform EndGamePanel { private get; set; }
         public Text CardsLeftLabel { get; set; }
-
-
+        
         private HudManager _hudManager;
 
         [UsedImplicitly]
@@ -89,18 +88,15 @@ namespace HarryPotterUnity.Game
         public void InitTurn(bool firstTurn = false)
         {
             TurnIndicator.gameObject.SetActive(true);
-            
+
             InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
 
             Deck.DrawCard();
-
             AddActions(2);
 
             if (ActionsAvailable < 1) ActionsAvailable = 1;
-
             if( !firstTurn ) _hudManager.ToggleSkipActionButton();
-
-            //Creatures do damage here
+            
             OppositePlayer.TakeDamage(DamagePerTurn);
 
             //reset the damage buffer in case it was set last turn.
