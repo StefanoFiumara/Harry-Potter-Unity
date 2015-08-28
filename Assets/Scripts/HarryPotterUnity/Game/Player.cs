@@ -93,8 +93,7 @@ namespace HarryPotterUnity.Game
 
             if (OnTurnStart != null)
             {
-                print("Invoking OnTurnStart");
-                OnTurnStart.Invoke();
+                OnTurnStart();
                 OnTurnStart = null;
             }
 
