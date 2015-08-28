@@ -57,6 +57,7 @@ namespace HarryPotterUnity.Cards.Generic
 
             while (selectedCards.Count < _inputRequired)
             {
+                //TODO: Throw another ray here every frame to set the outline OnMouseOver
                 if (Input.GetKeyDown(KeyCode.Mouse0) && _cardInfo.Player.IsLocalPlayer)
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
