@@ -10,8 +10,12 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
         protected override void SpellAction(List<GenericCard> targets)
         {
-            //TODO: Does not work against gargoyles!
-            Player.DamageBuffer = Player.OppositePlayer.DamagePerTurn;
+            Player.OppositePlayer.OnTurnStart += () =>
+            {
+                print("Setting Damage buffer to: " + Player.OppositePlayer.DamagePerTurn);
+                Player.DamageBuffer = Player.OppositePlayer.DamagePerTurn;
+            };
+            
         }
     }
 }

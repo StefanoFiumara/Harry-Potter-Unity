@@ -39,6 +39,9 @@ namespace HarryPotterUnity.Game
         
         private HudManager _hudManager;
 
+        public delegate void OnTurnStartActions();
+        public event OnTurnStartActions OnTurnStart;
+
         [UsedImplicitly]
         public void Awake()
         {
@@ -67,18 +70,9 @@ namespace HarryPotterUnity.Game
 
             ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
 
-            if (ActionsAvailable > 0) return;
-            ActionsAvailable = 0;
-            
-            TurnIndicator.gameObject.SetActive(false);
-
-            InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayAfterTurnAction());
-
-            Hand.AdjustHandSpacing();
-
-            OppositePlayer.InitTurn();
+            if (ActionsAvailable <= 0) EndTurn(); 
         }
-
+        
         public void AddActions(int amount)
         {
             ActionsAvailable += amount;
@@ -96,11 +90,27 @@ namespace HarryPotterUnity.Game
 
             if (ActionsAvailable < 1) ActionsAvailable = 1;
             if( !firstTurn ) _hudManager.ToggleSkipActionButton();
-            
+
+            if (OnTurnStart != null)
+            {
+                print("Invoking OnTurnStart");
+                OnTurnStart.Invoke();
+                OnTurnStart = null;
+            }
+
             OppositePlayer.TakeDamage(DamagePerTurn);
 
             //reset the damage buffer in case it was set last turn.
             OppositePlayer.DamageBuffer = 0;
+        }
+
+        private void EndTurn()
+        {
+            ActionsAvailable = 0;
+            TurnIndicator.gameObject.SetActive(false);
+            InPlay.Cards.ForEach(card => ((IPersistentCard)card).OnInPlayAfterTurnAction());
+            Hand.AdjustHandSpacing();
+            OppositePlayer.InitTurn();
         }
 
         public bool CanUseActions(int amount = 1)
