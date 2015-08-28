@@ -91,7 +91,7 @@ namespace HarryPotterUnity.Cards.Generic
         private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
         private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
 
-        private GameObject _cardFace;
+        protected GameObject _cardFace;
         private GameObject _outline;
 
         private List<ICardPlayRequirement> _playRequirements;
@@ -99,7 +99,7 @@ namespace HarryPotterUnity.Cards.Generic
         #endregion
 
         [UsedImplicitly]
-        public void Start()
+        protected virtual void Start()
         {
             FlipState = FlipStates.FaceDown;
             
@@ -125,7 +125,6 @@ namespace HarryPotterUnity.Cards.Generic
             _outline.transform.parent = transform;
 
             _outline.SetActive(false);
-
         }
 
         private void GetPlayRequirements()

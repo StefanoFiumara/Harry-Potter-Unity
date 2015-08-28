@@ -14,6 +14,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
             if (Player.OppositePlayer.InPlay.GetCreaturesInPlay().Count != 0) return;
 
             Player.DamagePerTurn += 3;
+            _attackLabel.text = (_damagePerTurn + 3).ToString();
             _hasAddedDamage = true;
         }
 
@@ -22,6 +23,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
             if (!_hasAddedDamage) return;
 
             Player.DamagePerTurn -= 3;
+            _attackLabel.text = (_damagePerTurn).ToString();
             _hasAddedDamage = false;
         }
 

@@ -151,9 +151,9 @@ MonoBehaviour:
     Style: <b>Mixed</b>
 
 
-    Potions class allows you to use cauldrons to get ahead in your lessons, brew delicious
-    concoctions to heal yourself while in battle, and poison your opponent to ensure
-    your victory.'
+    Potions lessons allows you to use cauldrons to get ahead in your lessons, brew
+    delicious concoctions to heal yourself while in battle, and poison your opponent
+    to ensure your victory.'
 --- !u!222 &19883667
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -704,10 +704,10 @@ MonoBehaviour:
     Style: <b>Defensive</b>
 
 
-    In addition to using various defensive trinkets, transfigurations will teach you
-    powerful spells that are heavily defensive, you won''t be damaging your opponent
-    very heavily with these, but you won''t have any problems keeping their creatures
-    at bay and countering their other moves.'
+    In addition to using various trinkets, transfigurations will teach you various
+    defensive and powerful spells. You won''t be damaging your opponent too much with
+    these, but you won''t have any problems keeping their creatures at bay and countering
+    their other moves.'
 --- !u!222 &261117371
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1184,7 +1184,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Welcome to Hogwarts!
 
-    Select the classes you would like to take:'
+    Select the lessons you would like to take:'
 --- !u!222 &557488471
 CanvasRenderer:
   m_ObjectHideFlags: 0
