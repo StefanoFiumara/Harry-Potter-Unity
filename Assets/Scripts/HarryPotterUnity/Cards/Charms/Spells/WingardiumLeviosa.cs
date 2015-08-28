@@ -12,7 +12,6 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         {
             Player.OppositePlayer.OnTurnStart += () =>
             {
-                print("Setting Damage buffer to: " + Player.OppositePlayer.DamagePerTurn);
                 Player.DamageBuffer = Player.OppositePlayer.DamagePerTurn;
             };
             
