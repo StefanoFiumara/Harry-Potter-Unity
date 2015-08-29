@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Cards.Generic
 
         public enum CardType
         {
-            Lesson, Creature, Spell, Item //, Location, Match, Adventure, Character
+            Lesson, Creature, Spell, Item, Location, Match, Adventure, Character
         }
 
         public enum Tag
@@ -36,9 +36,9 @@ namespace HarryPotterUnity.Cards.Generic
         public enum ClassificationTypes
         {
             CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch,
-            Lesson
-           // Character,
-           // Adventure
+            Lesson,
+            Character,
+            Adventure
         }
 
         public enum FlipStates
@@ -63,7 +63,7 @@ namespace HarryPotterUnity.Cards.Generic
         #endregion
         
         #region Properties
-        protected CardStates State { get; set; }
+        public CardStates State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
         public CardType Type { get { return _cardType; } }
         public FlipStates FlipState { get; set; }
@@ -103,7 +103,7 @@ namespace HarryPotterUnity.Cards.Generic
         {
             FlipState = FlipStates.FaceDown;
             
-            gameObject.layer = GameManager.CardLayer;
+            gameObject.layer = GameManager.CARD_LAYER;
             _cardFace = transform.FindChild("Front").gameObject;
 
             AddCollider();
@@ -158,10 +158,11 @@ namespace HarryPotterUnity.Cards.Generic
         {
             ShowPreview();
 
-            if (IsPlayable())
+            if (IsPlayableFromHand() || (State == CardStates.InPlay && ((IPersistentCard)this).CanPerformInPlayAction()))
             {
                 _outline.SetActive(true);
             }
+
         }
 
         [UsedImplicitly]
@@ -177,25 +178,29 @@ namespace HarryPotterUnity.Cards.Generic
             //TODO: Execute OnSelectedAction if card is InPlay
             if (State == CardStates.InPlay && Player.IsLocalPlayer)
             {
-                //TODO: Gather input here as needed and call execute action via photonview
-                Debug.Log("Called OnSelected");
-                return;
+                if (((IPersistentCard)this).CanPerformInPlayAction())
+                {
+                    //TODO: Gather input here if needed for the InPlay Action
+                    Player.NetworkManager.photonView.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
+                }
+            }
+            else if (IsPlayableFromHand())
+            {
+                if (_inputRequired > 0)
+                {
+                    _inputGatherer.GatherInput();
+                }
+                else
+                {
+                    Player.NetworkManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+                }
             }
 
-            if (!IsPlayable()) return;
-
-            if (_inputRequired > 0)
-            {
-                _inputGatherer.GatherInput();
-            }
-            else
-            {
-                Player.NetworkManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
-            }
+            
             
         }
 
-        private bool IsPlayable()
+        private bool IsPlayableFromHand()
         {
             bool meetsRequirements = _playRequirements.Count == 0 ||
                                      _playRequirements.TrueForAll(req => req.MeetsRequirement());
@@ -223,14 +228,14 @@ namespace HarryPotterUnity.Cards.Generic
 
         private void ShowPreview()
         {
-            _cardFace.layer = GameManager.PreviewLayer;
+            _cardFace.layer = GameManager.PREVIEW_LAYER;
             
             if (FlipState == FlipStates.FaceDown) return;
 
             if (iTween.Count(gameObject) == 0)
             {
-                GameManager.PreviewCamera.transform.rotation = transform.rotation;
-                GameManager.PreviewCamera.transform.position = transform.position + 2 * Vector3.back;
+                GameManager._previewCamera.transform.rotation = transform.rotation;
+                GameManager._previewCamera.transform.position = transform.position + 2 * Vector3.back;
             }
             else
             {
@@ -240,25 +245,25 @@ namespace HarryPotterUnity.Cards.Generic
     
         private void HidePreview()
         {
-            _cardFace.layer = GameManager.CardLayer;
-            GameManager.PreviewCamera.transform.position = DefaultPreviewCameraPosition;
+            _cardFace.layer = GameManager.CARD_LAYER;
+            GameManager._previewCamera.transform.position = DefaultPreviewCameraPosition;
         }
 
         public void Disable()
         {
-            gameObject.layer = GameManager.IgnoreRaycastLayer;
+            gameObject.layer = GameManager.IGNORE_RAYCAST_LAYER;
             _cardFace.GetComponent<Renderer>().material.color = new Color(0.35f, 0.35f, 0.35f);
         }
 
         public void Enable()
         {
-            gameObject.layer = GameManager.CardLayer;
+            gameObject.layer = GameManager.CARD_LAYER;
             _cardFace.GetComponent<Renderer>().material.color = Color.white;
         }
 
         public void SetSelected()
         {
-            gameObject.layer = GameManager.CardLayer;
+            gameObject.layer = GameManager.CARD_LAYER;
             _cardFace.GetComponent<Renderer>().material.color = Color.yellow;
         }
 
