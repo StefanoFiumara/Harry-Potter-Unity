@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using HarryPotterUnity.Cards.Generic.Interfaces;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
@@ -169,7 +170,7 @@ namespace HarryPotterUnity.Utils
             var p1SelectedLessons = p1LessonsBytes.Select(n => (LessonTypes) n).ToList();
             var p2SelectedLessons = p2LessonsBytes.Select(n => (LessonTypes) n).ToList();
 
-            GameManager.NetworkIdCounter = 0;
+            GameManager._networkIdCounter = 0;
             GameManager.AllCards.Clear();
 
             _player1.InitDeck(p1SelectedLessons);
@@ -178,6 +179,8 @@ namespace HarryPotterUnity.Utils
 
         private IEnumerator _beginGameSequence()
         {
+            _player1.Deck.SpawnStartingCharacter();
+            _player2.Deck.SpawnStartingCharacter();
             _player1.Deck.Shuffle();
             _player2.Deck.Shuffle();
             yield return new WaitForSeconds(2.4f);
@@ -204,6 +207,21 @@ namespace HarryPotterUnity.Utils
             }
 
             card.MouseUpAction();
+        }
+
+        [PunRPC, UsedImplicitly]
+        public void ExecuteInPlayActionById(byte id)
+        {
+            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
+
+            if (card == null)
+            {
+                throw new Exception("ExecutePlayActionById could not find card with Id: " + id);
+            }
+
+            var persistentCard = card as IPersistentCard;
+            if (persistentCard != null) persistentCard.OnSelectedAction();
+            else throw new Exception("ExecuteInPlayActionById did not receive a PersistentCard!");
         }
 
         [PunRPC, UsedImplicitly]
