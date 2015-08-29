@@ -4,7 +4,10 @@
 
         void OnInPlayBeforeTurnAction();
         void OnInPlayAfterTurnAction();
-        void OnSelectedAction(); //Might not need this
+
+        bool CanPerformInPlayAction();
+        void OnSelectedAction(); 
+
         void OnEnterInPlayAction();
         void OnExitInPlayAction();
     }
