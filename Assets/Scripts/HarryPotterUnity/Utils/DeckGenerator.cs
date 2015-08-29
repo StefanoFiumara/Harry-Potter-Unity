@@ -22,9 +22,12 @@ namespace HarryPotterUnity.Utils
                 }
         }
 
+        private static List<GenericCard> _startingCharacters;
+         
         private static void LoadCardLibrary()
         {
             _cardLibrary = new List<GenericCard>();
+            _startingCharacters = new List<GenericCard>();
 
             var resources = Resources.LoadAll("Cards/");
             
@@ -37,7 +40,24 @@ namespace HarryPotterUnity.Utils
                 }
                 var cardInfo = container.GetComponent<GenericCard>();
                 _cardLibrary.Add(cardInfo);
+
+                if (cardInfo.Type == GenericCard.CardType.Character)
+                {
+                    _startingCharacters.Add(cardInfo);
+                }
             }
+        }
+
+        public static GenericCard GetRandomStartingCharacter()
+        {
+            if(_startingCharacters == null) LoadCardLibrary();
+
+            if (_startingCharacters != null)
+            {
+                return _startingCharacters.Skip(Random.Range(0, _startingCharacters.Count - 1)).First();
+            }
+
+            throw new Exception("Starting Characters are not loaded!");
         }
 
         public static IEnumerable<GenericCard> GenerateDeck(List<LessonTypes> types)
