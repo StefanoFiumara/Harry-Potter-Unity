@@ -33,4 +33,5 @@ MonoBehaviour:
   - PunRespawn
   - RequestForPickupTimes
   - StartGameRpc
+  - ExecuteInPlayActionById
   DisableAutoOpenWizard: 1
