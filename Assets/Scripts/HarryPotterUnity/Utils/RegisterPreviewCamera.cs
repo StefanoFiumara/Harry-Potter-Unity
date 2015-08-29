@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Utils
 
         [UsedImplicitly]
         public void Start () {
-            GameManager.PreviewCamera = GetComponent<Camera>();
+            GameManager._previewCamera = GetComponent<Camera>();
         }
 
     }
