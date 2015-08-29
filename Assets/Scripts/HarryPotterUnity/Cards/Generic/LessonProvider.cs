@@ -55,6 +55,8 @@ namespace HarryPotterUnity.Cards.Generic {
             Player.UpdateLessonTypesInPlay();
         }
 
+        public bool CanPerformInPlayAction() { return false; }
+
         public void OnInPlayBeforeTurnAction() { }
         public void OnInPlayAfterTurnAction() { }
         public void OnSelectedAction() { }
