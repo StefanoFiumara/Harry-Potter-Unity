@@ -18,7 +18,7 @@ namespace HarryPotterUnity.Cards.Generic
         private GameObject _uiCanvas;
         private Text _healthLabel;
         protected Text _attackLabel;
-
+        
         [UsedImplicitly]
         protected override void Start()
         {
@@ -84,11 +84,12 @@ namespace HarryPotterUnity.Cards.Generic
             _health += amount;
             _healthLabel.text = Mathf.Clamp(_health, 0, int.MaxValue).ToString();
         }
-    
+
+        public bool CanPerformInPlayAction() { return false; }
+
         //Generic Creatures don't do anything special on these actions
         public void OnInPlayBeforeTurnAction() { }
         public void OnInPlayAfterTurnAction() { }
         public void OnSelectedAction() { }
-  
     }
 }
