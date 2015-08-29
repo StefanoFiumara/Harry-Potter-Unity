@@ -61,7 +61,7 @@ namespace HarryPotterUnity.Game
 
         public void InitDeck(List<LessonTypes> selectedLessons)
         {
-            Deck.InitDeck( DeckGenerator.GenerateDeck(selectedLessons) );
+            Deck.InitDeck( DeckGenerator.GenerateDeck(selectedLessons), DeckGenerator.GetRandomStartingCharacter() );
         }
 
         public void UseActions(int amount = 1)
@@ -189,14 +189,14 @@ namespace HarryPotterUnity.Game
 
         public void DisableAllCards()
         {
-            Deck.gameObject.layer = GameManager.IgnoreRaycastLayer;
+            Deck.gameObject.layer = GameManager.IGNORE_RAYCAST_LAYER;
             GameManager.DisableCards(Hand.Cards);
             GameManager.DisableCards(InPlay.Cards);
         }
 
         public void EnableAllCards()
         {
-            Deck.gameObject.layer = GameManager.DeckLayer;
+            Deck.gameObject.layer = GameManager.DECK_LAYER;
             GameManager.EnableCards(Hand.Cards);
             GameManager.EnableCards(InPlay.Cards);
         }
