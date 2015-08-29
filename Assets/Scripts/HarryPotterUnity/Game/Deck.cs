@@ -13,6 +13,8 @@ namespace HarryPotterUnity.Game
     {
         private List<GenericCard> _cards;
 
+        private GenericCard _startingCharacter;
+
         private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
@@ -44,10 +46,11 @@ namespace HarryPotterUnity.Game
             _outline.SetActive(false);
         }
 
-        public void InitDeck (IEnumerable<GenericCard> cardList)
+        public void InitDeck (IEnumerable<GenericCard> cardList, GenericCard startingCharacter)
         {
             _cards = new List<GenericCard>(cardList);
-
+            _startingCharacter = startingCharacter;
+            
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y);
             
             for (int i = 0; i < _cards.Count; i++)
@@ -60,11 +63,28 @@ namespace HarryPotterUnity.Game
 
                 _cards[i].Player = _player;
 
-                _cards[i].NetworkId = GameManager.NetworkIdCounter++;
+                _cards[i].NetworkId = GameManager._networkIdCounter++;
                 GameManager.AllCards.Add(_cards[i]);
             }
         }
-	
+
+        public void SpawnStartingCharacter()
+        {
+            _startingCharacter = Instantiate(_startingCharacter);
+
+            _startingCharacter.transform.parent = transform;
+            _startingCharacter.Player = _player;
+
+            _startingCharacter.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
+
+            _startingCharacter.NetworkId = GameManager._networkIdCounter++;
+            
+
+            GameManager.AllCards.Add(_startingCharacter);
+
+            _player.InPlay.Add(_startingCharacter);
+        }
+
         public GenericCard TakeTopCard()
         {
             GenericCard card = null;
@@ -207,7 +227,5 @@ namespace HarryPotterUnity.Game
 
             return result;
         }
-
-        
     }
 }
