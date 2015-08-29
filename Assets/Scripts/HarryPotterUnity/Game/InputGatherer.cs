@@ -2,12 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Generic.PlayRequirements;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Generic
+namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
     class InputGatherer : MonoBehaviour
@@ -43,7 +44,7 @@ namespace HarryPotterUnity.Cards.Generic
             foreach (var card in validCards)
             {
                 card.Enable();
-                card.gameObject.layer = GameManager.ValidChoiceLayer;
+                card.gameObject.layer = GameManager.VALID_CHOICE_LAYER;
             }
 
             StartCoroutine(WaitForPlayerInput());
