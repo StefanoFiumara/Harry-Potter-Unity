@@ -201,10 +201,7 @@ namespace HarryPotterUnity.Cards.Generic
                 {
                     Player.NetworkManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
                 }
-            }
-
-            
-            
+            }   
         }
         
         private bool IsPlayableFromHand()
@@ -215,7 +212,8 @@ namespace HarryPotterUnity.Cards.Generic
             return Player.IsLocalPlayer &&
                    State == CardStates.InHand &&
                    Player.CanUseActions(_actionCost) &&
-                   meetsRequirements;
+                   meetsRequirements &&
+                   MeetsAdditionalPlayRequirements();
         }
 
         public void MouseUpAction(List<GenericCard> targets = null)
@@ -277,6 +275,11 @@ namespace HarryPotterUnity.Cards.Generic
         public virtual List<GenericCard> GetValidTargets()
         {
             return  new List<GenericCard>();
+        }
+
+        protected virtual bool MeetsAdditionalPlayRequirements()
+        {
+            return true;
         }
     }
 }
