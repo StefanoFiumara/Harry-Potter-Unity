@@ -13,7 +13,7 @@ namespace HarryPotterUnity.Game
     public class Discard : MonoBehaviour
     {
         private List<GenericCard> _cards;
-
+        
         private static readonly Vector2 DiscardPositionOffset = new Vector2(-355f, -30f);
 
         [UsedImplicitly]
@@ -66,6 +66,11 @@ namespace HarryPotterUnity.Game
         public List<GenericCard> GetCards(Predicate<GenericCard> predicate)
         {
             return _cards.FindAll(predicate).ToList();
+        }
+
+        public int CountCards(Func<GenericCard, bool> predicate)
+        {
+            return _cards.Count(predicate);
         }
 
         private void AdjustCardSpacing()

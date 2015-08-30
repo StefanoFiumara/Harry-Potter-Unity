@@ -23,7 +23,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
             if (!_hasAddedDamage) return;
 
             Player.DamagePerTurn -= 2;
-            _attackLabel.text = (_damagePerTurn - 2).ToString();
+            _attackLabel.text = (_damagePerTurn).ToString();
             _hasAddedDamage = false;
         }
 
