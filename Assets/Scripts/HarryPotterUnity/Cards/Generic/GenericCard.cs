@@ -158,11 +158,18 @@ namespace HarryPotterUnity.Cards.Generic
         {
             ShowPreview();
 
-            if (IsPlayableFromHand() || (State == CardStates.InPlay && ((IPersistentCard)this).CanPerformInPlayAction()))
+            if (IsPlayableFromHand() || IsActivatable())
             {
                 _outline.SetActive(true);
             }
 
+        }
+
+        private bool IsActivatable()
+        {
+            return State == CardStates.InPlay && 
+                            ((IPersistentCard)this).CanPerformInPlayAction() && 
+                            Player.IsLocalPlayer;
         }
 
         [UsedImplicitly]
@@ -199,7 +206,7 @@ namespace HarryPotterUnity.Cards.Generic
             
             
         }
-
+        
         private bool IsPlayableFromHand()
         {
             bool meetsRequirements = _playRequirements.Count == 0 ||
