@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic.Interfaces;
 using HarryPotterUnity.Cards.Generic.PlayRequirements;
@@ -274,7 +275,13 @@ namespace HarryPotterUnity.Cards.Generic
 
         public virtual List<GenericCard> GetValidTargets()
         {
-            return  new List<GenericCard>();
+            if (_inputRequired == 0)
+            {
+                return new List<GenericCard>();
+            }
+
+            throw new NotSupportedException("Card with input did not define valid targets");
+            
         }
 
         protected virtual bool MeetsAdditionalPlayRequirements()
