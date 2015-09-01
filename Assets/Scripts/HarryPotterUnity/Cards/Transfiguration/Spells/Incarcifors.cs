@@ -18,6 +18,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             if (targets.Count != 1)
             {
                 Debug.LogError("More or less than one input sent to Incarcifors");
+                return;
             }
 
             var target = targets[0];
