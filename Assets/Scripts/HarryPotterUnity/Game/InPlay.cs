@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Game
 
         private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
         private static readonly Vector2 ItemSpacing = new Vector2(80f, 0f);
-        private static readonly Vector2 CreatureSpacing = new Vector2(80f, 36f);
+        private static readonly Vector2 CreatureSpacing = new Vector2(80f, 55f);
         private static readonly Vector2 CharacterSpacing = new Vector2(80f, 0f);
 
 
@@ -116,8 +116,8 @@ namespace HarryPotterUnity.Game
                     break;
                 case GenericCard.CardType.Creature:
                     cardPosition = CreaturePositionOffset;
-                    cardPosition.x += (position % 3) * CreatureSpacing.x;
-                    cardPosition.y -= (int)(position / 3) * CreatureSpacing.y;
+                    cardPosition.x += (position % 4) * CreatureSpacing.x;
+                    cardPosition.y -= (int)(position / 4) * CreatureSpacing.y;
                     break;
                 case GenericCard.CardType.Item:
                     cardPosition = ItemPositionOffset;
