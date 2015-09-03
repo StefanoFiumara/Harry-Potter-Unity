@@ -46,6 +46,7 @@ GameObject:
   - 4: {fileID: 447014}
   - 114: {fileID: 11402702}
   - 114: {fileID: 11432746}
+  - 114: {fileID: 11430810}
   m_Layer: 10
   m_Name: Aparecium
   m_TagString: Untagged
@@ -190,6 +191,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 5
   _lessonType: 2
+--- !u!114 &11430810
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 2
 --- !u!114 &11432746
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,6 +236,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _cardType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _maximumAmountAllowed
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -29,6 +29,7 @@ GameObject:
   - 114: {fileID: 11478092}
   - 114: {fileID: 11433974}
   - 114: {fileID: 11418266}
+  - 114: {fileID: 11450404}
   m_Layer: 10
   m_Name: Hover_Charm
   m_TagString: Untagged
@@ -203,6 +204,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 4
   _lessonType: 1
+--- !u!114 &11450404
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 3
 --- !u!114 &11478092
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,6 +246,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _cardType
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _maximumAmountAllowed
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

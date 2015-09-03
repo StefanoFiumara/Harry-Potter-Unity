@@ -29,6 +29,7 @@ GameObject:
   - 114: {fileID: 11486584}
   - 114: {fileID: 11471508}
   - 114: {fileID: 11401924}
+  - 114: {fileID: 11486638}
   m_Layer: 10
   m_Name: Accio
   m_TagString: Untagged
@@ -220,6 +221,18 @@ MonoBehaviour:
   _cardType: 2
   Tags: 
   _actionCost: 1
+--- !u!114 &11486638
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 125120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -237,6 +250,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _cardType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _maximumAmountAllowed
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
