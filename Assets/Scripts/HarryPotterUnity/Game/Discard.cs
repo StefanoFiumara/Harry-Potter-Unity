@@ -33,6 +33,8 @@ namespace HarryPotterUnity.Game
         public void Add(GenericCard card) 
         {
             _cards.Add(card);
+            card.Enable();
+
             card.transform.parent = transform;
 
             var cardPos = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 16f);

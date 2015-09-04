@@ -20,8 +20,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
                 Debug.LogError("More than one input sent to Diffindo, this should never happen!");
                 return;
             }
-            targets[0].Enable();
-
+            
             Player.OppositePlayer.Discard.Add(targets[0]);
             Player.OppositePlayer.InPlay.Remove(targets[0]);
         }
