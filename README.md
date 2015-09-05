@@ -18,10 +18,10 @@ Planned Features
 
 To Test the Project
 -------------------
-This is a Unity3D Project, to test the game yourself before an official client is out will requiresome rather large downloads, sorry for the inconvenience!
+This is a Unity3D Project, to test the game yourself before an official client is out will require some rather large downloads, sorry for the inconvenience!
 
-You will need to download the Unity3D Game Engine [here](http://unity3d.com/) (This game has been upgraded to Unity 5.0, so make sure you grab that version). Open the scene located in **/Assets/Scenes/MultiplayerLobby.unity** and hit the play button at the top of the unity window. The game will automatically connect to the Photon Server, select a combination of lessons to use in your deck and click the 'Find Duel' button, which will throw you into the random matchmaking service.
+You will need to download the Unity3D Game Engine [here](http://unity3d.com/) (This game has been upgraded to Unity 5.1.2, so make sure you grab that version). Open the scene located in **/Assets/Scenes/MultiplayerLobby.unity** and hit the play button at the top of the unity window, the game will automatically connect to the Photon Server. To play, you must select a combination of lessons to use in your deck and click the 'Find Duel' button, which will throw you into the random matchmaking service.
 
-To test the game, you can open up multiple instances of the game by creating a build (ctrl-B) and running it alongside the unity editor. Once two clients are connected the decks will appear and automatically shuffle, each player will draw 7 cards and the first turn will begin.
+To test the game by yourself, you can open up multiple instances of the game by creating a build (ctrl-B) and running it alongside the unity editor. Once two clients are connected via matchmaking the decks will appear and automatically shuffle, each player will draw 7 cards and the first turn will begin.
 
 Basic functionality has been implemented and you should be able to complete a game against another player, you will probably notice that there aren't that many cards implemented, I have spent the past few months doing the multiplayer conversion and haven't been implementing new cards until all the basic functionality is in, you can expect the card pool to grow massively in the next few months once all the multiplayer kinks get worked out.
