@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExitGames.Client.Photon;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
