@@ -183,14 +183,10 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly]
         public void OnMouseUp()
         {
-            //TODO: Execute OnSelectedAction if card is InPlay
-            if (State == CardStates.InPlay && Player.IsLocalPlayer)
+            if(IsActivateable())
             {
-                if (((IPersistentCard)this).CanPerformInPlayAction())
-                {
                     //TODO: Gather input here if needed for the InPlay Action
                     Player.NetworkManager.photonView.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
-                }
             }
             else if (IsPlayableFromHand())
             {
