@@ -16,7 +16,7 @@ MonoBehaviour:
   ServerAddress: 
   ServerPort: 5055
   AppID: e90422b0-1605-4f24-af5d-96c49b543ec9
-  PreferredRegion: 0
+  PreferredRegion: 1
   EnabledRegions: -1
   RpcList:
   - Chat
