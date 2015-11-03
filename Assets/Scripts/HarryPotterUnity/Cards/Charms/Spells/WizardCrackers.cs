@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
@@ -11,7 +12,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         {
             var card = Player.Deck.TakeTopCard();
 
-            if (card.Type == CardType.Lesson)
+            if (card.Type == Type.Lesson)
             {
                 Player.InPlay.Add(card);
             }

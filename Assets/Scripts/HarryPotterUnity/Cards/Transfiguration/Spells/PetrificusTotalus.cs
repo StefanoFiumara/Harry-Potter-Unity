@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.OppositePlayer.Discard.GetCards(c => c.Type == CardType.Lesson).Count > 0;
+            return Player.OppositePlayer.Discard.GetCards(c => c.Type == Type.Lesson).Count > 0;
         }
 
         public override List<GenericCard> GetValidTargets()
@@ -30,7 +31,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             var target = targets[0];
             var player = target.Player;
 
-            var lesson = player.Discard.GetCards(c => c.Type == CardType.Lesson).FirstOrDefault();
+            var lesson = player.Discard.GetCards(c => c.Type == Type.Lesson).FirstOrDefault();
 
             if (lesson == null)
             {

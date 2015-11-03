@@ -3,6 +3,7 @@ using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
 using UnityEngine;
 using System.Linq;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Characters
@@ -13,14 +14,14 @@ namespace HarryPotterUnity.Cards.Characters
         public bool CanPerformInPlayAction()
         {
             return Player.CanUseActions() && 
-                   Player.Hand.Cards.Count(c => c.Type == CardType.Lesson) >= 2 &&
+                   Player.Hand.Cards.Count(c => c.Type == Type.Lesson) >= 2 &&
                    Player.AmountLessonsInPlay >= 2;
         }
 
         public void OnSelectedAction()
         {
-            var firstLesson = Player.Hand.Cards.Find(c => c.Type == CardType.Lesson);
-            var secondLesson = Player.Hand.Cards.FindLast(c => c.Type == CardType.Lesson);
+            var firstLesson = Player.Hand.Cards.Find(c => c.Type == Type.Lesson);
+            var secondLesson = Player.Hand.Cards.FindLast(c => c.Type == Type.Lesson);
 
             Player.InPlay.Add(firstLesson);
             Player.InPlay.Add(secondLesson);

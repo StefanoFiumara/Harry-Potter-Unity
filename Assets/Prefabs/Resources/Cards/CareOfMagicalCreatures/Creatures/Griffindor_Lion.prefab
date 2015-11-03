@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 0
   _rarity: 0
-  _cardType: 1
+  _type: 1
   Tags: 
   _actionCost: 1
   _damagePerTurn: 3
@@ -217,6 +217,10 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: _cardType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _type
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

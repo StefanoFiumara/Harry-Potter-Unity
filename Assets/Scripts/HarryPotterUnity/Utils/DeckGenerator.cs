@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -41,7 +41,7 @@ namespace HarryPotterUnity.Utils
                 var cardInfo = container.GetComponent<GenericCard>();
                 _cardLibrary.Add(cardInfo);
 
-                if (cardInfo.Type == GenericCard.CardType.Character)
+                if (cardInfo.Type == Type.Character)
                 {
                     _startingCharacters.Add(cardInfo);
                 }
@@ -57,14 +57,14 @@ namespace HarryPotterUnity.Utils
                 return _startingCharacters.Skip(Random.Range(0, _startingCharacters.Count - 1)).First();
             }
 
-            throw new Exception("Starting Characters are not loaded!");
+            throw new System.Exception("Starting Characters are not loaded!");
         }
 
         public static IEnumerable<GenericCard> GenerateDeck(List<LessonTypes> types)
         {
             if (types.Count != 2 && types.Count != 3)
             {
-                throw new Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
+                throw new System.Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
             }
 
             var deck = new List<GenericCard>();
@@ -92,23 +92,23 @@ namespace HarryPotterUnity.Utils
             return deck;
         }
 
-        private static GenericCard.ClassificationTypes MapLessonType(LessonTypes type)
+        private static ClassificationTypes MapLessonType(LessonTypes type)
         {
             switch (type)
             {
-                    case LessonTypes.Creatures: return GenericCard.ClassificationTypes.CareOfMagicalCreatures;
-                    case LessonTypes.Charms: return GenericCard.ClassificationTypes.Charms;
-                    case LessonTypes.Transfiguration: return  GenericCard.ClassificationTypes.Transfiguration;
-                    case LessonTypes.Quidditch: return  GenericCard.ClassificationTypes.Quidditch;
-                    case LessonTypes.Potions: return GenericCard.ClassificationTypes.Potions;
+                    case LessonTypes.Creatures: return ClassificationTypes.CareOfMagicalCreatures;
+                    case LessonTypes.Charms: return ClassificationTypes.Charms;
+                    case LessonTypes.Transfiguration: return  ClassificationTypes.Transfiguration;
+                    case LessonTypes.Quidditch: return  ClassificationTypes.Quidditch;
+                    case LessonTypes.Potions: return ClassificationTypes.Potions;
             }
             
-            throw new ArgumentException("Unable to map lesson type");
+            throw new System.ArgumentException("Unable to map lesson type");
         }
 
         private static void AddLessonsToDeck(ref List<GenericCard> deck, LessonTypes lessonType, int amount)
         {
-            var card = CardLibrary.Where(c => c.Classification == GenericCard.ClassificationTypes.Lesson)
+            var card = CardLibrary.Where(c => c.Classification == ClassificationTypes.Lesson)
                 .First(l => ((ILessonProvider) l).LessonType == lessonType);
 
             for (int i = 0; i < amount; i++)
@@ -117,7 +117,7 @@ namespace HarryPotterUnity.Utils
             }
         }
 
-        private static void AddCardsToDeck(ref List<GenericCard> deck, GenericCard.ClassificationTypes classification, int amount)
+        private static void AddCardsToDeck(ref List<GenericCard> deck, ClassificationTypes classification, int amount)
         {
             var potentialCards = CardLibrary.Where(c => c.Classification == classification).ToList();
 
@@ -150,16 +150,16 @@ namespace HarryPotterUnity.Utils
 
             switch (card.Rarity)
             {
-                case GenericCard.CardRarity.Common:
+                case Rarity.Common:
                     chanceToAdd = 1f;
                     break;
-                case GenericCard.CardRarity.Uncommon:
+                case Rarity.Uncommon:
                     chanceToAdd = 0.7f;
                     break;
-                case GenericCard.CardRarity.Rare:
+                case Rarity.Rare:
                     chanceToAdd = 0.5f;
                     break;
-                case GenericCard.CardRarity.UltraRare:
+                case Rarity.UltraRare:
                     chanceToAdd = 0.3f;
                     break;
             }

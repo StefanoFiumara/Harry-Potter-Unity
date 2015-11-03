@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
@@ -10,7 +11,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override void SpellAction(List<GenericCard> targets)
         {
-            var lessons = Player.Deck.GetCardsOfType(CardType.Lesson, 2).ToList();
+            var lessons = Player.Deck.GetCardsOfType(Type.Lesson, 2).ToList();
             foreach (var lesson in lessons)
             {
                 Player.Deck.Remove(lesson);

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -26,7 +27,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             {
                 var card = Player.Hand.Cards[i];
 
-                if (card.Type != CardType.Lesson) continue;
+                if (card.Type != Type.Lesson) continue;
 
                 Player.Hand.Remove(card);
                 Player.InPlay.Add(card);

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -24,7 +25,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
             {
                 var card = Player.OppositePlayer.Hand.Cards[i];
 
-                if (card.Type != CardType.Creature) continue;
+                if (card.Type != Type.Creature) continue;
 
                 Player.OppositePlayer.Hand.Remove(card);
                 Player.OppositePlayer.Discard.Add(card);

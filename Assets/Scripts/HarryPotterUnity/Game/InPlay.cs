@@ -2,6 +2,7 @@
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -64,12 +65,12 @@ namespace HarryPotterUnity.Game
 
         public List<GenericCard> GetCreaturesInPlay()
         {
-            return Cards.FindAll(c => c.Type == GenericCard.CardType.Creature);
+            return Cards.FindAll(c => c.Type == Type.Creature);
         }
 
         private IEnumerable<GenericCard> GetLessonsInPlay()
         {
-            return Cards.FindAll(c => c.Type == GenericCard.CardType.Lesson);
+            return Cards.FindAll(c => c.Type == Type.Lesson);
         }
 
         public IEnumerable<GenericCard> GetLessonsOfType(LessonTypes type, int amount = 1)
@@ -90,12 +91,12 @@ namespace HarryPotterUnity.Game
                 cardPosition, 
                 0.3f,
                 0f,
-                GenericCard.FlipStates.FaceUp, 
+                FlipStates.FaceUp, 
                 TweenQueue.RotationType.Rotate90,
-                GenericCard.CardStates.InPlay));
+                State.InPlay));
         }
 
-        private void RearrangeCardsOfType(GenericCard.CardType type)
+        private void RearrangeCardsOfType(Type type)
         {
             GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.Type == type), GetTargetPositionForCard));
         }
@@ -109,21 +110,21 @@ namespace HarryPotterUnity.Game
             //TODO: Violates OCP!
             switch (card.Type)
             {
-                case GenericCard.CardType.Lesson:
+                case Type.Lesson:
                     cardPosition = LessonPositionOffset;
                     cardPosition.x += (position % 3) * LessonSpacing.x;
                     cardPosition.y -= (int)(position / 3) * LessonSpacing.y;
                     break;
-                case GenericCard.CardType.Creature:
+                case Type.Creature:
                     cardPosition = CreaturePositionOffset;
                     cardPosition.x += (position % 4) * CreatureSpacing.x;
                     cardPosition.y -= (int)(position / 4) * CreatureSpacing.y;
                     break;
-                case GenericCard.CardType.Item:
+                case Type.Item:
                     cardPosition = ItemPositionOffset;
                     cardPosition.x += (position % 9) * ItemSpacing.x;
                     break;
-                case GenericCard.CardType.Character:
+                case Type.Character:
                     cardPosition = CharacterPositionOffset;
                     cardPosition.x += (position%3) * CharacterSpacing.x;
                     break;

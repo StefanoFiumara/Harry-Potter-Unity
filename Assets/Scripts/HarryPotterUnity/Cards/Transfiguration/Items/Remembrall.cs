@@ -2,6 +2,7 @@
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -19,12 +20,12 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
         public bool CanPerformInPlayAction()
         {
             return Player.CanUseActions() && 
-                   Player.Discard.CountCards(c => c.Type == CardType.Lesson) > 0;
+                   Player.Discard.CountCards(c => c.Type == Type.Lesson) > 0;
         }
 
         public void OnSelectedAction()
         {
-            var lesson = Player.Discard.GetCards(c => c.Type == CardType.Lesson).First();
+            var lesson = Player.Discard.GetCards(c => c.Type == Type.Lesson).First();
 
             Player.InPlay.Add(lesson);
             Player.Discard.RemoveAll(new[] {lesson});

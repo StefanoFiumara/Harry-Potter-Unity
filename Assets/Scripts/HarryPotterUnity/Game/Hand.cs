@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -37,7 +38,7 @@ namespace HarryPotterUnity.Game
 
             card.transform.parent = transform;
 
-            var flipState = _player.IsLocalPlayer ? GenericCard.FlipStates.FaceUp : GenericCard.FlipStates.FaceDown;
+            var flipState = _player.IsLocalPlayer ? FlipStates.FaceUp : FlipStates.FaceDown;
 
             AnimateCardToHand(card, flipState, preview);
 
@@ -86,7 +87,7 @@ namespace HarryPotterUnity.Game
             return cardPosition;
         }
 
-        private void AnimateCardToHand(GenericCard card, GenericCard.FlipStates flipState, bool preview = true)
+        private void AnimateCardToHand(GenericCard card, FlipStates flipState, bool preview = true)
         {
             var cardPosition = HandCardsOffset;
 
@@ -97,10 +98,10 @@ namespace HarryPotterUnity.Game
 
             if (preview)
             {
-                GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flipState, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.InHand));
+                GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flipState, TweenQueue.RotationType.NoRotate, State.InHand));
             }
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPosition, 0.3f, 0.1f, flipState, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.InHand));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPosition, 0.3f, 0.1f, flipState, TweenQueue.RotationType.NoRotate, State.InHand));
         }
     }
 }

@@ -1,7 +1,4 @@
-﻿public enum LessonTypes
-{
-    Creatures = 0, Charms, Transfiguration, Potions, Quidditch
-}
+﻿using HarryPotterUnity.Enums;
 
 namespace HarryPotterUnity.Cards.Generic.Interfaces
 {

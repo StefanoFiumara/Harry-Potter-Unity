@@ -191,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 1
   _rarity: 0
-  _cardType: 2
+  _type: 2
   Tags: 
   _actionCost: 1
   _damageAmount: 3
@@ -238,6 +238,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _maximumAmountAllowed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _type
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

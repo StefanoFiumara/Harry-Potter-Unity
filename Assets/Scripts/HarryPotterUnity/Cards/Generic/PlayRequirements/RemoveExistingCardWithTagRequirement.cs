@@ -1,4 +1,5 @@
 ﻿using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
         private Player _player;
 
         [SerializeField, UsedImplicitly]
-        private GenericCard.Tag _tag;
+        private Tag _tag;
 
         [UsedImplicitly]
         void Start()

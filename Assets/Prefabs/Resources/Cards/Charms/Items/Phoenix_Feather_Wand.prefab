@@ -220,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 1
   _rarity: 2
-  _cardType: 3
+  _type: 3
   Tags: 02000000
   _actionCost: 1
   _lessonType: 1
@@ -303,6 +303,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _maximumAmountAllowed
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _type
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

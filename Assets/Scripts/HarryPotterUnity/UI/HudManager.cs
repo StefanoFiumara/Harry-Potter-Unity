@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ExitGames.Client.Photon;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;

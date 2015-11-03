@@ -1,4 +1,5 @@
 ﻿using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
     class DiscardPileContainsRequirement : MonoBehaviour, ICardPlayRequirement
     {
         [SerializeField, UsedImplicitly]
-        private GenericCard.CardType _type;
+        private Type _type;
 
         [SerializeField, UsedImplicitly]
         private int _minimumAmount;

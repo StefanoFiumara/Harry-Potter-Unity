@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Potions.Spells

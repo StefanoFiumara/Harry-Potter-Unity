@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -46,7 +47,7 @@ namespace HarryPotterUnity.Cards.Generic {
 
             Player.AmountLessonsInPlay += AmountLessonsProvided;
 
-            State = CardStates.InPlay;
+            State = State.InPlay;
         }
 
         public void OnExitInPlayAction()

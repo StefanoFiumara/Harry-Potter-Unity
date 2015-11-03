@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
@@ -11,7 +12,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         protected override void SpellAction(List<GenericCard> targets)
         {
             //TODO: Implement it with input instead?
-            var lessons = Player.Discard.GetCards(card => card.Type == CardType.Lesson).Take(2).ToList();
+            var lessons = Player.Discard.GetCards(card => card.Type == Type.Lesson).Take(2).ToList();
            
             Player.Hand.AddAll(lessons);
             Player.Discard.RemoveAll(lessons);

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -43,8 +44,8 @@ namespace HarryPotterUnity.Game
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, GenericCard.FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.Discarded));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, State.Discarded));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, State.Discarded));
         }
 
         public void AddAll(IEnumerable<GenericCard> cards)

@@ -1,8 +1,9 @@
-﻿using System;
+﻿//using System;
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic.Interfaces;
 using HarryPotterUnity.Cards.Generic.PlayRequirements;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -12,49 +13,14 @@ namespace HarryPotterUnity.Cards.Generic
 {
     [SelectionBase]
     public abstract class GenericCard : MonoBehaviour {
-
-        #region Enums
-        public enum CardStates
-        {
-            InDeck, InHand, InPlay, Discarded
-        }
-
-        public enum CardType
-        {
-            Lesson, Creature, Spell, Item, Location, Match, Adventure, Character
-        }
-
-        public enum Tag
-        {
-            Unique, Healing, Wand, Cauldron, Broom
-        }
-
-        public enum CardRarity
-        {
-            Common, Uncommon, Rare, UltraRare
-        }
         
-        public enum ClassificationTypes
-        {
-            CareOfMagicalCreatures, Charms, Transfiguration, Potions, Quidditch,
-            Lesson,
-            Character,
-            Adventure
-        }
-
-        public enum FlipStates
-        {
-            FaceUp, FaceDown
-        }
-        #endregion
-
         #region Inspector Layout
         [Header("Deck Generation Options")]
         [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
-        [SerializeField, UsedImplicitly] private CardRarity _rarity;
+        [SerializeField, UsedImplicitly] private Rarity _rarity;
 
         [Header("Basic Card Settings")]
-        [SerializeField,UsedImplicitly] private CardType _cardType;
+        [SerializeField,UsedImplicitly] private Type _type;
 
         //TODO: Turn into [Flags] and implement bitmasking? YAGNI? Make private and Serialize?
         [UsedImplicitly] public List<Tag> Tags;
@@ -64,11 +30,11 @@ namespace HarryPotterUnity.Cards.Generic
         #endregion
         
         #region Properties
-        public CardStates State { get; set; }
+        protected State State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
-        public CardType Type { get { return _cardType; } }
-        public FlipStates FlipState { get; set; }
-        public CardRarity Rarity { get { return _rarity; } }
+        public Type Type { get { return _type; } }
+        public FlipStates FlipState { private get; set; }
+        public Rarity Rarity { get { return _rarity; } }
         public Player Player { get; set; }
 
         public List<IDeckGenerationRequirement> DeckGenerationRequirements
@@ -149,7 +115,7 @@ namespace HarryPotterUnity.Cards.Generic
         }
 
         [UsedImplicitly]
-        public void SwitchState(CardStates newState)
+        public void SwitchState(State newState)
         {
             State = newState;
         }
@@ -168,7 +134,7 @@ namespace HarryPotterUnity.Cards.Generic
 
         private bool IsActivatable()
         {
-            return State == CardStates.InPlay && 
+            return State == State.InPlay && 
                             ((IPersistentCard)this).CanPerformInPlayAction() && 
                             Player.IsLocalPlayer;
         }
@@ -183,7 +149,7 @@ namespace HarryPotterUnity.Cards.Generic
         [UsedImplicitly]
         public void OnMouseUp()
         {
-            if(IsActivateable())
+            if(IsActivatable())
             {
                     //TODO: Gather input here if needed for the InPlay Action
                     Player.NetworkManager.photonView.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
@@ -207,7 +173,7 @@ namespace HarryPotterUnity.Cards.Generic
                                      _playRequirements.TrueForAll(req => req.MeetsRequirement());
 
             return Player.IsLocalPlayer &&
-                   State == CardStates.InHand &&
+                   State == State.InHand &&
                    Player.CanUseActions(_actionCost) &&
                    meetsRequirements &&
                    MeetsAdditionalPlayRequirements();
@@ -276,7 +242,7 @@ namespace HarryPotterUnity.Cards.Generic
                 return new List<GenericCard>();
             }
 
-            throw new NotSupportedException("Card with input did not define valid targets");
+            throw new System.NotSupportedException("Card with input did not define valid targets");
             
         }
 

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -55,7 +56,7 @@ namespace HarryPotterUnity.Cards.Generic
             Player.CreaturesInPlay++;
             Player.DamagePerTurn += _damagePerTurn;
 
-            State = CardStates.InPlay;
+            State = State.InPlay;
 
             _uiCanvas.SetActive(true);
         }

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
@@ -176,7 +177,7 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public IEnumerable<GenericCard> GetCardsOfType(GenericCard.CardType type, int amount)
+        public IEnumerable<GenericCard> GetCardsOfType(Type type, int amount)
         {
             //TODO: Randomize this
             return _cards.FindAll(card => card.Type == type).Take(amount);
@@ -195,7 +196,7 @@ namespace HarryPotterUnity.Game
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
             cardPos.z -= _cards.IndexOf(card) * 0.2f;
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, GenericCard.FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, GenericCard.CardStates.InDeck));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, State.InDeck));
         }
 
         public void AddAll(IEnumerable<GenericCard> cards)

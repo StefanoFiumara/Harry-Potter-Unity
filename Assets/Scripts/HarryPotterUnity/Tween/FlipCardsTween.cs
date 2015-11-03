@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using UnityEngine;
 
 namespace HarryPotterUnity.Tween
@@ -11,10 +12,10 @@ namespace HarryPotterUnity.Tween
         private readonly float _time;
         private readonly float _delay;
         private readonly float _timeUntilNextTween;
-        private readonly GenericCard.FlipStates _flip;
+        private readonly FlipStates _flip;
       
 
-        public FlipCardsTween(List<GameObject> targets, GenericCard.FlipStates flip, float time = 0.3f, float delay = 0f, float timeUntilNextTween = 0f)
+        public FlipCardsTween(List<GameObject> targets, FlipStates flip, float time = 0.3f, float delay = 0f, float timeUntilNextTween = 0f)
         {
             _targets = targets;
             _flip = flip;
@@ -39,10 +40,10 @@ namespace HarryPotterUnity.Tween
             float targetFlip = 0f;
             switch (_flip)
             {
-                case GenericCard.FlipStates.FaceUp:
+                case FlipStates.FaceUp:
                     targetFlip = 0f;
                     break;
-                case GenericCard.FlipStates.FaceDown:
+                case FlipStates.FaceDown:
                     targetFlip = 180f;
                     break;
             }

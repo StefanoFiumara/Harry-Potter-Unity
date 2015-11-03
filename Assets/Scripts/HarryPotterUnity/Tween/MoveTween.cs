@@ -1,4 +1,5 @@
 ﻿using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Enums;
 using UnityEngine;
 
 namespace HarryPotterUnity.Tween
@@ -11,11 +12,11 @@ namespace HarryPotterUnity.Tween
         private readonly float _time;
         private readonly float _delay;
         private readonly float _timeUntilNextTween;
-        private readonly GenericCard.FlipStates _flip;
+        private readonly FlipStates _flip;
         private readonly TweenQueue.RotationType _rotate;
-        private readonly GenericCard.CardStates _stateAfterAnimation;
+        private readonly State _stateAfterAnimation;
 
-        public MoveTween(GameObject target, Vector3 position, float time, float delay, GenericCard.FlipStates flip, TweenQueue.RotationType rotate, GenericCard.CardStates stateAfterAnimation, float timeUntilNextTween = 0f)
+        public MoveTween(GameObject target, Vector3 position, float time, float delay, FlipStates flip, TweenQueue.RotationType rotate, State stateAfterAnimation, float timeUntilNextTween = 0f)
         {
             _target = target;
             _position = position;
@@ -70,10 +71,10 @@ namespace HarryPotterUnity.Tween
             float targetFlip = 0f;
             switch (_flip)
             {
-                    case GenericCard.FlipStates.FaceUp:
+                    case FlipStates.FaceUp:
                         targetFlip = 0f;
                         break;
-                    case GenericCard.FlipStates.FaceDown:
+                    case FlipStates.FaceDown:
                         targetFlip = 180f;
                         break;
             }
