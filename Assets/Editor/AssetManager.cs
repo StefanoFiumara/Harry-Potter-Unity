@@ -8,24 +8,25 @@ namespace Assets.Editor
     [UsedImplicitly]
     public class AssetManager : MonoBehaviour 
     {
-        [MenuItem("HP-TCG Card Management/Add Outline Prefabs"), UsedImplicitly]
-        public static void AddPhotonViews()
+        /*[MenuItem("HP-TCG Card Management/Do Work")] */
+        /// <summary>
+        /// Template for applying changes to all card objects in the library
+        /// </summary>
+        [UsedImplicitly]
+        public static void DoWork()
         {
+            /*
             var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
-
-            string outlinePath = AssetDatabase.GetAllAssetPaths().FirstOrDefault(path => path.Contains("Outline.prefab"));
-
-            var outlinePrefab = (GameObject) AssetDatabase.LoadAssetAtPath(outlinePath, typeof (GameObject));
-
             
             foreach (string path in assetFolderPaths)
             {
                 var obj = (GameObject) AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
 
-                outlinePrefab.transform.parent = obj.transform;
+                //Do work with asset...
 
                 AssetDatabase.SaveAssets();
             }
+            */
         }
     }
 }
