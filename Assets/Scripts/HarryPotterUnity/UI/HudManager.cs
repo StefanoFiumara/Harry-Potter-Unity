@@ -5,7 +5,6 @@ using ExitGames.Client.Photon;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
-using Photon_Unity_Networking.Plugins.PhotonNetwork;
 using UnityEngine;
 using UnityEngine.UI;
 using MonoBehaviour = UnityEngine.MonoBehaviour;

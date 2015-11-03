@@ -6,15 +6,14 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
-using Photon_Unity_Networking.Plugins.PhotonNetwork;
 using UnityEngine;
-using MonoBehaviour = Photon_Unity_Networking.Plugins.PhotonNetwork.MonoBehaviour;
+using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Utils
 {
     [UsedImplicitly]
-    public class NetworkManager : Photon_Unity_Networking.Plugins.PhotonNetwork.MonoBehaviour
+    public class NetworkManager : MonoBehaviour
     {
         private Player _player1;
         private Player _player2;

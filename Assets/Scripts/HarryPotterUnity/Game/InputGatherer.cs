@@ -6,7 +6,6 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
-using Photon_Unity_Networking.Plugins.PhotonNetwork;
 using UnityEngine;
 using MonoBehaviour = UnityEngine.MonoBehaviour;
 

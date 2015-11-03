@@ -7,7 +7,6 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
-using Photon_Unity_Networking.Plugins.PhotonNetwork;
 using UnityEngine;
 using MonoBehaviour = UnityEngine.MonoBehaviour;
 
