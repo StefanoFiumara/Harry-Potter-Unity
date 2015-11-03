@@ -29,9 +29,13 @@ namespace HarryPotterUnity.Cards
         #region Properties
         protected State State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
+
         public Type Type { get { return GetCardType(); } }
+        protected abstract Type GetCardType();
+
         public FlipStates FlipState { private get; set; }
         public Rarity Rarity { get { return _rarity; } }
+
         public Player Player { get; set; }
 
         public List<IDeckGenerationRequirement> DeckGenerationRequirements
@@ -204,8 +208,7 @@ namespace HarryPotterUnity.Cards
                 throw new System.Exception("OnClickAction must be defined in cards that do not implement IPersistentCard!");
             }
         }
-        protected abstract Type GetCardType();
-
+        
         private void ShowPreview()
         {
             _cardFace.layer = GameManager.PREVIEW_LAYER;
