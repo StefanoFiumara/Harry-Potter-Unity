@@ -150,6 +150,8 @@ namespace HarryPotterUnity.Cards
         [UsedImplicitly]
         public void OnMouseUp()
         {
+            if (_outline.activeSelf == false) return; //Do not call OnMouseUp if cursor has left the object
+
             if(IsActivatable())
             {
                     //TODO: Gather input here if needed for the InPlay Action
@@ -172,6 +174,7 @@ namespace HarryPotterUnity.Cards
         {
             bool meetsRequirements = _playRequirements.Count == 0 ||
                                      _playRequirements.TrueForAll(req => req.MeetsRequirement());
+                                    //TODO: Check Player Constraints here
 
             return Player.IsLocalPlayer &&
                    State == State.InHand &&
