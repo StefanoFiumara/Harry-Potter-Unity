@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
-    public class RemoveExistingCardWithTagRequirement : MonoBehaviour, ICardPlayRequirement
+    public class UniqueTagRequirement : MonoBehaviour, ICardPlayRequirement
     {
         private Player _player;
 

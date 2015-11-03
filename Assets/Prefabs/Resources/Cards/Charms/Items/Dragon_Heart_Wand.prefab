@@ -215,12 +215,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 132464}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67cade98edaf7d541aa503fdf620a068, type: 3}
+  m_Script: {fileID: 11500000, guid: 32f14a1f1a646e04e862bc3b6e51aa3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _classification: 1
   _rarity: 1
-  _type: 3
   Tags: 02000000
   _actionCost: 1
   _lessonType: 1
@@ -290,6 +289,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _amountLessonsProvided
       value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
