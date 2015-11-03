@@ -84,13 +84,12 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            int position = _cards.FindAll(c => c.Type == card.Type).IndexOf(card);
+            int position = _cards.IndexOf(card);
 
             var cardPos = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 16f);
             cardPos.z -= position * 0.2f;
-
+            
             return cardPos;
         }
-        //TODO: OnMouseUp: View cards in discard pile
     }
 }
