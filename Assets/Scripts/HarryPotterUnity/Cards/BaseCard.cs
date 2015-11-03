@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.DeckGenerationRequirements;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Cards.PlayRequirements;
+using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
-using MonoBehaviour = UnityEngine.MonoBehaviour;
 
 namespace HarryPotterUnity.Cards
 {
@@ -21,8 +19,6 @@ namespace HarryPotterUnity.Cards
         [SerializeField, UsedImplicitly] private Rarity _rarity;
 
         [Header("Basic Card Settings")]
-        [SerializeField,UsedImplicitly] private Type _type;
-
         //TODO: Turn into [Flags] and implement bitmasking? YAGNI? Make private and Serialize?
         [UsedImplicitly] public List<Tag> Tags;
 
@@ -33,7 +29,7 @@ namespace HarryPotterUnity.Cards
         #region Properties
         protected State State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
-        public Type Type { get { return _type; } }
+        public Type Type { get { return GetCardType(); } }
         public FlipStates FlipState { private get; set; }
         public Rarity Rarity { get { return _rarity; } }
         public Player Player { get; set; }
@@ -196,7 +192,19 @@ namespace HarryPotterUnity.Cards
             
         }
 
-        protected abstract void OnClickAction(List<BaseCard> targets);
+        protected virtual void OnClickAction(List<BaseCard> targets)
+        {
+            if (this is IPersistentCard)
+            {
+                Player.InPlay.Add(this);
+                Player.Hand.Remove(this);
+            }
+            else
+            {
+                throw new System.Exception("OnClickAction must be defined in cards that do not implement IPersistentCard!");
+            }
+        }
+        protected abstract Type GetCardType();
 
         private void ShowPreview()
         {

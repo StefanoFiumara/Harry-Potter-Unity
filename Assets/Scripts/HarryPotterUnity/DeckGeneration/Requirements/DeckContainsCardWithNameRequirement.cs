@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.DeckGenerationRequirements
+namespace HarryPotterUnity.DeckGeneration.Requirements
 {
     public class DeckContainsCardWithNameRequirement : MonoBehaviour, IDeckGenerationRequirement
     {

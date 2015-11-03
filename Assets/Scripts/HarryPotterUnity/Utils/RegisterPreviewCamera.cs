@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using HarryPotterUnity.Game;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Utils

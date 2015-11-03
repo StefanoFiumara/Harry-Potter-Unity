@@ -7,20 +7,14 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
     [UsedImplicitly]
-    public class ColourChangingInk : BaseCard, IPersistentCard
-    {
-        protected override void OnClickAction(List<BaseCard> targets)
-        {
-            Player.Hand.Remove(this);
-            Player.InPlay.Add(this);
-        }
-        
-        public bool CanPerformInPlayAction()
+    public class ColourChangingInk : BaseItem
+    { 
+        public override bool CanPerformInPlayAction()
         {
             return Player.CanUseActions() && Player.Hand.Cards.Count > 0;
         }
 
-        public void OnSelectedAction()
+        public override void OnSelectedAction()
         {
             var cardsInHand = Player.Hand.Cards.ToList();
             int cardCount = cardsInHand.Count;
@@ -36,9 +30,9 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
             Player.UseActions();
         }
 
-        public void OnInPlayBeforeTurnAction() { }
-        public void OnInPlayAfterTurnAction() { }
-        public void OnEnterInPlayAction() { }
-        public void OnExitInPlayAction() { }
+        public override void OnInPlayBeforeTurnAction() { }
+        public override void OnInPlayAfterTurnAction() { }
+        public override void OnEnterInPlayAction() { }
+        public override void OnExitInPlayAction() { }
     }
 }

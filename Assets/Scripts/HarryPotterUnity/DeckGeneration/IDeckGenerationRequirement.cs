@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards;
 
-namespace HarryPotterUnity.Cards.DeckGenerationRequirements
+namespace HarryPotterUnity.DeckGeneration
 {
     public interface IDeckGenerationRequirement
     {

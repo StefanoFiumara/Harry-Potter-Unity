@@ -8,21 +8,15 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
     [UsedImplicitly]
-    public class Remembrall : BaseCard, IPersistentCard
-    {
-        protected override void OnClickAction(List<BaseCard> targets)
-        {
-            Player.InPlay.Add(this);
-            Player.Hand.Remove(this);
-        }
-        
-        public bool CanPerformInPlayAction()
+    public class Remembrall : BaseItem
+    { 
+        public override bool CanPerformInPlayAction()
         {
             return Player.CanUseActions() && 
                    Player.Discard.CountCards(c => c.Type == Type.Lesson) > 0;
         }
 
-        public void OnSelectedAction()
+        public override void OnSelectedAction()
         {
             var lesson = Player.Discard.GetCards(c => c.Type == Type.Lesson).First();
 
@@ -32,9 +26,9 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
             Player.UseActions();
         }
 
-        public void OnInPlayBeforeTurnAction() { }
-        public void OnInPlayAfterTurnAction() { }
-        public void OnEnterInPlayAction() { }
-        public void OnExitInPlayAction() { }
+        public override void OnInPlayBeforeTurnAction() { }
+        public override void OnInPlayAfterTurnAction() { }
+        public override void OnEnterInPlayAction() { }
+        public override void OnExitInPlayAction() { }
     }
 }

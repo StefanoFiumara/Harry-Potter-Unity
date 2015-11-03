@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace HarryPotterUnity.Utils
+namespace HarryPotterUnity.DeckGeneration
 {
     [UsedImplicitly]
     public static class DeckGenerator

@@ -11,10 +11,12 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         private BaseCard _cardInfo;
 
+        [UsedImplicitly]
         void Start()
         {
             _cardInfo = GetComponent<BaseCard>();
         }
+
         public bool MeetsRequirement()
         {
             return _cardInfo.Player.Hand.Cards.Count <= _limitAmount;

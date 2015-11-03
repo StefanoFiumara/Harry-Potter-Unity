@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HarryPotterUnity.Cards;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.DeckGenerationRequirements
+namespace HarryPotterUnity.DeckGeneration.Requirements
 {
     public class DeckCardLimitRequirement : MonoBehaviour, IDeckGenerationRequirement
     {

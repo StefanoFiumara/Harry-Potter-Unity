@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Enums;
+using HarryPotterUnity.Game;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;

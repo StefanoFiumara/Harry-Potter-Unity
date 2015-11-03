@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Enums;
+using HarryPotterUnity.Game;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using UnityEngine;
@@ -28,6 +29,11 @@ namespace HarryPotterUnity.Cards
             State = State.Discarded;
             var rotate180 = Player.OppositePlayer.IsLocalPlayer ? TweenQueue.RotationType.Rotate180 : TweenQueue.RotationType.NoRotate;
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, FlipStates.FaceUp, rotate180, State, 0.6f));
+        }
+
+        protected override Type GetCardType()
+        {
+            return Type.Spell;
         }
     }
 }

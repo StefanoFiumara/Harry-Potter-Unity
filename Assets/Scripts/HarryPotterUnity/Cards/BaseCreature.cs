@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
@@ -44,13 +45,7 @@ namespace HarryPotterUnity.Cards
 
             _uiCanvas.SetActive(false);
         }
-
-        protected override void OnClickAction(List<BaseCard> targets)
-        {
-            Player.InPlay.Add(this);
-            Player.Hand.Remove(this);
-        }
-
+        
         public void OnEnterInPlayAction()
         {
             Player.CreaturesInPlay++;
@@ -92,5 +87,10 @@ namespace HarryPotterUnity.Cards
         public void OnInPlayBeforeTurnAction() { }
         public void OnInPlayAfterTurnAction() { }
         public void OnSelectedAction() { }
+
+        protected sealed override Enums.Type GetCardType()
+        {
+            return Enums.Type.Creature;
+        }
     }
 }

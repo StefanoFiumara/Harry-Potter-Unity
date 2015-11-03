@@ -3,14 +3,13 @@ using System.Collections;
 using System.Linq;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
-using HarryPotterUnity.Game;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
 using UnityEngine;
 using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
-namespace HarryPotterUnity.Utils
+namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
     public class NetworkManager : MonoBehaviour

@@ -3,7 +3,7 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Tween;
 using UnityEngine;
 
-namespace HarryPotterUnity.Utils
+namespace HarryPotterUnity.Game
 {
     public static class GameManager {
 

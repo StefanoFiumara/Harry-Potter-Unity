@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
@@ -21,12 +22,31 @@ namespace HarryPotterUnity.Game
         public InPlay InPlay { get; private set; }
         public Discard Discard { get; private set; }
 
-        public List<LessonTypes> LessonTypesInPlay { get; private set; }
+        public HashSet<LessonTypes> LessonTypesInPlay
+        {
+            get
+            {
+                var result = new HashSet<LessonTypes>();
+                foreach (var providers in InPlay.Cards.OfType<ILessonProvider>())
+                {
+                    result.Add(providers.LessonType);
+                }
+                return result;
+            }
+        }
 
         public int CreaturesInPlay { get; set; }
         public int DamagePerTurn { get; set; }
         public int DamageBuffer { private get; set; }
-        public int AmountLessonsInPlay { get; set; }
+
+        public int AmountLessonsInPlay
+        {
+            get
+            {
+                return InPlay.Cards.OfType<ILessonProvider>().Select(c => c.AmountLessonsProvided).Sum();
+            }
+        }
+
         private int ActionsAvailable { get; set; }
 
         public bool IsLocalPlayer { get; set; }
@@ -46,9 +66,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void Awake()
         {
-            LessonTypesInPlay = new List<LessonTypes>();
             ActionsAvailable = 0;
-            AmountLessonsInPlay = 0;
 
             Hand = transform.GetComponentInChildren<Hand>();
             Deck = transform.GetComponentInChildren<Deck>();
@@ -175,19 +193,7 @@ namespace HarryPotterUnity.Game
 
             Discard.AddAll(cards);
         }
-
-        public void UpdateLessonTypesInPlay()
-        {
-            LessonTypesInPlay = new List<LessonTypes>();
-
-            var lessonProviders = InPlay.Cards.FindAll(card => card is ILessonProvider).Cast<ILessonProvider>();
-
-            foreach (var lessonProvider in lessonProviders.Where(provider => !LessonTypesInPlay.Contains(provider.LessonType)))
-            {
-                LessonTypesInPlay.Add(lessonProvider.LessonType);
-            }
-        }
-
+        
         public void DisableAllCards()
         {
             Deck.gameObject.layer = GameManager.IGNORE_RAYCAST_LAYER;

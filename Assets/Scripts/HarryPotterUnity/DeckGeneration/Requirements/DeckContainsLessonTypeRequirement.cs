@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.DeckGenerationRequirements
+namespace HarryPotterUnity.DeckGeneration.Requirements
 {
     public class DeckContainsLessonTypeRequirement : MonoBehaviour, IDeckGenerationRequirement
     {
