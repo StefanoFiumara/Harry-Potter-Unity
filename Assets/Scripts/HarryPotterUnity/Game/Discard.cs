@@ -20,15 +20,6 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void Start () {
             _cards = new List<BaseCard>();
-
-            /*
-            if (gameObject.GetComponent<Collider>() != null) return;
-            
-            var col = gameObject.AddComponent<BoxCollider>();
-            col.isTrigger = true;
-            col.size = new Vector3(50f, 70f, 1f);
-            col.center = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 0f);
-             * */
         }
 
         public void Add(BaseCard card) 
