@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
@@ -13,13 +13,13 @@ namespace HarryPotterUnity.Game
     [UsedImplicitly]
     public class Discard : MonoBehaviour
     {
-        private List<GenericCard> _cards;
+        private List<BaseCard> _cards;
         
         private static readonly Vector2 DiscardPositionOffset = new Vector2(-355f, -30f);
 
         [UsedImplicitly]
         public void Start () {
-            _cards = new List<GenericCard>();
+            _cards = new List<BaseCard>();
 
             /*
             if (gameObject.GetComponent<Collider>() != null) return;
@@ -31,7 +31,7 @@ namespace HarryPotterUnity.Game
              * */
         }
 
-        public void Add(GenericCard card) 
+        public void Add(BaseCard card) 
         {
             _cards.Add(card);
             card.Enable();
@@ -48,7 +48,7 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, State.Discarded));
         }
 
-        public void AddAll(IEnumerable<GenericCard> cards)
+        public void AddAll(IEnumerable<BaseCard> cards)
         {
             AdjustCardSpacing();
 
@@ -58,7 +58,7 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public void RemoveAll(IEnumerable<GenericCard> cards)
+        public void RemoveAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
             {
@@ -66,23 +66,23 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public List<GenericCard> GetCards(Predicate<GenericCard> predicate)
+        public List<BaseCard> GetCards(Predicate<BaseCard> predicate)
         {
             return _cards.FindAll(predicate).ToList();
         }
 
-        public int CountCards(Func<GenericCard, bool> predicate)
+        public int CountCards(Func<BaseCard, bool> predicate)
         {
             return _cards.Count(predicate);
         }
 
         private void AdjustCardSpacing()
         {
-            ITweenObject tween = new AsyncMoveTween(new List<GenericCard>(_cards), GetTargetPositionForCard);
+            ITweenObject tween = new AsyncMoveTween(new List<BaseCard>(_cards), GetTargetPositionForCard);
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
-        private Vector3 GetTargetPositionForCard(GenericCard card)
+        private Vector3 GetTargetPositionForCard(BaseCard card)
         {
             int position = _cards.FindAll(c => c.Type == card.Type).IndexOf(card);
 

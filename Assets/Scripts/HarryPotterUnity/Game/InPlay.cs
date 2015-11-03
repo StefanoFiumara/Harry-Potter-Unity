@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
@@ -12,7 +12,7 @@ namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
     public class InPlay : MonoBehaviour {
-        public List<GenericCard> Cards { get; private set; }
+        public List<BaseCard> Cards { get; private set; }
 
         private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
         private static readonly Vector3 ItemPositionOffset = new Vector3(-255f, 0f, 15f);
@@ -27,10 +27,10 @@ namespace HarryPotterUnity.Game
 
         public InPlay()
         {
-            Cards = new List<GenericCard>();
+            Cards = new List<BaseCard>();
         }
 
-        public void Add(GenericCard card)
+        public void Add(BaseCard card)
         {
             Cards.Add(card);
             card.transform.parent = transform;
@@ -40,7 +40,7 @@ namespace HarryPotterUnity.Game
             ((IPersistentCard) card).OnEnterInPlayAction();
         }
 
-        public void Remove(GenericCard card)
+        public void Remove(BaseCard card)
         {
             Cards.Remove(card);
 
@@ -49,7 +49,7 @@ namespace HarryPotterUnity.Game
             ((IPersistentCard) card).OnExitInPlayAction();
         }
 
-        public void RemoveAll(List<GenericCard> cards)
+        public void RemoveAll(List<BaseCard> cards)
         {
             foreach (var card in cards)
             {
@@ -63,17 +63,17 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public List<GenericCard> GetCreaturesInPlay()
+        public List<BaseCard> GetCreaturesInPlay()
         {
             return Cards.FindAll(c => c.Type == Type.Creature);
         }
 
-        private IEnumerable<GenericCard> GetLessonsInPlay()
+        private IEnumerable<BaseCard> GetLessonsInPlay()
         {
             return Cards.FindAll(c => c.Type == Type.Lesson);
         }
 
-        public IEnumerable<GenericCard> GetLessonsOfType(LessonTypes type, int amount = 1)
+        public IEnumerable<BaseCard> GetLessonsOfType(LessonTypes type, int amount = 1)
         {
             return GetLessonsInPlay().Where(x => ((ILessonProvider)x).LessonType == type).Take(amount);
         }
@@ -83,7 +83,7 @@ namespace HarryPotterUnity.Game
             return GetLessonsInPlay().Count(x => ((ILessonProvider)x).LessonType == type);
         }
 
-        private void TweenCardToPosition(GenericCard card)
+        private void TweenCardToPosition(BaseCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
 
@@ -101,7 +101,7 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.Type == type), GetTargetPositionForCard));
         }
 
-        private Vector3 GetTargetPositionForCard(GenericCard card)
+        private Vector3 GetTargetPositionForCard(BaseCard card)
         {
             int position = Cards.FindAll(c => c.Type == card.Type).IndexOf(card);
 

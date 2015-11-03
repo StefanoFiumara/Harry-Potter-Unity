@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -8,19 +7,19 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
     [UsedImplicitly]
-    public class PetrificusTotalus : GenericSpell
+    public class PetrificusTotalus : BaseSpell
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
             return Player.OppositePlayer.Discard.GetCards(c => c.Type == Type.Lesson).Count > 0;
         }
 
-        public override List<GenericCard> GetValidTargets()
+        public override List<BaseCard> GetValidTargets()
         {
             return Player.OppositePlayer.InPlay.GetCreaturesInPlay();
         }
 
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             if (targets.Count != 1)
             {

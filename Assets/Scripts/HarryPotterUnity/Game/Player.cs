@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
@@ -153,7 +153,7 @@ namespace HarryPotterUnity.Game
         {
             if (amount <= 0) return;
 
-            var cards = new List<GenericCard>();
+            var cards = new List<BaseCard>();
 
             for (int i = 0; i < amount; i++)
             {

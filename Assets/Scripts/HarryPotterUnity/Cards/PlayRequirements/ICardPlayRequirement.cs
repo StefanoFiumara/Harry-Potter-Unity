@@ -1,4 +1,4 @@
-﻿namespace HarryPotterUnity.Cards.Generic.Interfaces
+﻿namespace HarryPotterUnity.Cards.PlayRequirements
 {
     public interface ICardPlayRequirement
     {

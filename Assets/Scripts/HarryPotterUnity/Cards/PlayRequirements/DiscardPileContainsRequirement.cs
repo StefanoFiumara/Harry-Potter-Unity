@@ -1,9 +1,8 @@
-﻿using HarryPotterUnity.Cards.Generic.Interfaces;
-using HarryPotterUnity.Enums;
+﻿using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Generic.PlayRequirements
+namespace HarryPotterUnity.Cards.PlayRequirements
 {
     [UsedImplicitly]
     class DiscardPileContainsRequirement : MonoBehaviour, ICardPlayRequirement
@@ -16,7 +15,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
 
         public bool MeetsRequirement()
         {
-            var player = GetComponent<GenericCard>().Player;
+            var player = GetComponent<BaseCard>().Player;
 
             return player.Discard.GetCards(card => card.Type == _type).Count >= _minimumAmount;
         }

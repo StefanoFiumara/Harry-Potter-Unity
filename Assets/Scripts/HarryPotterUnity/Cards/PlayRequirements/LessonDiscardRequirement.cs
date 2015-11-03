@@ -1,11 +1,10 @@
 ﻿using System.Linq;
-using HarryPotterUnity.Cards.Generic.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Generic.PlayRequirements
+namespace HarryPotterUnity.Cards.PlayRequirements
 {
     [UsedImplicitly]
     public class LessonDiscardRequirement : MonoBehaviour, ICardPlayRequirement
@@ -22,7 +21,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
         [UsedImplicitly]
         void Start()
         {
-            _player = GetComponent<GenericCard>().Player;
+            _player = GetComponent<BaseCard>().Player;
         }
         public bool MeetsRequirement()
         {

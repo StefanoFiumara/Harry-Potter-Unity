@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
@@ -10,9 +9,9 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
     [UsedImplicitly]
-    public class Aparecium : GenericSpell
+    public class Aparecium : BaseSpell
     {
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             int handCount = Player.Hand.Cards.Count;
 

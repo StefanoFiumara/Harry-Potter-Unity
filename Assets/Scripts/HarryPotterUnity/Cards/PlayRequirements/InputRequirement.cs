@@ -1,14 +1,13 @@
-﻿using HarryPotterUnity.Cards.Generic.Interfaces;
-using HarryPotterUnity.Game;
+﻿using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Generic.PlayRequirements
+namespace HarryPotterUnity.Cards.PlayRequirements
 {
     [UsedImplicitly]
     public class InputRequirement : MonoBehaviour, ICardPlayRequirement
     {
-        private GenericCard _cardInfo;
+        private BaseCard _cardInfo;
 
         [SerializeField, UsedImplicitly]
         private int _inputRequired;
@@ -18,7 +17,7 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
         [UsedImplicitly]
         void Awake()
         {
-            _cardInfo = GetComponent<GenericCard>();
+            _cardInfo = GetComponent<BaseCard>();
             if (GetComponent<InputGatherer>() == null)
             {
                 gameObject.AddComponent<InputGatherer>();   

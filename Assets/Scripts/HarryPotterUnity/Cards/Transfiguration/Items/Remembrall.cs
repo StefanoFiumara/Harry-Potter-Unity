@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -9,9 +8,9 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
     [UsedImplicitly]
-    public class Remembrall : GenericCard, IPersistentCard
+    public class Remembrall : BaseCard, IPersistentCard
     {
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void OnClickAction(List<BaseCard> targets)
         {
             Player.InPlay.Add(this);
             Player.Hand.Remove(this);

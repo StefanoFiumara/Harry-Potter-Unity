@@ -2,18 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.PlayRequirements;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
+using Photon_Unity_Networking.Plugins.PhotonNetwork;
 using UnityEngine;
+using MonoBehaviour = UnityEngine.MonoBehaviour;
 
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
     class InputGatherer : MonoBehaviour
     {
-        private GenericCard _cardInfo;
+        private BaseCard _cardInfo;
         private InputRequirement _requirement;
 
         private int _inputRequired;
@@ -21,7 +23,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         private void Start()
         {
-            _cardInfo = GetComponent<GenericCard>();
+            _cardInfo = GetComponent<BaseCard>();
             _requirement = GetComponent<InputRequirement>();
 
             if (_requirement == null)
@@ -54,7 +56,7 @@ namespace HarryPotterUnity.Game
         {
             if (_inputRequired <= 0) throw new Exception("_inputRequired field is not set or set to a negative value!");
 
-            var selectedCards = new List<GenericCard>();
+            var selectedCards = new List<BaseCard>();
 
             while (selectedCards.Count < _inputRequired)
             {
@@ -66,7 +68,7 @@ namespace HarryPotterUnity.Game
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, 1000f, 1 << 11))
                     {
-                        var target = hit.transform.gameObject.GetComponent<GenericCard>();
+                        var target = hit.transform.gameObject.GetComponent<BaseCard>();
                         selectedCards.Add(target);
 
                         target.SetSelected();

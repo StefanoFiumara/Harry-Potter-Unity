@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Generic {
+namespace HarryPotterUnity.Cards {
 
     [UsedImplicitly]
-    public class LessonProvider : GenericCard, IPersistentCard, ILessonProvider
+    public class LessonProvider : BaseCard, IPersistentCard, ILessonProvider
     {
         
 
@@ -31,7 +30,7 @@ namespace HarryPotterUnity.Cards.Generic {
         }
         #endregion
 
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void OnClickAction(List<BaseCard> targets)
         {
             Player.InPlay.Add(this);
             Player.Hand.Remove(this);

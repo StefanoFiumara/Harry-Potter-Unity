@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
 using UnityEngine;
 using System.Linq;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Characters
 {
     [UsedImplicitly]
-    public class HermioneGranger : GenericCard, IPersistentCard
+    public class HermioneGranger : BaseCard, IPersistentCard
     {
         public bool CanPerformInPlayAction()
         {
@@ -30,7 +29,7 @@ namespace HarryPotterUnity.Cards.Characters
             Player.UseActions();
         }
 
-        protected override void OnClickAction(List<GenericCard> targets) { }
+        protected override void OnClickAction(List<BaseCard> targets) { }
         public void OnInPlayBeforeTurnAction() { }
         public void OnInPlayAfterTurnAction() { }        
         public void OnEnterInPlayAction() { }

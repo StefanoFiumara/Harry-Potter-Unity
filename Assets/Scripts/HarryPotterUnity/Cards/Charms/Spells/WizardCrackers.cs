@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
     [UsedImplicitly]
-    public class WizardCrackers : GenericSpell {
+    public class WizardCrackers : BaseSpell {
 
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             var card = Player.Deck.TakeTopCard();
 

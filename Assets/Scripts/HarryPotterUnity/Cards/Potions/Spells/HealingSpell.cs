@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -8,7 +7,7 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Potions.Spells
 {
     [UsedImplicitly]
-    class HealingSpell : GenericSpell
+    class HealingSpell : BaseSpell
     {
 
         [Header("Healing Spell Settings")]
@@ -18,7 +17,7 @@ namespace HarryPotterUnity.Cards.Potions.Spells
         [SerializeField, UsedImplicitly]
         private bool _shuffleDeckAfterHeal;
 
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             var cards = Player.Discard.GetCards(card => !card.Tags.Contains(Tag.Healing)).Take(_healingAmount).ToList();
             

@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
     [UsedImplicitly]
-    public class Incarcifors : GenericSpell
+    public class Incarcifors : BaseSpell
     {
-        public override List<GenericCard> GetValidTargets()
+        public override List<BaseCard> GetValidTargets()
         {
             return Player.OppositePlayer.InPlay.GetCreaturesInPlay();
         }
 
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             if (targets.Count != 1)
             {

@@ -4,13 +4,13 @@ using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Generic
+namespace HarryPotterUnity.Cards
 {
-    public abstract class GenericSpell : GenericCard {
+    public abstract class BaseSpell : BaseCard {
 
         private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
 
-        protected sealed override void OnClickAction(List<GenericCard> targets)
+        protected sealed override void OnClickAction(List<BaseCard> targets)
         {
             Enable();
             PreviewSpell();
@@ -21,7 +21,7 @@ namespace HarryPotterUnity.Cards.Generic
             SpellAction(targets);
         }
 
-        protected abstract void SpellAction(List<GenericCard> targets);
+        protected abstract void SpellAction(List<BaseCard> targets);
 
         private void PreviewSpell()
         {

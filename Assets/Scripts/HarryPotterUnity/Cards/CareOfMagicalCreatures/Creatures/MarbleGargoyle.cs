@@ -1,11 +1,10 @@
-﻿using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+﻿using HarryPotterUnity.Cards.Interfaces;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 {
     [UsedImplicitly]
-    public class MarbleGargoyle : GenericCreature, IPersistentCard 
+    public class MarbleGargoyle : BaseCreature, IPersistentCard 
     {
         private bool _hasAddedDamage;
 

@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HarryPotterUnity.Cards.Generic
+namespace HarryPotterUnity.Cards
 {
-    public class GenericCreature : GenericCard, IPersistentCard {
+    public class BaseCreature : BaseCard, IPersistentCard {
 
         [Header("Creature Settings")]
         [SerializeField, UsedImplicitly]
@@ -45,7 +45,7 @@ namespace HarryPotterUnity.Cards.Generic
             _uiCanvas.SetActive(false);
         }
 
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void OnClickAction(List<BaseCard> targets)
         {
             Player.InPlay.Add(this);
             Player.Hand.Remove(this);

@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
     [UsedImplicitly]
-    public class Obliviate : GenericSpell {
+    public class Obliviate : BaseSpell {
 
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             int handCount = Player.OppositePlayer.Hand.Cards.Count;
             

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Tween;
 using UnityEngine;
 
@@ -15,18 +15,18 @@ namespace HarryPotterUnity.Utils
 
         public static byte _networkIdCounter;
 
-        public static readonly List<GenericCard> AllCards = new List<GenericCard>(); 
+        public static readonly List<BaseCard> AllCards = new List<BaseCard>(); 
 
         public static Camera _previewCamera;
         
         public static readonly TweenQueue TweenQueue = new TweenQueue();
 
-        public static void DisableCards(List<GenericCard> cards)
+        public static void DisableCards(List<BaseCard> cards)
         {
             cards.ForEach(card => card.Disable());
         }
 
-        public static void EnableCards(List<GenericCard> cards)
+        public static void EnableCards(List<BaseCard> cards)
         {
             cards.ForEach(card => card.Enable());
         }

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using UnityEngine;
 
@@ -50,7 +50,7 @@ namespace HarryPotterUnity.Tween
 
             foreach (var target in _targets)
             {
-                target.GetComponent<GenericCard>().FlipState = _flip;
+                target.GetComponent<BaseCard>().FlipState = _flip;
 
                 iTween.RotateTo(target, iTween.Hash("time", _time,
                     "delay", _delay,

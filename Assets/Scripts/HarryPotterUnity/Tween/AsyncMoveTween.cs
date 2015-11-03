@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards;
 using UnityEngine;
 
 namespace HarryPotterUnity.Tween
@@ -8,11 +8,11 @@ namespace HarryPotterUnity.Tween
     class AsyncMoveTween : ITweenObject
     {
 
-        private readonly List<GenericCard> _targets;
-        private readonly Func<GenericCard, Vector3> _getPosition;
+        private readonly List<BaseCard> _targets;
+        private readonly Func<BaseCard, Vector3> _getPosition;
         private readonly float _timeUntilNextTween;
 
-        public AsyncMoveTween(List<GenericCard> targets, Func<GenericCard, Vector3> getPositionFunction, float timeUntilNextTween = 0f)
+        public AsyncMoveTween(List<BaseCard> targets, Func<BaseCard, Vector3> getPositionFunction, float timeUntilNextTween = 0f)
         {
             _targets = targets;
             _getPosition = getPositionFunction;

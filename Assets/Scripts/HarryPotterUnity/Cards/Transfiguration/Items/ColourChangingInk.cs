@@ -1,16 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Cards.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
     [UsedImplicitly]
-    public class ColourChangingInk : GenericCard, IPersistentCard
+    public class ColourChangingInk : BaseCard, IPersistentCard
     {
-        protected override void OnClickAction(List<GenericCard> targets)
+        protected override void OnClickAction(List<BaseCard> targets)
         {
             Player.Hand.Remove(this);
             Player.InPlay.Add(this);

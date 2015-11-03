@@ -1,6 +1,6 @@
 ﻿using HarryPotterUnity.Enums;
 
-namespace HarryPotterUnity.Cards.Generic.Interfaces
+namespace HarryPotterUnity.Cards.Interfaces
 {
     public interface ILessonProvider
     {

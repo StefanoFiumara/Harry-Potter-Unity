@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
     [UsedImplicitly]
-    public class Diffindo : GenericSpell
+    public class Diffindo : BaseSpell
     {
-        public override List<GenericCard> GetValidTargets()
+        public override List<BaseCard> GetValidTargets()
         {
             return Player.OppositePlayer.InPlay.Cards;
         }
 
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             if (targets.Count != 1)
             {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
@@ -11,7 +11,7 @@ namespace HarryPotterUnity.Game
     [UsedImplicitly]
     public class Hand : MonoBehaviour {
         
-        public List<GenericCard> Cards { get; private set; }
+        public List<BaseCard> Cards { get; private set; }
 
         private Player _player;
 
@@ -23,7 +23,7 @@ namespace HarryPotterUnity.Game
 
         public Hand()
         {
-            Cards = new List<GenericCard>();
+            Cards = new List<BaseCard>();
         }
 
         [UsedImplicitly]
@@ -32,7 +32,7 @@ namespace HarryPotterUnity.Game
             _player = transform.GetComponentInParent<Player>();
         }
 
-        public void Add(GenericCard card, bool preview = true, bool adjustSpacing = true)
+        public void Add(BaseCard card, bool preview = true, bool adjustSpacing = true)
         {
             if (adjustSpacing) AdjustHandSpacing();
 
@@ -44,7 +44,7 @@ namespace HarryPotterUnity.Game
 
             Cards.Add(card);
         }
-        public void AddAll(IEnumerable<GenericCard> cards)
+        public void AddAll(IEnumerable<BaseCard> cards)
         {
             AdjustHandSpacing();
 
@@ -56,7 +56,7 @@ namespace HarryPotterUnity.Game
             AdjustHandSpacing();
         }
 
-        public void RemoveAll(IEnumerable<GenericCard> cardsToRemove)
+        public void RemoveAll(IEnumerable<BaseCard> cardsToRemove)
         {
             foreach (var card in cardsToRemove)
             {
@@ -64,18 +64,18 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public void Remove(GenericCard card)
+        public void Remove(BaseCard card)
         {
-            RemoveAll(new List<GenericCard> { card });
+            RemoveAll(new List<BaseCard> { card });
         }
 
         public void AdjustHandSpacing()
         {
-            ITweenObject tween = new AsyncMoveTween(new List<GenericCard>(Cards), GetTargetPositionForCard);
+            ITweenObject tween = new AsyncMoveTween(new List<BaseCard>(Cards), GetTargetPositionForCard);
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
-        private Vector3 GetTargetPositionForCard(GenericCard card)
+        private Vector3 GetTargetPositionForCard(BaseCard card)
         {
             float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
             var cardPosition = HandCardsOffset;
@@ -87,7 +87,7 @@ namespace HarryPotterUnity.Game
             return cardPosition;
         }
 
-        private void AnimateCardToHand(GenericCard card, FlipStates flipState, bool preview = true)
+        private void AnimateCardToHand(BaseCard card, FlipStates flipState, bool preview = true)
         {
             var cardPosition = HandCardsOffset;
 

@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Potions.Spells
 {
     [UsedImplicitly]
-    public class ManegroPotion : GenericSpell {
+    public class ManegroPotion : BaseSpell {
 
-        protected override void SpellAction(List<GenericCard> targets)
+        protected override void SpellAction(List<BaseCard> targets)
         {
             int damage = Player.InPlay.GetAmountOfLessonsOfType(LessonTypes.Potions);
             var lesson = Player.InPlay.GetLessonsOfType(LessonTypes.Potions).First();

@@ -1,4 +1,4 @@
-﻿using HarryPotterUnity.Cards.Generic;
+﻿using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using UnityEngine;
 
@@ -79,7 +79,7 @@ namespace HarryPotterUnity.Tween
                         break;
             }
 
-            _target.GetComponent<GenericCard>().FlipState = _flip;
+            _target.GetComponent<BaseCard>().FlipState = _flip;
 
             iTween.RotateTo(_target, iTween.Hash("time", _time,
                 "y", targetFlip,

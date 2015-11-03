@@ -1,15 +1,14 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
     [UsedImplicitly]
-    public class EndlessSandwiches : GenericSpell {
-        protected override void SpellAction(List<GenericCard> targets)
+    public class EndlessSandwiches : BaseSpell {
+        protected override void SpellAction(List<BaseCard> targets)
         {
             int amountCardsToDraw = 7 - Player.Hand.Cards.Count;
-            var cardsToDraw = new List<GenericCard>();
+            var cardsToDraw = new List<BaseCard>();
 
             while (amountCardsToDraw-- > 0)
             {

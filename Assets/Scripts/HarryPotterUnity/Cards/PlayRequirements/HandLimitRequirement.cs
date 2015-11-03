@@ -1,8 +1,7 @@
-﻿using HarryPotterUnity.Cards.Generic.Interfaces;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Generic.PlayRequirements
+namespace HarryPotterUnity.Cards.PlayRequirements
 {
     [UsedImplicitly]
     public class HandLimitRequirement : MonoBehaviour, ICardPlayRequirement
@@ -10,11 +9,11 @@ namespace HarryPotterUnity.Cards.Generic.PlayRequirements
         [SerializeField, UsedImplicitly]
         private int _limitAmount;
 
-        private GenericCard _cardInfo;
+        private BaseCard _cardInfo;
 
         void Start()
         {
-            _cardInfo = GetComponent<GenericCard>();
+            _cardInfo = GetComponent<BaseCard>();
         }
         public bool MeetsRequirement()
         {

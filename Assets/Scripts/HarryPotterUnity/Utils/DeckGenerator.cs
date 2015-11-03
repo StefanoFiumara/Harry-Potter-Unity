@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
-using HarryPotterUnity.Cards.Generic.Interfaces;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -12,9 +12,9 @@ namespace HarryPotterUnity.Utils
     [UsedImplicitly]
     public static class DeckGenerator
     {
-        private static List<GenericCard> _cardLibrary;
+        private static List<BaseCard> _cardLibrary;
 
-        private static List<GenericCard> CardLibrary
+        private static List<BaseCard> CardLibrary
         {
             get {
                     if (_cardLibrary == null) LoadCardLibrary();
@@ -22,12 +22,12 @@ namespace HarryPotterUnity.Utils
                 }
         }
 
-        private static List<GenericCard> _startingCharacters;
+        private static List<BaseCard> _startingCharacters;
          
         private static void LoadCardLibrary()
         {
-            _cardLibrary = new List<GenericCard>();
-            _startingCharacters = new List<GenericCard>();
+            _cardLibrary = new List<BaseCard>();
+            _startingCharacters = new List<BaseCard>();
 
             var resources = Resources.LoadAll("Cards/");
             
@@ -38,7 +38,7 @@ namespace HarryPotterUnity.Utils
                     Debug.LogError("Failed to load asset");
                     continue;
                 }
-                var cardInfo = container.GetComponent<GenericCard>();
+                var cardInfo = container.GetComponent<BaseCard>();
                 _cardLibrary.Add(cardInfo);
 
                 if (cardInfo.Type == Type.Character)
@@ -48,7 +48,7 @@ namespace HarryPotterUnity.Utils
             }
         }
 
-        public static GenericCard GetRandomStartingCharacter()
+        public static BaseCard GetRandomStartingCharacter()
         {
             if(_startingCharacters == null) LoadCardLibrary();
 
@@ -60,14 +60,14 @@ namespace HarryPotterUnity.Utils
             throw new System.Exception("Starting Characters are not loaded!");
         }
 
-        public static IEnumerable<GenericCard> GenerateDeck(List<LessonTypes> types)
+        public static IEnumerable<BaseCard> GenerateDeck(List<LessonTypes> types)
         {
             if (types.Count != 2 && types.Count != 3)
             {
                 throw new System.Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
             }
 
-            var deck = new List<GenericCard>();
+            var deck = new List<BaseCard>();
 
             switch (types.Count)
             {
@@ -106,7 +106,7 @@ namespace HarryPotterUnity.Utils
             throw new System.ArgumentException("Unable to map lesson type");
         }
 
-        private static void AddLessonsToDeck(ref List<GenericCard> deck, LessonTypes lessonType, int amount)
+        private static void AddLessonsToDeck(ref List<BaseCard> deck, LessonTypes lessonType, int amount)
         {
             var card = CardLibrary.Where(c => c.Classification == ClassificationTypes.Lesson)
                 .First(l => ((ILessonProvider) l).LessonType == lessonType);
@@ -117,7 +117,7 @@ namespace HarryPotterUnity.Utils
             }
         }
 
-        private static void AddCardsToDeck(ref List<GenericCard> deck, ClassificationTypes classification, int amount)
+        private static void AddCardsToDeck(ref List<BaseCard> deck, ClassificationTypes classification, int amount)
         {
             var potentialCards = CardLibrary.Where(c => c.Classification == classification).ToList();
 
@@ -142,7 +142,7 @@ namespace HarryPotterUnity.Utils
             }
         }
 
-        private static bool MeetsRarityRequirements(this GenericCard card)
+        private static bool MeetsRarityRequirements(this BaseCard card)
         {
             float chanceToAdd = 1f;
 

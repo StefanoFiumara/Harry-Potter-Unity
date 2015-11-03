@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
+using Photon_Unity_Networking.Plugins.PhotonNetwork;
 using UnityEngine;
+using MonoBehaviour = UnityEngine.MonoBehaviour;
 
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
     public class Deck : MonoBehaviour
     {
-        private List<GenericCard> _cards;
+        private List<BaseCard> _cards;
 
-        private GenericCard _startingCharacter;
+        private BaseCard _startingCharacter;
 
         private Player _player;
 
@@ -47,9 +49,9 @@ namespace HarryPotterUnity.Game
             _outline.SetActive(false);
         }
 
-        public void InitDeck (IEnumerable<GenericCard> cardList, GenericCard startingCharacter)
+        public void InitDeck (IEnumerable<BaseCard> cardList, BaseCard startingCharacter)
         {
-            _cards = new List<GenericCard>(cardList);
+            _cards = new List<BaseCard>(cardList);
             _startingCharacter = startingCharacter;
             
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y);
@@ -86,9 +88,9 @@ namespace HarryPotterUnity.Game
             _player.InPlay.Add(_startingCharacter);
         }
 
-        public GenericCard TakeTopCard()
+        public BaseCard TakeTopCard()
         {
-            GenericCard card = null;
+            BaseCard card = null;
 
             if (_cards.Count > 0)
             {
@@ -177,18 +179,18 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public IEnumerable<GenericCard> GetCardsOfType(Type type, int amount)
+        public IEnumerable<BaseCard> GetCardsOfType(Type type, int amount)
         {
             //TODO: Randomize this
             return _cards.FindAll(card => card.Type == type).Take(amount);
         }
 
-        public void Remove(GenericCard card)
+        public void Remove(BaseCard card)
         {
             _cards.Remove(card);
         }
 
-        private void Add(GenericCard card)
+        private void Add(BaseCard card)
         {
             _cards.Insert(0, card);
             card.transform.parent = transform;
@@ -199,7 +201,7 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, State.InDeck));
         }
 
-        public void AddAll(IEnumerable<GenericCard> cards)
+        public void AddAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
             {
@@ -214,7 +216,7 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(_cards, GetTargetPositionForCard));
         }
 
-        private Vector3 GetTargetPositionForCard(GenericCard card)
+        private Vector3 GetTargetPositionForCard(BaseCard card)
         {
             if (!_cards.Contains(card))
             {

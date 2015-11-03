@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
-using HarryPotterUnity.Cards.Generic;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
     [UsedImplicitly]
-    public class MiceToSnuffboxes : GenericSpell {
-        public override List<GenericCard> GetValidTargets()
+    public class MiceToSnuffboxes : BaseSpell {
+        public override List<BaseCard> GetValidTargets()
         {
             var validCards = Player.InPlay.GetCreaturesInPlay();
             validCards.AddRange(Player.OppositePlayer.InPlay.GetCreaturesInPlay());
@@ -14,7 +13,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             return validCards;
         }
 
-        protected override void SpellAction(List<GenericCard> selectedCards)
+        protected override void SpellAction(List<BaseCard> selectedCards)
         {
             //TODO: fix animation bugs by doing an AddAll of the selected cards belong to the same player.
             foreach(var card in selectedCards) {

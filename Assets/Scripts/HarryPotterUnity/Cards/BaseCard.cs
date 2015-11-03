@@ -1,18 +1,20 @@
-﻿//using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic.Interfaces;
-using HarryPotterUnity.Cards.Generic.PlayRequirements;
+using HarryPotterUnity.Cards.DeckGenerationRequirements;
+using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
+using Photon_Unity_Networking.Plugins.PhotonNetwork;
 using UnityEngine;
+using MonoBehaviour = UnityEngine.MonoBehaviour;
 
-namespace HarryPotterUnity.Cards.Generic
+namespace HarryPotterUnity.Cards
 {
     [SelectionBase]
-    public abstract class GenericCard : MonoBehaviour {
+    public abstract class BaseCard : MonoBehaviour {
         
         #region Inspector Layout
         [Header("Deck Generation Options")]
@@ -179,7 +181,7 @@ namespace HarryPotterUnity.Cards.Generic
                    MeetsAdditionalPlayRequirements();
         }
 
-        public void MouseUpAction(List<GenericCard> targets = null)
+        public void MouseUpAction(List<BaseCard> targets = null)
         {       
             foreach (var requirement in _playRequirements)
             {
@@ -192,7 +194,7 @@ namespace HarryPotterUnity.Cards.Generic
             
         }
 
-        protected abstract void OnClickAction(List<GenericCard> targets);
+        protected abstract void OnClickAction(List<BaseCard> targets);
 
         private void ShowPreview()
         {
@@ -235,11 +237,11 @@ namespace HarryPotterUnity.Cards.Generic
             _cardFace.GetComponent<Renderer>().material.color = Color.yellow;
         }
 
-        public virtual List<GenericCard> GetValidTargets()
+        public virtual List<BaseCard> GetValidTargets()
         {
             if (_inputRequired == 0)
             {
-                return new List<GenericCard>();
+                return new List<BaseCard>();
             }
 
             throw new System.NotSupportedException("Card with input did not define valid targets");

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Cards.Generic;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
@@ -10,8 +9,8 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
     [UsedImplicitly]
-    public class OutOfTheWoods : GenericSpell {
-        protected override void SpellAction(List<GenericCard> targets)
+    public class OutOfTheWoods : BaseSpell {
+        protected override void SpellAction(List<BaseCard> targets)
         {
             int handCount = Player.OppositePlayer.Hand.Cards.Count;
 
