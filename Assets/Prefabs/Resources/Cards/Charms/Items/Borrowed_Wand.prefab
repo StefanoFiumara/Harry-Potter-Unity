@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 1
   _rarity: 0
-  Tags: 
+  Tags: 02000000
   _actionCost: 1
   _lessonType: 1
   _amountLessonsProvided: 2
@@ -270,6 +270,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _amountLessonsProvided
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Tags.Array.data[0]
       value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []

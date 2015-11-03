@@ -17,7 +17,7 @@ namespace HarryPotterUnity.Game
 
         public static readonly List<BaseCard> AllCards = new List<BaseCard>(); 
 
-        public static Camera _previewCamera;
+        public static Camera _previewCamera = GameObject.Find("Preview Camera").GetComponent<Camera>();
         
         public static readonly TweenQueue TweenQueue = new TweenQueue();
 

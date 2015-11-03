@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using HarryPotterUnity.Cards.Interfaces;
+﻿using System.Linq;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 

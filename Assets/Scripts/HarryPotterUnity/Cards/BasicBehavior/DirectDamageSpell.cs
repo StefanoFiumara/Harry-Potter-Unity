@@ -2,7 +2,7 @@
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards
+namespace HarryPotterUnity.Cards.BasicBehavior
 {
     public class DirectDamageSpell : BaseSpell {
         
