@@ -57,7 +57,6 @@ namespace HarryPotterUnity.Cards
         private int _inputRequired;
         
         private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
-        private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
 
         private GameObject _cardFace;
         private GameObject _outline;
@@ -213,23 +212,15 @@ namespace HarryPotterUnity.Cards
         {
             _cardFace.layer = GameManager.PREVIEW_LAYER;
             
-            if (FlipState == FlipStates.FaceDown) return;
-
-            if (iTween.Count(gameObject) == 0)
-            {
-                GameManager._previewCamera.transform.rotation = transform.rotation;
-                GameManager._previewCamera.transform.position = transform.position + 2 * Vector3.back;
-            }
-            else
-            {
-                HidePreview();
-            }
+            if (FlipState == FlipStates.FaceUp && iTween.Count(gameObject) == 0)
+                GameManager.PreviewCamera.ShowPreview(this);
+            else HidePreview();
         }
     
         private void HidePreview()
         {
             _cardFace.layer = GameManager.CARD_LAYER;
-            GameManager._previewCamera.transform.position = DefaultPreviewCameraPosition;
+            GameManager.PreviewCamera.HidePreview();
         }
 
         public void Disable()

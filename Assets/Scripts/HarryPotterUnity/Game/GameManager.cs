@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Tween;
+using HarryPotterUnity.UI;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
@@ -17,7 +18,7 @@ namespace HarryPotterUnity.Game
 
         public static readonly List<BaseCard> AllCards = new List<BaseCard>(); 
 
-        public static Camera _previewCamera = GameObject.Find("Preview Camera").GetComponent<Camera>();
+        public static readonly PreviewCamera PreviewCamera = GameObject.Find("Preview Camera").GetComponent<PreviewCamera>();
         
         public static readonly TweenQueue TweenQueue = new TweenQueue();
 

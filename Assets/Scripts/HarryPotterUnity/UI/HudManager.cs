@@ -4,7 +4,6 @@ using System.Linq;
 using ExitGames.Client.Photon;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -191,7 +190,8 @@ namespace HarryPotterUnity.UI
             if (_selectQuidditch.isOn) _selectedLessons.Add(LessonTypes.Quidditch);
 
             //Convert to byte array for serialization
-            var selectedLessons = Array.ConvertAll(_selectedLessons.ToArray(), input => (byte)input);
+            var selectedLessons = _selectedLessons.Select(n => (byte) n).ToArray();
+            
             var selected = new Hashtable {{"lessons", selectedLessons}};
             PhotonNetwork.player.SetCustomProperties(selected);
         }
