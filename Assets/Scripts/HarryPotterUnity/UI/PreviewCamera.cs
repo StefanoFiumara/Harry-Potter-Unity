@@ -9,27 +9,24 @@ namespace HarryPotterUnity.UI
     [UsedImplicitly]
     public class PreviewCamera : MonoBehaviour
     {
-        private GameObject _renderTexture;
+        [SerializeField, UsedImplicitly]
+        private RectTransform _renderTexture;
 
         private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
-
-        [UsedImplicitly]
-        private void Start()
-        {
-            //TODO: Switch to using HUD element for preview camera
-            _renderTexture = GameObject.Find("PreviewRenderTexture");
-
-            if(_renderTexture == null) throw new System.Exception("Preview Camera could not find render texture GameObject");
-        }
+        
+        private static readonly Vector3 HorizontalPreviewPosition = new Vector3(-466f, 274f, 0f);
+        private static readonly Vector3 VerticalPreviewPosition = new Vector3(-515f, 221f, 0f);
 
         private void RotateHorizontal()
         {
-            _renderTexture.transform.rotation = Quaternion.Euler(0f,0f,90);
+            _renderTexture.localPosition = HorizontalPreviewPosition;
+            _renderTexture.rotation = Quaternion.Euler(0f,0f,270f);
         }
 
         private void RotateVertical()
         {
-            _renderTexture.transform.rotation = Quaternion.Euler(0f, 0f, 180f);
+            _renderTexture.localPosition = VerticalPreviewPosition;
+            _renderTexture.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
         public void ShowPreview(BaseCard card)
