@@ -370,7 +370,7 @@ namespace Photon
                 return PhotonView.Get(this);
             }
         }
-
+        /*
         new public PhotonView networkView
         {
             get
@@ -379,6 +379,7 @@ namespace Photon
                 return PhotonView.Get(this);
             }
         }
+        */
     }
 
 
