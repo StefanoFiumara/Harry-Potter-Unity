@@ -188,6 +188,7 @@ namespace HarryPotterUnity.Game
             _player2.DrawInitialHand();
 
             _player1.InitTurn(true);
+            GameManager._gameInProgress = true;
         }
 
         public void DestroyPlayerObjects()
@@ -265,9 +266,9 @@ namespace HarryPotterUnity.Game
 
         public static IEnumerator WaitForGameOverMessage(Player sender)
         {
-            while (GameManager.TweenQueue.TweenQueueIsEmpty)
+            while (GameManager.TweenQueue.TweenQueueIsEmpty == false)
             {
-                yield return null;
+                yield return new WaitForSeconds(0.2f);
             }
 
             if (sender.IsLocalPlayer)
