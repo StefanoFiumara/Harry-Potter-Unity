@@ -34,9 +34,15 @@ namespace HarryPotterUnity.Game
                 return result;
             }
         }
+        
+        public int DamagePerTurn
+        {
+            get
+            {
+                return InPlay.GetCreaturesInPlay().Sum(card => card.DamagePerTurn);
+            }
+        }
 
-        public int CreaturesInPlay { get; set; }
-        public int DamagePerTurn { get; set; }
         public int DamageBuffer { private get; set; }
 
         public int AmountLessonsInPlay
