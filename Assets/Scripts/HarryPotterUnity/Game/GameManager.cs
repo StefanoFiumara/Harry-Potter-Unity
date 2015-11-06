@@ -16,6 +16,8 @@ namespace HarryPotterUnity.Game
 
         public static byte _networkIdCounter;
 
+        public static bool _gameInProgress;
+
         public static readonly List<BaseCard> AllCards = new List<BaseCard>(); 
 
         public static readonly PreviewCamera PreviewCamera = GameObject.Find("Preview Camera").GetComponent<PreviewCamera>();

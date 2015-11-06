@@ -109,9 +109,13 @@ namespace HarryPotterUnity.Game
         
         private void GameOver()
         {
-            _player.DisableAllCards();
-            _player.OppositePlayer.DisableAllCards();
-            StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
+            if (GameManager._gameInProgress)
+            {
+                GameManager._gameInProgress = false;
+                _player.DisableAllCards();
+                _player.OppositePlayer.DisableAllCards();
+                StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
+            }
         }
 
         [UsedImplicitly]
