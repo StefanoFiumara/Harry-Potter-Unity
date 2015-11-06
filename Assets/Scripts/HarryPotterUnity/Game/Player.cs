@@ -22,16 +22,17 @@ namespace HarryPotterUnity.Game
         public InPlay InPlay { get; private set; }
         public Discard Discard { get; private set; }
 
+        private readonly HashSet<LessonTypes> _lessonTypesInPlay = new HashSet<LessonTypes>(); 
         public HashSet<LessonTypes> LessonTypesInPlay
         {
             get
             {
-                var result = new HashSet<LessonTypes>();
+                _lessonTypesInPlay.Clear();
                 foreach (var providers in InPlay.Cards.OfType<ILessonProvider>())
                 {
-                    result.Add(providers.LessonType);
+                    _lessonTypesInPlay.Add(providers.LessonType);
                 }
-                return result;
+                return _lessonTypesInPlay;
             }
         }
         
