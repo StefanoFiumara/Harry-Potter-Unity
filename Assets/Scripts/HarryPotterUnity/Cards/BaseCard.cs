@@ -167,6 +167,8 @@ namespace HarryPotterUnity.Cards
                     Player.NetworkManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
                 }
             }   
+
+            _outline.SetActive(false);
         }
         
         private bool IsPlayableFromHand()
