@@ -39,7 +39,7 @@ namespace HarryPotterUnity.Game
         {
             get
             {
-                return InPlay.GetCreaturesInPlay().Sum(card => card.DamagePerTurn);
+                return InPlay.GetCreaturesInPlay().Cast<BaseCreature>().Sum(card => card.DamagePerTurn);
             }
         }
 
@@ -49,7 +49,7 @@ namespace HarryPotterUnity.Game
         {
             get
             {
-                return InPlay.Cards.OfType<ILessonProvider>().Select(c => c.AmountLessonsProvided).Sum();
+                return InPlay.GetLessonsInPlay().Cast<BaseLesson>().Sum(card => card.AmountLessonsProvided);
             }
         }
 

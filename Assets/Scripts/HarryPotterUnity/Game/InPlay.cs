@@ -68,7 +68,7 @@ namespace HarryPotterUnity.Game
             return Cards.FindAll(c => c is BaseCreature);
         }
 
-        private List<BaseCard> GetLessonsInPlay()
+        public List<BaseCard> GetLessonsInPlay()
         {
             return Cards.FindAll(c => c is BaseLesson);
         }
