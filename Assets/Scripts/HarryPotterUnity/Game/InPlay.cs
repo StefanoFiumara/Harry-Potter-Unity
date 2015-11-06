@@ -65,12 +65,12 @@ namespace HarryPotterUnity.Game
 
         public List<BaseCard> GetCreaturesInPlay()
         {
-            return Cards.FindAll(c => c.Type == Type.Creature);
+            return Cards.FindAll(c => c is BaseCreature);
         }
 
-        private IEnumerable<BaseCard> GetLessonsInPlay()
+        private List<BaseCard> GetLessonsInPlay()
         {
-            return Cards.FindAll(c => c.Type == Type.Lesson);
+            return Cards.FindAll(c => c is BaseLesson);
         }
 
         public IEnumerable<BaseCard> GetLessonsOfType(LessonTypes type, int amount = 1)
