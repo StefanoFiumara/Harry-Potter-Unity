@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
 
         protected override void SpellAction(List<BaseCard> selectedCards)
         {
-            //TODO: fix animation bugs by doing an AddAll of the selected cards belong to the same player.
+            //TODO: fix animation bugs by doing an AddAll if the selected cards belong to the same player.
             foreach(var card in selectedCards) {
                 card.Player.Hand.Add(card, preview: false);
                 card.Player.InPlay.Remove(card);
