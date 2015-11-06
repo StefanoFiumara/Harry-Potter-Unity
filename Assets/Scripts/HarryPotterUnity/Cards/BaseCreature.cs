@@ -21,6 +21,8 @@ namespace HarryPotterUnity.Cards
         private Text _healthLabel;
         protected Text _attackLabel;
         
+        public int DamagePerTurn { get { return _damagePerTurn; } }
+        public int Health { get { return _health; } }
         [UsedImplicitly]
         protected override void Start()
         {
@@ -48,19 +50,11 @@ namespace HarryPotterUnity.Cards
         
         public void OnEnterInPlayAction()
         {
-            Player.CreaturesInPlay++;
-            Player.DamagePerTurn += _damagePerTurn;
-
-            State = State.InPlay;
-
             _uiCanvas.SetActive(true);
         }
 
         public void OnExitInPlayAction()
         {
-            Player.CreaturesInPlay--;
-            Player.DamagePerTurn -= _damagePerTurn;
-
             _uiCanvas.SetActive(false);
         }
 
