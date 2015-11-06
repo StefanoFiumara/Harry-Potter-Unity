@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Cards.Interfaces;
+﻿using System.Linq;
+using HarryPotterUnity.Cards.Interfaces;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
@@ -10,10 +11,10 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 
         public new void OnInPlayBeforeTurnAction()
         {
-            if (Player.OppositePlayer.InPlay.GetCreaturesInPlay().Count != 0) return;
-
-            Player.DamagePerTurn += 3;
-            _attackLabel.text = (_damagePerTurn + 3).ToString();
+            if (Player.OppositePlayer.InPlay.GetCreaturesInPlay().Count() != 0) return;
+            
+            _damagePerTurn += 3;
+            _attackLabel.text = _damagePerTurn.ToString();
             _hasAddedDamage = true;
         }
 
@@ -21,18 +22,8 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
         {
             if (!_hasAddedDamage) return;
 
-            Player.DamagePerTurn -= 3;
-            _attackLabel.text = (_damagePerTurn).ToString();
-            _hasAddedDamage = false;
-        }
-
-        public new void OnExitInPlayAction()
-        {
-            base.OnExitInPlayAction();
-
-            if (!_hasAddedDamage) return;
-
-            Player.DamagePerTurn -= 3;
+            _damagePerTurn -= 3;
+            _attackLabel.text = _damagePerTurn.ToString();
             _hasAddedDamage = false;
         }
     }
