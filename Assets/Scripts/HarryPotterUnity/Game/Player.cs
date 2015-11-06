@@ -42,9 +42,7 @@ namespace HarryPotterUnity.Game
                 return InPlay.GetCreaturesInPlay().Cast<BaseCreature>().Sum(card => card.DamagePerTurn);
             }
         }
-
-        public int DamageBuffer { private get; set; }
-
+        
         public int AmountLessonsInPlay
         {
             get
@@ -52,6 +50,8 @@ namespace HarryPotterUnity.Game
                 return InPlay.GetLessonsInPlay().Cast<BaseLesson>().Sum(card => card.AmountLessonsProvided);
             }
         }
+
+        public int CreatureDamageBuffer { private get; set; }
 
         private int ActionsAvailable { get; set; }
 
@@ -81,7 +81,7 @@ namespace HarryPotterUnity.Game
 
             _hudManager = FindObjectOfType<HudManager>();
 
-            if (!_hudManager) throw new Exception("MultiplayerGameManager could not find MultiplayerLobbyHudManager!");
+            if (!_hudManager) throw new Exception("Player could not find HudManager!");
         }
 
         public void InitDeck(List<LessonTypes> selectedLessons)
@@ -108,7 +108,10 @@ namespace HarryPotterUnity.Game
         {
             TurnIndicator.gameObject.SetActive(true);
 
-            InPlay.Cards.ForEach(card => ((IPersistentCard) card).OnInPlayBeforeTurnAction());
+            foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
+            {
+                card.OnInPlayBeforeTurnAction();   
+            }
 
             Deck.DrawCard();
             AddActions(2);
@@ -125,7 +128,7 @@ namespace HarryPotterUnity.Game
             OppositePlayer.TakeDamage(DamagePerTurn);
 
             //reset the damage buffer in case it was set last turn.
-            OppositePlayer.DamageBuffer = 0;
+            OppositePlayer.CreatureDamageBuffer = 0;
         }
 
         private void EndTurn()
@@ -181,9 +184,9 @@ namespace HarryPotterUnity.Game
 
             for (int i = 0; i < amount; i++)
             {
-                if (DamageBuffer > 0)
+                if (CreatureDamageBuffer > 0)
                 {
-                    DamageBuffer--;
+                    CreatureDamageBuffer--;
                     continue;
                 }
 
