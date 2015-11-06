@@ -40,7 +40,7 @@ namespace HarryPotterUnity.Game
         {
             get
             {
-                return InPlay.GetCreaturesInPlay().Cast<BaseCreature>().Sum(card => card.DamagePerTurn);
+                return InPlay.Cards.OfType<BaseCreature>().Sum(card => card.DamagePerTurn);
             }
         }
         
@@ -48,7 +48,7 @@ namespace HarryPotterUnity.Game
         {
             get
             {
-                return InPlay.GetLessonsInPlay().Cast<BaseLesson>().Sum(card => card.AmountLessonsProvided);
+                return InPlay.Cards.OfType<ILessonProvider>().Sum(card => card.AmountLessonsProvided);
             }
         }
 
@@ -185,6 +185,7 @@ namespace HarryPotterUnity.Game
 
             for (int i = 0; i < amount; i++)
             {
+                //TODO: Only perform this check if the damage source is a creature!
                 if (CreatureDamageBuffer > 0)
                 {
                     CreatureDamageBuffer--;
