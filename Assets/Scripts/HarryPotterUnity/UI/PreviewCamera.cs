@@ -12,19 +12,19 @@ namespace HarryPotterUnity.UI
         private RectTransform _renderTexture;
 
         private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
-        
-        private static readonly Vector3 HorizontalPreviewPosition = new Vector3(-466f, 274f, 0f);
-        private static readonly Vector3 VerticalPreviewPosition = new Vector3(-515f, 221f, 0f);
+
+        private static readonly Vector2 HorizontalPreviewPosition = new Vector2(350f, 0f);
+        private static readonly Vector2 VerticalPreviewPosition = Vector2.zero;
 
         private void RotateHorizontal()
         {
-            _renderTexture.localPosition = HorizontalPreviewPosition;
+            _renderTexture.anchoredPosition = HorizontalPreviewPosition;
             _renderTexture.rotation = Quaternion.Euler(0f,0f,270f);
         }
 
         private void RotateVertical()
         {
-            _renderTexture.localPosition = VerticalPreviewPosition;
+            _renderTexture.anchoredPosition = VerticalPreviewPosition;
             _renderTexture.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
 

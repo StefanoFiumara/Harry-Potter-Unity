@@ -190,7 +190,6 @@ namespace HarryPotterUnity.UI
             if (_selectPotions.isOn) _selectedLessons.Add(LessonTypes.Potions);
             if (_selectQuidditch.isOn) _selectedLessons.Add(LessonTypes.Quidditch);
 
-            //Convert to byte array for serialization
             var selectedLessons = _selectedLessons.Select(n => (byte) n).ToArray();
             
             var selected = new Hashtable {{"lessons", selectedLessons}};
