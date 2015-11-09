@@ -160,6 +160,8 @@ namespace HarryPotterUnity.Game
             var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
             var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
 
+            EndGamePanel.GetComponent<Image>().color = new Color32(0xAE, 0x3D, 0x3D, 0xFF);
+
             titleLabel.text = "Sorry!";
             messageLabel.text = "Your Opponent Defeated You!";
 
@@ -171,6 +173,8 @@ namespace HarryPotterUnity.Game
             var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
             var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
 
+            EndGamePanel.GetComponent<Image>().color = new Color32(0x3D, 0xAE, 0x50, 0xFF);
+            
             titleLabel.text = "Congratulations!";
             messageLabel.text = "You won the game!";
 

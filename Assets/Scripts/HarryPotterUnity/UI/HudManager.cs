@@ -112,6 +112,7 @@ namespace HarryPotterUnity.UI
         {
             _gameStatusText.text = "Connected to Photon Server!";
             _findMatchButton.gameObject.SetActive(true);
+            _findMatchButton.interactable = true;
 
             _titleText.gameObject.SetActive(true);
             _gameStatusText.gameObject.SetActive(true);
@@ -160,7 +161,7 @@ namespace HarryPotterUnity.UI
             UpdateLessonSelection();
             if (_selectedLessons.Count == 2 || _selectedLessons.Count == 3)
             {
-                _findMatchButton.gameObject.SetActive(false);
+                _findMatchButton.interactable = false;
                 _gameStatusText.text = "Finding Match...";
 
                 PhotonNetwork.JoinRandomRoom();

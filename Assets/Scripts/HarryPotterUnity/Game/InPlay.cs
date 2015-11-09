@@ -24,7 +24,6 @@ namespace HarryPotterUnity.Game
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 55f);
         private static readonly Vector2 CharacterSpacing = new Vector2(80f, 0f);
 
-
         public InPlay()
         {
             Cards = new List<BaseCard>();

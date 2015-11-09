@@ -3,7 +3,6 @@ using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using MonoBehaviour = UnityEngine.MonoBehaviour;
@@ -81,7 +80,6 @@ namespace HarryPotterUnity.Game
 
             _startingCharacter.NetworkId = GameManager._networkIdCounter++;
             
-
             GameManager.AllCards.Add(_startingCharacter);
 
             _player.InPlay.Add(_startingCharacter);
@@ -109,13 +107,12 @@ namespace HarryPotterUnity.Game
         
         private void GameOver()
         {
-            if (GameManager._gameInProgress)
-            {
-                GameManager._gameInProgress = false;
-                _player.DisableAllCards();
-                _player.OppositePlayer.DisableAllCards();
-                StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
-            }
+            if (!GameManager._gameInProgress) return;
+
+            GameManager._gameInProgress = false;
+            _player.DisableAllCards();
+            _player.OppositePlayer.DisableAllCards();
+            StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
         }
 
         [UsedImplicitly]
@@ -184,7 +181,6 @@ namespace HarryPotterUnity.Game
 
         public IEnumerable<BaseCard> GetCardsOfType(Type type, int amount)
         {
-            //TODO: Randomize this
             return _cards.FindAll(card => card.Type == type).Take(amount);
         }
 
