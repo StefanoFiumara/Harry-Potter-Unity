@@ -2,7 +2,6 @@
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -39,10 +38,9 @@ namespace HarryPotterUnity.Game
             card.transform.parent = transform;
 
             var flipState = _player.IsLocalPlayer ? FlipStates.FaceUp : FlipStates.FaceDown;
-
-            AnimateCardToHand(card, flipState, preview);
-
+            
             Cards.Add(card);
+            AnimateCardToHand(card, flipState, preview);
         }
         public void AddAll(IEnumerable<BaseCard> cards)
         {
@@ -62,6 +60,7 @@ namespace HarryPotterUnity.Game
             {
                 Cards.Remove(card);
             }
+            AdjustHandSpacing();
         }
 
         public void Remove(BaseCard card)
@@ -77,9 +76,10 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
             var cardPosition = HandCardsOffset;
 
+            float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
+            
             int index = Cards.IndexOf(card);
             cardPosition.x += index * SPACING * shrinkFactor;
             cardPosition.z -= index;
@@ -89,12 +89,7 @@ namespace HarryPotterUnity.Game
 
         private void AnimateCardToHand(BaseCard card, FlipStates flipState, bool preview = true)
         {
-            var cardPosition = HandCardsOffset;
-
-            float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
-
-            cardPosition.x += Cards.Count * SPACING * shrinkFactor;
-            cardPosition.z -= Cards.Count;
+            var cardPosition = GetTargetPositionForCard(card);
 
             if (preview)
             {
