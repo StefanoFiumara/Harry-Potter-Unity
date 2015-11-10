@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11439946}
   - 114: {fileID: 11449396}
   - 114: {fileID: 11404006}
+  - 114: {fileID: 11462582}
   m_Layer: 10
   m_Name: Baby_Dragon
   m_TagString: Untagged
@@ -204,7 +205,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 0
   _rarity: 0
-  _type: 1
   Tags: 
   _actionCost: 1
   _damagePerTurn: 3
@@ -222,6 +222,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 1
   _lessonType: 0
+  _returnToHand: 0
+--- !u!114 &11462582
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -236,6 +249,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _type
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _maximumAmountAllowed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

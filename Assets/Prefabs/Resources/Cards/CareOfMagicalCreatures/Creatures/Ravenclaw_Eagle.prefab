@@ -46,6 +46,7 @@ GameObject:
   - 4: {fileID: 464092}
   - 114: {fileID: 11420740}
   - 114: {fileID: 11446982}
+  - 114: {fileID: 11486060}
   m_Layer: 10
   m_Name: Ravenclaw_Eagle
   m_TagString: Untagged
@@ -190,7 +191,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 0
   _rarity: 0
-  _type: 1
   Tags: 
   _actionCost: 1
   _damagePerTurn: 2
@@ -208,6 +208,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 4
   _lessonType: 0
+--- !u!114 &11486060
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 181114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -222,6 +234,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _type
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _maximumAmountAllowed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
