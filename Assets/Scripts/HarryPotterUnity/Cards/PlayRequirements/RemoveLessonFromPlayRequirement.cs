@@ -7,7 +7,7 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
     [UsedImplicitly]
-    public class LessonDiscardRequirement : MonoBehaviour, ICardPlayRequirement
+    public class RemoveLessonFromPlayRequirement : MonoBehaviour, ICardPlayRequirement
     {
 
         [SerializeField, UsedImplicitly]
@@ -15,6 +15,9 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         [SerializeField, UsedImplicitly]
         private LessonTypes _lessonType;
+
+        [SerializeField, UsedImplicitly]
+        private bool _returnToHand;
 
         private Player _player;
 
@@ -32,7 +35,11 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         {
             var lessons = _player.InPlay.GetLessonsOfType(_lessonType, _amountRequired).ToList();
 
-            _player.Discard.AddAll(lessons);
+            if(_returnToHand)
+                _player.Hand.AddAll(lessons);
+            else
+                _player.Discard.AddAll(lessons);
+
             _player.InPlay.RemoveAll(lessons);
         }
     }
