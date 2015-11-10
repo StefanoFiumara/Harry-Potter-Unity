@@ -135,7 +135,7 @@ namespace HarryPotterUnity.DeckGeneration
                                   card.MeetsRarityRequirements();
                 
                 //TODO: Enabled the second check when enough cards have been implemented
-                if (canBeAdded == false /* || deck.Count(c => c.Equals(card)) >= 4 */ ) continue;
+                if (canBeAdded == false || deck.Count(c => c.Equals(card)) >= 4) continue;
 
                 deck.Add(card);
                 cardsAdded++;
