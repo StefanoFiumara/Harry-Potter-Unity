@@ -11,7 +11,9 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.OppositePlayer.Discard.GetCards(c => c.Type == Type.Lesson).Count > 0;
+            return Player.OppositePlayer.
+                            Discard.GetCards(c => c.Type == Type.Lesson).Count > 0 && 
+                            GetValidTargets().Count > 0;
         }
 
         public override List<BaseCard> GetValidTargets()
@@ -27,21 +29,15 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
                 return;
             }
 
-            var target = targets[0];
+            var target = targets.First();
             var player = target.Player;
 
-            var lesson = player.Discard.GetCards(c => c.Type == Type.Lesson).FirstOrDefault();
-
-            if (lesson == null)
-            {
-                Debug.LogError("No lesson in target player's discard pile");
-                return;
-            }
-
+            var lesson = player.Discard.GetCards(c => c.Type == Type.Lesson).First();
+            
             player.InPlay.Remove(target);
             player.Discard.Add(target);
 
-            player.Discard.RemoveAll(new[] {lesson});
+            player.Discard.Remove(lesson);
             player.InPlay.Add(lesson);
         }
     }

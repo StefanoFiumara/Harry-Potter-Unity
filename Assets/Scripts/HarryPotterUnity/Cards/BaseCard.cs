@@ -19,7 +19,6 @@ namespace HarryPotterUnity.Cards
         [SerializeField, UsedImplicitly] private Rarity _rarity;
 
         [Header("Basic Card Settings")]
-        //TODO: Turn into [Flags] and implement bitmasking? YAGNI? Make private and Serialize?
         [UsedImplicitly] public List<Tag> Tags;
 
         [UsedImplicitly, SerializeField, Range(0, 2)]

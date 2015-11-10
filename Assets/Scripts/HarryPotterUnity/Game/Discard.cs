@@ -38,6 +38,11 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, State.Discarded));
         }
 
+        public void Remove(BaseCard card)
+        {
+            _cards.Remove(card);
+        }
+
         public void AddAll(IEnumerable<BaseCard> cards)
         {
             AdjustCardSpacing();
