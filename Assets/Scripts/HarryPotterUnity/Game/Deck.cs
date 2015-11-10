@@ -23,6 +23,7 @@ namespace HarryPotterUnity.Game
         
         private GameObject _outline;
 
+        public BaseCard StartingCharacter { get { return _startingCharacter; } }
         [UsedImplicitly]
         public void Awake()
         {
