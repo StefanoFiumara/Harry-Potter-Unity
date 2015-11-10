@@ -208,6 +208,7 @@ namespace HarryPotterUnity.Game
             }
 
             card.MouseUpAction();
+            card.Player.OnCardPlayed(card);
         }
 
         [PunRPC, UsedImplicitly]
@@ -242,6 +243,7 @@ namespace HarryPotterUnity.Game
             var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
 
             card.MouseUpAction(selectedCards);
+            card.Player.OnCardPlayed(card);
 
             card.Player.EnableAllCards();
             card.Player.OppositePlayer.EnableAllCards();

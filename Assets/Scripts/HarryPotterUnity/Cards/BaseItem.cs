@@ -11,11 +11,14 @@ namespace HarryPotterUnity.Cards
             return Type.Item;
         }
 
-        public abstract void OnInPlayBeforeTurnAction();
-        public abstract void OnInPlayAfterTurnAction();
-        public abstract bool CanPerformInPlayAction();
-        public abstract void OnSelectedAction();
-        public abstract void OnEnterInPlayAction();
-        public abstract void OnExitInPlayAction();
+        public virtual bool CanPerformInPlayAction()
+        {
+            return false;
+        }
+        public virtual void OnInPlayBeforeTurnAction() { }
+        public virtual void OnInPlayAfterTurnAction() { }
+        public virtual void OnSelectedAction() { }
+        public virtual void OnEnterInPlayAction() { }
+        public virtual void OnExitInPlayAction() { }
     }
 }

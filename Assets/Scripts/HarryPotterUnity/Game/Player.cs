@@ -70,6 +70,14 @@ namespace HarryPotterUnity.Game
         public delegate void OnTurnStartActions();
         public event OnTurnStartActions OnTurnStart;
 
+        public delegate void OnCardPlayedActions(BaseCard card);
+        public event OnCardPlayedActions OnCardPlayedEvent;
+
+        public void OnCardPlayed(BaseCard card)
+        {
+            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card);
+        }
+
         [UsedImplicitly]
         public void Awake()
         {
