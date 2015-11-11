@@ -5,8 +5,21 @@ using JetBrains.Annotations;
 namespace HarryPotterUnity.Cards.Quidditch.Items
 {
     [UsedImplicitly]
-    public class NimbusTwoThousand : BaseItem
+    public class NimbusTwoThousand : ItemLessonProvider
     {
+        private bool _hasEffectedTriggered;
+        protected int _damageAmount;
+
+        protected override void Start()
+        {
+            base.Start();
+            _damageAmount = 2;
+        }
+        public override void OnInPlayBeforeTurnAction()
+        {
+            _hasEffectedTriggered = false;
+        }
+
         public override void OnEnterInPlayAction()
         {
             Player.OnCardPlayedEvent += AddDamageToQuidditchCards;
@@ -14,13 +27,12 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 
         private void AddDamageToQuidditchCards(BaseCard cardPlayed)
         {
-            if (cardPlayed is DirectDamageSpell || cardPlayed is TargetedDamageSpell)
-            {
-                if (cardPlayed.Classification == ClassificationTypes.Quidditch)
-                {
-                    Player.OppositePlayer.TakeDamage(2);
-                }
-            }
+            if (!(cardPlayed is DirectDamageSpell) && !(cardPlayed is TargetedDamageSpell)) return;
+            if (cardPlayed.Classification != ClassificationTypes.Quidditch) return;
+            if (_hasEffectedTriggered) return;
+
+            _hasEffectedTriggered = true;
+            Player.OppositePlayer.TakeDamage(_damageAmount);
         }
 
         public override void OnExitInPlayAction()
