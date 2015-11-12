@@ -243,7 +243,7 @@ namespace HarryPotterUnity.Game
             var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
 
             card.MouseUpAction(selectedCards);
-            card.Player.OnCardPlayed(card);
+            card.Player.OnCardPlayed(card, selectedCards);
 
             card.Player.EnableAllCards();
             card.Player.OppositePlayer.EnableAllCards();
