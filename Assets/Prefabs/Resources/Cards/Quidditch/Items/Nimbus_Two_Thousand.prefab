@@ -48,6 +48,7 @@ GameObject:
   - 114: {fileID: 11400752}
   - 114: {fileID: 11414440}
   - 114: {fileID: 11471186}
+  - 114: {fileID: 11455372}
   m_Layer: 10
   m_Name: Nimbus_Two_Thousand
   m_TagString: Untagged
@@ -204,6 +205,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 7
   _lessonType: 4
+--- !u!114 &11455372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 180534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b303336d3e58e3438cd424c2097b307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardName: Nimbus_Two_Thousand_One
 --- !u!114 &11464506
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -232,7 +245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maximumAmountAllowed: 1
+  _maximumAmountAllowed: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -242,7 +255,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: _maximumAmountAllowed
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _lessonType
@@ -251,6 +264,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _amountLessonsProvided
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _cardName
+      value: Nimbus_Two_Thousand_One
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
