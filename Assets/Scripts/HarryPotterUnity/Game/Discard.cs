@@ -34,8 +34,8 @@ namespace HarryPotterUnity.Game
             var cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, State.Discarded));
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, FlipStates.FaceUp, TweenQueue.RotationType.NoRotate, State.Discarded));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, FlipStates.FaceUp, RotationType.NoRotate, State.Discarded));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, FlipStates.FaceUp, RotationType.NoRotate, State.Discarded));
         }
 
         public void Remove(BaseCard card)

@@ -101,11 +101,16 @@ namespace HarryPotterUnity.Game
                 GameOver();
             }
 
-            _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", _cards.Count);
+            UpdateCardsLeftLabel();
 
             return card;
         }
-        
+
+        private void UpdateCardsLeftLabel()
+        {
+            _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", _cards.Count);
+        }
+
         private void GameOver()
         {
             if (!GameManager._gameInProgress) return;
@@ -188,17 +193,20 @@ namespace HarryPotterUnity.Game
         public void Remove(BaseCard card)
         {
             _cards.Remove(card);
+            UpdateCardsLeftLabel();
         }
 
         private void Add(BaseCard card)
         {
             _cards.Insert(0, card);
+            UpdateCardsLeftLabel();
+
             card.transform.parent = transform;
 
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
             cardPos.z -= _cards.IndexOf(card) * 0.2f;
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, FlipStates.FaceDown, TweenQueue.RotationType.NoRotate, State.InDeck));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, FlipStates.FaceDown, RotationType.NoRotate, State.InDeck));
         }
 
         public void AddAll(IEnumerable<BaseCard> cards)

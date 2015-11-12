@@ -27,8 +27,8 @@ namespace HarryPotterUnity.Cards
         private void PreviewSpell()
         {
             State = State.Discarded;
-            var rotate180 = Player.OppositePlayer.IsLocalPlayer ? TweenQueue.RotationType.Rotate180 : TweenQueue.RotationType.NoRotate;
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, FlipStates.FaceUp, rotate180, State, 0.6f));
+            var rotateType = Player.OppositePlayer.IsLocalPlayer ? RotationType.Rotate180 : RotationType.NoRotate;
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, FlipStates.FaceUp, rotateType, State, 0.6f));
         }
 
         protected override Type GetCardType()

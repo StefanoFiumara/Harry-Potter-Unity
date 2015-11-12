@@ -37,4 +37,9 @@
     {
         FaceUp, FaceDown
     }
+
+    public enum RotationType
+    {
+        NoRotate, Rotate90, Rotate180
+    }
 }

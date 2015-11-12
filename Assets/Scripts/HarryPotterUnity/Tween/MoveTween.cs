@@ -13,10 +13,10 @@ namespace HarryPotterUnity.Tween
         private readonly float _delay;
         private readonly float _timeUntilNextTween;
         private readonly FlipStates _flip;
-        private readonly TweenQueue.RotationType _rotate;
+        private readonly RotationType _rotate;
         private readonly State _stateAfterAnimation;
 
-        public MoveTween(GameObject target, Vector3 position, float time, float delay, FlipStates flip, TweenQueue.RotationType rotate, State stateAfterAnimation, float timeUntilNextTween = 0f)
+        public MoveTween(GameObject target, Vector3 position, float time, float delay, FlipStates flip, RotationType rotate, State stateAfterAnimation, float timeUntilNextTween = 0f)
         {
             _target = target;
             _position = position;
@@ -60,10 +60,10 @@ namespace HarryPotterUnity.Tween
             float targetRotate = 0f;
             switch (_rotate)
             {
-                case TweenQueue.RotationType.Rotate90:
+                case RotationType.Rotate90:
                     targetRotate = 270f;
                     break;
-                case TweenQueue.RotationType.Rotate180:
+                case RotationType.Rotate180:
                     targetRotate = 180f;
                     break;
             }

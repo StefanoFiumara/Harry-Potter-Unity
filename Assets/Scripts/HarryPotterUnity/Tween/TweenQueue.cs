@@ -7,11 +7,6 @@ namespace HarryPotterUnity.Tween
 {
     public class TweenQueue
     {
-        public enum RotationType
-        {
-            NoRotate, Rotate90, Rotate180
-        }
-
         private Queue<ITweenObject> _queue;
 
         private bool _tweenQueueRunning;

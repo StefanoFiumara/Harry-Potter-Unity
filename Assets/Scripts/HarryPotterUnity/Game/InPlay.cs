@@ -97,7 +97,7 @@ namespace HarryPotterUnity.Game
                 0.3f,
                 0f,
                 FlipStates.FaceUp, 
-                TweenQueue.RotationType.Rotate90,
+                RotationType.Rotate90,
                 State.InPlay));
         }
 
