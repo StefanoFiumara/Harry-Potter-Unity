@@ -9,7 +9,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.OnTurnStart += () =>
+            Player.OppositePlayer.OnTurnStartEvent += () =>
             {
                 Player.CreatureDamageBuffer = Player.OppositePlayer.DamagePerTurn;
             };
