@@ -11,8 +11,14 @@ using UnityEngine;
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class InPlay : MonoBehaviour {
+    public class InPlay : MonoBehaviour
+    {
         public List<BaseCard> Cards { get; private set; }
+
+        public List<BaseCard> CardsExceptStartingCharacter
+        {
+            get { return Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
+        } 
 
         private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
         private static readonly Vector3 ItemPositionOffset = new Vector3(-255f, 0f, 15f);
