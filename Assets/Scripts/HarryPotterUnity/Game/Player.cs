@@ -68,14 +68,14 @@ namespace HarryPotterUnity.Game
         private HudManager _hudManager;
 
         public delegate void OnTurnStartActions();
-        public event OnTurnStartActions OnTurnStart;
+        public event OnTurnStartActions OnTurnStartEvent;
 
-        public delegate void OnCardPlayedActions(BaseCard card);
+        public delegate void OnCardPlayedActions(BaseCard card, List<BaseCard> targets = null);
         public event OnCardPlayedActions OnCardPlayedEvent;
 
-        public void OnCardPlayed(BaseCard card)
+        public void OnCardPlayed(BaseCard card, List<BaseCard> targets = null)
         {
-            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card);
+            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
         }
 
         [UsedImplicitly]
@@ -128,10 +128,10 @@ namespace HarryPotterUnity.Game
             if (ActionsAvailable < 1) ActionsAvailable = 1;
             if( !firstTurn ) _hudManager.ToggleSkipActionButton();
 
-            if (OnTurnStart != null)
+            if (OnTurnStartEvent != null)
             {
-                OnTurnStart();
-                OnTurnStart = null;
+                OnTurnStartEvent();
+                OnTurnStartEvent = null;
             }
 
             OppositePlayer.TakeDamage(DamagePerTurn);
@@ -144,7 +144,12 @@ namespace HarryPotterUnity.Game
         {
             ActionsAvailable = 0;
             TurnIndicator.gameObject.SetActive(false);
-            InPlay.Cards.ForEach(card => ((IPersistentCard)card).OnInPlayAfterTurnAction());
+
+            foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
+            {
+                card.OnInPlayAfterTurnAction();
+            }
+            
             Hand.AdjustHandSpacing();
             OppositePlayer.InitTurn();
         }
