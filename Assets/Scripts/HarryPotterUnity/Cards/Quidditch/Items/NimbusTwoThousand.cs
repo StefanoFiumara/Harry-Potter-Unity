@@ -1,4 +1,6 @@
-﻿using HarryPotterUnity.Cards.BasicBehavior;
+﻿using System.Collections.Generic;
+using System.Linq;
+using HarryPotterUnity.Cards.BasicBehavior;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
@@ -25,11 +27,12 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
             Player.OnCardPlayedEvent += AddDamageToQuidditchCards;
         }
 
-        private void AddDamageToQuidditchCards(BaseCard cardPlayed)
+        private void AddDamageToQuidditchCards(BaseCard cardPlayed, List<BaseCard> targets)
         {
             if (!(cardPlayed is DirectDamageSpell) && !(cardPlayed is TargetedDamageSpell)) return;
             if (cardPlayed.Classification != ClassificationTypes.Quidditch) return;
             if (_hasEffectedTriggered) return;
+            if (!(targets.First() is BaseCharacter)) return;
 
             _hasEffectedTriggered = true;
             Player.OppositePlayer.TakeDamage(_damageAmount);
