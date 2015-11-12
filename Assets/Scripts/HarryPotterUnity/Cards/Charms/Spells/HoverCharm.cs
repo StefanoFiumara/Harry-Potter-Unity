@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     public class HoverCharm : BaseSpell {
         public override List<BaseCard> GetValidTargets()
         {
-            return Player.OppositePlayer.InPlay.Cards;
+            return Player.OppositePlayer.InPlay.CardsExceptStartingCharacter;
         }
 
         protected override void SpellAction(List<BaseCard> targets)

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -9,19 +10,15 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         public override List<BaseCard> GetValidTargets()
         {
-            return Player.OppositePlayer.InPlay.Cards;
+            return Player.OppositePlayer.InPlay.CardsExceptStartingCharacter;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            if (targets.Count != 1)
-            {
-                Debug.LogError("More than one input sent to Diffindo, this should never happen!");
-                return;
-            }
+            var target = targets.Single();
             
-            Player.OppositePlayer.Discard.Add(targets[0]);
-            Player.OppositePlayer.InPlay.Remove(targets[0]);
+            Player.OppositePlayer.Discard.Add(target);
+            Player.OppositePlayer.InPlay.Remove(target);
         }
     }
 }
