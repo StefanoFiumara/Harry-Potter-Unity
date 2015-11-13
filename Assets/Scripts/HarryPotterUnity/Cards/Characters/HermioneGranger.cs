@@ -25,10 +25,5 @@ namespace HarryPotterUnity.Cards.Characters
 
             Player.UseActions();
         }
-
-        public override void OnInPlayBeforeTurnAction() { }
-        public override void OnInPlayAfterTurnAction() { }        
-        public override void OnEnterInPlayAction() { }
-        public override void OnExitInPlayAction() { }
     }
 }

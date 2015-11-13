@@ -17,14 +17,5 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
         public LessonTypes LessonType { get {return _lessonType; } }
         public int AmountLessonsProvided { get {return _amountLessonsProvided;} }
-
-        public override void OnInPlayBeforeTurnAction() { }
-        public override void OnInPlayAfterTurnAction() { }
-
-        public override bool CanPerformInPlayAction() { return false; }
-        public override void OnSelectedAction() { }
-
-        public override void OnEnterInPlayAction() { }
-        public override void OnExitInPlayAction() { }
     }
 }
