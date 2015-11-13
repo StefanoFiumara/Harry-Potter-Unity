@@ -1,6 +1,4 @@
-﻿using HarryPotterUnity.Cards.BasicBehavior;
-using HarryPotterUnity.Enums;
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Quidditch.Items
 {

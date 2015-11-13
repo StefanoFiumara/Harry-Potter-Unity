@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.BasicBehavior
 {
-    public class DirectDamageSpell : BaseSpell {
+    public class DirectDamageSpell : BaseSpell, IDamageSpell {
         
         [Header("Direct Damage Spell Settings"), Space(10)]
         [UsedImplicitly, SerializeField]

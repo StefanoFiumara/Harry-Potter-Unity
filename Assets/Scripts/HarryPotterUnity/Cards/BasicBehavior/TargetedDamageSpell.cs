@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.Cards.PlayRequirements;
 using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.BasicBehavior
 {
-    public class TargetedDamageSpell : BaseSpell {
+    [RequireComponent(typeof(InputRequirement))]
+    public class TargetedDamageSpell : BaseSpell, IDamageSpell {
         
         [Header("Targeted Damage Spell Settings"), Space(10)]
         [UsedImplicitly, SerializeField]
@@ -13,6 +16,8 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
         [UsedImplicitly, SerializeField]
         private bool _canTargetPlayer;
+
+        public int DamageAmount { get { return _damageAmount; } }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
@@ -30,7 +35,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
             if (_canTargetPlayer) targets.Add(Player.OppositePlayer.Deck.StartingCharacter);
 
-            targets.AddRange( Player.OppositePlayer.InPlay.GetCreaturesInPlay() );
+            targets.AddRange(Player.OppositePlayer.InPlay.GetCreaturesInPlay());
 
             return targets;
         }

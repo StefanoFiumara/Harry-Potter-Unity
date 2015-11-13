@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.BasicBehavior;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 
@@ -29,13 +30,17 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 
         private void AddDamageToQuidditchCards(BaseCard cardPlayed, List<BaseCard> targets)
         {
-            if (!(cardPlayed is DirectDamageSpell) && !(cardPlayed is TargetedDamageSpell)) return;
-            if (cardPlayed.Classification != ClassificationTypes.Quidditch) return;
+            if (!IsQuidditchDamageCard(cardPlayed)) return;
             if (_hasEffectedTriggered) return;
-            if (!(targets.First() is BaseCharacter)) return;
 
             _hasEffectedTriggered = true;
             Player.OppositePlayer.TakeDamage(_damageAmount);
+        }
+
+        private bool IsQuidditchDamageCard(BaseCard card)
+        {
+            return card is IDamageSpell &&
+                   card.Classification == ClassificationTypes.Quidditch;
         }
 
         public override void OnExitInPlayAction()
