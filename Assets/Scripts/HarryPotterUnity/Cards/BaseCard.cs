@@ -76,7 +76,7 @@ namespace HarryPotterUnity.Cards
 
             _inputGatherer = GetComponent<InputGatherer>();
 
-            GetPlayRequirements();
+            LoadPlayRequirements();
 
             AddOutlineComponent();
         }
@@ -93,7 +93,7 @@ namespace HarryPotterUnity.Cards
             _outline.SetActive(false);
         }
 
-        private void GetPlayRequirements()
+        private void LoadPlayRequirements()
         {
             _playRequirements = GetComponents<MonoBehaviour>().OfType<ICardPlayRequirement>().ToList();
 
@@ -171,7 +171,7 @@ namespace HarryPotterUnity.Cards
         }
         
         private bool IsPlayableFromHand()
-        {
+        {            
             bool meetsRequirements = _playRequirements.Count == 0 ||
                                      _playRequirements.TrueForAll(req => req.MeetsRequirement());
                                     //TODO: Check Player Constraints here
@@ -180,7 +180,19 @@ namespace HarryPotterUnity.Cards
                    State == State.InHand &&
                    Player.CanUseActions(_actionCost) &&
                    meetsRequirements &&
+                   IsUnique() &&
                    MeetsAdditionalPlayRequirements();
+        }
+
+        private bool IsUnique()
+        {
+            if (!Tags.Contains(Tag.Unique)) return true;
+
+            var allInPlayCards = Player.InPlay.CardsExceptStartingCharacter.Concat(
+                Player.OppositePlayer.InPlay.CardsExceptStartingCharacter)
+                .Select(c => c.CardName);
+
+            return allInPlayCards.Contains(CardName) == false;
         }
 
         public void MouseUpAction(List<BaseCard> targets = null)
