@@ -116,16 +116,7 @@ namespace HarryPotterUnity.Game
         public void InitTurn(bool firstTurn = false)
         {
             TurnIndicator.gameObject.SetActive(true);
-
-            foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
-            {
-                card.OnInPlayBeforeTurnAction();   
-            }
-
-            Deck.DrawCard();
-            AddActions(2);
-
-            if (ActionsAvailable < 1) ActionsAvailable = 1;
+            
             if( !firstTurn ) _hudManager.ToggleSkipActionButton();
 
             if (OnTurnStartEvent != null)
@@ -134,6 +125,14 @@ namespace HarryPotterUnity.Game
                 OnTurnStartEvent = null;
             }
 
+            foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
+            {
+                card.OnInPlayBeforeTurnAction();
+            }
+
+            Deck.DrawCard();
+            AddActions(2);
+            if (ActionsAvailable < 1) ActionsAvailable = 1;
             OppositePlayer.TakeDamage(DamagePerTurn);
 
             //reset the damage buffer in case it was set last turn.
@@ -203,6 +202,7 @@ namespace HarryPotterUnity.Game
             for (int i = 0; i < amount; i++)
             {
                 //TODO: Only perform this check if the damage source is a creature!
+                // OR check all the buffers based on damage type??
                 if (CreatureDamageBuffer > 0)
                 {
                     CreatureDamageBuffer--;
