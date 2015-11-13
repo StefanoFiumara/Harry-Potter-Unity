@@ -10,5 +10,10 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
         {
             Player.AddActions(1);
         }
+
+        public new void OnEnterInPlayAction()
+        {
+            Player.AddActions(1);
+        }
     }
 }

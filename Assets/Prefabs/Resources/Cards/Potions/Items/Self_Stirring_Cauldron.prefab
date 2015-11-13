@@ -213,13 +213,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 104658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f14a1f1a646e04e862bc3b6e51aa3f, type: 3}
+  m_Script: {fileID: 11500000, guid: 83619951810ee1942bf806ac187b3557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _classification: 3
   _rarity: 2
   Tags: 03000000
-  _actionCost: 0
   _lessonType: 3
   _amountLessonsProvided: 4
 --- !u!1001 &100100000

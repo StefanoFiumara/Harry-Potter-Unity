@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Cards.PlayRequirements;
@@ -7,6 +8,7 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
+using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Cards
 {
@@ -21,8 +23,20 @@ namespace HarryPotterUnity.Cards
         [Header("Basic Card Settings")]
         [UsedImplicitly] public List<Tag> Tags;
 
-        [UsedImplicitly, SerializeField, Range(0, 2)]
-        private int _actionCost = 1;
+        private int ActionCost
+        {
+            get
+            {
+                switch (GetCardType())
+                {
+                    case Type.Adventure:
+                    case Type.Character:
+                        return 2;
+                    default:
+                        return 1;
+                }
+            }
+        }
         #endregion
         
         #region Properties
@@ -178,7 +192,7 @@ namespace HarryPotterUnity.Cards
 
             return Player.IsLocalPlayer &&
                    State == State.InHand &&
-                   Player.CanUseActions(_actionCost) &&
+                   Player.CanUseActions(ActionCost) &&
                    meetsRequirements &&
                    IsUnique() &&
                    MeetsAdditionalPlayRequirements();
@@ -204,7 +218,7 @@ namespace HarryPotterUnity.Cards
 
             OnClickAction(targets);
 
-            Player.UseActions(_actionCost);
+            Player.UseActions(ActionCost);
             
         }
 
