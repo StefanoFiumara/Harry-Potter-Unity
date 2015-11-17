@@ -61,9 +61,9 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public List<BaseCard> GetCards(Predicate<BaseCard> predicate)
+        public List<BaseCard> GetCards(Predicate<BaseCard> predicate = null)
         {
-            return _cards.FindAll(predicate).ToList();
+            return predicate == null ? _cards : _cards.FindAll(predicate).ToList();
         }
 
         public int CountCards(Func<BaseCard, bool> predicate)
