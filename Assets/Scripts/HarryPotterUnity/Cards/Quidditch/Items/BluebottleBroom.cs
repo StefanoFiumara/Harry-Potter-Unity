@@ -15,5 +15,10 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 
             Player.UseActions();
         }
+
+        public override bool CanPerformInPlayAction()
+        {
+            return Player.CanUseActions();
+        }
     }
 }
