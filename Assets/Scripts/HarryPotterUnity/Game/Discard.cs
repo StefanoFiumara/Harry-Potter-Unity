@@ -86,5 +86,10 @@ namespace HarryPotterUnity.Game
             
             return cardPos;
         }
+
+        public List<BaseCard> GetHealableCards(int amount)
+        {
+            return GetCards(card => !card.Tags.Contains(Tag.Healing)).Take(amount).ToList(); 
+        }
     }
 }
