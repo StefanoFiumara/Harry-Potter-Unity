@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using HarryPotterUnity.Cards.Interfaces;
+﻿using System.Linq;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
@@ -29,10 +26,5 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
 
             Player.UseActions();
         }
-
-        public override void OnInPlayBeforeTurnAction() { }
-        public override void OnInPlayAfterTurnAction() { }
-        public override void OnEnterInPlayAction() { }
-        public override void OnExitInPlayAction() { }
     }
 }
