@@ -186,14 +186,17 @@ namespace HarryPotterUnity.Cards
         
         private bool IsPlayableFromHand()
         {            
-            bool meetsRequirements = _playRequirements.Count == 0 ||
+            bool meetsPlayRequirements = _playRequirements.Count == 0 ||
                                      _playRequirements.TrueForAll(req => req.MeetsRequirement());
-                                    //TODO: Check Player Constraints here
+            
+            //TODO: Check Player Constraints here
+            //bool meetsPlayerConstraints = true;
 
             return Player.IsLocalPlayer &&
                    State == State.InHand &&
                    Player.CanUseActions(ActionCost) &&
-                   meetsRequirements &&
+                   meetsPlayRequirements &&
+                  // meetsPlayerConstraints &&
                    IsUnique() &&
                    MeetsAdditionalPlayRequirements();
         }
