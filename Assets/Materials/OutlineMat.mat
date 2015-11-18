@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: HighlightMat
+  m_Name: OutlineMat
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _ALPHAPREMULTIPLY_ON _EMISSION
   m_LightmapFlags: 1
@@ -175,11 +175,11 @@ Material:
       data:
         first:
           name: _EmissionColor
-        second: {r: 1.995, g: 1.995, b: .432914972, a: 1}
+        second: {r: 1.995, g: 1.995, b: 1.995, a: 1}
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 0, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _EmissionColorUI

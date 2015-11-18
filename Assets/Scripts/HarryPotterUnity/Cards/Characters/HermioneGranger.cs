@@ -19,10 +19,7 @@ namespace HarryPotterUnity.Cards.Characters
             var firstLesson = Player.Hand.Cards.Find(c => c.Type == Type.Lesson);
             var secondLesson = Player.Hand.Cards.FindLast(c => c.Type == Type.Lesson);
 
-            Player.InPlay.Add(firstLesson);
-            Player.InPlay.Add(secondLesson);
-            Player.Hand.RemoveAll(new[] {firstLesson, secondLesson});
-
+            Player.InPlay.AddAll(new [] {firstLesson, secondLesson });
             Player.UseActions();
         }
     }

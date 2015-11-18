@@ -21,15 +21,13 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             if (selectedCards.All(c => c.Player.IsLocalPlayer == localPlayer))
             {
                 selectedCards.First().Player.Hand.AddAll(selectedCards);
-                selectedCards.First().Player.InPlay.RemoveAll(selectedCards);
 
             }
             else
             {
                 foreach (var card in selectedCards)
                 {
-                    card.Player.Hand.Add(card, preview: false);
-                    card.Player.InPlay.Remove(card);
+                    card.Player.Hand.Add(card, preview: false, adjustSpacing: true);
                 }
             }
         }

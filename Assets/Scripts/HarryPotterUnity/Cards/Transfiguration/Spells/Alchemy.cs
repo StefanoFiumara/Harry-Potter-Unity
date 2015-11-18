@@ -11,11 +11,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
         protected override void SpellAction(List<BaseCard> targets)
         {
             var lessons = Player.Deck.GetCardsOfType(Type.Lesson, 2).ToList();
-            foreach (var lesson in lessons)
-            {
-                Player.Deck.Remove(lesson);
-            }
-
+            
             Player.Hand.AddAll(lessons);
             Player.Deck.Shuffle();
         }

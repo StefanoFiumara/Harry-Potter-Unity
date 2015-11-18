@@ -11,7 +11,7 @@ GameObject:
   - 33: {fileID: 3309400}
   - 23: {fileID: 2342032}
   m_Layer: 10
-  m_Name: Outline
+  m_Name: Highlight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,7 +39,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 2100000, guid: 5d3bad25bd2e8f94c95bd1cc5bf25a94, type: 2}
+  - {fileID: 2100000, guid: a5d061f0be2b0ee478300a65ff3da9c0, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -78,7 +78,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5d3bad25bd2e8f94c95bd1cc5bf25a94, type: 2}
+      objectReference: {fileID: 2100000, guid: a5d061f0be2b0ee478300a65ff3da9c0, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 140984}

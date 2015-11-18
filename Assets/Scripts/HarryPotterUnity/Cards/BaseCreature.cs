@@ -48,12 +48,12 @@ namespace HarryPotterUnity.Cards
             _uiCanvas.SetActive(false);
         }
         
-        public void OnEnterInPlayAction()
+        public virtual void OnEnterInPlayAction()
         {
             _uiCanvas.SetActive(true);
         }
 
-        public void OnExitInPlayAction()
+        public virtual void OnExitInPlayAction()
         {
             _uiCanvas.SetActive(false);
         }
@@ -63,10 +63,10 @@ namespace HarryPotterUnity.Cards
             _health -= amount;
             _healthLabel.text = Mathf.Clamp(_health, 0, int.MaxValue).ToString();
 
-            if (_health > 0) return;
-
-            Player.InPlay.Remove(this);
-            Player.Discard.Add(this);
+            if (_health <= 0)
+            {
+                Player.Discard.Add(this);
+            }
         }
 
         public void Heal(int amount)
@@ -75,12 +75,12 @@ namespace HarryPotterUnity.Cards
             _healthLabel.text = Mathf.Clamp(_health, 0, int.MaxValue).ToString();
         }
 
-        public bool CanPerformInPlayAction() { return false; }
+        public virtual bool CanPerformInPlayAction() { return false; }
 
         //Generic Creatures don't do anything special on these actions
-        public void OnInPlayBeforeTurnAction() { }
-        public void OnInPlayAfterTurnAction() { }
-        public void OnSelectedAction() { }
+        public virtual void OnInPlayBeforeTurnAction() { }
+        public virtual void OnInPlayAfterTurnAction() { }
+        public virtual void OnSelectedAction() { }
 
         protected sealed override Enums.Type GetCardType()
         {

@@ -15,8 +15,7 @@ namespace HarryPotterUnity.Cards
         {
             Enable();
             PreviewSpell();
-
-            Player.Hand.Remove(this);
+            
             Player.Discard.Add(this);
 
             SpellAction(targets);

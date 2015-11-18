@@ -5,11 +5,11 @@ using JetBrains.Annotations;
 namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 {
     [UsedImplicitly]
-    public class MarbleGargoyle : BaseCreature, IPersistentCard 
+    public class MarbleGargoyle : BaseCreature 
     {
         private bool _hasAddedDamage;
 
-        public new void OnInPlayBeforeTurnAction()
+        public override void OnInPlayBeforeTurnAction()
         {
             if (Player.OppositePlayer.InPlay.GetCreaturesInPlay().Count() != 0) return;
             
@@ -18,7 +18,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
             _hasAddedDamage = true;
         }
 
-        public new void OnInPlayAfterTurnAction()
+        public override void OnInPlayAfterTurnAction()
         {
             if (!_hasAddedDamage) return;
 

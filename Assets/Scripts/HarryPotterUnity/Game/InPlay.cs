@@ -11,7 +11,7 @@ using UnityEngine;
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class InPlay : MonoBehaviour
+    public class InPlay : MonoBehaviour, ICardCollection
     {
         public List<BaseCard> Cards { get; private set; }
 
@@ -38,9 +38,13 @@ namespace HarryPotterUnity.Game
         public void Add(BaseCard card)
         {
             Cards.Add(card);
+            
             card.transform.parent = transform;
 
             TweenCardToPosition(card);
+
+            card.Collection.Remove(card);
+            card.Collection = this;
 
             ((IPersistentCard) card).OnEnterInPlayAction();
         }
@@ -54,15 +58,53 @@ namespace HarryPotterUnity.Game
             ((IPersistentCard) card).OnExitInPlayAction();
         }
 
-        public void RemoveAll(List<BaseCard> cards)
+        public void AddAll(IEnumerable<BaseCard> cards)
         {
-            foreach (var card in cards)
+            var cardList = cards as IList<BaseCard> ?? cards.ToList();
+
+            foreach (var card in cardList)
+            {
+                Cards.Add(card);
+                
+                card.transform.parent = transform;
+
+                TweenCardToPosition(card);
+            }
+
+            //Use RemoveAll if the cards are coming from the same collection
+            var collection = cardList.First().Collection;
+            if (cardList.Skip(1).All(c => c.Collection == collection))
+            {
+                collection.RemoveAll(cardList);
+                foreach (var card in cardList)
+                {
+                    card.Collection = this;
+                    ((IPersistentCard)card).OnEnterInPlayAction();
+                }
+            }
+            else
+            {
+                foreach (var card in cardList)
+                {
+                    card.Collection.Remove(card);
+                    card.Collection = this;
+
+                    ((IPersistentCard)card).OnEnterInPlayAction();
+                }
+            }
+        }
+        
+        public void RemoveAll(IEnumerable<BaseCard> cards)
+        {
+            var cardList = cards as IList<BaseCard> ?? cards.ToList();
+
+            foreach (var card in cardList)
             {
                 Cards.Remove(card);
                 ((IPersistentCard)card).OnExitInPlayAction();
             }
 
-            foreach (var type in cards.GroupBy(c => c.Type))
+            foreach (var type in cardList.GroupBy(c => c.Type))
             {
                 RearrangeCardsOfType(type.Key);
             }
@@ -131,7 +173,7 @@ namespace HarryPotterUnity.Game
                     break;
                 case Type.Character:
                     cardPosition = CharacterPositionOffset;
-                    cardPosition.x += (position%3) * CharacterSpacing.x;
+                    cardPosition.x += (position % 3) * CharacterSpacing.x;
                     break;
                 default:
                     Debug.Log("Warning: GetTargetPositionForCard could not identify cardType");

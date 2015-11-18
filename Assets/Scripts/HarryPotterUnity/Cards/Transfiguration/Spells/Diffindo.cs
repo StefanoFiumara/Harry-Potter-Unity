@@ -18,7 +18,6 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             var target = targets.Single();
             
             Player.OppositePlayer.Discard.Add(target);
-            Player.OppositePlayer.InPlay.Remove(target);
         }
     }
 }

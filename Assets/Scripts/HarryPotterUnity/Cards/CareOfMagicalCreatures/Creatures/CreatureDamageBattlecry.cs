@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 {
-    class CreatureDamageBattlecry : BaseCreature, IPersistentCard
+    class CreatureDamageBattlecry : BaseCreature
     {
         [UsedImplicitly, SerializeField, Space(10)]
         private int _battlecryDamage;
 
-        public new void OnEnterInPlayAction()
+        public override void OnEnterInPlayAction()
         {
             base.OnEnterInPlayAction();
 

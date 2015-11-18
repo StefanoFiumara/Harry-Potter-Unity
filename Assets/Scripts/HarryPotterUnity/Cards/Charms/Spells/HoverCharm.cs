@@ -16,7 +16,6 @@ namespace HarryPotterUnity.Cards.Charms.Spells
             var target = targets.First();
 
             Player.OppositePlayer.Hand.Add(target);
-            Player.OppositePlayer.InPlay.Remove(target);
         }
     }
 }

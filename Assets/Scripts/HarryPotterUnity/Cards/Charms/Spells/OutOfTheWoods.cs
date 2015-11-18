@@ -26,8 +26,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
                 var card = Player.OppositePlayer.Hand.Cards[i];
 
                 if (card.Type != Type.Creature) continue;
-
-                Player.OppositePlayer.Hand.Remove(card);
+                
                 Player.OppositePlayer.Discard.Add(card);
 
                 enemyHand.Remove(card.gameObject);

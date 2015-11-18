@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.PlayRequirements;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using MonoBehaviour = UnityEngine.MonoBehaviour;
@@ -15,7 +14,7 @@ namespace HarryPotterUnity.Game
     class InputGatherer : MonoBehaviour
     {
         private BaseCard _cardInfo;
-        private InputRequirement _requirement;
+        
 
         private int _inputRequired;
 
@@ -23,15 +22,15 @@ namespace HarryPotterUnity.Game
         private void Start()
         {
             _cardInfo = GetComponent<BaseCard>();
-            _requirement = GetComponent<InputRequirement>();
+            var requirement = GetComponent<InputRequirement>();
 
-            if (_requirement == null)
+            if (requirement == null)
             {
                 Debug.LogError("No Input Requirement Attached to this card");
                 return;
             }
 
-            _inputRequired = _requirement.InputRequired;
+            _inputRequired = requirement.InputRequired;
 
         }
 
@@ -44,6 +43,7 @@ namespace HarryPotterUnity.Game
 
             foreach (var card in validCards)
             {
+                card.SetAsValidChoice();
                 card.Enable();
                 card.gameObject.layer = GameManager.VALID_CHOICE_LAYER;
             }
@@ -59,7 +59,6 @@ namespace HarryPotterUnity.Game
 
             while (selectedCards.Count < _inputRequired)
             {
-                //TODO: Throw another ray here every frame to set the outline OnMouseOver
                 if (Input.GetKeyDown(KeyCode.Mouse0) && _cardInfo.Player.IsLocalPlayer)
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);

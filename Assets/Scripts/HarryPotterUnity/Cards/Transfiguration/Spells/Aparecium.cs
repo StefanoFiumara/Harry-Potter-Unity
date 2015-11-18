@@ -28,8 +28,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
                 var card = Player.Hand.Cards[i];
 
                 if (card.Type != Type.Lesson) continue;
-
-                Player.Hand.Remove(card);
+                
                 Player.InPlay.Add(card);
 
                 hand.Remove(card.gameObject);

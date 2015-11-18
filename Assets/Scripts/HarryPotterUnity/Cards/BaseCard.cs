@@ -23,23 +23,27 @@ namespace HarryPotterUnity.Cards
         [Header("Basic Card Settings")]
         [UsedImplicitly] public List<Tag> Tags;
 
-        private int ActionCost
+
+        #endregion
+
+        #region Properties
+
+        private ICardCollection _collection;
+
+        public ICardCollection Collection
         {
             get
             {
-                switch (GetCardType())
+                if (_collection == null)
                 {
-                    case Type.Adventure:
-                    case Type.Character:
-                        return 2;
-                    default:
-                        return 1;
+                    throw new System.Exception("collection is null for card: " + CardName);
                 }
-            }
+                return _collection;
+            } 
+            set { _collection = value; }
+
         }
-        #endregion
-        
-        #region Properties
+
         protected State State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
 
@@ -61,6 +65,21 @@ namespace HarryPotterUnity.Cards
             }
         }
 
+        private int ActionCost
+        {
+            get
+            {
+                switch (GetCardType())
+                {
+                    case Type.Adventure:
+                    case Type.Character:
+                        return 2;
+                    default:
+                        return 1;
+                }
+            }
+        }
+
         public byte NetworkId { get; set; }
         public string CardName { get { return transform.name; } }
         #endregion
@@ -73,6 +92,7 @@ namespace HarryPotterUnity.Cards
 
         private GameObject _cardFace;
         private GameObject _outline;
+        private GameObject _highlight;
 
         private List<ICardPlayRequirement> _playRequirements;
         private List<IDeckGenerationRequirement> _deckGenerationRequirements;
@@ -93,6 +113,7 @@ namespace HarryPotterUnity.Cards
             LoadPlayRequirements();
 
             AddOutlineComponent();
+            AddHighlightComponent();
         }
 
         private void AddOutlineComponent()
@@ -105,6 +126,18 @@ namespace HarryPotterUnity.Cards
             _outline.transform.parent = transform;
 
             _outline.SetActive(false);
+        }
+
+        private void AddHighlightComponent()
+        {
+            var tmp = Resources.Load("Highlight");
+
+            _highlight = (GameObject)Instantiate(tmp);
+            _highlight.transform.position = transform.position + Vector3.back * 0.2f;
+            _highlight.transform.rotation = _cardFace.transform.rotation;
+            _highlight.transform.parent = transform;
+            
+            _highlight.SetActive(false);
         }
 
         private void LoadPlayRequirements()
@@ -230,11 +263,10 @@ namespace HarryPotterUnity.Cards
             if (this is IPersistentCard)
             {
                 Player.InPlay.Add(this);
-                Player.Hand.Remove(this);
             }
             else
             {
-                throw new System.Exception("OnClickAction must be defined in cards that do not implement IPersistentCard!");
+                throw new Exception("OnClickAction must be overriden in cards that do not implement IPersistentCard!");
             }
         }
         
@@ -278,13 +310,23 @@ namespace HarryPotterUnity.Cards
                 return new List<BaseCard>();
             }
 
-            throw new System.NotSupportedException("Card with input did not define valid targets");
+            throw new NotSupportedException("Card with input did not define valid targets");
             
         }
 
         protected virtual bool MeetsAdditionalPlayRequirements()
         {
             return true;
+        }
+
+        public void SetAsValidChoice()
+        {
+            _highlight.SetActive(true);
+        }
+
+        public void RemoveHighlight()
+        {
+            _highlight.SetActive(false);
         }
     }
 }

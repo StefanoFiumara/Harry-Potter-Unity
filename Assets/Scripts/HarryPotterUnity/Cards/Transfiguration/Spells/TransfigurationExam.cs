@@ -21,9 +21,6 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
 
             Player.OppositePlayer.Discard.AddAll(enemyCreatures);
             Player.Discard.AddAll(playerCreatures);
-            
-            Player.OppositePlayer.InPlay.RemoveAll(enemyCreatures);
-            Player.InPlay.RemoveAll(playerCreatures);
         }
     }
 }

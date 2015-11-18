@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -14,16 +15,9 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            if (targets.Count != 1)
-            {
-                Debug.LogError("More or less than one input sent to Incarcifors");
-                return;
-            }
-
-            var target = targets[0];
+            var target = targets.First();
             
             Player.OppositePlayer.Discard.Add(target);
-            Player.OppositePlayer.InPlay.Remove(target);
         }
     }
 }

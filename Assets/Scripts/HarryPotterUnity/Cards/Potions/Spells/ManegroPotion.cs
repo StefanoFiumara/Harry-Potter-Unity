@@ -14,7 +14,6 @@ namespace HarryPotterUnity.Cards.Potions.Spells
             var lesson = Player.InPlay.GetLessonsOfType(LessonTypes.Potions).First();
 
             Player.Discard.Add(lesson);
-            Player.InPlay.Remove(lesson);
 
             Player.OppositePlayer.TakeDamage(damage);
         }

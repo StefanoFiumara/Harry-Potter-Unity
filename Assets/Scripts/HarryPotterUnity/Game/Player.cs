@@ -235,5 +235,23 @@ namespace HarryPotterUnity.Game
             GameManager.EnableCards(Hand.Cards);
             GameManager.EnableCards(InPlay.Cards);
         }
+
+        public void ClearHighlightComponent()
+        {
+            foreach (var card in Hand.Cards)
+            {
+                card.RemoveHighlight();
+            }
+
+            foreach (var card in InPlay.Cards)
+            {
+                card.RemoveHighlight();
+            }
+
+            foreach (var card in Discard.Cards)
+            {
+                card.RemoveHighlight();
+            }
+        }
     }
 }

@@ -21,7 +21,6 @@ namespace HarryPotterUnity.Cards.Potions.Spells
         {
             var cards = Player.Discard.GetHealableCards(_healingAmount);
             
-            Player.Discard.RemoveAll(cards);
             Player.Deck.AddAll(cards);
             if (_shuffleDeckAfterHeal)
             {

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -19,15 +20,9 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            if (targets.Count != 1)
-            {
-                Debug.LogError("Wrong Input sent to RavenToWritingDesk");
-                return;
-            }
+            var target = targets.First();
 
-            Player.OppositePlayer.Discard.Add(targets[0]);
-            Player.OppositePlayer.InPlay.Remove(targets[0]);
-            
+            Player.OppositePlayer.Discard.Add(target);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
@@ -8,8 +9,8 @@ using UnityEngine;
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class Hand : MonoBehaviour {
-        
+    public class Hand : MonoBehaviour, ICardCollection
+    {   
         public List<BaseCard> Cards { get; private set; }
 
         private Player _player;
@@ -31,24 +32,45 @@ namespace HarryPotterUnity.Game
             _player = transform.GetComponentInParent<Player>();
         }
 
-        public void Add(BaseCard card, bool preview = true, bool adjustSpacing = true)
+        public void Add(BaseCard card)
+        {
+            Add(card, true, true);
+        }
+
+        public void Add(BaseCard card, bool preview, bool adjustSpacing)
         {
             if (adjustSpacing) AdjustHandSpacing();
 
             card.transform.parent = transform;
+            
+            Cards.Add(card);
 
             var flipState = _player.IsLocalPlayer ? FlipStates.FaceUp : FlipStates.FaceDown;
             
-            Cards.Add(card);
             AnimateCardToHand(card, flipState, preview);
+
+            card.Collection.Remove(card);
+            card.Collection = this;
         }
         public void AddAll(IEnumerable<BaseCard> cards)
         {
             AdjustHandSpacing();
 
-            foreach (var card in cards)
+            var cardList = cards as IList<BaseCard> ?? cards.ToList();
+
+            foreach (var card in cardList)
             {
-                Add(card, adjustSpacing: false);
+                card.transform.parent = transform;
+                
+                Cards.Add(card);
+                var flipState = _player.IsLocalPlayer ? FlipStates.FaceUp : FlipStates.FaceDown;
+                AnimateCardToHand(card, flipState);
+            }
+
+            foreach (var card in cardList)
+            {
+                card.Collection.Remove(card);
+                card.Collection = this;
             }
 
             AdjustHandSpacing();
@@ -62,10 +84,10 @@ namespace HarryPotterUnity.Game
             }
             AdjustHandSpacing();
         }
-
+        
         public void Remove(BaseCard card)
         {
-            RemoveAll(new List<BaseCard> { card });
+            RemoveAll(new[] { card });
         }
 
         public void AdjustHandSpacing()

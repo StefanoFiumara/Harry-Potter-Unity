@@ -10,11 +10,9 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            //TODO: Implement it with input instead?
             var lessons = Player.Discard.GetCards(card => card.Type == Type.Lesson).Take(2).ToList();
            
             Player.Hand.AddAll(lessons);
-            Player.Discard.RemoveAll(lessons);
         }
     }
 }

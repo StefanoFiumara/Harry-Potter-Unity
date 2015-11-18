@@ -29,7 +29,6 @@ namespace HarryPotterUnity.Cards.PlayRequirements
             var card =_player.InPlay.Cards.Find(c => c.Tags.Contains(_tag));
 
             _player.Discard.Add(card);
-            _player.InPlay.Remove(card);
         }
     }
 }

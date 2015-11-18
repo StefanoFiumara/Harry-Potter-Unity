@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Cards.BasicBehavior;
+﻿using System.Linq;
+using HarryPotterUnity.Cards.BasicBehavior;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Quidditch.Items
@@ -8,10 +9,10 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
     {
         public override void OnSelectedAction()
         {
-            var card = Player.Discard.GetHealableCards(1);
+            var card = Player.Discard.GetHealableCards(1).Single();
 
-            Player.Discard.RemoveAll(card);
-            Player.Deck.AddAll(card);
+            
+            Player.Deck.Add(card);
 
             Player.UseActions();
         }

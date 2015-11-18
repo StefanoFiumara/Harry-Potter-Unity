@@ -15,8 +15,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
         {
             var cardsInHand = Player.Hand.Cards.ToList();
             int cardCount = cardsInHand.Count;
-
-            Player.Hand.RemoveAll( cardsInHand );
+            
             Player.Deck.AddAll( cardsInHand );
 
             while (cardCount-- > 0)

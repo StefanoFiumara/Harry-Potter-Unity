@@ -39,8 +39,6 @@ namespace HarryPotterUnity.Cards.PlayRequirements
                 _player.Hand.AddAll(lessons);
             else
                 _player.Discard.AddAll(lessons);
-
-            _player.InPlay.RemoveAll(lessons);
         }
     }
 }
