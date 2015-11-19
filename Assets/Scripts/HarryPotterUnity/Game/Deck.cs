@@ -29,20 +29,9 @@ namespace HarryPotterUnity.Game
             col.isTrigger = true;
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
-
-            LoadOutlineComponent();
         }
 
-        private void LoadOutlineComponent()
-        {
-            var resource = Resources.Load("DeckOutline");
-
-            _outline = (GameObject) Instantiate(resource);
-            _outline.transform.localPosition = _outlinePosition;
-            _outline.transform.rotation = Quaternion.Euler(new Vector3(90f, 180f, _player.transform.rotation.eulerAngles.z));
-            _outline.transform.parent = transform;
-            _outline.SetActive(false);
-        }
+        
 
         public void InitDeck (IEnumerable<BaseCard> cardList, BaseCard startingCharacter)
         {
@@ -94,6 +83,7 @@ namespace HarryPotterUnity.Game
             {
                 card = Cards[Cards.Count - 1];
                 Cards.RemoveAt(Cards.Count - 1);
+                card.RemoveHighlight();
             }
 
             if (Cards.Count <= 0)
@@ -134,14 +124,14 @@ namespace HarryPotterUnity.Game
         {
             if (CanDrawCard())
             {
-                _outline.SetActive(true);
+                Cards[Cards.Count - 1].SetAsValidChoice();
             }
         }
 
         [UsedImplicitly]
         private void OnMouseExit()
         {
-            _outline.SetActive(false);
+            Cards[Cards.Count - 1].RemoveHighlight();
         }
 
         private bool CanDrawCard()

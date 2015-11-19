@@ -126,7 +126,6 @@ namespace HarryPotterUnity.Cards
 
             _outline = (GameObject) Instantiate(tmp);
             _outline.transform.position = transform.position + Vector3.back*0.3f;
-            _outline.transform.rotation = _cardFace.transform.rotation;
             _outline.transform.parent = transform;
 
             _outline.SetActive(false);
@@ -138,7 +137,6 @@ namespace HarryPotterUnity.Cards
 
             _highlight = (GameObject)Instantiate(tmp);
             _highlight.transform.position = transform.position + Vector3.back * 0.2f;
-            _highlight.transform.rotation = _cardFace.transform.rotation;
             _highlight.transform.parent = transform;
             
             _highlight.SetActive(false);
