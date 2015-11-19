@@ -12,7 +12,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
         protected override bool MeetsAdditionalPlayRequirements()
         {
             return Player.OppositePlayer.
-                            Discard.GetCards(c => c.Type == Type.Lesson).Count > 0 && 
+                            Discard.Cards.Any(c => c.Type == Type.Lesson) && 
                             GetValidTargets().Count > 0;
         }
 
@@ -32,7 +32,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             var target = targets.First();
             var player = target.Player;
 
-            var lesson = player.Discard.GetCards(c => c.Type == Type.Lesson).First();
+            var lesson = player.Discard.Cards.First(c => c.Type == Type.Lesson);
             
             player.Discard.Add(target);
             

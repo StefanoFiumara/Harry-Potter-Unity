@@ -9,10 +9,8 @@ using UnityEngine;
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class Hand : MonoBehaviour, ICardCollection
+    public class Hand : CardCollection
     {   
-        public List<BaseCard> Cards { get; private set; }
-
         private Player _player;
 
         private static readonly Vector3 HandPreviewPosition = new Vector3(-80f, -13f, -336f);
@@ -32,7 +30,7 @@ namespace HarryPotterUnity.Game
             _player = transform.GetComponentInParent<Player>();
         }
 
-        public void Add(BaseCard card)
+        public override void Add(BaseCard card)
         {
             Add(card, true, true);
         }
@@ -49,10 +47,10 @@ namespace HarryPotterUnity.Game
             
             AnimateCardToHand(card, flipState, preview);
 
-            card.Collection.Remove(card);
-            card.Collection = this;
+            MoveToThisCollection(card);
         }
-        public void AddAll(IEnumerable<BaseCard> cards)
+        
+        public override void AddAll(IEnumerable<BaseCard> cards)
         {
             AdjustHandSpacing();
 
@@ -69,23 +67,23 @@ namespace HarryPotterUnity.Game
 
             foreach (var card in cardList)
             {
-                card.Collection.Remove(card);
-                card.Collection = this;
+                MoveToThisCollection(card);
             }
 
             AdjustHandSpacing();
         }
 
-        public void RemoveAll(IEnumerable<BaseCard> cardsToRemove)
+        public override void RemoveAll(IEnumerable<BaseCard> cardsToRemove)
         {
             foreach (var card in cardsToRemove)
             {
                 Cards.Remove(card);
             }
+
             AdjustHandSpacing();
         }
-        
-        public void Remove(BaseCard card)
+
+        protected override void Remove(BaseCard card)
         {
             RemoveAll(new[] { card });
         }
@@ -98,6 +96,8 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
+            if (!Cards.Contains(card)) return card.transform.localPosition;
+
             var cardPosition = HandCardsOffset;
 
             float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;

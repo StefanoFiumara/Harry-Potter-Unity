@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Enums;
+﻿using System.Linq;
+using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -17,7 +18,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         {
             var player = GetComponent<BaseCard>().Player;
 
-            return player.Discard.GetCards(card => card.Type == _type).Count >= _minimumAmount;
+            return player.Discard.Cards.Count(card => card.Type == _type) >= _minimumAmount;
         }
 
         public void OnRequirementMet() { }

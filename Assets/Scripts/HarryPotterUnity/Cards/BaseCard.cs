@@ -28,9 +28,9 @@ namespace HarryPotterUnity.Cards
 
         #region Properties
 
-        private ICardCollection _collection;
-
-        public ICardCollection Collection
+        private CardCollection _collection;
+        public CardCollection PreviousCollection { get; private set; }
+        public CardCollection CurrentCollection
         {
             get
             {
@@ -39,8 +39,12 @@ namespace HarryPotterUnity.Cards
                     throw new System.Exception("collection is null for card: " + CardName);
                 }
                 return _collection;
-            } 
-            set { _collection = value; }
+            }
+            set
+            {
+                PreviousCollection = _collection;
+                _collection = value;
+            }
 
         }
 

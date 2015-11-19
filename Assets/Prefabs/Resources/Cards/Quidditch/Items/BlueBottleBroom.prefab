@@ -191,7 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 4
   _rarity: 0
-  Tags: 
+  Tags: 04000000
   _lessonType: 4
   _amountLessonsProvided: 1
 --- !u!114 &11486264
@@ -225,7 +225,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: Tags.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: Tags.Array.data[0]
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 188050}

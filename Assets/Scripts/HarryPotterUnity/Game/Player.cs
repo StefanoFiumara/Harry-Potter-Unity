@@ -35,7 +35,7 @@ namespace HarryPotterUnity.Game
                 return _lessonTypesInPlay;
             }
         }
-        
+
         public int DamagePerTurn
         {
             get

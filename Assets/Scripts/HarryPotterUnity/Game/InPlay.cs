@@ -11,10 +11,8 @@ using UnityEngine;
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class InPlay : MonoBehaviour, ICardCollection
+    public class InPlay : CardCollection
     {
-        public List<BaseCard> Cards { get; private set; }
-
         public List<BaseCard> CardsExceptStartingCharacter
         {
             get { return Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
@@ -35,7 +33,7 @@ namespace HarryPotterUnity.Game
             Cards = new List<BaseCard>();
         }
 
-        public void Add(BaseCard card)
+        public override void Add(BaseCard card)
         {
             Cards.Add(card);
             
@@ -43,13 +41,12 @@ namespace HarryPotterUnity.Game
 
             TweenCardToPosition(card);
 
-            card.Collection.Remove(card);
-            card.Collection = this;
+            MoveToThisCollection(card);
 
             ((IPersistentCard) card).OnEnterInPlayAction();
         }
 
-        public void Remove(BaseCard card)
+        protected override void Remove(BaseCard card)
         {
             Cards.Remove(card);
 
@@ -58,43 +55,17 @@ namespace HarryPotterUnity.Game
             ((IPersistentCard) card).OnExitInPlayAction();
         }
 
-        public void AddAll(IEnumerable<BaseCard> cards)
+        public override void AddAll(IEnumerable<BaseCard> cards)
         {
             var cardList = cards as IList<BaseCard> ?? cards.ToList();
 
             foreach (var card in cardList)
             {
-                Cards.Add(card);
-                
-                card.transform.parent = transform;
-
-                TweenCardToPosition(card);
-            }
-
-            //Use RemoveAll if the cards are coming from the same collection
-            var collection = cardList.First().Collection;
-            if (cardList.Skip(1).All(c => c.Collection == collection))
-            {
-                collection.RemoveAll(cardList);
-                foreach (var card in cardList)
-                {
-                    card.Collection = this;
-                    ((IPersistentCard)card).OnEnterInPlayAction();
-                }
-            }
-            else
-            {
-                foreach (var card in cardList)
-                {
-                    card.Collection.Remove(card);
-                    card.Collection = this;
-
-                    ((IPersistentCard)card).OnEnterInPlayAction();
-                }
+                Add(card);
             }
         }
         
-        public void RemoveAll(IEnumerable<BaseCard> cards)
+        public override void RemoveAll(IEnumerable<BaseCard> cards)
         {
             var cardList = cards as IList<BaseCard> ?? cards.ToList();
 
@@ -150,6 +121,8 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
+            if (!Cards.Contains(card)) return card.transform.localPosition;
+
             int position = Cards.FindAll(c => c.Type == card.Type).IndexOf(card);
 
             var cardPosition = new Vector3();

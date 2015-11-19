@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using HarryPotterUnity.Cards.Interfaces;
+﻿using System.Linq;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
@@ -18,17 +15,12 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
 
         public override void OnSelectedAction()
         {
-            var lesson = Player.Discard.GetCards(c => c.Type == Type.Lesson).First();
+            var lesson = Player.Discard.Cards.First(c => c.Type == Type.Lesson);
 
             Player.InPlay.Add(lesson);
             Player.Discard.RemoveAll(new[] {lesson});
 
             Player.UseActions();
         }
-
-        public override void OnInPlayBeforeTurnAction() { }
-        public override void OnInPlayAfterTurnAction() { }
-        public override void OnEnterInPlayAction() { }
-        public override void OnExitInPlayAction() { }
     }
 }

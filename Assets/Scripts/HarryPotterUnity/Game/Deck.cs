@@ -5,15 +5,12 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using JetBrains.Annotations;
 using UnityEngine;
-using MonoBehaviour = UnityEngine.MonoBehaviour;
 
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class Deck : MonoBehaviour, ICardCollection
+    public class Deck : CardCollection
     {
-        public List<BaseCard> Cards { get; private set; }
-
         private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
@@ -68,14 +65,14 @@ namespace HarryPotterUnity.Game
                 
                 GameManager.AllCards.Add(Cards[i]);
 
-                Cards[i].Collection = this;
+                Cards[i].CurrentCollection = this;
             }
         }
 
         public void SpawnStartingCharacter()
         {
             StartingCharacter = Instantiate(StartingCharacter);
-            StartingCharacter.Collection = this;
+            StartingCharacter.CurrentCollection = this;
 
             StartingCharacter.transform.parent = transform;
             StartingCharacter.Player = _player;
@@ -193,16 +190,15 @@ namespace HarryPotterUnity.Game
             return Cards.FindAll(card => card.Type == type).Take(amount);
         }
 
-        public void Remove(BaseCard card)
+        protected override void Remove(BaseCard card)
         {
             Cards.Remove(card);
             UpdateCardsLeftLabel();
         }
 
-        public void Add(BaseCard card)
+        public override void Add(BaseCard card)
         {
-            card.Collection.Remove(card);
-            card.Collection = this;
+            MoveToThisCollection(card);
 
             Cards.Insert(0, card);
             
@@ -216,7 +212,7 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, FlipStates.FaceDown, RotationType.NoRotate, State.InDeck));
         }
 
-        public void AddAll(IEnumerable<BaseCard> cards)
+        public override void AddAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
             {
@@ -226,7 +222,7 @@ namespace HarryPotterUnity.Game
             AdjustCardSpacing();
         }
 
-        public void RemoveAll(IEnumerable<BaseCard> cards)
+        public override void RemoveAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
             {
@@ -235,7 +231,7 @@ namespace HarryPotterUnity.Game
 
             AdjustCardSpacing();
         }
-
+        
         private void AdjustCardSpacing()
         {
             GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards, GetTargetPositionForCard));
@@ -243,11 +239,7 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            if (!Cards.Contains(card))
-            {
-                Debug.LogError("GetTargetPositionForCard cannot find given card in deck.");
-                return Vector3.zero;
-            }
+            if (!Cards.Contains(card)) return card.transform.localPosition;
 
             int index = Cards.IndexOf(card);
             var result = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
