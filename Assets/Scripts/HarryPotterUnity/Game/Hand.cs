@@ -73,7 +73,7 @@ namespace HarryPotterUnity.Game
             AdjustHandSpacing();
         }
 
-        public override void RemoveAll(IEnumerable<BaseCard> cardsToRemove)
+        protected override void RemoveAll(IEnumerable<BaseCard> cardsToRemove)
         {
             foreach (var card in cardsToRemove)
             {

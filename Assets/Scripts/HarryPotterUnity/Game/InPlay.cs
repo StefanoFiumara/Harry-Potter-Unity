@@ -65,7 +65,7 @@ namespace HarryPotterUnity.Game
             }
         }
         
-        public override void RemoveAll(IEnumerable<BaseCard> cards)
+        protected override void RemoveAll(IEnumerable<BaseCard> cards)
         {
             var cardList = cards as IList<BaseCard> ?? cards.ToList();
 

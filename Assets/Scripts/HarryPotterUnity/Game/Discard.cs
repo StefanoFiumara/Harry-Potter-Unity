@@ -57,7 +57,7 @@ namespace HarryPotterUnity.Game
             AdjustCardSpacing();
         }
 
-        public override void RemoveAll(IEnumerable<BaseCard> cards)
+        protected override void RemoveAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
             {

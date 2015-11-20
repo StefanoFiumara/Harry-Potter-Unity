@@ -18,8 +18,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
             var lesson = Player.Discard.Cards.First(c => c.Type == Type.Lesson);
 
             Player.InPlay.Add(lesson);
-            Player.Discard.RemoveAll(new[] {lesson});
-
+            
             Player.UseActions();
         }
     }
