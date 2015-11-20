@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Cards
         private void PreviewSpell()
         {
             State = State.Discarded;
-            var rotateType = Player.OppositePlayer.IsLocalPlayer ? RotationType.Rotate180 : RotationType.NoRotate;
+            var rotateType = Player.OppositePlayer.IsLocalPlayer ? TweenRotationType.Rotate180 : TweenRotationType.NoRotate;
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(gameObject, SpellOffset, 0.5f, 0f, FlipStates.FaceUp, rotateType, State, 0.6f));
         }
 

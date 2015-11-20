@@ -38,7 +38,7 @@
         FaceUp, FaceDown
     }
 
-    public enum RotationType
+    public enum TweenRotationType
     {
         NoRotate, Rotate90, Rotate180
     }

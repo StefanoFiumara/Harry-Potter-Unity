@@ -110,7 +110,7 @@ namespace HarryPotterUnity.Game
                 0.3f,
                 0f,
                 FlipStates.FaceUp, 
-                RotationType.Rotate90,
+                TweenRotationType.Rotate90,
                 State.InPlay));
         }
 
@@ -147,6 +147,12 @@ namespace HarryPotterUnity.Game
                 case Type.Character:
                     cardPosition = CharacterPositionOffset;
                     cardPosition.x += (position % 3) * CharacterSpacing.x;
+                    break;
+                case Type.Match:
+                    break;
+                case Type.Location:
+                    break;
+                case Type.Adventure:
                     break;
                 default:
                     Debug.Log("Warning: GetTargetPositionForCard could not identify cardType");

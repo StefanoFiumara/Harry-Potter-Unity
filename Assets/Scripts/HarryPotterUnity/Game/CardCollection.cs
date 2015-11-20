@@ -9,8 +9,9 @@ namespace HarryPotterUnity.Game
         public List<BaseCard> Cards { get; protected set; }
 
         public abstract void Add(BaseCard card);
-        protected abstract void Remove(BaseCard card);
         public abstract void AddAll(IEnumerable<BaseCard> cards);
+
+        protected abstract void Remove(BaseCard card);
         protected abstract void RemoveAll(IEnumerable<BaseCard> cards);
 
         private bool Contains(BaseCard card)

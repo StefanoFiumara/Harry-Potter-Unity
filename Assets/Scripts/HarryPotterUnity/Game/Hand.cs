@@ -32,7 +32,7 @@ namespace HarryPotterUnity.Game
 
         public override void Add(BaseCard card)
         {
-            Add(card, true, true);
+            Add(card, preview: true, adjustSpacing: true);
         }
 
         public void Add(BaseCard card, bool preview, bool adjustSpacing)
@@ -115,10 +115,10 @@ namespace HarryPotterUnity.Game
 
             if (preview)
             {
-                GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flipState, RotationType.NoRotate, State.InHand));
+                GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flipState, TweenRotationType.NoRotate, State.InHand));
             }
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPosition, 0.3f, 0.1f, flipState, RotationType.NoRotate, State.InHand));
+            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPosition, 0.3f, 0.1f, flipState, TweenRotationType.NoRotate, State.InHand));
         }
     }
 }
