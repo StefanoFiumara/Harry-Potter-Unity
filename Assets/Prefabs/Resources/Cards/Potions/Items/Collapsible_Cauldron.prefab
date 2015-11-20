@@ -29,6 +29,8 @@ GameObject:
   - 114: {fileID: 11435118}
   - 114: {fileID: 11409838}
   - 114: {fileID: 11486576}
+  - 114: {fileID: 11429822}
+  - 114: {fileID: 11463980}
   m_Layer: 10
   m_Name: Collapsible_Cauldron
   m_TagString: Untagged
@@ -191,6 +193,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 6
   _lessonType: 3
+--- !u!114 &11429822
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 2
 --- !u!114 &11435118
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,6 +221,18 @@ MonoBehaviour:
   Tags: 03000000
   _lessonType: 3
   _amountLessonsProvided: 3
+--- !u!114 &11463980
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 150902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b303336d3e58e3438cd424c2097b307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardName: Pewter_Cauldron
 --- !u!114 &11486576
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -227,7 +253,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _maximumAmountAllowed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _cardName
+      value: Pewter_Cauldron
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 150902}
