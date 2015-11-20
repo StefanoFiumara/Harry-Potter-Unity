@@ -14,10 +14,7 @@ namespace HarryPotterUnity.Game
         private Player _player;
 
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
-        private readonly Vector3 _outlinePosition = new Vector3(-359.5f, -125.9f, 16f);
         
-        private GameObject _outline;
-
         public BaseCard StartingCharacter { get; private set; }
 
         [UsedImplicitly]
