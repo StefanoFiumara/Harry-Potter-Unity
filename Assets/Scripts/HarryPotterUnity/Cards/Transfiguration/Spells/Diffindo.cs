@@ -16,7 +16,6 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
         protected override void SpellAction(List<BaseCard> targets)
         {
             var target = targets.Single();
-            
             Player.OppositePlayer.Discard.Add(target);
         }
     }
