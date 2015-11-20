@@ -183,6 +183,9 @@ namespace HarryPotterUnity.Game
             UpdateCardsLeftLabel();
         }
 
+        /// <summary>
+        /// Adds a card to the bottom of the deck
+        /// </summary>
         public override void Add(BaseCard card)
         {
             MoveToThisCollection(card);
@@ -199,6 +202,9 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, FlipStates.FaceDown, RotationType.NoRotate, State.InDeck));
         }
 
+        /// <summary>
+        /// Last card in the list with be at the bottom of the deck.
+        /// </summary>
         public override void AddAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
