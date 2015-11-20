@@ -43,7 +43,7 @@ namespace HarryPotterUnity.Game
             
             Cards.Add(card);
 
-            var flipState = _player.IsLocalPlayer ? FlipStates.FaceUp : FlipStates.FaceDown;
+            var flipState = _player.IsLocalPlayer ? FlipState.FaceUp : FlipState.FaceDown;
             
             AnimateCardToHand(card, flipState, preview);
 
@@ -61,7 +61,7 @@ namespace HarryPotterUnity.Game
                 card.transform.parent = transform;
                 
                 Cards.Add(card);
-                var flipState = _player.IsLocalPlayer ? FlipStates.FaceUp : FlipStates.FaceDown;
+                var flipState = _player.IsLocalPlayer ? FlipState.FaceUp : FlipState.FaceDown;
                 AnimateCardToHand(card, flipState);
             }
 
@@ -109,7 +109,7 @@ namespace HarryPotterUnity.Game
             return cardPosition;
         }
 
-        private void AnimateCardToHand(BaseCard card, FlipStates flipState, bool preview = true)
+        private void AnimateCardToHand(BaseCard card, FlipState flipState, bool preview = true)
         {
             var cardPosition = GetTargetPositionForCard(card);
 

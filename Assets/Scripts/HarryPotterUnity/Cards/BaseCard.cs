@@ -54,7 +54,7 @@ namespace HarryPotterUnity.Cards
         public Type Type { get { return GetCardType(); } }
         protected abstract Type GetCardType();
 
-        public FlipStates FlipState { private get; set; }
+        public FlipState FlipState { private get; set; }
         public Rarity Rarity { get { return _rarity; } }
 
         public Player Player { get; set; }
@@ -105,7 +105,7 @@ namespace HarryPotterUnity.Cards
         [UsedImplicitly]
         protected virtual void Start()
         {
-            FlipState = FlipStates.FaceDown;
+            FlipState = FlipState.FaceDown;
             
             gameObject.layer = GameManager.CARD_LAYER;
             _cardFace = transform.FindChild("Front").gameObject;
@@ -276,7 +276,7 @@ namespace HarryPotterUnity.Cards
         {
             _cardFace.layer = GameManager.PREVIEW_LAYER;
             
-            if (FlipState == FlipStates.FaceUp && iTween.Count(gameObject) == 0)
+            if (FlipState == FlipState.FaceUp && iTween.Count(gameObject) == 0)
                 GameManager.PreviewCamera.ShowPreview(this);
             else HidePreview();
         }

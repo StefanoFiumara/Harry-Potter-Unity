@@ -109,7 +109,7 @@ namespace HarryPotterUnity.Game
                 cardPosition, 
                 0.3f,
                 0f,
-                FlipStates.FaceUp, 
+                FlipState.FaceUp, 
                 TweenRotationType.Rotate90,
                 State.InPlay));
         }

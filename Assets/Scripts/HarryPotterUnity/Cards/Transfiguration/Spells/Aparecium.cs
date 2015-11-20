@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
 
             if (!Player.IsLocalPlayer)
                 GameManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(new List<GameObject>(hand),
-                                                                          FlipStates.FaceUp,
+                                                                          Enums.FlipState.FaceUp,
                                                                           timeUntilNextTween: 1f));
 
             for (int i = handCount - 1; i >= 0; i--)
@@ -34,7 +34,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
                 hand.Remove(card.gameObject);
             }
 
-            if (!Player.IsLocalPlayer) GameManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(hand, FlipStates.FaceDown));
+            if (!Player.IsLocalPlayer) GameManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(hand, FlipState.FaceDown));
         }
     }
 }

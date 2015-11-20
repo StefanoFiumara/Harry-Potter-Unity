@@ -33,7 +33,7 @@
         Adventure
     }
 
-    public enum FlipStates
+    public enum FlipState
     {
         FaceUp, FaceDown
     }

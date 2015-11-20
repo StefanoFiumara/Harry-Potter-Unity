@@ -12,10 +12,10 @@ namespace HarryPotterUnity.Tween
         private readonly float _time;
         private readonly float _delay;
         private readonly float _timeUntilNextTween;
-        private readonly FlipStates _flip;
+        private readonly FlipState _flip;
       
 
-        public FlipCardsTween(List<GameObject> targets, FlipStates flip, float time = 0.3f, float delay = 0f, float timeUntilNextTween = 0f)
+        public FlipCardsTween(List<GameObject> targets, FlipState flip, float time = 0.3f, float delay = 0f, float timeUntilNextTween = 0f)
         {
             _targets = targets;
             _flip = flip;
@@ -40,10 +40,10 @@ namespace HarryPotterUnity.Tween
             float targetFlip = 0f;
             switch (_flip)
             {
-                case FlipStates.FaceUp:
+                case FlipState.FaceUp:
                     targetFlip = 0f;
                     break;
-                case FlipStates.FaceDown:
+                case FlipState.FaceDown:
                     targetFlip = 180f;
                     break;
             }
