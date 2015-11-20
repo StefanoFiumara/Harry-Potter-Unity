@@ -14,5 +14,10 @@ namespace HarryPotterUnity.Cards.Charms.Spells
            
             Player.Hand.AddAll(lessons);
         }
+
+        protected override bool MeetsAdditionalPlayRequirements()
+        {
+            return Player.Discard.Cards.Count(c => c.Type == Type.Lesson) >= 2;
+        }
     }
 }
