@@ -47,6 +47,7 @@ GameObject:
   - 114: {fileID: 11492116}
   - 114: {fileID: 11486264}
   - 114: {fileID: 11472590}
+  - 114: {fileID: 11422568}
   m_Layer: 10
   m_Name: BlueBottleBroom
   m_TagString: Untagged
@@ -178,6 +179,18 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11422568
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 188050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 2
 --- !u!114 &11472590
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,6 +246,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: Tags.Array.data[0]
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _maximumAmountAllowed
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
