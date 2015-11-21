@@ -29,6 +29,9 @@ namespace HarryPotterUnity.UI
         [SerializeField, UsedImplicitly]
         private Button _findMatchButton;
 
+        [SerializeField, UsedImplicitly]
+        private Button _cancelFindMatchButton;
+
         [SerializeField, UsedImplicitly] 
         private Text _gameStatusText;
 
@@ -92,6 +95,7 @@ namespace HarryPotterUnity.UI
         public RectTransform EndGamePanel { get { return _endGamePanel; } }
 
 
+        [SerializeField, UsedImplicitly] private Text _networkStatusText;
 
         private List<LessonTypes> _selectedLessons;
 
@@ -106,6 +110,8 @@ namespace HarryPotterUnity.UI
         public void Update()
         {
             _playersOnlineText.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
+
+            _networkStatusText.text = PhotonNetwork.connectionStateDetailed.ToString();
         }
 
         public void InitMainMenu()
@@ -162,17 +168,33 @@ namespace HarryPotterUnity.UI
             if (_selectedLessons.Count == 2 || _selectedLessons.Count == 3)
             {
                 _findMatchButton.interactable = false;
-                _gameStatusText.text = "Finding Match...";
+                _gameStatusText.text = "Preparing to Find Match...";
 
                 PhotonNetwork.JoinRandomRoom();
-                
                 DisableLessonSelect();
             }
             else
             {
                 _errorPanel.gameObject.SetActive(true);
             }
+        }
 
+        public void OnJoinedRoom()
+        {
+            _gameStatusText.text = "Finding Match...";
+            _cancelFindMatchButton.gameObject.SetActive(true);
+        }
+
+        [UsedImplicitly]
+        public void FindMatch_Cancel()
+        {
+            if (PhotonNetwork.inRoom)
+            {
+                _gameStatusText.text = "Returning to Main Menu...";
+                _cancelFindMatchButton.gameObject.SetActive(false);
+                PhotonNetwork.LeaveRoom();
+                PhotonNetwork.JoinLobby();
+            }
         }
 
         [UsedImplicitly]

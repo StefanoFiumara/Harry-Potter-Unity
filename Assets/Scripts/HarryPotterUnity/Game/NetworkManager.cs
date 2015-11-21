@@ -35,6 +35,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
+            Debug.Log("OnJoinedLobby");
             _hudManager.InitMainMenu();
         }
 
@@ -42,7 +43,7 @@ namespace HarryPotterUnity.Game
         public void OnJoinedRoom()
         {
             if (PhotonNetwork.room.playerCount == 1) return;
-
+            
             _hudManager.SetPlayer2CameraRotation();
         }
 
