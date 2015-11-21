@@ -15,7 +15,7 @@ MonoBehaviour:
   Protocol: 0
   ServerAddress: 
   ServerPort: 5055
-  AppID: e90422b0-1605-4f24-af5d-96c49b543ec9
+  AppID: d17b705a-d4da-4ef4-8d30-5ca480bc0432
   PreferredRegion: 1
   EnabledRegions: -1
   RpcList:
