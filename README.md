@@ -18,10 +18,12 @@ Planned Features
 
 To Test the Project
 -------------------
-This is a Unity3D Project, to test the game yourself before an official client is out will require some rather large downloads, sorry for the inconvenience!
+You can find a build of the project in the releases tab, read there for more details on what  the current public version entails.
 
-You will need to download the Unity3D Game Engine [here](http://unity3d.com/) (This game has been upgraded to Unity 5.1.2, so make sure you grab that version). Open the scene located in **/Assets/Scenes/MultiplayerLobby.unity** and hit the play button at the top of the unity window, the game will automatically connect to the Photon Server. To play, you must select a combination of lessons to use in your deck and click the 'Find Duel' button, which will throw you into the random matchmaking service.
+I don't expect there to be a ton of people using this, as it is quite a niche project, but you can now download the game and hop into the matchmaking service without needing to compile it yourself!
 
-To test the game by yourself, you can open up multiple instances of the game by creating a build (ctrl-B) and running it alongside the unity editor. Once two clients are connected via matchmaking the decks will appear and automatically shuffle, each player will draw 7 cards and the first turn will begin.
+If you have no one to play with, you can test the game against yourself, to do so, you can open up multiple instances of the game and hit Find Match at the same time. Once the two clients are connected the decks will appear and automatically shuffle, each player will draw 7 cards and the first turn will begin.
 
-Basic functionality has been implemented and you should be able to complete a game against another player, you will probably notice that there aren't that many cards implemented, I have spent the past few months doing the multiplayer conversion and haven't been implementing new cards until all the basic functionality is in, you can expect the card pool to grow massively in the next few months once all the multiplayer kinks get worked out.
+Basic functionality has been implemented and you should be able to complete a game against another player, you will probably notice that there aren't that many cards implemented, I have spent the past few months working on the infrastructure that will allow more complicated cards to be thrown into the random card pool, you can expect the card pool to grow substantially in the next few months as the more complicated features get built into the engine.
+
+Thanks for reading and enjoy the game! Feel free to drop me a message if you enjoy it.
