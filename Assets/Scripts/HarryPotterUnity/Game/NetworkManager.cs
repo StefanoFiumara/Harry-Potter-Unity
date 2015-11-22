@@ -35,7 +35,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
-            Debug.Log("OnJoinedLobby");
+         
             _hudManager.InitMainMenu();
         }
 
