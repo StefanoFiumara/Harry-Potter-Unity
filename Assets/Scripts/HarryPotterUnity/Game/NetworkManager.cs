@@ -22,7 +22,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void Start()
         {
-            PhotonNetwork.ConnectUsingSettings("v0.1");
+            PhotonNetwork.ConnectUsingSettings("v0.1-Release");
 
             _hudManager = FindObjectOfType<HudManager>();
 
