@@ -110,8 +110,7 @@ namespace HarryPotterUnity.UI
         public void Update()
         {
             _playersOnlineText.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
-
-            _networkStatusText.text = PhotonNetwork.connectionStateDetailed.ToString();
+            _networkStatusText.text = string.Format("Network Status: {0}", PhotonNetwork.connectionStateDetailed);
         }
 
         public void InitMainMenu()
@@ -119,6 +118,7 @@ namespace HarryPotterUnity.UI
             _gameStatusText.text = "Connected to Photon Server!";
             _findMatchButton.gameObject.SetActive(true);
             _findMatchButton.interactable = true;
+            _cancelFindMatchButton.gameObject.SetActive(false);
 
             _titleText.gameObject.SetActive(true);
             _gameStatusText.gameObject.SetActive(true);
