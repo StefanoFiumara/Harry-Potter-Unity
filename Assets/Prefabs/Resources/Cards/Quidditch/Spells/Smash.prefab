@@ -46,6 +46,7 @@ GameObject:
   - 4: {fileID: 490768}
   - 114: {fileID: 11478708}
   - 114: {fileID: 11487854}
+  - 114: {fileID: 11426742}
   m_Layer: 10
   m_Name: Smash
   m_TagString: Untagged
@@ -177,6 +178,18 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &11426742
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 178154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 044252d760427a541a54447a12e253ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputRequired: 1
 --- !u!114 &11478708
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -226,6 +239,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _lessonType
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _inputRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
