@@ -15,6 +15,7 @@ Planned Features
 * Multiplayer Matchmaking, pits two players with randomly generated decks against each other.
 * A basic tutorial system for introducing a new player to the game, this will have separate mechanics to walk the player through how the card game works and will probably include a pre-built deck to ease the player into the concept.
 * A progress system to track the player's achievements and wins/losses, maybe an achievement system to track the player's various accomplishments in each game.
+* A deck editor for constructed play further down the line.
 
 To Test the Project
 -------------------
