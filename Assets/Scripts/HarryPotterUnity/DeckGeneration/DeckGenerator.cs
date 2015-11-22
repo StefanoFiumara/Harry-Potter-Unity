@@ -46,7 +46,6 @@ namespace HarryPotterUnity.DeckGeneration
                     _startingCharacters.Add(cardInfo);
                 }
             }
-            Debug.Log("starting characters: " + _startingCharacters.Count);
         }
 
         public static BaseCard GetRandomStartingCharacter()
