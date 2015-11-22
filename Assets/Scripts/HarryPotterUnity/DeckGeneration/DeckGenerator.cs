@@ -46,18 +46,23 @@ namespace HarryPotterUnity.DeckGeneration
                     _startingCharacters.Add(cardInfo);
                 }
             }
+            Debug.Log("starting characters: " + _startingCharacters.Count);
         }
 
         public static BaseCard GetRandomStartingCharacter()
         {
             if(_startingCharacters == null) LoadCardLibrary();
 
-            if (_startingCharacters != null)
+            if (_startingCharacters == null)
             {
-                return _startingCharacters.Skip(Random.Range(0, _startingCharacters.Count - 1)).First();
+                throw new System.Exception("Starting Characters are not loaded!");
             }
 
-            throw new System.Exception("Starting Characters are not loaded!");
+            var character = _startingCharacters.Skip(Random.Range(0, _startingCharacters.Count)).First();
+
+            _startingCharacters.Remove(character);
+
+            return character;
         }
 
         public static IEnumerable<BaseCard> GenerateDeck(List<LessonTypes> types)
