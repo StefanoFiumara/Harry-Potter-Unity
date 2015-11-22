@@ -16,7 +16,7 @@ namespace HarryPotterUnity.Game
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
         
         public BaseCard StartingCharacter { get; private set; }
-
+        
         [UsedImplicitly]
         public void Awake()
         {
@@ -156,20 +156,10 @@ namespace HarryPotterUnity.Game
                 var temp = Cards[i];
                 Cards[i] = Cards[random];
                 Cards[random] = temp;
-
-                float newZ = (transform.position.z + 16f) - i * 0.2f;
-
-                var point1 = Vector3.MoveTowards(Cards[i].transform.position, Camera.main.transform.position, 80f);
-                point1.z = Cards[i].transform.position.z;
-
-                var point2 = new Vector3(Cards[i].transform.position.x, Cards[i].transform.position.y, newZ);
-
-                iTween.MoveTo(Cards[i].gameObject, iTween.Hash("time", 0.5f, 
-                                                               "path", new[] {point1, point2}, 
-                                                               "easetype", iTween.EaseType.EaseInOutSine, 
-                                                               "delay", Random.Range(0f,1.5f)
-                                                               ));
             }
+
+            GameManager.TweenQueue.AddTweenToQueue(new ShuffleDeckTween(Cards, GetTargetPositionForCard));
+            
         }
 
         public IEnumerable<BaseCard> GetCardsOfType(Type type, int amount)
@@ -232,7 +222,11 @@ namespace HarryPotterUnity.Game
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            if (!Cards.Contains(card)) return card.transform.localPosition;
+            if (!Cards.Contains(card))
+            {
+                Debug.Log("Card not found in CardCollection");
+                return card.transform.localPosition;
+            }
 
             int index = Cards.IndexOf(card);
             var result = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
