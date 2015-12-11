@@ -4,6 +4,7 @@ using System.Linq;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
+using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -27,17 +28,23 @@ namespace HarryPotterUnity.Game
             {
                 Debug.LogError("Network Manager could not find Hud Manager in Scene!");
             }
+
+            HpLogger.Write("Connecting to Photon Master Server");
         }
 
         [UsedImplicitly]
         public void OnConnectedToMaster()
         {
+            HpLogger.Write("Connected to Photon Master Server");
+
+            HpLogger.Write("Joining Default Lobby");
             PhotonNetwork.JoinLobby();
         }
 
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
+            HpLogger.Write("Joined Default Lobby");
             _hudManager.InitMainMenu();
         }
 
