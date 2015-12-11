@@ -29,22 +29,22 @@ namespace HarryPotterUnity.Game
                 Debug.LogError("Network Manager could not find Hud Manager in Scene!");
             }
 
-            HpLogger.Write("Connecting to Photon Master Server");
+            Log.Write("Connecting to Photon Master Server");
         }
 
         [UsedImplicitly]
         public void OnConnectedToMaster()
         {
-            HpLogger.Write("Connected to Photon Master Server");
+            Log.Write("Connected to Photon Master Server");
 
-            HpLogger.Write("Joining Default Lobby");
+            Log.Write("Joining Default Lobby");
             PhotonNetwork.JoinLobby();
         }
 
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
-            HpLogger.Write("Joined Default Lobby");
+            Log.Write("Joined Default Lobby");
             _hudManager.InitMainMenu();
         }
 

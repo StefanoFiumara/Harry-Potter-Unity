@@ -213,7 +213,7 @@ namespace HarryPotterUnity.Game
 
                 if (card == null)
                 {
-                    HpLogger.Write("Game Over");
+                    Log.Write("Game Over");
                     break;
                 }
                 cards.Add(card);

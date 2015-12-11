@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Utils
 {
-    public static class HpLogger
+    public static class Log
     {
         private static readonly string LogFilePath = Path.Combine(Directory.GetCurrentDirectory(), "HP-TCG.log");
 
-        static HpLogger()
+        static Log()
         {
             File.WriteAllText(LogFilePath, string.Empty);
 

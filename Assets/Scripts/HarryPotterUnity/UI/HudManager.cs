@@ -171,7 +171,7 @@ namespace HarryPotterUnity.UI
                 _findMatchButton.interactable = false;
                 _gameStatusText.text = "Preparing to Find Match...";
 
-                HpLogger.Write("Initiate Find Match");
+                Log.Write("Initiate Find Match");
 
                 PhotonNetwork.JoinRandomRoom();
                 DisableLessonSelect();
@@ -193,7 +193,7 @@ namespace HarryPotterUnity.UI
         {
             if (PhotonNetwork.inRoom)
             {
-                HpLogger.Write("Canceled Find Match");
+                Log.Write("Canceled Find Match");
 
                 _gameStatusText.text = "Returning to Main Menu...";
                 _cancelFindMatchButton.gameObject.SetActive(false);

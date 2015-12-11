@@ -225,7 +225,7 @@ namespace HarryPotterUnity.Game
         {
             if (!Cards.Contains(card))
             {
-                HpLogger.Write("Card not found in CardCollection");
+                Log.Write("Card not found in CardCollection");
                 return card.transform.localPosition;
             }
 
