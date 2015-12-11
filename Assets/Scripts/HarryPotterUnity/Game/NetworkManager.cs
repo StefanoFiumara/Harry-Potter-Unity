@@ -10,15 +10,13 @@ using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Game
 {
-    [UsedImplicitly]
     public class NetworkManager : Photon.MonoBehaviour
     {
         private Player _player1;
         private Player _player2;
 
         private HudManager _hudManager;
-
-        [UsedImplicitly]
+        
         public void Start()
         {
             PhotonNetwork.ConnectUsingSettings("v0.2-dev");
@@ -31,15 +29,15 @@ namespace HarryPotterUnity.Game
             }
         }
 
+        [UsedImplicitly]
         public void OnConnectedToMaster()
         {
-            Debug.Log("Joined Master");
             PhotonNetwork.JoinLobby();
         }
+
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
-            Debug.Log("Joined Lobby");
             _hudManager.InitMainMenu();
         }
 
