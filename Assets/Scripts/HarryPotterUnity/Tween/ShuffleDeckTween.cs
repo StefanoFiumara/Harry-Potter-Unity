@@ -9,16 +9,13 @@ namespace HarryPotterUnity.Tween
     public class ShuffleDeckTween : ITweenObject
     {
         private readonly IEnumerable<BaseCard> _cards;
-
-        private readonly Func<BaseCard, Vector3> _getTargetPosition;
-
+        
         public float CompletionTime { get { return 2f; } }
         public float TimeUntilNextTween { get { return 0f; } }
 
         public ShuffleDeckTween(IEnumerable<BaseCard> cards, Func<BaseCard, Vector3> getTargetPosition)
         {
             _cards = cards;
-            _getTargetPosition = getTargetPosition;
         }
 
         public void ExecuteTween()
