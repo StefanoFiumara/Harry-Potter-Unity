@@ -1,7 +1,13 @@
 Build/
 bin/
 packages.config
-Packages/
+packages/
+
+# =============== #
+# HP TCG Specific #
+# =============== #
+HP-TCG.log
+
 # =============== #
 # Unity generated #
 # =============== #
@@ -37,3 +43,4 @@ ehthumbs.db
 Thumbs.db
 Thumbs.db.meta
 *.DotSettings
+
