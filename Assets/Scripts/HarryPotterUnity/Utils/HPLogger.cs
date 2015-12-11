@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Utils
 {
     public static class HpLogger
     {
-        private static readonly string LogFilePath = Path.Combine(Directory.GetCurrentDirectory(), "HP-TCG-LOG.txt");
+        private static readonly string LogFilePath = Path.Combine(Directory.GetCurrentDirectory(), "HP-TCG.log");
 
         static HpLogger()
         {
@@ -17,7 +17,7 @@ namespace HarryPotterUnity.Utils
                 writer.WriteLine("------------------------------------");
                 writer.WriteLine("------- Harry Potter TCG Log -------");
                 writer.WriteLine("------------------------------------");
-                writer.WriteLine("Current Time: {0:YYYY MM-dd HH:mm:ss}", DateTime.Now);
+                writer.WriteLine("Current Time: {0:MMM dd yyyy HH:mm:ss}", DateTime.Now);
                 writer.WriteLine();
             }
         }
@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Utils
         {
             using (var writer = new StreamWriter(LogFilePath, append: true))
             {
-                string msg = string.Format("{0:MM-dd HH:mm:ss} -- {1}", DateTime.Now, text);
+                string msg = string.Format("{0:HH:mm:ss} -- {1}", DateTime.Now, text);
                 writer.WriteLine(msg);
             }
 
