@@ -65,6 +65,27 @@
             The serverTimeOffset is serverTimestamp - localTime. Used to approximate the serverTimestamp with help of localTime
             </summary>
         </member>
+        <member name="F:ExitGames.Client.Photon.PeerBase.CommandLogSize">
+            <summary>Size of CommandLog. Default is 0, no logging.</summary>
+        </member>
+        <member name="F:ExitGames.Client.Photon.PeerBase.CommandLog">
+            <summary>Log of sent reliable commands and incoming ACKs.</summary>
+        </member>
+        <member name="F:ExitGames.Client.Photon.PeerBase.InReliableLog">
+            <summary>Log of incoming reliable commands, used to track which commands from the server this client got. Part of the PhotonPeer.CommandLogToString() result.</summary>
+        </member>
+        <member name="M:ExitGames.Client.Photon.PeerBase.CommandLogResize">
+            <summary>Reduce CommandLog to CommandLogSize. Oldest entries get discarded.</summary>
+        </member>
+        <member name="M:ExitGames.Client.Photon.PeerBase.CommandLogInit">
+            <summary>Initializes the CommandLog and InReliableLog according to CommandLogSize. A value of 0 will set both logs to 0.</summary>
+        </member>
+        <member name="M:ExitGames.Client.Photon.PeerBase.CommandLogToString">
+            <summary>Converts the CommandLog into a readable table-like string with summary.</summary>
+        </member>
+        <member name="F:ExitGames.Client.Photon.PeerBase.timeLastSendOutgoing">
+            <summary>Set to timeInt, whenever SendOutgoingCommands actually checks outgoing queues to send them. Must be connected.</summary>
+        </member>
         <member name="M:ExitGames.Client.Photon.PeerBase.Connect(System.String,System.String)">
             <summary>Connect to server and send Init (which inlcudes the appId).</summary>
         </member>
@@ -94,13 +115,13 @@
             <summary> (default=2) Rhttp: minimum number of open connections </summary>
         </member>
         <member name="F:ExitGames.Client.Photon.PeerBase.rhttpMaxConnections">
-            <summary> (default=6) Rhttp: maximum number of open connections, should be > rhttpMinConnections </summary>
+            <summary> (default=6) Rhttp: maximum number of open connections, should be &gt; rhttpMinConnections </summary>
         </member>
         <member name="M:ExitGames.Client.Photon.PeerBase.ExchangeKeysForEncryption">
             <summary>
             Internally uses an operation to exchange encryption keys with the server.
             </summary>
-            <returns></returns>
+            <returns>If the op could be sent.</returns>
         </member>
         <member name="M:ExitGames.Client.Photon.PeerBase.NetworkSimRun">
             <summary>
@@ -390,8 +411,19 @@
         </member>
         <member name="M:ExitGames.Client.Photon.IPhotonSocket.TryParseAddress(System.String,System.String@,System.UInt16@)">
             <summary>
-            Ports of IPv4 Addresses are of type ushort. They are used as int usually though.
+            Separates the given address into address (host name or IP) and port. Port must be included after colon!
             </summary>
+            <remarks>
+            This method expects any address to include a port. The final ':' in addressAndPort has to separate it.
+            IPv6 addresses have multiple colons and <b>must use brackets</b> to separate address from port.
+            
+            Examples:
+                ns.exitgames.com:5058
+                http://[2001:db8:1f70::999:de8:7648:6e8]:100/
+                [2001:db8:1f70::999:de8:7648:6e8]:100
+            See:
+                http://serverfault.com/questions/205793/how-can-one-distinguish-the-host-and-the-port-in-an-ipv6-url
+            </remarks>
         </member>
         <member name="T:ExitGames.Client.Photon.NCommand">
             <summary> Internal class for "commands" - the package in which operations are sent.</summary>
@@ -612,6 +644,14 @@
             Creates new instances of TrafficStats and starts a new timer for those.
             </summary>
         </member>
+        <member name="M:ExitGames.Client.Photon.PhotonPeer.CommandLogToString">
+            <summary>Converts the CommandLog into a readable table-like string with summary.</summary>
+            <remarks>
+            Sent reliable commands begin with SND. Their acknowledgements with ACK.
+            ACKs list the reliable sequence number of the command they acknowledge (not their own).
+            Careful: This method should not be called frequently, as it's time- and memory-consuming to create the log.
+            </remarks>
+        </member>
         <member name="F:ExitGames.Client.Photon.PhotonPeer.peerBase">
             <summary>Implements the message-protocol, based on the underlying network protocol (udp, tcp, http).</summary>
         </member>
@@ -798,7 +838,7 @@
             <summary>
             Channel-less wrapper for OpCustom().
             </summary>
-            <param name="customOpCode">Operations are handled by their byte\-typed code. 
+            <param name="customOpCode">Operations are handled by their byte\-typed code.
             The codes of the "LoadBalancong" application are in the class <see cref="!:ExitGames.Client.Photon.LoadBalancing.OperationCode"/>.</param>
             <param name="customOpParameters">Containing parameters as key\-value pair. The key is byte\-typed, while the value is any serializable datatype.</param>
             <param name="sendReliable">Selects if the operation must be acknowledged or not. If false, the
@@ -929,17 +969,17 @@
             <remarks>In a release build of the lib, this will always be empty.</remarks>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.ByteCountLastOperation">
-            <summary>
-            Gets the size of the last serialized operation call in bytes.
-            The value includes all headers for this single operation but excludes those of UDP, Enet Package Headers and TCP.
-            </summary>
-            <remarks>
-            Get this value immediately after calling an operation. 
-            Example:
+             <summary>
+             Gets the size of the last serialized operation call in bytes.
+             The value includes all headers for this single operation but excludes those of UDP, Enet Package Headers and TCP.
+             </summary>
+             <remarks>
+             Get this value immediately after calling an operation.
+             Example:
             
-            this.loadbalancingClient.OpJoinRoom("myroom");
-            int opjoinByteCount = this.loadbalancingClient.ByteCountLastOperation;
-            </remarks>
+             this.loadbalancingClient.OpJoinRoom("myroom");
+             int opjoinByteCount = this.loadbalancingClient.ByteCountLastOperation;
+             </remarks>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.TrafficStatsEnabled">
             <summary>
@@ -971,6 +1011,13 @@
             <remarks>
             Operations are outgoing traffic, results and events are incoming.
             Includes the per-command header sizes (Udp: Enet Command Header or Tcp: Message Header).
+            </remarks>
+        </member>
+        <member name="P:ExitGames.Client.Photon.PhotonPeer.CommandLogSize">
+            <summary>Size of CommandLog. Default is 0, no logging.</summary>
+            <remarks>
+            A bigger log is better for debugging but uses more memory.
+            Get the log as string via CommandLogToString.
             </remarks>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.QuickResendAttempts">
@@ -1076,6 +1123,11 @@
             </summary>
             <see cref="P:ExitGames.Client.Photon.PhotonPeer.CrcEnabled"/>
         </member>
+        <member name="P:ExitGames.Client.Photon.PhotonPeer.PacketLossByChallenge">
+            <summary>
+            Count of packages dropped due to wrong challenge for this connection.
+            </summary>
+        </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.ResentReliableCommands">
             <summary>
             Count of commands that got repeated (due to local repeat-timing before an ACK was received).
@@ -1146,6 +1198,23 @@
              0 until connected.
              While connected, the value is an approximation of the server's current timestamp.
              </value>
+        </member>
+        <member name="P:ExitGames.Client.Photon.PhotonPeer.ConnectionTime">
+            <summary>The internally used "per connection" time value, which is updated infrequently, when the library executes some connectio-related tasks.</summary>
+            <remarks>
+            This integer value is an infrequently updated value by design.
+            The lib internally sets the value when it sends outgoing commands or reads incoming packages.
+            This is based on SupportClass.GetTickCount() and an initial time value per (server) connection.
+            This value is also used in low level Enet commands as sent time and optional logging.
+            </remarks>
+        </member>
+        <member name="P:ExitGames.Client.Photon.PhotonPeer.LastSendAckTime">
+            <summary>The last ConnectionTime value, when some ACKs were sent out by this client.</summary>
+            <remarks>Only applicable to UDP connections.</remarks>
+        </member>
+        <member name="P:ExitGames.Client.Photon.PhotonPeer.LastSendOutgoingTime">
+            <summary>The last ConnectionTime value, when SendOutgoingCommands actually checked outgoing queues to send them. Must be connected.</summary>
+            <remarks>Available for UDP and TCP connections.</remarks>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.LocalTimeInMilliSeconds">
             <summary>
@@ -1237,7 +1306,7 @@
             This value affects the Packet-content. The resulting UDP packages will have additional
             headers that also count against the package size (so it's bigger than this limit in the end)
             Setting this value while being connected is not allowed and will throw an Exception.
-            Minimum is 520. Huge values won't speed up connections in most cases!
+            Minimum is 576. Huge values won't speed up connections in most cases!
             </remarks>
         </member>
         <member name="P:ExitGames.Client.Photon.PhotonPeer.IsEncryptionAvailable">

@@ -6,13 +6,12 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
 using Random = UnityEngine.Random;
 
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class NetworkManager : MonoBehaviour
+    public class NetworkManager : Photon.MonoBehaviour
     {
         private Player _player1;
         private Player _player2;
@@ -23,7 +22,7 @@ namespace HarryPotterUnity.Game
         public void Start()
         {
             PhotonNetwork.ConnectUsingSettings("v0.2-dev");
-
+            
             _hudManager = FindObjectOfType<HudManager>();
 
             if (!_hudManager)
@@ -31,11 +30,16 @@ namespace HarryPotterUnity.Game
                 Debug.LogError("Network Manager could not find Hud Manager in Scene!");
             }
         }
-        
+
+        public void OnConnectedToMaster()
+        {
+            Debug.Log("Joined Master");
+            PhotonNetwork.JoinLobby();
+        }
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
-         
+            Debug.Log("Joined Lobby");
             _hudManager.InitMainMenu();
         }
 

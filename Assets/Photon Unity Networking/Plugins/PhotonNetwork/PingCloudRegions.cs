@@ -127,9 +127,13 @@ public class PhotonPingManager
             Debug.Log("Using constructor for new PingNativeDynamic()"); // it seems on android, the Activator can't find the default Constructor
             ping = new PingNativeDynamic();
         }
+        else if (PhotonHandler.PingImplementation == typeof(PingMono))
+        {
+            ping = new PingMono();  // using this type explicitly saves it from IL2CPP bytecode stripping
+        }
         else
         {
-            ping = (PhotonPing)Activator.CreateInstance(PhotonHandler.PingImplementation);
+            ping = (PhotonPing) Activator.CreateInstance(PhotonHandler.PingImplementation);
         }
 
         //Debug.Log("Ping is: " + ping + " type " + ping.GetType());

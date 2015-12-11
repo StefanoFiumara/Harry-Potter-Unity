@@ -17,6 +17,7 @@
 using System;
 using ExitGames.Client.Photon;
 
+
 /// <summary>
 /// This enum defines the set of MonoMessages Photon Unity Networking is using as callbacks. Implemented by PunBehaviour.
 /// </summary>
@@ -62,11 +63,12 @@ public enum PhotonNetworkingMessage
     OnLeftRoom,
 
     /// <summary>
-    /// Called after switching to a new MasterClient when the current one leaves. The former already got removed from the player list.
+    /// Called after switching to a new MasterClient when the current one leaves.
     /// </summary>
     /// <remarks>
     /// This is not called when this client enters a room.
-    ///
+    /// The former MasterClient is still in the player list when this method get called.
+    /// 
     /// Example: void OnMasterClientSwitched(PhotonPlayer newMasterClient) { ... }
     /// </remarks>
     OnMasterClientSwitched,
@@ -80,7 +82,7 @@ public enum PhotonNetworkingMessage
     ///
     /// Example: void OnPhotonCreateRoomFailed() { ... }
     ///
-    /// Example: void OnPhotonCreateRoomFailed(object[] codeAndMsg) { // codeAndMsg[0] is int ErrorCode. codeAndMsg[1] is string debug msg.  }
+    /// Example: void OnPhotonCreateRoomFailed(object[] codeAndMsg) { // codeAndMsg[0] is short ErrorCode. codeAndMsg[1] is string debug msg.  }
     /// </remarks>
     OnPhotonCreateRoomFailed,
 
@@ -93,7 +95,7 @@ public enum PhotonNetworkingMessage
     ///
     /// Example: void OnPhotonJoinRoomFailed() { ... }
     ///
-    /// Example: void OnPhotonJoinRoomFailed(object[] codeAndMsg) { // codeAndMsg[0] is int ErrorCode. codeAndMsg[1] is string debug msg.  }
+    /// Example: void OnPhotonJoinRoomFailed(object[] codeAndMsg) { // codeAndMsg[0] is short ErrorCode. codeAndMsg[1] is string debug msg.  }
     /// </remarks>
     OnPhotonJoinRoomFailed,
 
@@ -230,7 +232,7 @@ public enum PhotonNetworkingMessage
     ///
     /// Example: void OnPhotonRandomJoinFailed() { ... }
     ///
-    /// Example: void OnPhotonRandomJoinFailed(object[] codeAndMsg) { // codeAndMsg[0] is int ErrorCode. codeAndMsg[1] is string debug msg.  }
+    /// Example: void OnPhotonRandomJoinFailed(object[] codeAndMsg) { // codeAndMsg[0] is short ErrorCode. codeAndMsg[1] is string debug msg.  }
     /// </remarks>
     OnPhotonRandomJoinFailed,
 
@@ -389,6 +391,16 @@ public enum PhotonNetworkingMessage
     /// </remarks>
     /// <example>void OnOwnershipRequest(object[] viewAndPlayer) {} //</example>
     OnOwnershipRequest,
+    
+    /// <summary>
+    /// Called when the Master Server sent an update for the Lobby Statistics, updating PhotonNetwork.LobbyStatistics.
+    /// </summary>
+    /// <remarks>
+    /// This callback has two preconditions:
+    /// EnableLobbyStatistics must be set to true, before this client connects.
+    /// And the client has to be connected to the Master Server, which is providing the info about lobbies.
+    /// </remarks>
+    OnLobbyStatisticsUpdate,
 }
 
 
@@ -433,24 +445,26 @@ public enum PhotonTargets
     AllBufferedViaServer
 }
 
-/// <summary>
-/// Options of lobby types available. Lobby types might be implemented in certain Photon versions and won't be available on older servers.
-/// </summary>
-public enum LobbyType :byte
-{
-    /// <summary>This lobby is used unless another is defined by game or JoinRandom. Room-lists will be sent and JoinRandomRoom can filter by matching properties.</summary>
-    Default = 0,
-    /// <summary>This lobby type lists rooms like Default but JoinRandom has a parameter for SQL-like "where" clauses for filtering. This allows bigger, less, or and and combinations.</summary>
-    SqlLobby = 2
-}
 
-
-/// <summary>Currently available cloud regions as enum.</summary>
+/// <summary>Currently available <a href="http://doc.photonengine.com/en/pun/current/reference/regions">Photon Cloud regions</a> as enum.</summary>
 /// <remarks>
-/// Must match order in CloudServerRegionNames and CloudServerRegionPrefixes.
-/// To keep things compatible with older ServerSettings, "none" is the final value, not the first.
+/// This is used in PhotonNetwork.ConnectToRegion.
 /// </remarks>
-public enum CloudRegionCode { eu = 0, us = 1, asia = 2, jp = 3, au = 5, none = 4 };
+public enum CloudRegionCode
+{
+    /// <summary>European servers in Amsterdam.</summary>
+    eu = 0,
+    /// <summary>US servers (East Coast).</summary>
+    us = 1,
+    /// <summary>Asian servers in Singapore.</summary>
+    asia = 2,
+    /// <summary>Japanese servers in Tokyo.</summary>
+    jp = 3,
+    /// <summary>Australian servers in Melbourne.</summary>
+    au = 5,
+    /// <summary>No region selectedcs.</summary>
+    none = 4
+};
 
 
 /// <summary>
@@ -469,10 +483,14 @@ public enum CloudRegionFlag
 
 
 /// <summary>Available server (types) for internally used field: server.</summary>
+/// <remarks>Photon uses 3 different roles of servers: Name Server, Master Server and Game Server.</remarks>
 public enum ServerConnection
 {
+    /// <summary>This server is where matchmaking gets done and where clients can get lists of rooms in lobbies.</summary>
     MasterServer,
+    /// <summary>This server handles a number of rooms to execute and relay the messages between players (in a room).</summary>
     GameServer,
+    /// <summary>This server is used initially to get the address (IP) of a Master Server for a specific region. Not used for Photon OnPremise (self hosted).</summary>
     NameServer
 }
 
@@ -604,7 +622,7 @@ public enum DisconnectCause
 
     /// <summary>Connection timed out.
     /// Possible cause: Remote server not running or required ports blocked (due to router or firewall).</summary>
-    [Obsolete("Replaced by clearer: DisconnectByClientTimeout")]
+    [System.Obsolete("Replaced by clearer: DisconnectByClientTimeout")]
     TimeoutDisconnect = StatusCode.TimeoutDisconnect,
 
     /// <summary>Timeout disconnect by client (which decided an ACK was missing for too long).</summary>
@@ -615,7 +633,7 @@ public enum DisconnectCause
     InternalReceiveException = StatusCode.ExceptionOnReceive,
 
     /// <summary>Server actively disconnected this client.</summary>
-    [Obsolete("Replaced by clearer: DisconnectByServerTimeout")]
+    [System.Obsolete("Replaced by clearer: DisconnectByServerTimeout")]
     DisconnectByServer = StatusCode.DisconnectByServer,
 
     /// <summary>Timeout disconnect by server (which decided an ACK was missing for too long).</summary>

@@ -8,16 +8,16 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Net;
-using System.Net.Sockets;
-using System.Security;
-using System.Threading;
-
 #if UNITY_EDITOR || (!UNITY_ANDROID && !UNITY_IPHONE && !UNITY_PS3 && !UNITY_WINRT && !UNITY_WP8)
 
 namespace ExitGames.Client.Photon
 {
+    using System;
+    using System.Net;
+    using System.Net.Sockets;
+    using System.Security;
+    using System.Threading;
+
     /// <summary> Internal class to encapsulate the network i/o functionality for the realtime libary.</summary>
     internal class SocketUdp : IPhotonSocket, IDisposable
     {
@@ -81,7 +81,7 @@ namespace ExitGames.Client.Photon
         {
             if (this.ReportDebugOfLevel(DebugLevel.INFO))
             {
-                this.EnqueueDebugReturn(DebugLevel.INFO, "CSharpSocket.Disconnect()");
+                this.EnqueueDebugReturn(DebugLevel.INFO, "Disconnect()");
             }
 
             this.State = PhotonSocketState.Disconnecting;
@@ -121,8 +121,12 @@ namespace ExitGames.Client.Photon
                 {
                     sock.Send(data, 0, length, SocketFlags.None);
                 }
-                catch
+                catch (Exception e)
                 {
+                    if (this.ReportDebugOfLevel(DebugLevel.ERROR))
+                    {
+                        this.EnqueueDebugReturn(DebugLevel.ERROR, "Cannot send to: " + this.ServerAddress + ". " + e.Message);
+                    }
                     return PhotonSocketError.Exception;
                 }
             }
@@ -144,7 +148,7 @@ namespace ExitGames.Client.Photon
                 {
                     this.sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                    IPAddress ep = GetIpAddress(this.ServerAddress);
+                    IPAddress ep = IPhotonSocket.GetIpAddress(this.ServerAddress);
                     this.sock.Connect(ep, this.ServerPort);
 
                     this.State = PhotonSocketState.Connected;
@@ -154,7 +158,7 @@ namespace ExitGames.Client.Photon
             {
                 if (this.ReportDebugOfLevel(DebugLevel.ERROR))
                 {
-                    this.Listener.DebugReturn(DebugLevel.ERROR, "Connect() failed: " + se.ToString());
+                    this.Listener.DebugReturn(DebugLevel.ERROR, "Connect() to '" + this.ServerAddress + "' failed: " + se.ToString());
                 }
 
                 this.HandleException(StatusCode.SecurityExceptionOnConnect);
@@ -164,7 +168,7 @@ namespace ExitGames.Client.Photon
             {
                 if (this.ReportDebugOfLevel(DebugLevel.ERROR))
                 {
-                    this.Listener.DebugReturn(DebugLevel.ERROR, "Connect() failed: " + se.ToString());
+                    this.Listener.DebugReturn(DebugLevel.ERROR, "Connect() to '" + this.ServerAddress + "' failed: " + se.ToString());
                 }
 
                 this.HandleException(StatusCode.ExceptionOnConnect);
@@ -194,7 +198,7 @@ namespace ExitGames.Client.Photon
                     {
                         if (this.ReportDebugOfLevel(DebugLevel.ERROR))
                         {
-                            this.EnqueueDebugReturn(DebugLevel.ERROR, "Receive issue. State: " + this.State + " Exception: " + e);
+                            this.EnqueueDebugReturn(DebugLevel.ERROR, "Receive issue. State: " + this.State + ". Server: '" + this.ServerAddress + "' Exception: " + e);
                         }
 
                         this.HandleException(StatusCode.ExceptionOnReceive);

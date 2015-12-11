@@ -13,7 +13,7 @@ namespace ExitGames.Client.Photon.Chat
     public interface IChatClientListener
     {
         /// <summary>
-        /// All debug output of the library will be reported through this method. Print it or put it in a 
+        /// All debug output of the library will be reported through this method. Print it or put it in a
         /// buffer to use it on-screen.
         /// </remarks>
         /// <param name="level">DebugLevel (severity) of the message.</param>

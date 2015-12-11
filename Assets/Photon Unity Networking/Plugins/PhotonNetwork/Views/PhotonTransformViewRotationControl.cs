@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class PhotonTransformViewRotationControl 
 {
@@ -34,6 +35,7 @@ public class PhotonTransformViewRotationControl
         if( stream.isWriting == true )
         {
             stream.SendNext( currentRotation );
+            m_NetworkRotation = currentRotation;
         }
         else
         {

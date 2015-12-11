@@ -3,6 +3,7 @@ using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
+using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -224,7 +225,7 @@ namespace HarryPotterUnity.Game
         {
             if (!Cards.Contains(card))
             {
-                Debug.Log("Card not found in CardCollection");
+                HpLogger.Write("Card not found in CardCollection");
                 return card.transform.localPosition;
             }
 

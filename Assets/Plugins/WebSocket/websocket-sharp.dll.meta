@@ -1,7 +1,9 @@
 fileFormatVersion: 2
-guid: b1ae48a0099720f48b5a3fff48f9b05e
-timeCreated: 1434977927
-licenseType: Store
+guid: 748eb70bc0d7515498ef73fed155520a
+MonoAssemblyImporter:
+  serializedVersion: 1
+  iconMap: {}
+  executionOrder: {}
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -43,9 +45,6 @@ PluginImporter:
         CPU: AnyCPU
         DontProcess: False
         PlaceholderPath: 
-    WebGL:
-      enabled: 0
-      settings: {}
     Win:
       enabled: 0
       settings:
@@ -67,5 +66,3 @@ PluginImporter:
         CompileFlags: 
         FrameworkDependencies: 
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 

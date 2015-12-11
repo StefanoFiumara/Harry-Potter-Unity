@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if UNITY_WEBGL
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -8,7 +9,6 @@ using System.Collections;
 using UnityEngine;
 using System.Runtime.InteropServices;
 
-#if UNITY_WEBGL
 public class WebSocket
 {
 	private Uri mUrl;

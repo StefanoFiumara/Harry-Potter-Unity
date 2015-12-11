@@ -1,6 +1,7 @@
-﻿using System;
+﻿using UnityEngine;
+using System.Collections;
 
-[Serializable]
+[System.Serializable]
 public class PhotonTransformViewRotationModel 
 {
     public enum InterpolateOptions

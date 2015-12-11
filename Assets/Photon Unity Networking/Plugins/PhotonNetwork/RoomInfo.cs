@@ -12,6 +12,7 @@
 using System;
 using ExitGames.Client.Photon;
 
+
 /// <summary>
 /// A simplified room with just the info required to list and join, used for the room listing in the lobby.
 /// The properties are not settable (open, maxPlayers, etc).
@@ -51,6 +52,7 @@ public class RoomInfo
 
     /// <summary>Read-only "cache" of custom properties of a room. Set via Room.SetCustomProperties (not available for RoomInfo class!).</summary>
     /// <remarks>All keys are string-typed and the values depend on the game/application.</remarks>
+    /// <see cref="Room.SetCustomProperties"/>
     public Hashtable customProperties
     {
         get
@@ -138,7 +140,7 @@ public class RoomInfo
     /// <param name="properties"></param>
     protected internal RoomInfo(string roomName, Hashtable properties)
     {
-        this.CacheProperties(properties);
+        this.InternalCacheProperties(properties);
 
         this.nameField = roomName;
     }
@@ -177,7 +179,7 @@ public class RoomInfo
 
     /// <summary>Copies "well known" properties to fields (isVisible, etc) and caches the custom properties (string-keys only) in a local hashtable.</summary>
     /// <param name="propertiesToCache">New or updated properties to store in this RoomInfo.</param>
-    protected internal void CacheProperties(Hashtable propertiesToCache)
+    protected internal void InternalCacheProperties(Hashtable propertiesToCache)
     {
         if (propertiesToCache == null || propertiesToCache.Count == 0 || this.customPropertiesField.Equals(propertiesToCache))
         {
@@ -187,9 +189,9 @@ public class RoomInfo
         // check of this game was removed from the list. in that case, we don't
         // need to read any further properties
         // list updates will remove this game from the game listing
-        if (propertiesToCache.ContainsKey(GameProperties.Removed))
+        if (propertiesToCache.ContainsKey(GamePropertyKey.Removed))
         {
-            this.removedFromList = (Boolean)propertiesToCache[GameProperties.Removed];
+            this.removedFromList = (Boolean)propertiesToCache[GamePropertyKey.Removed];
             if (this.removedFromList)
             {
                 return;
@@ -197,43 +199,43 @@ public class RoomInfo
         }
 
         // fetch the "well known" properties of the room, if available
-        if (propertiesToCache.ContainsKey(GameProperties.MaxPlayers))
+        if (propertiesToCache.ContainsKey(GamePropertyKey.MaxPlayers))
         {
-            this.maxPlayersField = (byte)propertiesToCache[GameProperties.MaxPlayers];
+            this.maxPlayersField = (byte)propertiesToCache[GamePropertyKey.MaxPlayers];
         }
 
-        if (propertiesToCache.ContainsKey(GameProperties.IsOpen))
+        if (propertiesToCache.ContainsKey(GamePropertyKey.IsOpen))
         {
-            this.openField = (bool)propertiesToCache[GameProperties.IsOpen];
+            this.openField = (bool)propertiesToCache[GamePropertyKey.IsOpen];
         }
 
-        if (propertiesToCache.ContainsKey(GameProperties.IsVisible))
+        if (propertiesToCache.ContainsKey(GamePropertyKey.IsVisible))
         {
-            this.visibleField = (bool)propertiesToCache[GameProperties.IsVisible];
+            this.visibleField = (bool)propertiesToCache[GamePropertyKey.IsVisible];
         }
 
-        if (propertiesToCache.ContainsKey(GameProperties.PlayerCount))
+        if (propertiesToCache.ContainsKey(GamePropertyKey.PlayerCount))
         {
-            this.playerCount = (int)((byte)propertiesToCache[GameProperties.PlayerCount]);
+            this.playerCount = (int)((byte)propertiesToCache[GamePropertyKey.PlayerCount]);
         }
 
-        if (propertiesToCache.ContainsKey(GameProperties.CleanupCacheOnLeave))
+        if (propertiesToCache.ContainsKey(GamePropertyKey.CleanupCacheOnLeave))
         {
-            this.autoCleanUpField = (bool)propertiesToCache[GameProperties.CleanupCacheOnLeave];
+            this.autoCleanUpField = (bool)propertiesToCache[GamePropertyKey.CleanupCacheOnLeave];
         }
 
-        if (propertiesToCache.ContainsKey(GameProperties.MasterClientId))
+        if (propertiesToCache.ContainsKey(GamePropertyKey.MasterClientId))
         {
             this.serverSideMasterClient = true;
             bool isUpdate = this.masterClientIdField != 0;
-            this.masterClientIdField = (int) propertiesToCache[GameProperties.MasterClientId];
+            this.masterClientIdField = (int) propertiesToCache[GamePropertyKey.MasterClientId];
             if (isUpdate)
             {
                 PhotonNetwork.networkingPeer.UpdateMasterClient();
             }
         }
 
-        //if (propertiesToCache.ContainsKey(GameProperties.PropsListedInLobby))
+        //if (propertiesToCache.ContainsKey(GamePropertyKey.PropsListedInLobby))
         //{
         //    // could be cached but isn't useful
         //}

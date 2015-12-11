@@ -1,7 +1,6 @@
 fileFormatVersion: 2
-guid: 82dc7a91018a0bb48a55777898056842
-timeCreated: 1434977926
-licenseType: Store
+guid: b083984ccc3e389469dafb028fc4099b
+DefaultImporter:
 PluginImporter:
   serializedVersion: 1
   iconMap: {}
@@ -64,5 +63,3 @@ PluginImporter:
         CompileFlags: 
         FrameworkDependencies: 
   userData: 
-  assetBundleName: 
-  assetBundleVariant: 

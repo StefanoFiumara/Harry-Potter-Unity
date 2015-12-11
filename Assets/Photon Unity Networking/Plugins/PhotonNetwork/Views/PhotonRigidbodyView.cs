@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// This class helps you to synchronize the velocities of a physics RigidBody.

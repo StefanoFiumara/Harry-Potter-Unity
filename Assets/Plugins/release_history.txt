@@ -1,14 +1,45 @@
 * release_history.txt
-* Release history for the DotNet Photon Client Library (DotNet / Unity3D / Windows 8 RT / Windows Phone 8 / PlayStation Mobile)
-(C) 2014 Exit Games GmbH, http://www.exitgames.com
+* Release history for the DotNet Photon Client Library (DotNet / Unity / Windows Store / Windows Phone / Xamarin)
+(C) 2015 Exit Games GmbH, http://www.photonengine.com
 
 Questions? Visit:
-https://www.exitgames.com
-http://doc.exitgames.com
-http://forum.exitgames.com
+https://www.photonengine.com
+https://doc.photonengine.com
+http://forum.photonengine.com
 
 
-*** Version 4.0.0.9 (2015 - rev)
+*** Version 4.0.0.12 (3. November 2015 - rev3112)
+    Added: Suppor for IPv6. Note: IPv6 does not work in Unity yet. It has issues with IPv6. (Case 740910) 
+    Note: Host name resolution will prefer IPv4 over IPv6, if both IPs should be available. IPv6 Addresses must use brackets! Example: [::1]:5055. This separates the port from the address.
+    Added: Error logging when Addresses can not be resolved to IPs.
+    Changed: LoadBalancingClient OpJoinOrCreateRoom() no longer allows you to re-join a room. Simply remove the ActorNumber from the parameters. To re-join, use OpJoin with actorNumber (Player.ID that was assigned in the room).
+    Added: Support for PS4 in Unity LoadBalancing SDK. Note: The demos are not all updated with controller support, as we use the old UI, still. To test export, use the Particle Demo.
+
+
+*** Version 4.0.0.11 (28. October 2015 - rev3093)
+    Changed: Sending a generic Dictionary (with specific types) will now throw an Exception, if any key or value is null. This limitation does not include Dictionaries which use object as type. Those Exceptions are one of the few, which are not catched and turned into a debug message. Catch them by wrapping Operation calls, where needed (OpRaiseEvent()).
+    Changed: TrafficStatsGameLevel public properties are now settable. This enables you to reset individual values to (e.g.) show "LongestDeltaBetweenSending of the past second".
+    Added: CommandLog debugging option. This can be used to get a list of sent reliable commands and their ACKs (from the server). Default is 0 size ("off").
+    Added: CommandLogSize and CommandLogToString() to PhotonPeer. This is part of a LoadBalancingClient.loadBalancingPeer.
+    Added: Several PhotonPeer values to analyze connections: ConnectionTime, LastSendAckTime and LastSendOutgoingTime. PacketLossByChallenge is probably a tempoary addition to check if we have to drop corrupted packages due to bad "challenge" value.
+    Added: Log for incoming reliable commands. The most recent 200 entries will be logged with the CommandLogToString(). This is probably temporary.
+    Changed: Timing for resending reliable commands in RUDP. The peer will check the sent-queue more frequently now, no matter at what time some random command would have to be repeated. Repeats should be more timely, based on their dynamic resend-timing.
+    Changed: PhotonPeer.MaximumTransferUnit minimum is now 576 (was 520, which was lower than on the server).
+    Internal: Channels in the EnetPeer are now stored in an array, so we can replace some foreach-loops with for-loops.
+LoadBalancing (Realtime and Turnbased API)
+    Added: LeaveLobby handling in OnOperationResponse(), which sets the client's state correctly.
+    Changed: Order of execution for Ev Join. If user is known (inactive user rejoins), the player's props are read. The actor list is used, if available.
+    Changed: RoomOptions to use properties with backup-fields to avoid issues in Unity which has issues with Object Initializer (curly brackets).
+    Changed: JoinMode 2 is now "JoinOrRejoin". Was: "Rejoin".
+    Added: ErrorCode constant AuthenticationTicketExpired.
+    Internal: OpJoinRoom, OpCreateRoom and OpJoinRandomRoom no longer use a (growing) list of properties. Instead, classes were created to "sum up" their parameters. The api for games didn't change.
+    Internal: Related to the refactoring of Join/Create, the LoadBalancingClient now creates a Room instance when the client arrived on the GameServer (before, it got created in the initial "create" call).
+Chat
+    Added: More sanity checks on operations (empty userId or secret, max friends).
+    Added: Special debug logging when the server returns an error for "Operation Unknown". In this case, it's highly likely that you don't use a Chat AppId.
+    Added: More helpful error logging.
+
+*** Version 4.0.0.10 (14. July 2015 - rev2988)
     Removed: LitePeer class and complete "Lite" namespace. It's highly recommended to use the LoadBalancing API (LoadBalancingClient, etc). The (few) operations that were defined in Lite are no longer required really.
     Refactored: Some "base" enumerations that were provided by the Lite peer. They are now in LoadBalancingPeer.
     Added: support for RoomOptions.Plugins. Which we need now since we support multiple plugins per plugin dll - for testing purposes for instance.
@@ -25,10 +56,11 @@ http://forum.exitgames.com
     Changed: SocketUdp and SocketTcp now implement IDisposable, which seems to help with infrequent freezes in the Unity Editor.
     Added: PhotonPeer.QuickResendAttempts. Sets how many resend attempts for a reliable command will be done in quick succession (after RTT+4*Variance), before the time between repeats will be increased. Use with care and with low values.
     Added: IP/Hostname to logged exceptions when Connect fails. This is easier to support (e.g. DNS lookup fails).
+    Fixed: Library for PUN+ export to WebGL. Originally, we forced UDP as protocol for PUN+ export, as the native sockets library doesn't support TCP. However, WebGL export introduced a new use case.
+    Added: LoadBalancingClient.EnableLobbyStatistics and .LobbyStatistics. They provide an overview which lobbies your game uses and how busy they are.
+    Fixed: The LB Demo should set CustomProperties instead of directly setting (any) properties.
+    Fixed: SocketWebTcp is completely empty, unless WEBSOCKET is defined. Before the file still contained the "using" part of the class.
 LoadBalancing (Realtime and Turnbased API)
-    Added: GamePropertyKey.MasterClientId (248) and ParameterCode.MasterClientId (203)
-    Added: ParameterCode.ExpectedValues (231)
-    Added: ParameterCode.SuppressRoomEvents (237)
     Updated: Description for IsConnectedAndReady.
     Changed: NameServerAddress to return a fitting address depending on protocol (including WebSocket but not yet RHTTP).
     Updated: The only name server host is now "ns.exitgames.com", which gets turned into a proper address by protocol.
@@ -36,12 +68,23 @@ LoadBalancing (Realtime and Turnbased API)
     Changed: LoadBalancingClient.UserId no longer directly stores the id but puts it into AuthValues. This means, the UserId could also be set via setting AuthValues.
     Changed: The API of AuthenticationValues. There is now the UserId and AddAuthParameter() replaces the less general SetAuthParameters() (which only set specific key/values).
     Changed: PlayerName gets renamed to NickName, so PhotonPlayer.Name becomes .NickName and LoadBalancingClient.Name becomes .NickName, too. The old naming is marked as obsolete.
+    Changed: Particle Demo now connects to the Cloud by default (because it's easier to setup and try). You can define your own Master Server (Photon OnPremise) of course.
+    Added: GamePropertyKey.MasterClientId (248) and ParameterCode.MasterClientId (203)
+    Added: ParameterCode.ExpectedValues (231)
+    Added: ParameterCode.SuppressRoomEvents (237)
 Chat API:
-    Added: Unity/WebGL support (merged from PUN)
-    Added(Breaking): IChatClientListener.DebugReturn; Photon lib and chat client log via this method (no logging to console by default)
+    Added: A Unity 4.6 demo with uGUI. It's missing a few features but should give you a good start to making your own.
+    Added: Unity/WebGL support (merged from PUN).
+    Added: Breaking! IChatClientListener.DebugReturn(). Photon lib and chat client log via this method (no logging to console by default).
     Changed: ChatClient.CustomAuthenticationValues is now .AuthValues. You can use those values to identify a user, even if you don't setup an external, custom authentication service.
     Changed: ChatClient.UserId no longer directly stores the id but puts it into AuthValues. This means, the UserId could also be set via setting AuthValues.
     Changed: The API of AuthenticationValues. There is now the UserId and AddAuthParameter() replaces the less general SetAuthParameters() (which only set specific key/values).
+    Note: All users should have a UserId. You can set chatClient.UserId before you connect, or you can set the AuthenticationValues in Connect(..., authValues) to set a UserId.
+    Added: ChatChannel.ToStringMessages(), which gets all messages in a single string, line by line. The format is "Sender:Message".
+    Added: ChatClient.TryGetChannel() to find a channel only by name, no matter if public or private.
+Photon Unity SDK
+    Changed: Organization of APIs and Assemblies in SDK. Now you can copy the content of folder "PhotonAssets" into your project's Assets folder and you have all APIs.
+    Added: PhotonAssets-U5 folder which includes only the Windows Universal DLL.
 
 *** Version 4.0.0.8 (14. January 2015 - rev2765)
     Fixed: Serialization of custom types with nested Serialize-calls. In this case, re-using a specific memory stream breaks it.
@@ -252,7 +295,7 @@ LoadBalancing API
     Internal: SupportClass.GetMethods() now returns type.GetRuntimeMethods(), filtered by attribute (if at all needed). This is used by Photon Unity Networking (PUN) internally. It also returns inherited methods now, not only Declared.
 
 *** Version 3.2.1.0 (24.05.2013 - rev2112)
-    Added: Feature "Custom Authentication" which lets you authorize players/users in the Photon Cloud with an external account/user service. More on that online: http://doc.exitgames.com/photon-cloud/CustomAuthentication
+    Added: Feature "Custom Authentication" which lets you authorize players/users in the Photon Cloud with an external account/user service. More on that online: http://doc.photonengine.com/photon-cloud/CustomAuthentication
     Added: LoadBalancing API Feature "Friend Finding" which enables a client to find friends in rooms by userId. If an external service provides a userID per player and a friend list, this can be used to find a friend's room (game) and join it (unless closed or full).
     Added: CustomAuthenticationType enum to enable differnt types of custom auth later on (only one actually useful value so far).
     Added: Class AuthenticationValues as container for authentication values.

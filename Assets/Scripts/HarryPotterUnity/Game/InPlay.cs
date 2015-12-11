@@ -155,7 +155,7 @@ namespace HarryPotterUnity.Game
                 case Type.Adventure:
                     break;
                 default:
-                    Debug.Log("Warning: GetTargetPositionForCard could not identify cardType");
+                    HpLogger.Write("Warning: GetTargetPositionForCard could not identify cardType");
                     break;
             }
 

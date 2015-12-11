@@ -8,10 +8,12 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
-using System.Collections.Generic;
-using System.Reflection;
+using System;
 using UnityEngine;
-using MonoBehaviour = Photon.MonoBehaviour;
+using System.Reflection;
+using System.Collections.Generic;
+using ExitGames.Client.Photon;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -50,7 +52,7 @@ public enum OwnershipOption
 /// </summary>
 /// \ingroup publicApi
 [AddComponentMenu("Photon Networking/Photon View &v")]
-public class PhotonView : MonoBehaviour
+public class PhotonView : Photon.MonoBehaviour
 {
     #if UNITY_EDITOR
     [ContextMenu("Open PUN Wizard")]
@@ -102,7 +104,7 @@ public class PhotonView : MonoBehaviour
         set { this.instantiationDataField = value; }
     }
 
-    private object[] instantiationDataField;
+    internal object[] instantiationDataField;
 
     /// <summary>
     /// For internal use only, don't use
@@ -133,12 +135,13 @@ public class PhotonView : MonoBehaviour
     public List<Component> ObservedComponents;
     Dictionary<Component, MethodInfo> m_OnSerializeMethodInfos = new Dictionary<Component, MethodInfo>();
 
-    //These fields are only used in the CustomEditor for this script and would trigger a
-    //"this variable is never used" warning, which I am suppressing here
-#pragma warning disable 0414
+#if UNITY_EDITOR
+    // Suppressing compiler warning "this variable is never used". Only used in the CustomEditor, only in Editor
+    #pragma warning disable 0414
     [SerializeField]
     bool ObservedComponentsFoldoutOpen = true;
-#pragma warning restore 0414
+    #pragma warning restore 0414
+#endif
 
     [SerializeField]
     private int viewIdField = 0;
@@ -196,7 +199,10 @@ public class PhotonView : MonoBehaviour
     /// </remarks>
     public PhotonPlayer owner
     {
-        get { return PhotonPlayer.Find(this.ownerId); }
+        get
+        {
+            return PhotonPlayer.Find(this.ownerId);
+        }
     }
 
     public int OwnerActorNr
@@ -235,7 +241,12 @@ public class PhotonView : MonoBehaviour
     [SerializeField]
     protected internal bool isRuntimeInstantiated;
 
-    protected internal bool destroyedByPhotonNetworkOrQuit;
+    protected internal bool removedFromLocalViewList;
+
+    internal MonoBehaviour[] RpcMonoBehaviours;
+    private MethodInfo OnSerializeMethodInfo;
+
+    private bool failedToFindOnSerialize;
 
     /// <summary>Called by Unity on start of the application and does a setup the PhotonView.</summary>
     protected internal void Awake()
@@ -287,44 +298,23 @@ public class PhotonView : MonoBehaviour
         this.ownerId = newOwnerId;  // immediately switch ownership locally, to avoid more updates sent from this client.
     }
 
-
-    protected internal void OnApplicationQuit()
-    {
-        destroyedByPhotonNetworkOrQuit = true;	// on stop-playing its ok Destroy is being called directly (not by PN.Destroy())
-    }
-
     protected internal void OnDestroy()
     {
-        if (!this.destroyedByPhotonNetworkOrQuit)
+        if (!this.removedFromLocalViewList)
         {
-            PhotonNetwork.networkingPeer.LocalCleanPhotonView(this);
-        }
+            bool wasInList = PhotonNetwork.networkingPeer.LocalCleanPhotonView(this);
+            bool loading = false;
+            
+            #if !UNITY_5 || UNITY_5_0 || UNITY_5_1
+            loading = Application.isLoadingLevel;
+            #endif
 
-        if (!this.destroyedByPhotonNetworkOrQuit && !Application.isLoadingLevel)
-        {
-            if (this.instantiationId > 0)
+            if (wasInList && !loading && this.instantiationId > 0 && !PhotonHandler.AppQuits && PhotonNetwork.logLevel >= PhotonLogLevel.Informational)
             {
-                // if this viewID was not manually assigned (and we're not shutting down or loading a level), you should use PhotonNetwork.Destroy() to get rid of GOs with PhotonViews
-                Debug.LogError("OnDestroy() seems to be called without PhotonNetwork.Destroy()?! GameObject: " + this.gameObject + " Application.isLoadingLevel: " + Application.isLoadingLevel);
-            }
-            else
-            {
-                // this seems to be a manually instantiated PV. if it's local, we could warn if the ID is not in the allocated-list
-                if (this.viewID <= 0)
-                {
-                    Debug.LogWarning(string.Format("OnDestroy manually allocated PhotonView {0}. The viewID is 0. Was it ever (manually) set?", this));
-                }
-                else if (this.isMine && !PhotonNetwork.manuallyAllocatedViewIds.Contains(this.viewID))
-                {
-                    Debug.LogWarning(string.Format("OnDestroy manually allocated PhotonView {0}. The viewID is local (isMine) but not in manuallyAllocatedViewIds list. Use UnAllocateViewID() after you destroyed the PV.", this));
-                }
+                Debug.Log("PUN-instantiated '" + this.gameObject.name + "' got destroyed by engine. This is OK when loading levels. Otherwise use: PhotonNetwork.Destroy().");
             }
         }
     }
-
-    private MethodInfo OnSerializeMethodInfo;
-
-    private bool failedToFindOnSerialize;
 
     public void SerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -360,7 +350,7 @@ public class PhotonView : MonoBehaviour
         }
 
         // Use incoming data according to observed type
-        if (component is UnityEngine.MonoBehaviour)
+        if (component is MonoBehaviour)
         {
             ExecuteComponentOnSerialize(component, stream, info);
         }
@@ -439,7 +429,7 @@ public class PhotonView : MonoBehaviour
             return;
         }
 
-        if (component is UnityEngine.MonoBehaviour)
+        if (component is MonoBehaviour)
         {
             ExecuteComponentOnSerialize(component, stream, info);
         }
@@ -518,7 +508,7 @@ public class PhotonView : MonoBehaviour
             if (this.m_OnSerializeMethodInfos.ContainsKey(component) == false)
             {
                 MethodInfo newMethod = null;
-                bool foundMethod = NetworkingPeer.GetMethod(component as UnityEngine.MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out newMethod);
+                bool foundMethod = NetworkingPeer.GetMethod(component as MonoBehaviour, PhotonNetworkingMessage.OnPhotonSerializeView.ToString(), out newMethod);
 
                 if (foundMethod == false)
                 {
@@ -537,21 +527,19 @@ public class PhotonView : MonoBehaviour
     }
 
 
-    internal UnityEngine.MonoBehaviour[] RpcMonoBehaviours;
-
     /// <summary>
     /// Can be used to refesh the list of MonoBehaviours on this GameObject while PhotonNetwork.UseRpcMonoBehaviourCache is true.
     /// </summary>
     /// <remarks>
     /// Set PhotonNetwork.UseRpcMonoBehaviourCache to true to enable the caching.
     /// Uses this.GetComponents<MonoBehaviour>() to get a list of MonoBehaviours to call RPCs on (potentially).
-    /// 
-    /// While PhotonNetwork.UseRpcMonoBehaviourCache is false, this method has no effect, 
+    ///
+    /// While PhotonNetwork.UseRpcMonoBehaviourCache is false, this method has no effect,
     /// because the list is refreshed when a RPC gets called.
     /// </remarks>
     public void RefreshRpcMonoBehaviourCache()
     {
-        this.RpcMonoBehaviours = this.GetComponents<UnityEngine.MonoBehaviour>();
+        this.RpcMonoBehaviours = this.GetComponents<MonoBehaviour>();
     }
 
 
@@ -577,7 +565,7 @@ public class PhotonView : MonoBehaviour
     /// <param name="parameters">The parameters that the RPC method has (must fit this call!).</param>
     public void RPC(string methodName, PhotonTargets target, params object[] parameters)
     {
-        RpcSecure(methodName, target, false, parameters);
+        PhotonNetwork.RPC(this, methodName, target, false, parameters);
     }
 
     /// <summary>

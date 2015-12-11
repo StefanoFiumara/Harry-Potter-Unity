@@ -36,7 +36,7 @@ public class ServerSettingsInspector : Editor
                 else
                 {
                     CloudRegionFlag valRegions = (CloudRegionFlag)EditorGUILayout.EnumMaskField("Enabled Regions", settings.EnabledRegions);
-                    
+
                     if (valRegions != settings.EnabledRegions)
                     {
                         settings.EnabledRegions = valRegions;
@@ -120,6 +120,22 @@ public class ServerSettingsInspector : Editor
                 DrawDefaultInspector();
                 break;
         }
+
+        EditorGUI.indentLevel = 0;
+        EditorGUILayout.LabelField("Client Settings");
+        EditorGUI.indentLevel = 1;
+        //EditorGUILayout.LabelField("game version");
+        settings.JoinLobby = EditorGUILayout.Toggle("Auto-Join Lobby", settings.JoinLobby);
+        settings.EnableLobbyStatistics = EditorGUILayout.Toggle("Enable Lobby Stats", settings.EnableLobbyStatistics);
+        //EditorGUILayout.LabelField("automaticallySyncScene");
+        //EditorGUILayout.LabelField("autoCleanUpPlayerObjects");
+        //EditorGUILayout.LabelField("log level");
+        //EditorGUILayout.LabelField("lobby stats");
+        //EditorGUILayout.LabelField("sendrate / serialize rate");
+        //EditorGUILayout.LabelField("quick resends");
+        //EditorGUILayout.LabelField("max resends");
+        //EditorGUILayout.LabelField("enable crc checking");
+
 
         if (PhotonEditor.CheckPunPlus())
         {

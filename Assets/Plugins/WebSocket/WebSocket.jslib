@@ -10,16 +10,21 @@ SocketCreate: function(url)
 		error: null,
 		messages: []
 	}
+	socket.socket.binaryType = 'arraybuffer';
 	socket.socket.onmessage = function (e) {
-		// Todo: handle other data types?
-		if (e.data instanceof Blob)
+//		if (e.data instanceof Blob)
+//		{
+//			var reader = new FileReader();
+//			reader.addEventListener("loadend", function() {
+//				var array = new Uint8Array(reader.result);
+//				socket.messages.push(array);
+//			});
+//			reader.readAsArrayBuffer(e.data);
+//		} 
+		if (e.data instanceof ArrayBuffer)
 		{
-			var reader = new FileReader();
-			reader.addEventListener("loadend", function() {
-				var array = new Uint8Array(reader.result);
-				socket.messages.push(array);
-			});
-			reader.readAsArrayBuffer(e.data);
+			var array = new Uint8Array(e.data);
+			socket.messages.push(array);
 		}
 	};
 	socket.socket.onclose = function (e) {

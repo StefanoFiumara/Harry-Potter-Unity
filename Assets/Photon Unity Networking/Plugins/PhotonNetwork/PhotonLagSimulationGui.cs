@@ -7,6 +7,7 @@
 using ExitGames.Client.Photon;
 using UnityEngine;
 
+
 /// <summary>
 /// This MonoBehaviour is a basic GUI for the Photon client's network-simulation feature.
 /// It can modify lag (fixed delay), jitter (random lag) and packet loss.
