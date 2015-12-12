@@ -18,10 +18,12 @@ namespace HarryPotterUnity.Game
         private Player _player2;
 
         private HudManager _hudManager;
-        
+
+        private const string LOBBY_VERSION = "v0.2-dev";
+
         public void Start()
         {
-            PhotonNetwork.ConnectUsingSettings("v0.2-dev");
+            PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
             
             _hudManager = FindObjectOfType<HudManager>();
 
@@ -38,8 +40,8 @@ namespace HarryPotterUnity.Game
         {
             Log.Write("Connected to Photon Master Server");
 
-            Log.Write("Joining Default Lobby");
-            PhotonNetwork.JoinLobby();
+            Log.Write(string.Format("Joining {0} Lobby", LOBBY_VERSION));
+            PhotonNetwork.JoinLobby(new TypedLobby(LOBBY_VERSION, LobbyType.Default));
         }
 
         [UsedImplicitly]
