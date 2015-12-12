@@ -13,7 +13,7 @@ namespace HarryPotterExtensions
     {
         private struct CreateCardRequest
         {
-            public string Cardname { get; set; }
+            public string CardName { get; set; }
             public Texture2D CardGraphic { get; set; }
 
             public Type CardType { get; set; }
@@ -22,9 +22,14 @@ namespace HarryPotterExtensions
             public bool AddLessonRequirement { get; set; }
             public LessonTypes LessonType { get; set; }
             public int LessonAmtRequired { get; set; }
-
-            public bool AddScript { get; set; }
-            public string ScriptName { get; set; }
+            
+            public bool IsValid
+            {
+                get
+                {
+                    return CardGraphic != null && !string.IsNullOrEmpty(CardName);
+                }
+            }
         }
         
 
@@ -40,44 +45,40 @@ namespace HarryPotterExtensions
         private static void CreateCard(CreateCardRequest request)
         {
             GameObject card = InstantiateCardTemplate();
+            card.transform.name = request.CardName;
 
             Material newMaterial = CreateNewMaterial(request);
             card.transform.FindChild("Front").gameObject.GetComponent<Renderer>().material = newMaterial;
 
             if (request.AddLessonRequirement)
             {
-                var requirement = new LessonRequirement()
-                {
-                    AmountRequired = request.LessonAmtRequired,
-                    LessonType = request.LessonType
-                };
-
                 var newComponent = card.AddComponent<LessonRequirement>();
-                newComponent.AmountRequired = requirement.AmountRequired;
-                newComponent.LessonType = requirement.LessonType;
-            }
-
-            //TODO: maybe don't need this...
-            if (request.AddScript)
-            {
-                
+                newComponent.AmountRequired = request.LessonAmtRequired;
+                newComponent.LessonType = request.LessonType;
             }
         }
 
         private static Material CreateNewMaterial(CreateCardRequest request)
         {
+            string newMaterialAssetPath = string.Format("Assets/Materials/{0}s/{1}/{2}Mat.mat",
+                request.CardType,
+                request.Classification,
+                request.CardName);
+
             var material = new Material(Shader.Find("Diffuse"))
             {
                 mainTexture = request.CardGraphic
             };
-
-            string newMaterialAssetPath = string.Format("Assets/Materials/{0}s/{1}/{2}Mat.mat", 
-                request.CardType, 
-                request.Classification,
-                request.Cardname);
             
-            //TODO: Check if asset exists
-            AssetDatabase.CreateAsset(material, newMaterialAssetPath);
+            if (AssetDatabase.GetAllAssetPaths().Contains(newMaterialAssetPath) == false)
+            {
+                AssetDatabase.CreateAsset(material, newMaterialAssetPath);
+            }
+            else
+            {
+                Debug.LogError(string.Format("Asset at {0} already exists!", newMaterialAssetPath));
+                return null;
+            }
             
             return material;
         }
@@ -102,46 +103,39 @@ namespace HarryPotterExtensions
             ChooseCardTexture();
             ChooseCardProperties();
             ChooseAddLessonRequirement();
-            ChooseAddCustomScript();
-
+            
             GUILayout.Space(10);
 
             if (GUILayout.Button("Create Card"))
             {
-                //TODO: Validate Input
-                CreateCard(_cardRequest);
-                Close();
+                if (_cardRequest.IsValid)
+                {
+                    CreateCard(_cardRequest);
+                    Close();
+                }
+                else
+                {
+                    Debug.LogError("Card Request is invalid!");
+                }
             }
 
             GUILayout.EndVertical();
         }
-
-        private void ChooseAddCustomScript()
-        {
-            GUILayout.Space(10);
-
-            _cardRequest.AddScript = GUILayout.Toggle(_cardRequest.AddScript, "Add Custom Script");
-            if (!_cardRequest.AddScript) return;
-
-            GUILayout.BeginHorizontal();
-            GUILayout.Label("Script Name: ");
-            _cardRequest.ScriptName = EditorGUILayout.TextField(_cardRequest.ScriptName);
-            GUILayout.EndHorizontal();
-        }
-
+        
         private void ChooseAddLessonRequirement()
         {
             GUILayout.Space(10);
 
-            _cardRequest.AddLessonRequirement = GUILayout.Toggle(_cardRequest.AddLessonRequirement, "Add Lesson Requirement");
-            if (!_cardRequest.AddLessonRequirement) return;
-
+            _cardRequest.AddLessonRequirement = EditorGUILayout.BeginToggleGroup("Add Lesson Requirement", _cardRequest.AddLessonRequirement);
+            
             _cardRequest.LessonType = (LessonTypes) EditorGUILayout.EnumPopup("Lesson Type: ", _cardRequest.LessonType);
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Amount Required: ");
             _cardRequest.LessonAmtRequired = EditorGUILayout.IntField(_cardRequest.LessonAmtRequired);
             GUILayout.EndHorizontal();
+
+            EditorGUILayout.EndToggleGroup();
         }
 
         private void ChooseCardProperties()
@@ -160,7 +154,7 @@ namespace HarryPotterExtensions
             _cardRequest.CardGraphic = (Texture2D) EditorGUILayout.ObjectField("Card Image:", _cardRequest.CardGraphic, typeof (Texture2D), false);
             if (_cardRequest.CardGraphic != null)
             {
-                _cardRequest.Cardname = _cardRequest.CardGraphic.name;
+                _cardRequest.CardName = _cardRequest.CardGraphic.name.Replace("_", "").Replace("'", ""); ;
             }
         }
     }
