@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Linq;
 using HarryPotterUnity.Cards.PlayRequirements;
+using HarryPotterUnity.DeckGeneration.Requirements;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEditor;
@@ -23,6 +24,9 @@ namespace HarryPotterExtensions
             public LessonTypes LessonType { get; set; }
             public int LessonAmtRequired { get; set; }
             
+            public bool AddCardLimit { get; set; }
+            public int MaxAllowedInDeck { get; set; }
+
             public bool IsValid
             {
                 get
@@ -56,6 +60,16 @@ namespace HarryPotterExtensions
                 newComponent.AmountRequired = request.LessonAmtRequired;
                 newComponent.LessonType = request.LessonType;
             }
+
+            if (request.AddCardLimit)
+            {
+                var newComponent = card.AddComponent<DeckCardLimitRequirement>();
+                newComponent.MaximumAmountAllowed = request.MaxAllowedInDeck;
+            }
+
+            //TODO: Create prefab and focus project window
+            //Selection.activeObject = AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/"+prefabName+".prefab");
+            //EditorUtility.FocusProjectWindow();
         }
 
         private static Material CreateNewMaterial(CreateCardRequest request)
@@ -103,25 +117,38 @@ namespace HarryPotterExtensions
             ChooseCardTexture();
             ChooseCardProperties();
             ChooseAddLessonRequirement();
-            
-            GUILayout.Space(10);
-
-            if (GUILayout.Button("Create Card"))
-            {
-                if (_cardRequest.IsValid)
-                {
-                    CreateCard(_cardRequest);
-                    Close();
-                }
-                else
-                {
-                    Debug.LogError("Card Request is invalid!");
-                }
-            }
+            ChooseAddCardLimitRequirement();
+            ValidateRequest();
 
             GUILayout.EndVertical();
         }
-        
+
+        private void ValidateRequest()
+        {
+            GUILayout.Space(10);
+            if (!_cardRequest.IsValid) return;
+
+            if (GUILayout.Button("Create Card"))
+            {
+                CreateCard(_cardRequest);
+                Close();
+            }
+        }
+
+        private void ChooseAddCardLimitRequirement()
+        {
+            GUILayout.Space(10);
+
+            _cardRequest.AddCardLimit = EditorGUILayout.BeginToggleGroup("Add Card Limit", _cardRequest.AddCardLimit);
+
+            GUILayout.BeginHorizontal();
+            GUILayout.Label("Maximum Allowed In Deck: ");
+            _cardRequest.MaxAllowedInDeck = EditorGUILayout.IntField(_cardRequest.MaxAllowedInDeck);
+            GUILayout.EndHorizontal();
+
+            EditorGUILayout.EndToggleGroup();
+        }
+
         private void ChooseAddLessonRequirement()
         {
             GUILayout.Space(10);
@@ -150,11 +177,10 @@ namespace HarryPotterExtensions
         {
             GUILayout.Space(10);
 
-            //TODO: Write standalone script that rotates all horizontal images in our libarary
             _cardRequest.CardGraphic = (Texture2D) EditorGUILayout.ObjectField("Card Image:", _cardRequest.CardGraphic, typeof (Texture2D), false);
             if (_cardRequest.CardGraphic != null)
             {
-                _cardRequest.CardName = _cardRequest.CardGraphic.name.Replace("_", "").Replace("'", ""); ;
+                _cardRequest.CardName = _cardRequest.CardGraphic.name.Replace("_", "").Replace("'", "");
             }
         }
     }

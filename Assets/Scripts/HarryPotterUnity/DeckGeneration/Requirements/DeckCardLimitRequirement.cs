@@ -8,9 +8,22 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
 {
     public class DeckCardLimitRequirement : MonoBehaviour, IDeckGenerationRequirement
     {
-        [UsedImplicitly, SerializeField] private int _maximumAmountAllowed;
+        [SerializeField] private int _maximumAmountAllowed;
 
         private BaseCard _cardInfo;
+
+        public int MaximumAmountAllowed
+        {
+            private get
+            {
+                return _maximumAmountAllowed;
+            }
+
+            set
+            {
+                _maximumAmountAllowed = value;
+            }
+        }
 
         [UsedImplicitly]
         private void Start()
@@ -20,7 +33,7 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
 
         public bool MeetsRequirement(List<BaseCard> currentDeck)
         {
-            return currentDeck.Count(c => c.Equals(_cardInfo)) < _maximumAmountAllowed;
+            return currentDeck.Count(c => c.Equals(_cardInfo)) < MaximumAmountAllowed;
         }
     }
 }
