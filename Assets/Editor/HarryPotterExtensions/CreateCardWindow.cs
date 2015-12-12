@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.DeckGeneration.Requirements;
 using HarryPotterUnity.Enums;
@@ -25,7 +26,7 @@ namespace HarryPotterExtensions
             
             public bool AddCardLimit { get; set; }
             public int MaxAllowedInDeck { get; set; }
-
+            
             public bool IsValid
             {
                 get
@@ -34,17 +35,16 @@ namespace HarryPotterExtensions
                 }
             }
         }
-        
+
+        private CreateCardRequest _cardRequest;
+
 
         [MenuItem("Harry Potter TCG/Add New Card"), UsedImplicitly]
         public static void AddCard()
         {
             GetWindow(typeof(CreateCardWindow), true, "New Card");
         }
-
-        private CreateCardRequest _cardRequest;
         
-
         private static void CreateCard(CreateCardRequest request)
         {
             GameObject card = InstantiateCardTemplate();
@@ -65,11 +65,40 @@ namespace HarryPotterExtensions
                 var newComponent = card.AddComponent<DeckCardLimitRequirement>();
                 newComponent.MaximumAmountAllowed = request.MaxAllowedInDeck;
             }
-
+            
             //TODO: Create script: http://answers.unity3d.com/questions/12599/editor-script-need-to-create-class-script-automati.html
             //TODO: Create prefab and focus project window
             //Selection.activeObject = AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/"+prefabName+".prefab");
             //EditorUtility.FocusProjectWindow();
+
+            string newPrefabAssetPath = string.Format("Assets/Prefabs/Resources/Cards/{0}/{1}s/{2}.prefab", 
+                request.Classification, 
+                request.CardType,
+                request.CardName);
+
+            if (AssetDatabase.LoadAssetAtPath(newPrefabAssetPath, typeof (GameObject)))
+            {
+                string message = string.Format("A prefab already exists at\n{0}\nReplace?", newPrefabAssetPath);
+
+                if (EditorUtility.DisplayDialog("Prefab already exists", message, "Yes", "No"))
+                {
+                    CreatePrefab(newPrefabAssetPath, card);
+                }
+            }
+            else
+            {
+                CreatePrefab(newPrefabAssetPath, card);
+            }
+        }
+
+        private static void CreatePrefab(string newPrefabAssetPath, GameObject card)
+        {
+            Object empty = PrefabUtility.CreateEmptyPrefab(newPrefabAssetPath);
+            card = PrefabUtility.ReplacePrefab(card, empty);
+
+            Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(newPrefabAssetPath);
+            EditorGUIUtility.PingObject(card);
+            EditorUtility.FocusProjectWindow();
         }
 
         private static Material CreateNewMaterial(CreateCardRequest request)
@@ -86,6 +115,11 @@ namespace HarryPotterExtensions
             
             if (AssetDatabase.GetAllAssetPaths().Contains(newMaterialAssetPath) == false)
             {
+                var path = Path.GetDirectoryName(newMaterialAssetPath);
+                if (path != null && !Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
                 AssetDatabase.CreateAsset(material, newMaterialAssetPath);
             }
             else
