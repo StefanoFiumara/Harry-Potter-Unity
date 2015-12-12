@@ -12,6 +12,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 
         public override void OnEnterInPlayAction()
         {
+            base.OnEnterInPlayAction();
             Player.AddActions(1);
         }
     }
