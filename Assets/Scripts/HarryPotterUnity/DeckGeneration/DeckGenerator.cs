@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
@@ -6,6 +7,7 @@ using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 using Random = UnityEngine.Random;
+using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.DeckGeneration
 {
@@ -22,16 +24,17 @@ namespace HarryPotterUnity.DeckGeneration
                 }
         }
 
-        private static List<BaseCard> _startingCharacters;
-         
+        private static List<BaseCard> _availableStartingCharacters;
+        private static List<BaseCard> _allStartingCharacters;
         private static void LoadCardLibrary()
         {
             _cardLibrary = new List<BaseCard>();
-            _startingCharacters = new List<BaseCard>();
+            _allStartingCharacters = new List<BaseCard>();
+            _availableStartingCharacters = new List<BaseCard>();
 
             var resources = Resources.LoadAll("Cards/");
             
-            foreach (var container in resources.Cast<GameObject>())
+            foreach (GameObject container in resources.Cast<GameObject>())
             {
                 if (container == null)
                 {
@@ -43,34 +46,30 @@ namespace HarryPotterUnity.DeckGeneration
 
                 if (cardInfo.Type == Type.Character)
                 {
-                    _startingCharacters.Add(cardInfo);
+                    _availableStartingCharacters.Add(cardInfo);
+                    _allStartingCharacters.Add(cardInfo);
                 }
             }
         }
 
         public static BaseCard GetRandomStartingCharacter()
         {
-            if(_startingCharacters == null) LoadCardLibrary();
+            if(_availableStartingCharacters == null) LoadCardLibrary();
 
-            if (_startingCharacters == null)
+            if (_availableStartingCharacters == null)
             {
-                throw new System.Exception("Starting Characters are not loaded!");
+                throw new Exception("Starting Characters are not loaded!");
             }
 
-            var character = _startingCharacters.Skip(Random.Range(0, _startingCharacters.Count)).First();
+            BaseCard character = _availableStartingCharacters.Skip(Random.Range(0, _availableStartingCharacters.Count)).First();
 
-            _startingCharacters.Remove(character);
+            _availableStartingCharacters.Remove(character);
 
             return character;
         }
 
         public static IEnumerable<BaseCard> GenerateDeck(List<LessonTypes> types)
         {
-            if (types.Count != 2 && types.Count != 3)
-            {
-                throw new System.Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
-            }
-
             var deck = new List<BaseCard>();
 
             switch (types.Count)
@@ -91,6 +90,8 @@ namespace HarryPotterUnity.DeckGeneration
                     AddCardsToDeck(ref deck, MapLessonType(types[1]), 10);                   
                     AddCardsToDeck(ref deck, MapLessonType(types[2]), 10);
                     break;
+                default:
+                    throw new Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
             }
 
             return deck;
@@ -105,15 +106,14 @@ namespace HarryPotterUnity.DeckGeneration
                     case LessonTypes.Transfiguration: return  ClassificationTypes.Transfiguration;
                     case LessonTypes.Quidditch: return  ClassificationTypes.Quidditch;
                     case LessonTypes.Potions: return ClassificationTypes.Potions;
+                default:
+                    throw new ArgumentException("Unable to map lesson type");
             }
-            
-            throw new System.ArgumentException("Unable to map lesson type");
         }
 
         private static void AddLessonsToDeck(ref List<BaseCard> deck, LessonTypes lessonType, int amount)
         {
-            var card = CardLibrary.Where(c => c.Classification == ClassificationTypes.Lesson)
-                .First(l => ((ILessonProvider) l).LessonType == lessonType);
+            BaseCard card = CardLibrary.Where(c => c.Classification == ClassificationTypes.Lesson).First(l => ((ILessonProvider) l).LessonType == lessonType);
 
             for (int i = 0; i < amount; i++)
             {
@@ -133,11 +133,9 @@ namespace HarryPotterUnity.DeckGeneration
                 var card = potentialCards[selected];
 
                 var deckCopy = deck.ToList();
-                
-                bool canBeAdded = (card.DeckGenerationRequirements.Count == 0 ||
-                                  card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) &&
-                                  card.MeetsRarityRequirements();
-                
+
+                bool canBeAdded = (card.DeckGenerationRequirements.Count == 0 || card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) && card.MeetsRarityRequirements();
+
                 //TODO: Enabled the second check when enough cards have been implemented
                 if (canBeAdded == false /* || deck.Count(c => c.Equals(card)) >= 4 */) continue;
 
@@ -148,7 +146,7 @@ namespace HarryPotterUnity.DeckGeneration
 
         private static bool MeetsRarityRequirements(this BaseCard card)
         {
-            float chanceToAdd = 1f;
+            float chanceToAdd;
 
             float rng = Random.Range(0f, 1f);
 
@@ -166,9 +164,17 @@ namespace HarryPotterUnity.DeckGeneration
                 case Rarity.UltraRare:
                     chanceToAdd = 0.3f;
                     break;
+                default:
+                    chanceToAdd = 1f;
+                    break;
             }
-            
+
             return rng <= chanceToAdd;
+        }
+
+        public static void ResetStartingCharacterPool()
+        {
+            _availableStartingCharacters = _allStartingCharacters.ToList();
         }
     }
 }
