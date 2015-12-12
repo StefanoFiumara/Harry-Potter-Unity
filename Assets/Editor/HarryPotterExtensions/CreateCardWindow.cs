@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.DeckGeneration.Requirements;
@@ -6,6 +7,8 @@ using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
+using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterExtensions
 {
@@ -48,31 +51,30 @@ namespace HarryPotterExtensions
         private static void CreateCard(CreateCardRequest request)
         {
             GameObject card = InstantiateCardTemplate();
-            card.transform.name = request.CardName;
 
-            Material newMaterial = CreateNewMaterial(request);
-            card.transform.FindChild("Front").gameObject.GetComponent<Renderer>().material = newMaterial;
-
-            if (request.AddLessonRequirement)
+            try
             {
-                var newComponent = card.AddComponent<LessonRequirement>();
-                newComponent.AmountRequired = request.LessonAmtRequired;
-                newComponent.LessonType = request.LessonType;
-            }
+                card.transform.name = request.CardName;
 
-            if (request.AddCardLimit)
+                Material newMaterial = CreateNewMaterial(request);
+                card.transform.FindChild("Front").gameObject.GetComponent<Renderer>().material = newMaterial;
+
+                AddChosenComponents(request, card);
+
+                TryCreatePrefab(request, card);
+            }
+            catch (Exception e)
             {
-                var newComponent = card.AddComponent<DeckCardLimitRequirement>();
-                newComponent.MaximumAmountAllowed = request.MaxAllowedInDeck;
+                Debug.Log(string.Format("Error: {0}", e.Message));
+                Debug.Log("Card was not created");
+                Destroy(card);
             }
-            
-            //TODO: Create script: http://answers.unity3d.com/questions/12599/editor-script-need-to-create-class-script-automati.html
-            //TODO: Create prefab and focus project window
-            //Selection.activeObject = AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/"+prefabName+".prefab");
-            //EditorUtility.FocusProjectWindow();
+        }
 
-            string newPrefabAssetPath = string.Format("Assets/Prefabs/Resources/Cards/{0}/{1}s/{2}.prefab", 
-                request.Classification, 
+        private static void TryCreatePrefab(CreateCardRequest request, GameObject card)
+        {
+            string newPrefabAssetPath = string.Format("Assets/Prefabs/Resources/Cards/{0}/{1}s/{2}.prefab",
+                request.Classification,
                 request.CardType,
                 request.CardName);
 
@@ -91,6 +93,22 @@ namespace HarryPotterExtensions
             }
         }
 
+        private static void AddChosenComponents(CreateCardRequest request, GameObject card)
+        {
+            if (request.AddLessonRequirement)
+            {
+                var newComponent = card.AddComponent<LessonRequirement>();
+                newComponent.AmountRequired = request.LessonAmtRequired;
+                newComponent.LessonType = request.LessonType;
+            }
+
+            if (request.AddCardLimit)
+            {
+                var newComponent = card.AddComponent<DeckCardLimitRequirement>();
+                newComponent.MaximumAmountAllowed = request.MaxAllowedInDeck;
+            }
+        }
+
         private static void CreatePrefab(string newPrefabAssetPath, GameObject card)
         {
             Object empty = PrefabUtility.CreateEmptyPrefab(newPrefabAssetPath);
@@ -99,6 +117,8 @@ namespace HarryPotterExtensions
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(newPrefabAssetPath);
             EditorGUIUtility.PingObject(card);
             EditorUtility.FocusProjectWindow();
+
+            Destroy(card);
         }
 
         private static Material CreateNewMaterial(CreateCardRequest request)
