@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Linq;
 using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
@@ -182,6 +183,8 @@ namespace HarryPotterUnity.Game
 
             GameManager._networkIdCounter = 0;
             GameManager.AllCards.Clear();
+
+            DeckGenerator.ResetStartingCharacterPool();
 
             _player1.InitDeck(p1SelectedLessons);
             _player2.InitDeck(p2SelectedLessons);
