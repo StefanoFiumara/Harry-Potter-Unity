@@ -26,6 +26,7 @@ namespace HarryPotterUnity.DeckGeneration
 
         private static List<BaseCard> _availableStartingCharacters;
         private static List<BaseCard> _allStartingCharacters;
+
         private static void LoadCardLibrary()
         {
             _cardLibrary = new List<BaseCard>();
@@ -174,7 +175,15 @@ namespace HarryPotterUnity.DeckGeneration
 
         public static void ResetStartingCharacterPool()
         {
-            _availableStartingCharacters = _allStartingCharacters.ToList();
+            if (_allStartingCharacters == null)
+            {
+                LoadCardLibrary();
+            }
+            if (_allStartingCharacters != null)
+            {
+                _availableStartingCharacters = _allStartingCharacters.ToList();
+            }
+            
         }
     }
 }
