@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.DeckGeneration.Requirements;
 using HarryPotterUnity.Enums;
@@ -67,6 +66,7 @@ namespace HarryPotterExtensions
                 newComponent.MaximumAmountAllowed = request.MaxAllowedInDeck;
             }
 
+            //TODO: Create script: http://answers.unity3d.com/questions/12599/editor-script-need-to-create-class-script-automati.html
             //TODO: Create prefab and focus project window
             //Selection.activeObject = AssetDatabase.LoadMainAssetAtPath("Assets/Prefabs/"+prefabName+".prefab");
             //EditorUtility.FocusProjectWindow();
