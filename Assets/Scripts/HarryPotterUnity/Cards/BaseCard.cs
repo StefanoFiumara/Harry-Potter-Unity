@@ -36,7 +36,7 @@ namespace HarryPotterUnity.Cards
             {
                 if (_collection == null)
                 {
-                    throw new System.Exception("collection is null for card: " + CardName);
+                    throw new Exception("collection is null for card: " + CardName);
                 }
                 return _collection;
             }
