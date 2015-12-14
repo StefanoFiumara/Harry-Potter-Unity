@@ -4,52 +4,35 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Tween
 {
-    class MoveTween : ITweenObject
+    public class MoveTween : ITweenObject
     {
         
-        private readonly GameObject _target;
-        private readonly Vector3 _position;
-        private readonly float _time;
-        private readonly float _delay;
-        private readonly float _timeUntilNextTween;
-        private readonly FlipState _flip;
-        private readonly TweenRotationType _rotate;
-        private readonly State _stateAfterAnimation;
+        public GameObject Target { get; set; }
+        public Vector3 Position { get; set; }
+        public float Time { get; set; }
+        public float Delay { get; set; }
+        public FlipState Flip { get; set; }
+        public TweenRotationType Rotate { get; set; }
+        public State StateAfterAnimation { get; set; }
 
-        public MoveTween(GameObject target, Vector3 position, float time, float delay, FlipState flip, TweenRotationType rotate, State stateAfterAnimation, float timeUntilNextTween = 0f)
-        {
-            _target = target;
-            _position = position;
-            _time = time;
-            _delay = delay;
-            _flip = flip;
-            _rotate = rotate;
-            _stateAfterAnimation = stateAfterAnimation;
-            _timeUntilNextTween = timeUntilNextTween;
-        }
-
+        public float TimeUntilNextTween { get; set; }
 
         public float CompletionTime
         {
-            get { return _time + _delay; }
+            get { return Time + Delay; }
         }
-
-        public float TimeUntilNextTween
-        {
-            get { return _timeUntilNextTween; }
-        }
-
+        
         public void ExecuteTween()
         {
-            iTween.MoveTo(_target, iTween.Hash(
-                        "time", _time,
-                        "delay", _delay,
-                        "position", _position,
+            iTween.MoveTo(Target, iTween.Hash(
+                        "time", Time,
+                        "delay", Delay,
+                        "position", Position,
                         "easetype", iTween.EaseType.EaseInOutSine,
                         "islocal", true,
                         "oncomplete", "SwitchState",
-                        "oncompletetarget", _target,
-                        "oncompleteparams", _stateAfterAnimation
+                        "oncompletetarget", Target,
+                        "oncompleteparams", StateAfterAnimation
                         ));
 
             RotateAndFlipCard();
@@ -58,7 +41,7 @@ namespace HarryPotterUnity.Tween
         private void RotateAndFlipCard()
         {
             float targetRotate = 0f;
-            switch (_rotate)
+            switch (Rotate)
             {
                 case TweenRotationType.Rotate90:
                     targetRotate = 270f;
@@ -69,7 +52,7 @@ namespace HarryPotterUnity.Tween
             }
 
             float targetFlip = 0f;
-            switch (_flip)
+            switch (Flip)
             {
                     case FlipState.FaceUp:
                         targetFlip = 0f;
@@ -79,9 +62,9 @@ namespace HarryPotterUnity.Tween
                         break;
             }
 
-            _target.GetComponent<BaseCard>().FlipState = _flip;
+            Target.GetComponent<BaseCard>().FlipState = Flip;
 
-            iTween.RotateTo(_target, iTween.Hash("time", _time,
+            iTween.RotateTo(Target, iTween.Hash("time", Time,
                 "y", targetFlip,
                 "z", targetRotate,
                 "easetype", iTween.EaseType.EaseInOutSine,

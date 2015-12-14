@@ -115,10 +115,29 @@ namespace HarryPotterUnity.Game
 
             if (preview)
             {
-                GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, HandPreviewPosition, 0.5f, 0f, flipState, TweenRotationType.NoRotate, State.InHand));
+                var previewTween = new MoveTween
+                {
+                    Target = card.gameObject,
+                    Position = HandPreviewPosition,
+                    Time = 0.5f,
+                    Flip = flipState,
+                    Rotate = TweenRotationType.NoRotate,
+                    StateAfterAnimation = State.InHand
+                };
+                GameManager.TweenQueue.AddTweenToQueue( previewTween );
             }
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPosition, 0.3f, 0.1f, flipState, TweenRotationType.NoRotate, State.InHand));
+            var finalTween = new MoveTween
+            {
+                Target = card.gameObject,
+                Position = cardPosition,
+                Time = 0.3f,
+                Delay = 0.1f,
+                Flip = flipState,
+                Rotate = TweenRotationType.NoRotate,
+                StateAfterAnimation = State.InHand
+            };
+            GameManager.TweenQueue.AddTweenToQueue( finalTween );
         }
     }
 }

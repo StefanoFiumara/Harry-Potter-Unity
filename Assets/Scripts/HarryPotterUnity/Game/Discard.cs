@@ -37,8 +37,28 @@ namespace HarryPotterUnity.Game
             Vector3 cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
             
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, FlipState.FaceUp, TweenRotationType.NoRotate, State.Discarded));
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos, 0.25f, 0f, FlipState.FaceUp, TweenRotationType.NoRotate, State.Discarded));
+            var previewTween = new MoveTween
+            {
+                Target = card.gameObject,
+                Position = cardPreviewPos,
+                Time = 0.35f,
+                Flip = FlipState.FaceUp,
+                Rotate = TweenRotationType.NoRotate,
+                StateAfterAnimation = State.Discarded
+            };
+
+            var finalTween = new MoveTween
+            {
+                Target = card.gameObject,
+                Position = cardPos,
+                Time = 0.25f,
+                Flip = FlipState.FaceUp,
+                Rotate = TweenRotationType.NoRotate,
+                StateAfterAnimation = State.Discarded
+            };
+
+            GameManager.TweenQueue.AddTweenToQueue( previewTween );
+            GameManager.TweenQueue.AddTweenToQueue( finalTween );
 
             MoveToThisCollection(card);
         }

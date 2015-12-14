@@ -135,7 +135,9 @@ namespace HarryPotterUnity.DeckGeneration
 
                 var deckCopy = deck.ToList();
 
-                bool canBeAdded = (card.DeckGenerationRequirements.Count == 0 || card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) && card.MeetsRarityRequirements();
+                bool canBeAdded = (card.DeckGenerationRequirements.Count == 0 || 
+                                   card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) && 
+                                   card.MeetsRarityRequirements();
 
                 //TODO: Enabled the second check when enough cards have been implemented
                 if (canBeAdded == false /* || deck.Count(c => c.Equals(card)) >= 4 */) continue;
@@ -183,7 +185,6 @@ namespace HarryPotterUnity.DeckGeneration
             {
                 _availableStartingCharacters = _allStartingCharacters.ToList();
             }
-            
         }
     }
 }

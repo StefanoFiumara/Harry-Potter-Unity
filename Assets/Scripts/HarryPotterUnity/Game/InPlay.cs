@@ -105,14 +105,16 @@ namespace HarryPotterUnity.Game
         private void TweenCardToPosition(BaseCard card)
         {
             var cardPosition = GetTargetPositionForCard(card);
-
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject,
-                cardPosition, 
-                0.3f,
-                0f,
-                FlipState.FaceUp, 
-                TweenRotationType.Rotate90,
-                State.InPlay));
+            var tween = new MoveTween
+            {
+                Target = card.gameObject,
+                Position = cardPosition,
+                Time = 0.3f,
+                Flip = FlipState.FaceUp,
+                Rotate = TweenRotationType.Rotate90,
+                StateAfterAnimation = State.InPlay
+            };
+            GameManager.TweenQueue.AddTweenToQueue( tween );
         }
 
         private void RearrangeCardsOfType(Type type)

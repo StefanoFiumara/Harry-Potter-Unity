@@ -191,7 +191,16 @@ namespace HarryPotterUnity.Game
             var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
             cardPos.z -= Cards.IndexOf(card) * 0.2f;
 
-            GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPos,0.25f, 0f, FlipState.FaceDown, TweenRotationType.NoRotate, State.InDeck));
+            var tween = new MoveTween
+            {
+                Target = card.gameObject,
+                Position = cardPos,
+                Time = 0.25f,
+                Flip = FlipState.FaceDown,
+                Rotate = TweenRotationType.NoRotate,
+                StateAfterAnimation = State.InDeck
+            };
+            GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         /// <summary>
