@@ -200,6 +200,7 @@ namespace HarryPotterUnity.Game
                 Rotate = TweenRotationType.NoRotate,
                 StateAfterAnimation = State.InDeck
             };
+
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
