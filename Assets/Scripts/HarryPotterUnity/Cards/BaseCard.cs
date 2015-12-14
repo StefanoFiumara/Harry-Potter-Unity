@@ -27,7 +27,6 @@ namespace HarryPotterUnity.Cards
         #endregion
 
         #region Properties
-
         private CardCollection _collection;
         public CardCollection PreviousCollection { get; private set; }
         public CardCollection CurrentCollection
