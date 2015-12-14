@@ -205,7 +205,7 @@ namespace HarryPotterUnity.Game
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
-            _player1.InitTurn(true);
+            _player1.InitTurn(firstTurn: true);
         }
 
         public void DestroyPlayerObjects()
@@ -239,8 +239,14 @@ namespace HarryPotterUnity.Game
             }
 
             var persistentCard = card as IPersistentCard;
-            if (persistentCard != null) persistentCard.OnSelectedAction();
-            else throw new Exception("ExecuteInPlayActionById did not receive a PersistentCard!");
+            if (persistentCard != null)
+            {
+                persistentCard.OnSelectedAction();
+            }
+            else
+            {
+                throw new Exception("ExecuteInPlayActionById did not receive a PersistentCard!");
+            }
         }
 
         [PunRPC, UsedImplicitly]
