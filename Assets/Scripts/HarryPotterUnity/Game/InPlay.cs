@@ -6,6 +6,7 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
+using UnityDebugLogWrapper;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game

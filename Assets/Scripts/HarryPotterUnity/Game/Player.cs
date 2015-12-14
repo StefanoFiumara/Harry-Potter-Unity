@@ -8,6 +8,7 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
+using UnityDebugLogWrapper;
 using UnityEngine;
 using UnityEngine.UI;
 

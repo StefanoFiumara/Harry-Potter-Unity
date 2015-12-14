@@ -6,6 +6,7 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
+using UnityDebugLogWrapper;
 using UnityEngine;
 using UnityEngine.UI;
 using MonoBehaviour = UnityEngine.MonoBehaviour;

@@ -7,6 +7,7 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
+using UnityDebugLogWrapper;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -23,6 +24,11 @@ namespace HarryPotterUnity.Game
 
         public void Start()
         {
+            Log.Init("HP-TCG", "Harry Potter TCG Log");
+            Log.Write("Initialize Log File");
+
+            Log.Write("Connecting to Photon Master Server");
+
             PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
             
             _hudManager = FindObjectOfType<HudManager>();
@@ -31,8 +37,6 @@ namespace HarryPotterUnity.Game
             {
                 Debug.LogError("Network Manager could not find Hud Manager in Scene!");
             }
-
-            Log.Write("Connecting to Photon Master Server");
         }
 
         [UsedImplicitly]
@@ -40,14 +44,14 @@ namespace HarryPotterUnity.Game
         {
             Log.Write("Connected to Photon Master Server");
 
-            Log.Write(string.Format("Joining {0} Lobby", LOBBY_VERSION));
+            Log.Write("Joining {0} Lobby", LOBBY_VERSION);
             PhotonNetwork.JoinLobby(new TypedLobby(LOBBY_VERSION, LobbyType.Default));
         }
 
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
-            Log.Write("Joined Default Lobby");
+            Log.Write("Joined {0} Lobby", LOBBY_VERSION);
             _hudManager.InitMainMenu();
         }
 
