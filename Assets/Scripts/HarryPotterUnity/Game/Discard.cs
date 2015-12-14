@@ -17,6 +17,11 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void Start () {
             Cards = new List<BaseCard>();
+
+            var col = gameObject.AddComponent<BoxCollider>();
+            col.isTrigger = true;
+            col.size = new Vector3(50f, 70f, 1f);
+            col.center = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 0f);
         }
 
         public override void Add(BaseCard card) 
@@ -29,7 +34,7 @@ namespace HarryPotterUnity.Game
             var cardPos = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 16f);
             cardPos.z -=  Cards.Count * 0.2f;
 
-            var cardPreviewPos = cardPos;
+            Vector3 cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
             
             GameManager.TweenQueue.AddTweenToQueue(new MoveTween(card.gameObject, cardPreviewPos, 0.35f, 0f, FlipState.FaceUp, TweenRotationType.NoRotate, State.Discarded));
@@ -91,6 +96,11 @@ namespace HarryPotterUnity.Game
         public List<BaseCard> GetHealableCards(int amount)
         {
             return Cards.Where(card => !card.Tags.Contains(Tag.Healing)).Take(amount).ToList(); 
+        }
+
+        public void OnMouseUp()
+        {
+            Debug.Log("Discard Clicked");
         }
     }
 }
