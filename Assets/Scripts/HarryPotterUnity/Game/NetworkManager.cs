@@ -206,7 +206,6 @@ namespace HarryPotterUnity.Game
             _player2.DrawInitialHand();
 
             _player1.InitTurn(true);
-            GameManager._gameInProgress = true;
         }
 
         public void DestroyPlayerObjects()
