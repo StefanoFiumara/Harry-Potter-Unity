@@ -51,13 +51,16 @@ namespace HarryPotterUnity.Cards
             _p1ProgressLabel = _uiCanvas.transform.FindChild("HealthLabel").gameObject.GetComponent<Text>();
             _p2ProgressLabel = _uiCanvas.transform.FindChild("AttackLabel").gameObject.GetComponent<Text>();
 
-            _p1ProgressLabel.text = _p1Progress.ToString();
-            _p2ProgressLabel.text = _p2Progress.ToString();
+            UpdateProgressLabels();
 
             _uiCanvas.SetActive(false);
         }
 
-
+        private void UpdateProgressLabels()
+        {
+            _p1ProgressLabel.text = string.Format("{0}/{1}",_p1Progress, _goal);
+            _p2ProgressLabel.text = string.Format("{0}/{1}", _p2Progress, _goal);
+        }
         protected override bool MeetsAdditionalPlayRequirements()
         {
             return Player.InPlay.Cards
@@ -92,27 +95,27 @@ namespace HarryPotterUnity.Cards
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)
         {
             //TODO: there's a bug that causes damage to count towards the enemy player when a player plays a card that causes himself to take damage.
+            //TODO: Code smell here
             var playerDealingDamage = sourceCard.Player;
 
             if (playerDealingDamage == _player1)
             {
                 _p1Progress += amount;
-                _p1ProgressLabel.text = _p1Progress.ToString();
-
+                UpdateProgressLabels();
                 if (_p1Progress >= _goal)
                 {
-                    OnPlayerHasWonMatch(_player1, _player2);
                     Player.Discard.Add(this);
+                    OnPlayerHasWonMatch(_player1, _player2);
                 }
             }
             else if (playerDealingDamage == _player2)
             {
                 _p2Progress += amount;
-                _p2ProgressLabel.text = _p2Progress.ToString();
+                UpdateProgressLabels();
                 if (_p2Progress >= _goal)
                 {
-                    OnPlayerHasWonMatch(_player2, _player1);
                     Player.Discard.Add(this);
+                    OnPlayerHasWonMatch(_player2, _player1);
                 }
             }
         }
