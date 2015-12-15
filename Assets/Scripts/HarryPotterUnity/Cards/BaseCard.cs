@@ -22,8 +22,6 @@ namespace HarryPotterUnity.Cards
 
         [Header("Basic Card Settings")]
         [UsedImplicitly] public List<Tag> Tags;
-
-
         #endregion
 
         #region Properties

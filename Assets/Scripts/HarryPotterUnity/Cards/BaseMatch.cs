@@ -28,7 +28,9 @@ namespace HarryPotterUnity.Cards
         [Header("Match Settings")]
         [SerializeField, UsedImplicitly]
         private int _goal;
-        
+
+        protected abstract void OnPlayerHasWonMatch(Player winner, Player loser);
+
         protected override void Start()
         {
             base.Start();
@@ -95,33 +97,42 @@ namespace HarryPotterUnity.Cards
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)
         {
             //TODO: there's a bug that causes damage to count towards the enemy player when a player plays a card that causes himself to take damage.
-            //TODO: Code smell here
-            var playerDealingDamage = sourceCard.Player;
+            Player playerDealingDamage = sourceCard.Player;
 
             if (playerDealingDamage == _player1)
             {
-                _p1Progress += amount;
-                UpdateProgressLabels();
-                if (_p1Progress >= _goal)
-                {
-                    Player.Discard.Add(this);
-                    OnPlayerHasWonMatch(_player1, _player2);
-                }
+                IncreasePlayer1Progress(amount);
             }
             else if (playerDealingDamage == _player2)
             {
-                _p2Progress += amount;
-                UpdateProgressLabels();
-                if (_p2Progress >= _goal)
-                {
-                    Player.Discard.Add(this);
-                    OnPlayerHasWonMatch(_player2, _player1);
-                }
+                IncreasePlayer2Progress(amount);
             }
         }
 
-        protected abstract void OnPlayerHasWonMatch(Player winner, Player loser);
+        private void IncreasePlayer2Progress(int amount)
+        {
+            _p2Progress += amount;
+            UpdateProgressLabels();
 
+            if (_p2Progress >= _goal)
+            {
+                Player.Discard.Add(this);
+                OnPlayerHasWonMatch(_player2, _player1);
+            }
+        }
+
+        private void IncreasePlayer1Progress(int amount)
+        {
+            _p1Progress += amount;
+            UpdateProgressLabels();
+
+            if (_p1Progress >= _goal)
+            {
+                Player.Discard.Add(this);
+                OnPlayerHasWonMatch(_player1, _player2);
+            }
+        }
+        
         public virtual void OnInPlayBeforeTurnAction() { }
         public virtual void OnInPlayAfterTurnAction() { }
         public virtual void OnSelectedAction() { }
