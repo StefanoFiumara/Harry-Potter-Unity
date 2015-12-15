@@ -213,7 +213,7 @@ namespace HarryPotterUnity.Game
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
-            _player1.InitTurn(firstTurn: true);
+            _player1.BeginTurn(firstTurn: true);
         }
 
         public void DestroyPlayerObjects()

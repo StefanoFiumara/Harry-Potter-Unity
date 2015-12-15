@@ -79,7 +79,6 @@ namespace HarryPotterUnity.Game
             if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
         }
 
-        [UsedImplicitly]
         public void Awake()
         {
             ActionsAvailable = 0;
@@ -114,7 +113,7 @@ namespace HarryPotterUnity.Game
             ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
         }
 
-        public void InitTurn(bool firstTurn = false)
+        public void BeginTurn(bool firstTurn = false)
         {
             TurnIndicator.gameObject.SetActive(true);
             
@@ -151,7 +150,7 @@ namespace HarryPotterUnity.Game
             }
             
             Hand.AdjustHandSpacing();
-            OppositePlayer.InitTurn();
+            OppositePlayer.BeginTurn();
         }
 
         public bool CanUseActions(int amount = 1)
