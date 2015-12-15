@@ -84,7 +84,7 @@ namespace HarryPotterUnity.Cards
         }
 
         public byte NetworkId { get; set; }
-        public string CardName { get { return transform.name; } }
+        public string CardName { get { return string.Format("{0}: {1}", Type, transform.name.Replace("(Clone)", "")); } }
         #endregion
 
         #region Private Variables
