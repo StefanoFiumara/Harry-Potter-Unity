@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using ExitGames.Client.Photon;
 using HarryPotterUnity.Enums;
@@ -100,14 +99,12 @@ namespace HarryPotterUnity.UI
 
         private List<LessonTypes> _selectedLessons;
 
-        [UsedImplicitly]
         public void Start()
         {
             _networkManager = FindObjectsOfType<NetworkManager>().First();
             _selectedLessons = new List<LessonTypes>();
         }
-
-        [UsedImplicitly]
+        
         public void Update()
         {
             _playersOnlineText.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
