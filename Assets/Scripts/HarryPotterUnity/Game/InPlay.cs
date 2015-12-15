@@ -4,9 +4,8 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
-using UnityDebugLogWrapper;
+using UnityLogWrapper;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game

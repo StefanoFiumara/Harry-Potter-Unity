@@ -4,9 +4,8 @@ using System.Linq;
 using ExitGames.Client.Photon;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
-using UnityDebugLogWrapper;
+using UnityLogWrapper;
 using UnityEngine;
 using UnityEngine.UI;
 using MonoBehaviour = UnityEngine.MonoBehaviour;
@@ -183,6 +182,7 @@ namespace HarryPotterUnity.UI
             }
         }
 
+        [UsedImplicitly]
         public void OnJoinedRoom()
         {
             _gameStatusText.text = "Finding Match...";

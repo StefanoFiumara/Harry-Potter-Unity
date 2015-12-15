@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
 using JetBrains.Annotations;
-using UnityDebugLogWrapper;
+using UnityLogWrapper;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -57,7 +58,11 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnJoinedRoom()
         {
-            if (PhotonNetwork.room.playerCount == 1) return;
+            if (PhotonNetwork.room.playerCount == 1)
+            {
+                Log.Write("Joined Photon Room, waiting for players");
+                return;
+            }
             
             _hudManager.SetPlayer2CameraRotation();
         }
@@ -67,6 +72,7 @@ namespace HarryPotterUnity.Game
         {
             int seed = Random.Range(int.MinValue, int.MaxValue);
 
+            Log.Write("New player has connected, starting game");
             photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
 
@@ -80,6 +86,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnPhotonPlayerDisconnected()
         {
+            Log.Write("Opponent disconnected, return to main menu");
             _hudManager.BackToMainMenu();
         }
 
@@ -102,7 +109,7 @@ namespace HarryPotterUnity.Game
 
             if (!_player1 || !_player2)
             {
-                Debug.LogError("One of the players was not properly instantiated!");
+                Log.Error("One of the players was not properly instantiated!");
                 return;
             }
 
@@ -179,7 +186,7 @@ namespace HarryPotterUnity.Game
 
             if (p1LessonsBytes == null || p2LessonsBytes == null)
             {
-                Debug.LogError("p1 or p2 selected lessons are null!");
+                Log.Error("p1 or p2 selected lessons are null!");
                 return;
             }
 
@@ -190,13 +197,14 @@ namespace HarryPotterUnity.Game
             GameManager.AllCards.Clear();
 
             DeckGenerator.ResetStartingCharacterPool();
-
+            Log.Write("Generating Player Decks");
             _player1.InitDeck(p1SelectedLessons);
             _player2.InitDeck(p2SelectedLessons);
         }
 
         private IEnumerator _beginGameSequence()
         {
+            Log.Write("Game setup complete, starting match");
             _player1.Deck.SpawnStartingCharacter();
             _player2.Deck.SpawnStartingCharacter();
             _player1.Deck.Shuffle();
@@ -220,10 +228,12 @@ namespace HarryPotterUnity.Game
             var card = GameManager.AllCards.Find(c => c.NetworkId == id);
 
             if (card == null)
-            {
-                throw new Exception("ExecutePlayActionById could not find card with Id: " + id);
+            {   
+                Log.Error("ExecutePlayActionById could not find card with Id: " + id);
+                return;
             }
 
+            Log.Write("Player {0} Plays {1} from hand", card.Player.NetworkId, card.CardName);
             card.MouseUpAction();
             card.Player.OnCardPlayed(card);
         }
@@ -231,22 +241,23 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecuteInPlayActionById(byte id)
         {
-            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
 
             if (card == null)
             {
-                throw new Exception("ExecutePlayActionById could not find card with Id: " + id);
+                Log.Error("ExecuteInPlayActionById could not find card with Id: " + id);
+                return;
             }
 
             var persistentCard = card as IPersistentCard;
-            if (persistentCard != null)
+            if (persistentCard == null)
             {
-                persistentCard.OnSelectedAction();
+                Log.Error("ExecuteInPlayActionById did not receive a PersistentCard!");
+                return;
             }
-            else
-            {
-                throw new Exception("ExecuteInPlayActionById did not receive a PersistentCard!");
-            }
+            
+            Log.Write("Player {0} Activates {1}'s effect", card.Player.NetworkId, card.CardName);
+            persistentCard.OnSelectedAction();
         }
 
         [PunRPC, UsedImplicitly]
@@ -254,6 +265,7 @@ namespace HarryPotterUnity.Game
         {
             var player = id == 0 ? _player1 : _player2;
 
+            Log.Write("Player {0} Draws a Card", player.NetworkId);
             player.Deck.DrawCard();
             player.UseActions();
         }
@@ -264,6 +276,11 @@ namespace HarryPotterUnity.Game
             var card = GameManager.AllCards.Find(c => c.NetworkId == id);
             
             var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
+            
+            Log.Write("Player {0} plays card {1} targeting {2}", 
+                card.Player.NetworkId, 
+                card.CardName, 
+                string.Join(",", selectedCards.Select(c => c.CardName).ToArray()));
 
             card.MouseUpAction(selectedCards);
             card.Player.OnCardPlayed(card, selectedCards);
@@ -280,15 +297,17 @@ namespace HarryPotterUnity.Game
         {
             if (_player1.CanUseActions())
             {
+                Log.Write("Player 1 skipped an action");
                 _player1.UseActions();
             }
             else if (_player2.CanUseActions())
             {
+                Log.Write("Player 2 skipped an action");
                 _player2.UseActions();
             }
             else
             {
-                Debug.LogError("ExecuteSkipAction() failed to identify which player wants to skip their Action!");
+                Log.Error("ExecuteSkipAction() failed to identify which player wants to skip their Action!");
             }
         }
 
