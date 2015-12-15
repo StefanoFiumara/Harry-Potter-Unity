@@ -4,6 +4,7 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HarryPotterUnity.Cards
 {
@@ -19,6 +20,10 @@ namespace HarryPotterUnity.Cards
 
         private int _p1Progress;
         private int _p2Progress;
+        
+        private GameObject _uiCanvas;
+        private Text _p1ProgressLabel;
+        private Text _p2ProgressLabel;
 
         [Header("Match Settings")]
         [SerializeField, UsedImplicitly]
@@ -30,8 +35,28 @@ namespace HarryPotterUnity.Cards
 
             _player1 = Player;
             _player2 = Player.OppositePlayer;
-            //TODO: Add HUD to card to track player progress
+            LoadUiOverlay();
         }
+
+        private void LoadUiOverlay()
+        {
+            //Reuse the CreatureUIOverlay for now
+            var resource = Resources.Load("CreatureUIOverlay");
+            _uiCanvas = (GameObject)Instantiate(resource);
+
+            _uiCanvas.transform.position = transform.position - Vector3.back;
+            _uiCanvas.transform.SetParent(transform, true);
+            _uiCanvas.transform.localRotation = Player.IsLocalPlayer ? Quaternion.identity : Quaternion.Euler(0f, 0f, 180f);
+
+            _p1ProgressLabel = _uiCanvas.transform.FindChild("HealthLabel").gameObject.GetComponent<Text>();
+            _p2ProgressLabel = _uiCanvas.transform.FindChild("AttackLabel").gameObject.GetComponent<Text>();
+
+            _p1ProgressLabel.text = _p1Progress.ToString();
+            _p2ProgressLabel.text = _p2Progress.ToString();
+
+            _uiCanvas.SetActive(false);
+        }
+
 
         protected override bool MeetsAdditionalPlayRequirements()
         {
@@ -42,11 +67,13 @@ namespace HarryPotterUnity.Cards
 
         public void OnEnterInPlayAction()
         {
+            _uiCanvas.SetActive(true);
             SubscribeToMatchProgressEvents();
         }
 
         public void OnExitInPlayAction()
         {
+            _uiCanvas.SetActive(false);
             UnsubscribeToMatchProgressEvents();
         }
 
@@ -70,6 +97,8 @@ namespace HarryPotterUnity.Cards
             if (playerDealingDamage == _player1)
             {
                 _p1Progress += amount;
+                _p1ProgressLabel.text = _p1Progress.ToString();
+
                 if (_p1Progress >= _goal)
                 {
                     OnPlayerHasWonMatch(_player1, _player2);
@@ -79,6 +108,7 @@ namespace HarryPotterUnity.Cards
             else if (playerDealingDamage == _player2)
             {
                 _p2Progress += amount;
+                _p2ProgressLabel.text = _p2Progress.ToString();
                 if (_p2Progress >= _goal)
                 {
                     OnPlayerHasWonMatch(_player2, _player1);
