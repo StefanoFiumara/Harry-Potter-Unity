@@ -10,7 +10,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.TakeDamage(DamageAmount);
+            Player.OppositePlayer.TakeDamage(this, DamageAmount);
             Player.OppositePlayer.OnTurnStartEvent += () => Player.OppositePlayer.AddActions(-1);
         }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 {
-    class CreatureDamageBattlecry : BaseCreature
+    public class CreatureDamageBattlecry : BaseCreature
     {
         [UsedImplicitly, SerializeField, Space(10)]
         private int _battlecryDamage;
@@ -13,7 +13,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
         {
             base.OnEnterInPlayAction();
 
-            Player.OppositePlayer.TakeDamage(_battlecryDamage);
+            Player.OppositePlayer.TakeDamage(this, _battlecryDamage);
         }
     }
 }

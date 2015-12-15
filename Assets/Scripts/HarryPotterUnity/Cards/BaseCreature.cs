@@ -58,6 +58,7 @@ namespace HarryPotterUnity.Cards
             _uiCanvas.SetActive(false);
         }
 
+        //TODO: Need source?
         public void TakeDamage(int amount)
         {
             _health -= amount;

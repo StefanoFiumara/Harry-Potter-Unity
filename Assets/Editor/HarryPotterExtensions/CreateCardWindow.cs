@@ -73,9 +73,9 @@ namespace HarryPotterExtensions
 
         private static void TryCreatePrefab(CreateCardRequest request, GameObject card)
         {
-            string newPrefabAssetPath = string.Format("Assets/Prefabs/Resources/Cards/{0}/{1}s/{2}.prefab",
+            string newPrefabAssetPath = string.Format("Assets/Prefabs/Resources/Cards/{0}/{1}/{2}.prefab",
                 request.Classification,
-                request.CardType,
+                request.CardType == Type.Match ? "Matches" : request.CardType + "s",
                 request.CardName);
 
             if (AssetDatabase.LoadAssetAtPath(newPrefabAssetPath, typeof (GameObject)))
@@ -111,20 +111,24 @@ namespace HarryPotterExtensions
 
         private static void CreatePrefab(string newPrefabAssetPath, GameObject card)
         {
+            var path = Path.GetDirectoryName(newPrefabAssetPath);
+            if (path != null && !Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
             Object empty = PrefabUtility.CreateEmptyPrefab(newPrefabAssetPath);
             card = PrefabUtility.ReplacePrefab(card, empty);
 
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(newPrefabAssetPath);
             EditorGUIUtility.PingObject(card);
             EditorUtility.FocusProjectWindow();
-
-            Destroy(card);
         }
 
         private static Material CreateNewMaterial(CreateCardRequest request)
         {
-            string newMaterialAssetPath = string.Format("Assets/Materials/{0}s/{1}/{2}Mat.mat",
-                request.CardType,
+            string newMaterialAssetPath = string.Format("Assets/Materials/{0}/{1}/{2}Mat.mat",
+                request.CardType == Type.Match ? "Matches" : request.CardType + "s",
                 request.Classification,
                 request.CardName);
 

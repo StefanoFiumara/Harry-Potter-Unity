@@ -17,7 +17,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
 
             Player.Discard.Add(target);
             
-            Player.OppositePlayer.TakeDamage(DamageAmount);
+            Player.OppositePlayer.TakeDamage(this, DamageAmount);
         }
 
         public override List<BaseCard> GetValidTargets()

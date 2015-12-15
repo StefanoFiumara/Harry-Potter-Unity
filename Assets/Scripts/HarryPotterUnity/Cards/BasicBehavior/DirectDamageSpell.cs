@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.TakeDamage(_damageAmount);
+            Player.OppositePlayer.TakeDamage(this, _damageAmount);
         }
     }
 }

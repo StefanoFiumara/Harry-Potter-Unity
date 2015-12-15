@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
             if (target is BaseCreature)            
                 (target as BaseCreature).TakeDamage(_damageAmount);
             else
-                Player.OppositePlayer.TakeDamage(_damageAmount);
+                Player.OppositePlayer.TakeDamage(this, _damageAmount);
         }
 
         public override List<BaseCard> GetValidTargets()

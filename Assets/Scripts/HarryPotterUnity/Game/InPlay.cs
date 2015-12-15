@@ -19,12 +19,12 @@ namespace HarryPotterUnity.Game
         } 
 
         private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
-        private static readonly Vector3 ItemPositionOffset = new Vector3(-255f, 0f, 15f);
+        private static readonly Vector3 TopRowPositionOffset = new Vector3(-255f, 0f, 15f);
         private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);
         private static readonly Vector3 CharacterPositionOffset = new Vector3(-356f, -207, 15f);
 
         private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
-        private static readonly Vector2 ItemSpacing = new Vector2(80f, 0f);
+        private static readonly Vector2 TopRowSpacing = new Vector2(80f, 0f);
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 55f);
         private static readonly Vector2 CharacterSpacing = new Vector2(80f, 0f);
 
@@ -126,7 +126,7 @@ namespace HarryPotterUnity.Game
             if (!Cards.Contains(card)) return card.transform.localPosition;
 
             int position = Cards.FindAll(c => c.Type == card.Type).IndexOf(card);
-
+            
             var cardPosition = new Vector3();
 
             //TODO: Violates OCP!
@@ -142,22 +142,21 @@ namespace HarryPotterUnity.Game
                     cardPosition.x += (position % 4) * CreatureSpacing.x;
                     cardPosition.y -= (int)(position / 4) * CreatureSpacing.y;
                     break;
-                case Type.Item:
-                    cardPosition = ItemPositionOffset;
-                    cardPosition.x += (position % 9) * ItemSpacing.x;
-                    break;
                 case Type.Character:
                     cardPosition = CharacterPositionOffset;
                     cardPosition.x += (position % 3) * CharacterSpacing.x;
                     break;
-                case Type.Match:
-                    break;
+                case Type.Item:
                 case Type.Location:
-                    break;
                 case Type.Adventure:
+                case Type.Match:
+                    int topRowIndex = Cards.FindAll(c => c.Type == Type.Match || c.Type == Type.Adventure ||
+                                                         c.Type == Type.Item || c.Type == Type.Location).IndexOf(card);
+                    cardPosition = TopRowPositionOffset;
+                    cardPosition.x += (topRowIndex % 9) * TopRowSpacing.x;
                     break;
                 default:
-                    Log.Write("Warning: GetTargetPositionForCard could not identify cardType");
+                    Log.Error("GetTargetPositionForCard could not identify cardType");
                     break;
             }
 

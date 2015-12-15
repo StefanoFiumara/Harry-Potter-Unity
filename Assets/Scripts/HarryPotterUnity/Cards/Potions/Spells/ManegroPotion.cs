@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Cards.Potions.Spells
 
             Player.Discard.Add(lesson);
 
-            Player.OppositePlayer.TakeDamage(damage);
+            Player.OppositePlayer.TakeDamage(this, damage);
         }
     }
 }

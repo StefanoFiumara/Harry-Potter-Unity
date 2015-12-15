@@ -67,7 +67,7 @@ namespace HarryPotterUnity.Game
         public Text CardsLeftLabel { get; set; }
         
         private HudManager _hudManager;
-
+        
         public delegate void OnTurnStartActions();
         public event OnTurnStartActions OnTurnStartEvent;
 
@@ -78,6 +78,9 @@ namespace HarryPotterUnity.Game
         {
             if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
         }
+
+        public delegate void OnDamageTakenAction(BaseCard sourceCard, int amount);
+        public event OnDamageTakenAction OnDamageTakenEvent;
 
         public void Awake()
         {
@@ -133,7 +136,9 @@ namespace HarryPotterUnity.Game
             Deck.DrawCard();
             AddActions(2);
             if (ActionsAvailable < 1) ActionsAvailable = 1;
-            OppositePlayer.TakeDamage(DamagePerTurn);
+
+            //TODO: loop through creatures to send each source?
+            OppositePlayer.TakeDamage(null, DamagePerTurn);
 
             //reset the damage buffer in case it was set last turn.
             OppositePlayer.CreatureDamageBuffer = 0;
@@ -193,16 +198,15 @@ namespace HarryPotterUnity.Game
             EndGamePanel.gameObject.SetActive(true);
         }
 
-        public void TakeDamage(int amount)
+        public void TakeDamage(BaseCard sourceCard, int amount)
         {
             if (amount <= 0) return;
-
+            
             var cards = new List<BaseCard>();
-
             for (int i = 0; i < amount; i++)
             {
                 //TODO: Only perform this check if the damage source is a creature!
-                // OR check all the buffers based on damage type??
+                // OR check all the buffers based on damage source?? if(CanBeDamagedBySource(BaseCard source)) {
                 if (CreatureDamageBuffer > 0)
                 {
                     CreatureDamageBuffer--;
@@ -220,6 +224,11 @@ namespace HarryPotterUnity.Game
             }
 
             Discard.AddAll(cards);
+
+            if (OnDamageTakenEvent != null && sourceCard != null)
+            {
+                OnDamageTakenEvent(sourceCard, amount);
+            }
         }
         
         public void DisableAllCards()
