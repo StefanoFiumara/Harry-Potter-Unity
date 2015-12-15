@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -93,7 +91,7 @@ namespace HarryPotterUnity.Game
 
             _hudManager = FindObjectOfType<HudManager>();
 
-            if (!_hudManager) throw new Exception("Player could not find HudManager!");
+            if (!_hudManager) throw new System.Exception("Player could not find HudManager!");
         }
 
         public void InitDeck(List<LessonTypes> selectedLessons)
@@ -207,7 +205,7 @@ namespace HarryPotterUnity.Game
             {
                 //TODO: Only perform this check if the damage source is a creature!
                 // OR check all the buffers based on damage source?? if(CanBeDamagedBySource(BaseCard source)) {
-                if (CreatureDamageBuffer > 0)
+                if (sourceCard.Type == Type.Creature && CreatureDamageBuffer > 0)
                 {
                     CreatureDamageBuffer--;
                     continue;
