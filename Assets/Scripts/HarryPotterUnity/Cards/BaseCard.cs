@@ -8,6 +8,7 @@ using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityLogWrapper;
 using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Cards
@@ -314,12 +315,13 @@ namespace HarryPotterUnity.Cards
 
         public void SetHighlight()
         {
-            _highlight.SetActive(true);
+            if (_highlight) _highlight.SetActive(true);
+            else Log.Error("Highlight component has not yet been added.");
         }
 
         public void RemoveHighlight()
         {
-            _highlight.SetActive(false);
+            if(_highlight) _highlight.SetActive(false);
         }
     }
 }

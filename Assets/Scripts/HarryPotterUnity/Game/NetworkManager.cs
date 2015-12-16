@@ -173,7 +173,7 @@ namespace HarryPotterUnity.Game
             _player1.NetworkId = 0;
             _player2.NetworkId = 1;
 
-            StartCoroutine(_beginGameSequence());
+            BeginGameSequence();
         }
 
         private void InitPlayerDecks()
@@ -202,14 +202,15 @@ namespace HarryPotterUnity.Game
             _player2.InitDeck(p2SelectedLessons);
         }
 
-        private IEnumerator _beginGameSequence()
+        private void BeginGameSequence()
         {
             Log.Write("Game setup complete, starting match");
             _player1.Deck.SpawnStartingCharacter();
             _player2.Deck.SpawnStartingCharacter();
+
             _player1.Deck.Shuffle();
             _player2.Deck.Shuffle();
-            yield return new WaitForSeconds(2.4f);
+
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
