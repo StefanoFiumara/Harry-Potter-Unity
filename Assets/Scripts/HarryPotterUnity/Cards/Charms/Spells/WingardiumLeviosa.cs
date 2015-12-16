@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
@@ -11,7 +13,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         {
             Player.OppositePlayer.OnTurnStartEvent += () =>
             {
-                Player.CreatureDamageBuffer = Player.OppositePlayer.DamagePerTurn;
+                Player.CreatureDamageBuffer = Player.OppositePlayer.InPlay.Cards.OfType<BaseCreature>().Sum(card => card.DamagePerTurn);
             };
             
         }

@@ -34,15 +34,7 @@ namespace HarryPotterUnity.Game
                 return _lessonTypesInPlay;
             }
         }
-
-        public int DamagePerTurn
-        {
-            get
-            {
-                return InPlay.Cards.OfType<BaseCreature>().Sum(card => card.DamagePerTurn);
-            }
-        }
-        
+ 
         public int AmountLessonsInPlay
         {
             get
@@ -136,7 +128,11 @@ namespace HarryPotterUnity.Game
             if (ActionsAvailable < 1) ActionsAvailable = 1;
 
             //TODO: loop through creatures to send each source?
-            OppositePlayer.TakeDamage(null, DamagePerTurn);
+            //OppositePlayer.TakeDamage(null, DamagePerTurn);
+            foreach (var creature in InPlay.GetCreaturesInPlay().Cast<BaseCreature>())
+            {
+                OppositePlayer.TakeDamage(creature, creature.DamagePerTurn);
+            }
 
             //reset the damage buffer in case it was set last turn.
             OppositePlayer.CreatureDamageBuffer = 0;
