@@ -37,7 +37,7 @@ namespace HarryPotterUnity.Tween
 
         private IEnumerator RunTweenQueue()
         {
-            while (true)
+            while (_tweenQueueRunning)
             {
                 if (_queue.Count == 0)
                 {
@@ -47,14 +47,13 @@ namespace HarryPotterUnity.Tween
                 else
                 {
                     yield return new WaitForSeconds(_timeUntilNextTween);
-                    var tween = _queue.Dequeue();
+                    ITweenObject tween = _queue.Dequeue();
                     tween.ExecuteTween();
                     _timeUntilNextTween = tween.TimeUntilNextTween;
                     yield return new WaitForSeconds(tween.CompletionTime);
                     
                 }
             }
-            // ReSharper disable once FunctionNeverReturns
         }
 
         public void Reset()

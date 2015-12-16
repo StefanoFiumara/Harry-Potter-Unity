@@ -103,15 +103,14 @@ namespace HarryPotterUnity.Game
 
         private void TweenCardToPosition(BaseCard card)
         {
-            var cardPosition = GetTargetPositionForCard(card);
             var tween = new MoveTween
             {
                 Target = card.gameObject,
-                Position = cardPosition,
+                Position = GetTargetPositionForCard(card),
                 Time = 0.3f,
                 Flip = FlipState.FaceUp,
                 Rotate = TweenRotationType.Rotate90,
-                StateAfterAnimation = State.InPlay
+                OnCompleteCallback = () => card.State = State.InPlay
             };
             GameManager.TweenQueue.AddTweenToQueue( tween );
         }
@@ -129,7 +128,6 @@ namespace HarryPotterUnity.Game
             
             var cardPosition = new Vector3();
 
-            //TODO: Violates OCP!
             switch (card.Type)
             {
                 case Type.Lesson:

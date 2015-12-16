@@ -23,7 +23,7 @@ namespace HarryPotterUnity.Cards
         
         public int DamagePerTurn { get { return _damagePerTurn; } }
         public int Health { get { return _health; } }
-        [UsedImplicitly]
+
         protected override void Start()
         {
             base.Start();
@@ -70,6 +70,7 @@ namespace HarryPotterUnity.Cards
             }
         }
 
+        //TODO: Prevent from healing above starting health.
         public void Heal(int amount)
         {
             _health += amount;
@@ -77,8 +78,6 @@ namespace HarryPotterUnity.Cards
         }
 
         public virtual bool CanPerformInPlayAction() { return false; }
-
-        //Generic Creatures don't do anything special on these actions
         public virtual void OnInPlayBeforeTurnAction() { }
         public virtual void OnInPlayAfterTurnAction() { }
         public virtual void OnSelectedAction() { }

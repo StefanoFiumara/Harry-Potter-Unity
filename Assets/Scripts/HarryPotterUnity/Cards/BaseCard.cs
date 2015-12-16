@@ -45,7 +45,7 @@ namespace HarryPotterUnity.Cards
 
         }
 
-        protected State State { get; set; }
+        public State State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
 
         public Type Type { get { return GetCardType(); } }
@@ -158,13 +158,7 @@ namespace HarryPotterUnity.Cards
             col.isTrigger = true;
             col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
         }
-
-        [UsedImplicitly]
-        public void SwitchState(State newState)
-        {
-            State = newState;
-        }
-
+        
         [UsedImplicitly]
         public void OnMouseOver()
         {

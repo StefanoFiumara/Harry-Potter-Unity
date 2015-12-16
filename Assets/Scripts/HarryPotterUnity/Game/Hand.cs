@@ -122,7 +122,7 @@ namespace HarryPotterUnity.Game
                     Time = 0.5f,
                     Flip = flipState,
                     Rotate = TweenRotationType.NoRotate,
-                    StateAfterAnimation = State.InHand
+                    OnCompleteCallback = () => card.State = State.InHand
                 };
                 GameManager.TweenQueue.AddTweenToQueue( previewTween );
             }
@@ -135,7 +135,7 @@ namespace HarryPotterUnity.Game
                 Delay = 0.1f,
                 Flip = flipState,
                 Rotate = TweenRotationType.NoRotate,
-                StateAfterAnimation = State.InHand
+                OnCompleteCallback = () => card.State = State.InHand
             };
             GameManager.TweenQueue.AddTweenToQueue( finalTween );
         }

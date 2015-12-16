@@ -1,5 +1,4 @@
 ﻿using HarryPotterUnity.Game;
-using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Quidditch.Matches
 {

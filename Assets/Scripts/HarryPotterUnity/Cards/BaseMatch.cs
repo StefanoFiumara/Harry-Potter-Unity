@@ -8,7 +8,8 @@ using UnityEngine.UI;
 
 namespace HarryPotterUnity.Cards
 {
-    public abstract class BaseMatch : BaseCard, IPersistentCard {
+    public abstract class BaseMatch : BaseCard, IPersistentCard
+    {
 
         protected override Type GetCardType()
         {

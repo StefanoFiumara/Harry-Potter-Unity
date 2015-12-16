@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Cards;
+﻿using System;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using UnityEngine;
 
@@ -13,9 +14,10 @@ namespace HarryPotterUnity.Tween
         public float Delay { get; set; }
         public FlipState Flip { get; set; }
         public TweenRotationType Rotate { get; set; }
-        public State StateAfterAnimation { get; set; }
 
         public float TimeUntilNextTween { get; set; }
+
+        public Action OnCompleteCallback { private get; set; }
 
         public float CompletionTime
         {
@@ -30,9 +32,7 @@ namespace HarryPotterUnity.Tween
                         "position", Position,
                         "easetype", iTween.EaseType.EaseInOutSine,
                         "islocal", true,
-                        "oncomplete", "SwitchState",
-                        "oncompletetarget", Target,
-                        "oncompleteparams", StateAfterAnimation
+                        "oncomplete", OnCompleteCallback
                         ));
 
             RotateAndFlipCard();

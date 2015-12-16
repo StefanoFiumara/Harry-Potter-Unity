@@ -35,7 +35,7 @@ namespace HarryPotterUnity.Cards
                 Time = 0.5f,
                 Flip = FlipState.FaceUp,
                 Rotate = rotateType,
-                StateAfterAnimation = State,
+                OnCompleteCallback = () => State = State.Discarded,
                 TimeUntilNextTween = 0.6f
             };
             GameManager.TweenQueue.AddTweenToQueue(tween);

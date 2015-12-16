@@ -5,7 +5,8 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.BasicBehavior
 {
-    public class DirectDamageSpell : BaseSpell, IDamageSpell {
+    public class DirectDamageSpell : BaseSpell, IDamageSpell
+    {
         
         [Header("Direct Damage Spell Settings"), Space(10)]
         [UsedImplicitly, SerializeField]

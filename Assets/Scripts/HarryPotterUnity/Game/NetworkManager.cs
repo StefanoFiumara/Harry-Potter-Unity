@@ -265,7 +265,7 @@ namespace HarryPotterUnity.Game
         {
             var player = id == 0 ? _player1 : _player2;
 
-            Log.Write("Player {0} Draws a Card", player.NetworkId);
+            Log.Write("Player {0} Draws a Card", player.NetworkId + 1);
             player.Deck.DrawCard();
             player.UseActions();
         }

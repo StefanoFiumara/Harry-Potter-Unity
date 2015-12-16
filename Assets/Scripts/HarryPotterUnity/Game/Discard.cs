@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using JetBrains.Annotations;
@@ -44,7 +45,7 @@ namespace HarryPotterUnity.Game
                 Time = 0.35f,
                 Flip = FlipState.FaceUp,
                 Rotate = TweenRotationType.NoRotate,
-                StateAfterAnimation = State.Discarded
+                OnCompleteCallback = () => card.State = State.Discarded
             };
 
             var finalTween = new MoveTween
@@ -54,7 +55,7 @@ namespace HarryPotterUnity.Game
                 Time = 0.25f,
                 Flip = FlipState.FaceUp,
                 Rotate = TweenRotationType.NoRotate,
-                StateAfterAnimation = State.Discarded
+                OnCompleteCallback = () => card.State = State.Discarded
             };
 
             GameManager.TweenQueue.AddTweenToQueue( previewTween );
