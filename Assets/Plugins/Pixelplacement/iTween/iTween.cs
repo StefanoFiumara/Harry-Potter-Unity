@@ -8044,15 +8044,15 @@ public class iTween : MonoBehaviour
                 target = gameObject;
             }
 
-            //throw an error if a string wasn't passed for callback:
+            //Check if the callback type is a string or a delegate
             if (_tweenArguments[callbackType] is string)
             {
                 target.SendMessage((string)_tweenArguments[callbackType], (object)_tweenArguments[callbackType + "params"], SendMessageOptions.DontRequireReceiver);
             }
-            else if (_tweenArguments[callbackType] is System.Action)
+            else if (_tweenArguments[callbackType] is Action)
             {
-                var action = (Action)_tweenArguments[callbackType];
-                action();
+                var callbackAction = (Action)_tweenArguments[callbackType];
+                callbackAction();
             }
             else
             {
