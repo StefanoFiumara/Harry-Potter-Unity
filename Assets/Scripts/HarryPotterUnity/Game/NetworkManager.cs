@@ -233,7 +233,7 @@ namespace HarryPotterUnity.Game
                 return;
             }
 
-            Log.Write("Player {0} Plays {1} from hand", card.Player.NetworkId, card.CardName);
+            Log.Write("Player {0} Plays {1} from hand", card.Player.NetworkId + 1, card.CardName);
             card.MouseUpAction();
             card.Player.OnCardPlayed(card);
         }
@@ -256,7 +256,7 @@ namespace HarryPotterUnity.Game
                 return;
             }
             
-            Log.Write("Player {0} Activates {1}'s effect", card.Player.NetworkId, card.CardName);
+            Log.Write("Player {0} Activates {1}'s effect", card.Player.NetworkId + 1, card.CardName);
             persistentCard.OnSelectedAction();
         }
 
@@ -278,7 +278,7 @@ namespace HarryPotterUnity.Game
             var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
             
             Log.Write("Player {0} plays card {1} targeting {2}", 
-                card.Player.NetworkId, 
+                card.Player.NetworkId + 1, 
                 card.CardName, 
                 string.Join(",", selectedCards.Select(c => c.CardName).ToArray()));
 
