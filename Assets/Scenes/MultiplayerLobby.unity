@@ -153,7 +153,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '<b>Potions</b>
 
-    Style: <b>Mixed</b>
+    Style: <b>Cheap, Powerful, Requires Sacrifice</b>
 
 
     Potions lessons allows you to use cauldrons to get ahead in your lessons, brew
@@ -693,7 +693,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '<b>Charms</b>
 
-    Style: <b>Mixed</b>
+    Style: <b>Low but versatile damage</b>
 
 
     Charms allows you to equip powerful wands and teaches you how to throw a multitude
@@ -861,7 +861,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '<b>Transfigurations</b>
 
-    Style: <b>Defensive</b>
+    Style: <b>Card Removal / Defensive</b>
 
 
     In addition to using various trinkets, transfigurations will teach you various
@@ -2766,7 +2766,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '<b>Quidditch</b>
 
-    Style: <b>Offensive</b>
+    Style: <b>Dual Effects</b>
 
 
     Challenge your opponent to a Quidditch Match! Quidditch actions are extremely
@@ -3209,7 +3209,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: '<b>Care of Magical Creatures</b>
 
-    Style: <b>Offensive</b>
+    Style: <b>High & Consistent Damage</b>
 
 
     Crucial for almost every witch or wizard, Care of Magical Creatures teaches you
