@@ -232,8 +232,8 @@ namespace HarryPotterUnity.Cards
         {
             if (!Tags.Contains(Tag.Unique)) return true;
 
-            var allInPlayCards = Player.InPlay.CardsExceptStartingCharacter.Concat(
-                Player.OppositePlayer.InPlay.CardsExceptStartingCharacter)
+            var allInPlayCards = Player.InPlay.Cards.Concat(
+                Player.OppositePlayer.InPlay.Cards)
                 .Select(c => c.CardName);
 
             return allInPlayCards.Contains(CardName) == false;
