@@ -3,9 +3,7 @@ using System.Linq;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Tween;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
@@ -19,10 +17,16 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
             var hand = Player.Hand.Cards.Select(card => card.gameObject).ToList();
 
             if (!Player.IsLocalPlayer)
-                GameManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(new List<GameObject>(hand),
-                                                                          Enums.FlipState.FaceUp,
-                                                                          timeUntilNextTween: 1f));
-
+            {
+                var tween = new FlipCardsTween
+                {
+                    Targets = hand.ToList(),
+                    Flip = FlipState.FaceUp,
+                    TimeUntilNextTween = 1f
+                };
+                GameManager.TweenQueue.AddTweenToQueue(tween);
+            }
+              
             for (int i = handCount - 1; i >= 0; i--)
             {
                 var card = Player.Hand.Cards[i];
@@ -34,7 +38,15 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
                 hand.Remove(card.gameObject);
             }
 
-            if (!Player.IsLocalPlayer) GameManager.TweenQueue.AddTweenToQueue(new FlipCardsTween(hand, FlipState.FaceDown));
+            if (!Player.IsLocalPlayer)
+            {
+                var tween = new FlipCardsTween
+                {
+                    Targets = hand,
+                    Flip = FlipState.FaceDown
+                };
+                GameManager.TweenQueue.AddTweenToQueue(tween);
+            }
         }
     }
 }

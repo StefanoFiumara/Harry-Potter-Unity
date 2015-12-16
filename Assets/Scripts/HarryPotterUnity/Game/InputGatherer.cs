@@ -43,7 +43,7 @@ namespace HarryPotterUnity.Game
 
             foreach (var card in validCards)
             {
-                card.SetAsValidChoice();
+                card.SetHighlight();
                 card.Enable();
                 card.gameObject.layer = GameManager.VALID_CHOICE_LAYER;
             }

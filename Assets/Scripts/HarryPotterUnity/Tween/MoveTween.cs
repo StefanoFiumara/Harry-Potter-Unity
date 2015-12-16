@@ -16,6 +16,7 @@ namespace HarryPotterUnity.Tween
         public TweenRotationType Rotate { get; set; }
 
         public float TimeUntilNextTween { get; set; }
+        public BaseCard TweenSource { get; set; }
 
         public Action OnCompleteCallback { private get; set; }
 

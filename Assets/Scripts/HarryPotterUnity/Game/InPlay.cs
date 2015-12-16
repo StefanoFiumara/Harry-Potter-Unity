@@ -117,7 +117,12 @@ namespace HarryPotterUnity.Game
 
         private void RearrangeCardsOfType(Type type)
         {
-            GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards.FindAll(card => card.Type == type), GetTargetPositionForCard));
+            var tween = new AsyncMoveTween
+            {
+                Targets = Cards.FindAll(c => c.Type == type),
+                GetPosition = GetTargetPositionForCard
+            };
+            GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(BaseCard card)

@@ -119,7 +119,7 @@ namespace HarryPotterUnity.Game
         {
             if (CanDrawCard())
             {
-                Cards[Cards.Count - 1].SetAsValidChoice();
+                Cards[Cards.Count - 1].SetHighlight();
             }
         }
 
@@ -156,7 +156,7 @@ namespace HarryPotterUnity.Game
                 Cards[random] = temp;
             }
 
-            GameManager.TweenQueue.AddTweenToQueue(new ShuffleDeckTween(Cards, GetTargetPositionForCard));
+            GameManager.TweenQueue.AddTweenToQueue(new ShuffleDeckTween(Cards));
             
         }
 
@@ -225,7 +225,12 @@ namespace HarryPotterUnity.Game
         
         private void AdjustCardSpacing()
         {
-            GameManager.TweenQueue.AddTweenToQueue(new AsyncMoveTween(Cards, GetTargetPositionForCard));
+            var tween = new AsyncMoveTween
+            {
+                Targets = Cards,
+                GetPosition = GetTargetPositionForCard
+            };
+            GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(BaseCard card)

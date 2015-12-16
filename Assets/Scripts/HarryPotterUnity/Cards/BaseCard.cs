@@ -312,7 +312,7 @@ namespace HarryPotterUnity.Cards
             return true;
         }
 
-        public void SetAsValidChoice()
+        public void SetHighlight()
         {
             _highlight.SetActive(true);
         }

@@ -5,40 +5,35 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Tween
 {
-    class FlipCardsTween : ITweenObject
+    public class FlipCardsTween : ITweenObject
     {
         
-        private readonly List<GameObject> _targets;
-        private readonly float _time;
-        private readonly float _delay;
-        private readonly float _timeUntilNextTween;
-        private readonly FlipState _flip;
-      
+        public List<GameObject> Targets { get; set; }
+        public float TimeUntilNextTween { get; set; }
+        public FlipState Flip { get; set; }
 
-        public FlipCardsTween(List<GameObject> targets, FlipState flip, float time = 0.3f, float delay = 0f, float timeUntilNextTween = 0f)
-        {
-            _targets = targets;
-            _flip = flip;
-            _time = time;
-            _delay = delay;
-            _timeUntilNextTween = timeUntilNextTween;
-        }
+
+        //public FlipCardsTween(List<GameObject> targets, FlipState flip, float time = 0.3f, float delay = 0f, float timeUntilNextTween = 0f)
+        //{
+        //    Targets = targets;
+        //    Flip = flip;
+        //    Time = time;
+        //    Delay = delay;
+        //    _timeUntilNextTween = timeUntilNextTween;
+        //}
 
 
         public float CompletionTime
         {
-            get { return _time + _delay; }
+            get { return 0.3f; }
         }
-
-        public float TimeUntilNextTween
-        {
-            get { return _timeUntilNextTween; }
-        }
+        
+        public BaseCard TweenSource { get; set; }
 
         public void ExecuteTween()
         {
             float targetFlip = 0f;
-            switch (_flip)
+            switch (Flip)
             {
                 case FlipState.FaceUp:
                     targetFlip = 0f;
@@ -48,12 +43,11 @@ namespace HarryPotterUnity.Tween
                     break;
             }
 
-            foreach (var target in _targets)
+            foreach (var target in Targets)
             {
-                target.GetComponent<BaseCard>().FlipState = _flip;
+                target.GetComponent<BaseCard>().FlipState = Flip;
 
-                iTween.RotateTo(target, iTween.Hash("time", _time,
-                    "delay", _delay,
+                iTween.RotateTo(target, iTween.Hash("time", CompletionTime,
                     "y", targetFlip,
                     "easetype", iTween.EaseType.EaseInOutSine,
                     "islocal", true
