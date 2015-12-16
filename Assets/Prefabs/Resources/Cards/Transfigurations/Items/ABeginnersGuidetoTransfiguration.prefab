@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 487118}
   - 114: {fileID: 11452678}
   - 114: {fileID: 11491284}
-  - 114: {fileID: 11433868}
+  - 114: {fileID: 11425830}
   m_Layer: 10
   m_Name: ABeginnersGuidetoTransfiguration
   m_TagString: Untagged
@@ -182,7 +182,7 @@ MeshCollider:
   serializedVersion: 2
   m_Convex: 0
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11433868
+--- !u!114 &11425830
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -190,14 +190,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 137824}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32f14a1f1a646e04e862bc3b6e51aa3f, type: 3}
+  m_Script: {fileID: 11500000, guid: f7dcacc5c9d8d1a48af76ab1bd7531cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _classification: 2
   _rarity: 0
   Tags: 
   _lessonType: 2
-  _amountLessonsProvided: 1
+  _amountLessonsProvided: 2
 --- !u!114 &11452678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,7 +229,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _classification
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _amountLessonsProvided
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _lessonType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 137824}
