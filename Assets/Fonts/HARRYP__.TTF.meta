@@ -10,7 +10,9 @@ TrueTypeFontImporter:
   characterPadding: 0
   includeFontData: 1
   use2xBehaviour: 0
-  fontNames: []
+  fontNames:
+  - HarryPotter
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   userData: 
