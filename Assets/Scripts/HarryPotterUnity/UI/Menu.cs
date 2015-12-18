@@ -2,6 +2,7 @@
 
 namespace HarryPotterUnity.UI
 {
+    [RequireComponent(typeof(Animator), typeof(CanvasGroup))]
     public class Menu : MonoBehaviour
     {
         private Animator _animator;
@@ -14,7 +15,7 @@ namespace HarryPotterUnity.UI
             { _animator.SetBool("IsOpen", value); }
         }
 
-        private void Awake()
+        protected virtual void Awake()
         {
             _animator = GetComponent<Animator>();
             _canvasGroup = GetComponent<CanvasGroup>();

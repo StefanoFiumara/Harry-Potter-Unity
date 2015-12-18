@@ -43,10 +43,7 @@ namespace HarryPotterUnity.UI
 
         [SerializeField, UsedImplicitly] 
         private RectTransform _errorPanel;
-
-        [SerializeField, UsedImplicitly] 
-        private RectTransform _lessonSelectPanel;
-
+        
         [SerializeField, UsedImplicitly] 
         private Toggle _selectCreatures;
         [SerializeField, UsedImplicitly]
@@ -120,9 +117,6 @@ namespace HarryPotterUnity.UI
 
             _titleText.gameObject.SetActive(true);
             _gameStatusText.gameObject.SetActive(true);
-
-            EnableLessonSelect();
-            _lessonSelectPanel.gameObject.SetActive(true);
         }
 
         public void SetPlayer2CameraRotation()
@@ -171,7 +165,6 @@ namespace HarryPotterUnity.UI
                 Log.Write("Initiate Find Match");
 
                 PhotonNetwork.JoinRandomRoom();
-                DisableLessonSelect();
             }
             else
             {
@@ -243,25 +236,7 @@ namespace HarryPotterUnity.UI
             _gameplayHudContainer.gameObject.SetActive(false);
 
         }
-
-        private void DisableLessonSelect()
-        {
-            _selectCreatures.interactable = false;
-            _selectCharms.interactable = false;
-            _selectTransfiguration.interactable = false;
-            _selectPotions.interactable = false;
-            _selectQuidditch.interactable = false;
-        }
-
-        private void EnableLessonSelect()
-        {
-            _selectCreatures.interactable = true;
-            _selectCharms.interactable = true;
-            _selectTransfiguration.interactable = true;
-            _selectPotions.interactable = true;
-            _selectQuidditch.interactable = true;
-        }
-
+        
         public void ToggleSkipActionButton()
         {
             _skipActionButton.SetActive(!_skipActionButton.activeSelf);

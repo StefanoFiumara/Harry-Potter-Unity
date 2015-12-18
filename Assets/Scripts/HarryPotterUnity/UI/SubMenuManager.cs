@@ -27,5 +27,15 @@ namespace HarryPotterUnity.UI
                 _currentMenu.IsOpen = true;
             }
         }
+
+        [UsedImplicitly]
+        public void HideMenu(Menu menu)
+        {
+            if (menu != null && menu == _currentMenu)
+            {
+                menu.IsOpen = false;
+                _currentMenu = null;
+            }
+        }
     }
 }

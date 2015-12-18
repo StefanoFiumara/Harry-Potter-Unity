@@ -45,6 +45,11 @@ namespace HarryPotterUnity.Game
             Log.Write("Connected to Photon Master Server");
 
             Log.Write("Joining {0} Lobby", LOBBY_VERSION);
+            ConnectToPhotonLobby();
+        }
+
+        public static void ConnectToPhotonLobby()
+        {
             PhotonNetwork.JoinLobby(new TypedLobby(LOBBY_VERSION, LobbyType.Default));
         }
 
