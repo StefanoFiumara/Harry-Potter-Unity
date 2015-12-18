@@ -13,8 +13,13 @@ namespace HarryPotterUnity.UI
 
         private void Start()
         {
-            ShowMenu(_currentMenu);
             _subMenuManager = GetComponent<SubMenuManager>();
+        }
+
+        [UsedImplicitly]
+        public void OnJoinedLobby()
+        {
+            ShowMenu(_currentMenu);
         }
 
         [UsedImplicitly]

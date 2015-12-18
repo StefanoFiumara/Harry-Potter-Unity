@@ -44,7 +44,7 @@ namespace HarryPotterUnity.UI
             TextColor = new Color32(0x00, 0xC6, 0x1A, 0xFF),
             Title = "<b>Potions</b>",
             Style = "Style: <b>Cheap & Powerful, But At A Cost</b>",
-            Description = "Potions contains very powerful spells that are cheap, versatile, and deal high damage, but they often require a sacrifice in the form of discarding a certain number of your lessons from the board in order to be played."
+            Description = "Potions contain very powerful spells that are cheap, versatile, and deal high damage, but they often require a lesson sacrifice."
         };
 
         private readonly LessonDescription _quidditch = new LessonDescription
