@@ -12,25 +12,27 @@ namespace HarryPotterUnity.UI
 {
     public class FindMatchPanel : MonoBehaviour
     {
-
         private List<Toggle> _lessonSelectButtons;
-        private List<Button> _allButtons; 
         private SubMenuManager _subMenuManager;
         private ErrorPanel _errorPanel;
 
         private Button _startMatchmakingButton;
         private Button _cancelMatchmakingButton;
 
+        private Text _findMatchStatus;
+
         private void Awake()
         {
             _lessonSelectButtons = FindObjectsOfType<Toggle>().ToList();
-            _allButtons = FindObjectsOfType<Button>().ToList();
             
             _subMenuManager = FindObjectOfType<SubMenuManager>();
             _errorPanel = FindObjectOfType<ErrorPanel>();
 
-            _startMatchmakingButton = _allButtons.Find(b => b.name.Contains("StartMatchmakingButton"));
-            _cancelMatchmakingButton = _allButtons.Find(b => b.name.Contains("BackToMainMenuButton"));
+            var allButtons = FindObjectsOfType<Button>().ToList();
+            _startMatchmakingButton = allButtons.Find(b => b.name.Contains("StartMatchmakingButton"));
+            _cancelMatchmakingButton = allButtons.Find(b => b.name.Contains("BackToMainMenuButton"));
+
+            _findMatchStatus = FindObjectsOfType<Text>().Single(t => t.name.Contains("FindMatchStatus"));
         }
 
         [UsedImplicitly]
@@ -64,7 +66,15 @@ namespace HarryPotterUnity.UI
         public void OnJoinedRoom()
         {
             _cancelMatchmakingButton.interactable = true;
+            _findMatchStatus.GetComponent<Animator>().SetBool("IsFindingMatch", true);
         }
+
+        [UsedImplicitly]
+        public void OnLeftRoom()
+        {
+            _findMatchStatus.GetComponent<Animator>().SetBool("IsFindingMatch", false);
+        }
+        
 
         private List<LessonTypes> GetSelectedLessons()
         {

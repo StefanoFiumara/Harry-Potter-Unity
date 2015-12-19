@@ -28,7 +28,7 @@ namespace HarryPotterUnity.UI
             TextColor = new Color32(0x30, 0x98, 0xFF, 0xFF),
             Title = "<b>Charms</b>",
             Style = "Style: <b>Low But Versatile Damage</b>",
-            Description = "Charms are spells with relatively low damage that make up for it in versatility, charms have the ability to target creatures as well as your opponent, so they can be used for removal when you are in a pinch."
+            Description = "Charms are spells with low damage that make up for it in versatility, charms have the ability to target creatures as well as your opponent, so they can be used for removal when you are in a pinch."
         };
 
         private readonly LessonDescription _transfiguration = new LessonDescription

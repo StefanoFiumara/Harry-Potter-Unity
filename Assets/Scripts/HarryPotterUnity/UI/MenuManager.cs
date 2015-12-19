@@ -1,5 +1,7 @@
-﻿using JetBrains.Annotations;
+﻿using System.Linq;
+using JetBrains.Annotations;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace HarryPotterUnity.UI
 {
@@ -11,9 +13,17 @@ namespace HarryPotterUnity.UI
         [SerializeField]
         private SubMenuManager _subMenuManager;
 
-        private void Start()
+        private Text _networkStatus;
+        private Text _playersOnline;
+
+        private void Awake()
         {
             _subMenuManager = GetComponent<SubMenuManager>();
+
+            var allTextObjects = FindObjectsOfType<Text>();
+
+            _networkStatus = allTextObjects.SingleOrDefault(t => t.name.Contains("NetworkStatusDetailed"));
+            _playersOnline = allTextObjects.SingleOrDefault(t => t.name.Contains("PlayersOnlineLabel"));
         }
 
         [UsedImplicitly]
@@ -44,6 +54,12 @@ namespace HarryPotterUnity.UI
                 menu.IsOpen = false;
                 _currentMenu = null;
             }
+        }
+
+        private void Update()
+        {
+            _playersOnline.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
+            _networkStatus.text = string.Format("Network Status: {0}", PhotonNetwork.connectionStateDetailed);
         }
     }
 }

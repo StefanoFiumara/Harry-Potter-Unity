@@ -17,9 +17,7 @@ namespace HarryPotterUnity.Game
     {
         private Player _player1;
         private Player _player2;
-
-        private HudManager _hudManager;
-
+        
         private const string LOBBY_VERSION = "v0.2-dev";
 
         public void Start()
@@ -30,13 +28,6 @@ namespace HarryPotterUnity.Game
             Log.Write("Connecting to Photon Master Server");
 
             PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
-            
-            _hudManager = FindObjectOfType<HudManager>();
-
-            if (!_hudManager)
-            {
-                Debug.LogError("Network Manager could not find Hud Manager in Scene!");
-            }
         }
 
         [UsedImplicitly]
@@ -44,12 +35,12 @@ namespace HarryPotterUnity.Game
         {
             Log.Write("Connected to Photon Master Server");
 
-            Log.Write("Joining {0} Lobby", LOBBY_VERSION);
             ConnectToPhotonLobby();
         }
 
         public static void ConnectToPhotonLobby()
         {
+            Log.Write("Joining {0} Lobby", LOBBY_VERSION);
             PhotonNetwork.JoinLobby(new TypedLobby(LOBBY_VERSION, LobbyType.Default));
         }
 
@@ -57,7 +48,6 @@ namespace HarryPotterUnity.Game
         public void OnJoinedLobby()
         {
             Log.Write("Joined {0} Lobby", LOBBY_VERSION);
-            _hudManager.InitMainMenu();
         }
 
         [UsedImplicitly]
@@ -69,7 +59,7 @@ namespace HarryPotterUnity.Game
                 return;
             }
             
-            _hudManager.SetPlayer2CameraRotation();
+            //_hudManager.SetPlayer2CameraRotation();
         }
 
         [UsedImplicitly]
@@ -92,15 +82,12 @@ namespace HarryPotterUnity.Game
         public void OnPhotonPlayerDisconnected()
         {
             Log.Write("Opponent disconnected, return to main menu");
-            _hudManager.BackToMainMenu();
+            
         }
 
         [PunRPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
-            _hudManager.DisableMainMenuHud();
-            _hudManager.EnableGameplayHud();
-
             Random.seed = rngSeed;
             SpawnPlayers();
             StartGame();
@@ -130,10 +117,8 @@ namespace HarryPotterUnity.Game
             _player2.OppositePlayer = _player1;
 
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
-
-            _player1.EndGamePanel = _hudManager.EndGamePanel;
-            _player2.EndGamePanel = _hudManager.EndGamePanel;
-
+            
+            /*
             if (_player1.IsLocalPlayer)
             {
                 SetPlayer1Local();
@@ -142,8 +127,9 @@ namespace HarryPotterUnity.Game
             {
                 SetPlayer2Local();
             }
+            */
         }
-
+        /*
         private void SetPlayer2Local()
         {
             _player1.TurnIndicator = _hudManager.TurnIndicatorRemote;
@@ -167,7 +153,7 @@ namespace HarryPotterUnity.Game
             _player1.CardsLeftLabel = _hudManager.CardsLeftLocal;
             _player2.CardsLeftLabel = _hudManager.CardsLeftRemote;
         }
-
+        */
         private void StartGame()
         {
             InitPlayerDecks();
@@ -317,6 +303,7 @@ namespace HarryPotterUnity.Game
             }
         }
 
+        //TODO: This function probably belongs somewhere else
         public static IEnumerator WaitForGameOverMessage(Player sender)
         {
             while (GameManager.TweenQueue.TweenQueueIsEmpty == false)
