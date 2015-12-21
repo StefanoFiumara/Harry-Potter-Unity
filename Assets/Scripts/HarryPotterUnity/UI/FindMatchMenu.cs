@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace HarryPotterUnity.UI
 {
-    public class FindMatchPanel : MonoBehaviour
+    public class FindMatchMenu : Menu
     {
         private List<Toggle> _lessonSelectButtons;
         private SubMenuManager _subMenuManager;
@@ -21,8 +21,10 @@ namespace HarryPotterUnity.UI
 
         private Text _findMatchStatus;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             _lessonSelectButtons = FindObjectsOfType<Toggle>().ToList();
             
             _subMenuManager = FindObjectOfType<SubMenuManager>();
@@ -94,7 +96,10 @@ namespace HarryPotterUnity.UI
                 PhotonNetwork.LeaveRoom();
                 NetworkManager.ConnectToPhotonLobby();
             }
+        }
 
+        public override void OnShowMenu()
+        {
             _startMatchmakingButton.interactable = true;
             _lessonSelectButtons.ForEach(t => t.interactable = true);
         }

@@ -64,6 +64,9 @@ namespace HarryPotterUnity.Tween
             _queue = new Queue<ITweenObject>();
             _tweenQueueRunning = false;
             TweenQueueIsEmpty = true;
+
+            iTween.Stop();
+
             StaticCoroutine.Die();
         }
     }

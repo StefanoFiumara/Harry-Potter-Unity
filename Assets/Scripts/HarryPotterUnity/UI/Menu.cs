@@ -11,8 +11,7 @@ namespace HarryPotterUnity.UI
         public bool IsOpen
         {
             get { return _animator.GetBool("IsOpen"); }
-            set
-            { _animator.SetBool("IsOpen", value); }
+            set { _animator.SetBool("IsOpen", value); }
         }
 
         protected virtual void Awake()
@@ -36,6 +35,8 @@ namespace HarryPotterUnity.UI
             }
         }
 
+        public virtual void OnShowMenu() { }
+        public virtual void OnHideMenu() { }
     }
 }
 

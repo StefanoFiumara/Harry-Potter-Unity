@@ -76,7 +76,7 @@ namespace HarryPotterUnity.Game
             Log.Write("New player has connected, starting game");
             photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
-
+        
         [UsedImplicitly]
         public void OnPhotonRandomJoinFailed()
         {
@@ -88,7 +88,16 @@ namespace HarryPotterUnity.Game
         public void OnPhotonPlayerDisconnected()
         {
             Log.Write("Opponent disconnected, return to main menu");
-            
+            if (PhotonNetwork.inRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+
+            DestroyPlayerObjects();
+
+            _menuManager.ShowMenu(FindObjectsOfType<Menu>().Single(m => m.name.Contains("MainMenuContainer")));
+
+            GameManager.TweenQueue.Reset();
         }
 
         [PunRPC, UsedImplicitly]
