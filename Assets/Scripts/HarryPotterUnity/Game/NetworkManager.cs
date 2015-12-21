@@ -5,6 +5,7 @@ using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
+using HarryPotterUnity.UI.Menu;
 using JetBrains.Annotations;
 using UnityLogWrapper;
 using UnityEngine;
@@ -95,7 +96,7 @@ namespace HarryPotterUnity.Game
 
             DestroyPlayerObjects();
 
-            _menuManager.ShowMenu(FindObjectsOfType<Menu>().Single(m => m.name.Contains("MainMenuContainer")));
+            _menuManager.ShowMenu(FindObjectsOfType<BaseMenu>().Single(m => m.name.Contains("MainMenuContainer")));
 
             GameManager.TweenQueue.Reset();
         }
@@ -106,7 +107,7 @@ namespace HarryPotterUnity.Game
             Random.seed = rngSeed;
             
             //TODO: better way of doing this?
-            _menuManager.ShowMenu( FindObjectsOfType<Menu>().Single( m => m.name.Contains("GameplayMenuContainer") ) );
+            _menuManager.ShowMenu( FindObjectsOfType<BaseMenu>().Single( m => m.name.Contains("GameplayMenuContainer") ) );
 
             SpawnPlayers();
             StartGame();

@@ -4652,18 +4652,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1344401318}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 800919488}
-        m_MethodName: ShowMenu
-        m_Mode: 2
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: HarryPotterUnity.UI.Menu, Assembly-CSharp
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!222 &1344401322
@@ -4939,7 +4928,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1720463404}
-          m_ObjectArgumentAssemblyTypeName: HarryPotterUnity.UI.Menu, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: HarryPotterUnity.UI.Menu.BaseMenu, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -5314,10 +5303,10 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 800919488}
         m_MethodName: HideMenu
-        m_Mode: 2
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 1942064477}
-          m_ObjectArgumentAssemblyTypeName: HarryPotterUnity.UI.Menu, Assembly-CSharp
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -6524,7 +6513,7 @@ MonoBehaviour:
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 1879703942}
-          m_ObjectArgumentAssemblyTypeName: HarryPotterUnity.UI.Menu, Assembly-CSharp
+          m_ObjectArgumentAssemblyTypeName: HarryPotterUnity.UI.Menu.BaseMenu, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

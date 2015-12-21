@@ -1,14 +1,15 @@
-﻿using JetBrains.Annotations;
+﻿using HarryPotterUnity.UI.Menu;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.UI
 {
     public class SubMenuManager : MonoBehaviour
     {
-        private Menu _currentMenu;
+        private BaseMenu _currentMenu;
         
         [UsedImplicitly]
-        public void ShowMenu(Menu menu)
+        public void ShowMenu(BaseMenu menu)
         {
             if (menu.IsOpen)
             {

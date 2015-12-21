@@ -8,9 +8,9 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HarryPotterUnity.UI
+namespace HarryPotterUnity.UI.Menu
 {
-    public class FindMatchMenu : Menu
+    public class FindMatchMenu : BaseMenu
     {
         private List<Toggle> _lessonSelectButtons;
         private SubMenuManager _subMenuManager;

@@ -1,10 +1,9 @@
 ﻿using System.Linq;
-using UnityEngine;
 using UnityEngine.UI;
 
-namespace HarryPotterUnity.UI
+namespace HarryPotterUnity.UI.Menu
 {
-    public class ErrorPanel : Menu
+    public class ErrorPanel : BaseMenu
     {
         private Text _title;
         private Text _message;

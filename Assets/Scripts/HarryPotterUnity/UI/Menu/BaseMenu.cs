@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace HarryPotterUnity.UI
+namespace HarryPotterUnity.UI.Menu
 {
     [RequireComponent(typeof(Animator), typeof(CanvasGroup))]
-    public class Menu : MonoBehaviour
+    public class BaseMenu : MonoBehaviour
     {
         private Animator _animator;
         private CanvasGroup _canvasGroup;

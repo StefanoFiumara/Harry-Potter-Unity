@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using HarryPotterUnity.UI.Menu;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ namespace HarryPotterUnity.UI
     public class MenuManager : MonoBehaviour
     {
         [SerializeField]
-        private Menu _currentMenu;
+        private BaseMenu _currentMenu;
 
         [SerializeField]
         private SubMenuManager _subMenuManager;
@@ -33,7 +34,7 @@ namespace HarryPotterUnity.UI
         }
 
         [UsedImplicitly]
-        public void ShowMenu(Menu menu)
+        public void ShowMenu(BaseMenu menu)
         {
             if (_currentMenu != null)
             {
@@ -48,7 +49,7 @@ namespace HarryPotterUnity.UI
         }
 
         [UsedImplicitly]
-        public void HideMenu(Menu menu)
+        public void HideMenu(BaseMenu menu)
         {
             if (menu.IsOpen)
             {
