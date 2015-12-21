@@ -50,13 +50,6 @@ namespace HarryPotterUnity.Game
         public bool IsLocalPlayer { get; set; }
         public NetworkManager NetworkManager { get; set; }
         public byte NetworkId { get; set; }
-
-        public Text ActionsLeftLabel { private get; set; }
-        public Image TurnIndicator { private get; set; }
-        public RectTransform EndGamePanel { private get; set; }
-        public Text CardsLeftLabel { get; set; }
-        
-        private HudManager _hudManager;
         
         public delegate void OnTurnStartActions();
         public event OnTurnStartActions OnTurnStartEvent;
@@ -80,10 +73,6 @@ namespace HarryPotterUnity.Game
             Deck = transform.GetComponentInChildren<Deck>();
             InPlay = transform.GetComponentInChildren<InPlay>();
             Discard = transform.GetComponentInChildren<Discard>();
-
-            _hudManager = FindObjectOfType<HudManager>();
-
-            if (!_hudManager) throw new System.Exception("Player could not find HudManager!");
         }
 
         public void InitDeck(List<LessonTypes> selectedLessons)
@@ -94,24 +83,17 @@ namespace HarryPotterUnity.Game
         public void UseActions(int amount = 1)
         {
             ActionsAvailable -= amount;
-
-            ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
-
+            
             if (ActionsAvailable <= 0) EndTurn(); 
         }
         
         public void AddActions(int amount)
         {
             ActionsAvailable += amount;
-            ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
         }
 
-        public void BeginTurn(bool firstTurn = false)
+        public void BeginTurn()
         {
-            TurnIndicator.gameObject.SetActive(true);
-            
-            if( !firstTurn ) _hudManager.ToggleSkipActionButton();
-
             if (OnTurnStartEvent != null)
             {
                 OnTurnStartEvent();
@@ -141,7 +123,6 @@ namespace HarryPotterUnity.Game
         private void EndTurn()
         {
             ActionsAvailable = 0;
-            TurnIndicator.gameObject.SetActive(false);
 
             foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
             {
@@ -165,33 +146,7 @@ namespace HarryPotterUnity.Game
                 Hand.Add(card, preview: false, adjustSpacing: false);
             }       
         }
-
-        public void ShowGameOverLoseMessage()
-        {
-            var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
-            var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
-
-            EndGamePanel.GetComponent<Image>().color = new Color32(0xAE, 0x3D, 0x3D, 0xFF);
-
-            titleLabel.text = "Sorry!";
-            messageLabel.text = "Your Opponent Defeated You!";
-
-            EndGamePanel.gameObject.SetActive(true);
-        }
-
-        public void ShowGameOverWinMesssage()
-        {
-            var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
-            var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
-
-            EndGamePanel.GetComponent<Image>().color = new Color32(0x3D, 0xAE, 0x50, 0xFF);
-            
-            titleLabel.text = "Congratulations!";
-            messageLabel.text = "You won the game!";
-
-            EndGamePanel.gameObject.SetActive(true);
-        }
-
+        
         public void TakeDamage(BaseCard sourceCard, int amount)
         {
             if (amount <= 0) return;

@@ -15,7 +15,7 @@ namespace HarryPotterUnity.UI
 
         private static readonly Vector2 HorizontalPreviewPosition = new Vector2(350f, 0f);
         private static readonly Vector2 VerticalPreviewPosition = Vector2.zero;
-
+        
         private void RotateHorizontal()
         {
             _renderTexture.anchoredPosition = HorizontalPreviewPosition;

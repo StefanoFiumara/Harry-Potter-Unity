@@ -15,8 +15,6 @@ namespace HarryPotterUnity.Game
         public const int DECK_LAYER = 12;
 
         public static byte _networkIdCounter;
-
-        public static bool _gameInProgress;
         
         public static readonly List<BaseCard> AllCards = new List<BaseCard>(); 
 

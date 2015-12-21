@@ -89,21 +89,21 @@ namespace HarryPotterUnity.Game
                 GameOver();
             }
 
-            UpdateCardsLeftLabel();
+           // UpdateCardsLeftLabel();
 
             return card;
         }
 
+        /*
         private void UpdateCardsLeftLabel()
         {
             _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", Cards.Count);
         }
-
+        */
         private void GameOver()
         {
             _player.DisableAllCards();
             _player.OppositePlayer.DisableAllCards();
-            StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
         }
 
         [UsedImplicitly]
@@ -168,7 +168,7 @@ namespace HarryPotterUnity.Game
         protected override void Remove(BaseCard card)
         {
             Cards.Remove(card);
-            UpdateCardsLeftLabel();
+            //UpdateCardsLeftLabel();
         }
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace HarryPotterUnity.Game
 
             Cards.Insert(0, card);
             
-            UpdateCardsLeftLabel();
+            //UpdateCardsLeftLabel();
 
             card.transform.parent = transform;
 

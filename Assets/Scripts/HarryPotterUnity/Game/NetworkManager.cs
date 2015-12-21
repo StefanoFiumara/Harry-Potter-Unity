@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
@@ -17,7 +16,9 @@ namespace HarryPotterUnity.Game
     {
         private Player _player1;
         private Player _player2;
-        
+
+        private MenuManager _menuManager;
+
         private const string LOBBY_VERSION = "v0.2-dev";
 
         public void Start()
@@ -26,6 +27,8 @@ namespace HarryPotterUnity.Game
             Log.Write("Initialize Log File");
 
             Log.Write("Connecting to Photon Master Server");
+
+            _menuManager = FindObjectOfType<MenuManager>();
 
             PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
         }
@@ -58,8 +61,11 @@ namespace HarryPotterUnity.Game
                 Log.Write("Joined Photon Room, waiting for players");
                 return;
             }
-            
-            //_hudManager.SetPlayer2CameraRotation();
+
+            var rotation = Quaternion.Euler(0f, 0f, 180f);
+
+            Camera.main.transform.rotation = rotation;
+            GameManager.PreviewCamera.transform.rotation = rotation;
         }
 
         [UsedImplicitly]
@@ -89,6 +95,10 @@ namespace HarryPotterUnity.Game
         public void StartGameRpc(int rngSeed)
         {
             Random.seed = rngSeed;
+            
+            //TODO: better way of doing this?
+            _menuManager.ShowMenu( FindObjectsOfType<Menu>().Single( m => m.name.Contains("GameplayMenuContainer") ) );
+
             SpawnPlayers();
             StartGame();
         }
@@ -205,7 +215,7 @@ namespace HarryPotterUnity.Game
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
-            _player1.BeginTurn(firstTurn: true);
+            _player1.BeginTurn();
         }
 
         public void DestroyPlayerObjects()
@@ -300,24 +310,6 @@ namespace HarryPotterUnity.Game
             else
             {
                 Log.Error("ExecuteSkipAction() failed to identify which player wants to skip their Action!");
-            }
-        }
-
-        //TODO: This function probably belongs somewhere else
-        public static IEnumerator WaitForGameOverMessage(Player sender)
-        {
-            while (GameManager.TweenQueue.TweenQueueIsEmpty == false)
-            {
-                yield return new WaitForSeconds(0.2f);
-            }
-
-            if (sender.IsLocalPlayer)
-            {
-                sender.ShowGameOverLoseMessage();
-            }
-            else
-            {
-                sender.ShowGameOverWinMesssage();
             }
         }
     }
