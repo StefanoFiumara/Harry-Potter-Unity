@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
@@ -19,17 +20,19 @@ namespace HarryPotterUnity.Game
         private Player _player2;
 
         private MenuManager _menuManager;
+        private List<BaseMenu> _allMenuScreens;
 
         private const string LOBBY_VERSION = "v0.2-dev";
+
+        private static readonly TypedLobby DefaultLobby = new TypedLobby(LOBBY_VERSION, LobbyType.Default);
 
         public void Start()
         {
             Log.Init("HP-TCG", "Harry Potter TCG Log");
             Log.Write("Initialize Log File");
-
-            Log.Write("Connecting to Photon Master Server");
-
+            
             _menuManager = FindObjectOfType<MenuManager>();
+            _allMenuScreens = FindObjectsOfType<BaseMenu>().ToList();
 
             PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
         }
@@ -38,14 +41,12 @@ namespace HarryPotterUnity.Game
         public void OnConnectedToMaster()
         {
             Log.Write("Connected to Photon Master Server");
-
             ConnectToPhotonLobby();
         }
 
         public static void ConnectToPhotonLobby()
         {
-            Log.Write("Joining {0} Lobby", LOBBY_VERSION);
-            PhotonNetwork.JoinLobby(new TypedLobby(LOBBY_VERSION, LobbyType.Default));
+            PhotonNetwork.JoinLobby( DefaultLobby );
         }
 
         [UsedImplicitly]
@@ -57,12 +58,14 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnJoinedRoom()
         {
+            Log.Write("Joined Photon Room, waiting for players...");
+
             if (PhotonNetwork.room.playerCount == 1)
             {
-                Log.Write("Joined Photon Room, waiting for players");
                 return;
             }
 
+            //User joined as Player 2, rotate his camera
             var rotation = Quaternion.Euler(0f, 0f, 180f);
 
             Camera.main.transform.rotation = rotation;
@@ -96,7 +99,7 @@ namespace HarryPotterUnity.Game
 
             DestroyPlayerObjects();
 
-            _menuManager.ShowMenu(FindObjectsOfType<BaseMenu>().Single(m => m.name.Contains("MainMenuContainer")));
+            _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
 
             GameManager.TweenQueue.Reset();
         }
@@ -106,8 +109,7 @@ namespace HarryPotterUnity.Game
         {
             Random.seed = rngSeed;
             
-            //TODO: better way of doing this?
-            _menuManager.ShowMenu( FindObjectsOfType<BaseMenu>().Single( m => m.name.Contains("GameplayMenuContainer") ) );
+            _menuManager.ShowMenu( _allMenuScreens.First(m => m.name.Contains("GameplayMenuContainer")));
 
             SpawnPlayers();
             StartGame();
@@ -229,7 +231,7 @@ namespace HarryPotterUnity.Game
             _player1.BeginTurn();
         }
 
-        public void DestroyPlayerObjects()
+        private void DestroyPlayerObjects()
         {
             Destroy(_player1.gameObject);
             Destroy(_player2.gameObject);
