@@ -208,6 +208,7 @@ namespace HarryPotterUnity.Game
             GameManager.AllCards.Clear();
 
             DeckGenerator.ResetStartingCharacterPool();
+
             Log.Write("Generating Player Decks");
             _player1.InitDeck(p1SelectedLessons);
             _player2.InitDeck(p2SelectedLessons);

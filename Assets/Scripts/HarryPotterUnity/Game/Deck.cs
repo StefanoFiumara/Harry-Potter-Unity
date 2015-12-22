@@ -40,7 +40,8 @@ namespace HarryPotterUnity.Game
             
             for (int i = 0; i < Cards.Count; i++)
             {
-                Cards[i] = Instantiate(Cards[i]);
+                Cards[i] = Instantiate( Cards[i] );
+
                 Cards[i].transform.parent = transform;
                 Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
                 Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));

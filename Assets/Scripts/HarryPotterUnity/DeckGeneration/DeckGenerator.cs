@@ -14,57 +14,59 @@ namespace HarryPotterUnity.DeckGeneration
     [UsedImplicitly]
     public static class DeckGenerator
     {
+        private static List<BaseCard> _allStartingCharacters;
         private static List<BaseCard> _cardLibrary;
+        private static List<BaseCard> _availableStartingCharacters;
 
         private static List<BaseCard> CardLibrary
         {
-            get {
-                    if (_cardLibrary == null) LoadCardLibrary();
-                    return _cardLibrary;
-                }
-        }
-
-        private static List<BaseCard> _availableStartingCharacters;
-        private static List<BaseCard> _allStartingCharacters;
-
-        private static void LoadCardLibrary()
-        {
-            _cardLibrary = new List<BaseCard>();
-            _allStartingCharacters = new List<BaseCard>();
-            _availableStartingCharacters = new List<BaseCard>();
-
-            var resources = Resources.LoadAll("Cards/");
-            
-            foreach (GameObject container in resources.Cast<GameObject>())
+            get
             {
-                if (container == null)
+                if (_cardLibrary == null)
                 {
-                    Debug.LogError("Failed to load asset");
-                    continue;
-                }
-                var cardInfo = container.GetComponent<BaseCard>();
-                _cardLibrary.Add(cardInfo);
+                    var cards = Resources.LoadAll("Cards/").Cast<GameObject>().Select(o => o.GetComponent<BaseCard>());
 
-                if (cardInfo.Type == Type.Character)
-                {
-                    _availableStartingCharacters.Add(cardInfo);
-                    _allStartingCharacters.Add(cardInfo);
+                    _cardLibrary = new List<BaseCard>();
+                    _cardLibrary.AddRange( cards );
                 }
+
+                return _cardLibrary;
             }
         }
 
+        private static List<BaseCard> AllStartingCharacters
+        {
+            get
+            {
+                if (_allStartingCharacters == null)
+                {
+                    _allStartingCharacters = new List<BaseCard>();
+                    _allStartingCharacters.AddRange(CardLibrary.Where(c => c.Type == Type.Character));
+                }
+
+                return _allStartingCharacters;
+            }
+        }
+        
+        private static List<BaseCard> AvailableStartingCharacters
+        {
+            get
+            {
+                if (_availableStartingCharacters == null)
+                {
+                    _availableStartingCharacters = new List<BaseCard>();
+                    _availableStartingCharacters.AddRange( AllStartingCharacters );
+                }
+
+                return _availableStartingCharacters;
+            }
+        }
+        
         public static BaseCard GetRandomStartingCharacter()
         {
-            if(_availableStartingCharacters == null) LoadCardLibrary();
+            BaseCard character = AvailableStartingCharacters.Skip(Random.Range(0, AvailableStartingCharacters.Count)).First();
 
-            if (_availableStartingCharacters == null)
-            {
-                throw new Exception("Starting Characters are not loaded!");
-            }
-
-            BaseCard character = _availableStartingCharacters.Skip(Random.Range(0, _availableStartingCharacters.Count)).First();
-
-            _availableStartingCharacters.Remove(character);
+            AvailableStartingCharacters.Remove(character);
 
             return character;
         }
@@ -79,17 +81,17 @@ namespace HarryPotterUnity.DeckGeneration
                     AddLessonsToDeck(ref deck, types[0], 16);
                     AddLessonsToDeck(ref deck, types[1], 14);
 
-                    AddCardsToDeck(ref deck, MapLessonType(types[0]), 15);
-                    AddCardsToDeck(ref deck, MapLessonType(types[1]), 15);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 15);
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 15);
                     break;
                 case 3:
                     AddLessonsToDeck(ref deck, types[0], 15);
                     AddLessonsToDeck(ref deck, types[1], 8);
                     AddLessonsToDeck(ref deck, types[2], 7);
 
-                    AddCardsToDeck(ref deck, MapLessonType(types[0]), 10);
-                    AddCardsToDeck(ref deck, MapLessonType(types[1]), 10);                   
-                    AddCardsToDeck(ref deck, MapLessonType(types[2]), 10);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 10);
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 10);                   
+                    AddCardsToDeck(ref deck, types[2].ToClassification(), 10);
                     break;
                 default:
                     throw new Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
@@ -97,21 +99,7 @@ namespace HarryPotterUnity.DeckGeneration
 
             return deck;
         }
-
-        private static ClassificationTypes MapLessonType(LessonTypes type)
-        {
-            switch (type)
-            {
-                    case LessonTypes.Creatures: return ClassificationTypes.CareOfMagicalCreatures;
-                    case LessonTypes.Charms: return ClassificationTypes.Charms;
-                    case LessonTypes.Transfiguration: return  ClassificationTypes.Transfiguration;
-                    case LessonTypes.Quidditch: return  ClassificationTypes.Quidditch;
-                    case LessonTypes.Potions: return ClassificationTypes.Potions;
-                default:
-                    throw new ArgumentException("Unable to map lesson type");
-            }
-        }
-
+        
         private static void AddLessonsToDeck(ref List<BaseCard> deck, LessonTypes lessonType, int amount)
         {
             BaseCard card = CardLibrary.Where(c => c.Classification == ClassificationTypes.Lesson).First(l => ((ILessonProvider) l).LessonType == lessonType);
@@ -139,7 +127,7 @@ namespace HarryPotterUnity.DeckGeneration
                                    card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) && 
                                    card.MeetsRarityRequirements();
 
-                //TODO: Enabled the second check when enough cards have been implemented
+                //TODO: Enable the second check when enough cards have been implemented (20 of each classification?)
                 if (canBeAdded == false /* || deck.Count(c => c.Equals(card)) >= 4 */) continue;
 
                 deck.Add(card);
@@ -177,14 +165,7 @@ namespace HarryPotterUnity.DeckGeneration
 
         public static void ResetStartingCharacterPool()
         {
-            if (_allStartingCharacters == null)
-            {
-                LoadCardLibrary();
-            }
-            if (_allStartingCharacters != null)
-            {
-                _availableStartingCharacters = _allStartingCharacters.ToList();
-            }
+            _allStartingCharacters = null;
         }
     }
 }
