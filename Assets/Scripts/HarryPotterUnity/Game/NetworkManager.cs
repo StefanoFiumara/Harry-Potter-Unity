@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
@@ -58,18 +57,15 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnJoinedRoom()
         {
-            Log.Write("Joined Photon Room, waiting for players...");
+            Log.Write("Joined Photon Room, Waiting for Players...");
 
-            if (PhotonNetwork.room.playerCount == 1)
+            if (PhotonNetwork.room.playerCount == 2)
             {
-                return;
+                var rotation = Quaternion.Euler(0f, 0f, 180f);
+
+                Camera.main.transform.rotation = rotation;
+                GameManager.PreviewCamera.transform.rotation = rotation;
             }
-
-            //User joined as Player 2, rotate his camera
-            var rotation = Quaternion.Euler(0f, 0f, 180f);
-
-            Camera.main.transform.rotation = rotation;
-            GameManager.PreviewCamera.transform.rotation = rotation;
         }
 
         [UsedImplicitly]
@@ -91,7 +87,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnPhotonPlayerDisconnected()
         {
-            Log.Write("Opponent disconnected, return to main menu");
+            Log.Write("Opponent Disconnected, Return to Main Menu");
             if (PhotonNetwork.inRoom)
             {
                 PhotonNetwork.LeaveRoom();
@@ -123,7 +119,7 @@ namespace HarryPotterUnity.Game
 
             if (!_player1 || !_player2)
             {
-                Log.Error("One of the players was not properly instantiated!");
+                Log.Error("One of the players was not properly instantiated, Report this error!");
                 return;
             }
 
@@ -139,18 +135,9 @@ namespace HarryPotterUnity.Game
             _player2.OppositePlayer = _player1;
 
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
-            
-            /*
-            if (_player1.IsLocalPlayer)
-            {
-                SetPlayer1Local();
-            }
-            else
-            {
-                SetPlayer2Local();
-            }
-            */
         }
+
+        #region Legacy UI Code
         /*
         private void SetPlayer2Local()
         {
@@ -176,6 +163,8 @@ namespace HarryPotterUnity.Game
             _player2.CardsLeftLabel = _hudManager.CardsLeftRemote;
         }
         */
+        #endregion
+
         private void StartGame()
         {
             InitPlayerDecks();
