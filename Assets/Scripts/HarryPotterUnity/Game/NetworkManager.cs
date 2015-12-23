@@ -25,7 +25,7 @@ namespace HarryPotterUnity.Game
 
         private static readonly TypedLobby DefaultLobby = new TypedLobby(LOBBY_VERSION, LobbyType.Default);
 
-        public void Start()
+        public void Awake()
         {
             Log.Init("HP-TCG", "Harry Potter TCG Log");
             Log.Write("Initialize Log File");

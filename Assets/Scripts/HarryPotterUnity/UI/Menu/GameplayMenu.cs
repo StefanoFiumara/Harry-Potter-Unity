@@ -14,14 +14,22 @@ namespace HarryPotterUnity.UI.Menu
         private Text _actionsLeftLabelLocal;
         private Text _actionsLeftLabelRemote;
 
+        private Text _cardsLeftLabelLocal;
+        private Text _cardsLeftLabelRemote;
+
         protected override void Awake()
         {
             base.Awake();
 
-            _actionsLeftLabelLocal = FindObjectsOfType<Text>().First(t => t.name.Contains("ActionsLeftLabel_Local"));
-            _actionsLeftLabelRemote = FindObjectsOfType<Text>().First(t => t.name.Contains("ActionsLeftLabel_Remote"));
+            var allText = FindObjectsOfType<Text>();
 
-            if (_actionsLeftLabelLocal == null || _actionsLeftLabelRemote == null)
+            _actionsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Local"));
+            _actionsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Remote"));
+
+            _cardsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Local"));
+            _cardsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Remote"));
+
+            if (_actionsLeftLabelLocal == null || _actionsLeftLabelRemote == null || _cardsLeftLabelLocal == null || _cardsLeftLabelRemote == null)
             {
                 Log.Error("Could not find all needed HUD elements in gameplay menu, report this error!");
             }
@@ -35,12 +43,14 @@ namespace HarryPotterUnity.UI.Menu
             {
                 //Update Local Player Properties
                 _actionsLeftLabelLocal.text = string.Format("Actions Left: {0}", LocalPlayer.ActionsAvailable);
+                _cardsLeftLabelLocal.text = string.Format("Cards Left: {0}", LocalPlayer.Deck.Cards.Count);
             }
 
             if (RemotePlayer != null)
             {
                 //Update Remote Plater Properties
                 _actionsLeftLabelRemote.text = string.Format("Actions Left: {0}", RemotePlayer.ActionsAvailable);
+                _cardsLeftLabelRemote.text = string.Format("Cards Left: {0}", RemotePlayer.Deck.Cards.Count);
             }
         }
     }
