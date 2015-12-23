@@ -33,7 +33,6 @@ namespace HarryPotterUnity.UI
             ShowMenu(_currentMenu);
         }
 
-        [UsedImplicitly]
         public void ShowMenu(BaseMenu menu)
         {
             if (_currentMenu != null)
@@ -48,12 +47,14 @@ namespace HarryPotterUnity.UI
             _subMenuManager.HideMenu();
         }
 
+        //TODO: Remove parameter and fix all links in scene
         [UsedImplicitly]
         public void HideMenu(BaseMenu menu)
         {
             if (menu.IsOpen)
             {
                 menu.IsOpen = false;
+                menu.OnHideMenu();
                 _currentMenu = null;
             }
         }
