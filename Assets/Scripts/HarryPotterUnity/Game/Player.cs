@@ -48,7 +48,6 @@ namespace HarryPotterUnity.Game
         private int ActionsAvailable { get; set; }
 
         public bool IsLocalPlayer { get; set; }
-        public NetworkManager NetworkManager { get; set; }
         public byte NetworkId { get; set; }
         
         public delegate void OnTurnStartActions();

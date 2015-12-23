@@ -21,6 +21,8 @@ namespace HarryPotterUnity.Game
         public static readonly PreviewCamera PreviewCamera = GameObject.Find("Preview Camera").GetComponent<PreviewCamera>();
         
         public static readonly TweenQueue TweenQueue = new TweenQueue();
+
+        public static PhotonView Network;
         
         public static void DisableCards(List<BaseCard> cards)
         {

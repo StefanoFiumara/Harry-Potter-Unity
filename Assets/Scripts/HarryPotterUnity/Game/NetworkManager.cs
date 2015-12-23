@@ -33,6 +33,8 @@ namespace HarryPotterUnity.Game
             _menuManager = FindObjectOfType<MenuManager>();
             _allMenuScreens = FindObjectsOfType<BaseMenu>().ToList();
 
+            GameManager.Network = photonView;
+
             PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
         }
 
@@ -137,7 +139,7 @@ namespace HarryPotterUnity.Game
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
         }
 
-        #region Legacy UI Code
+        #region Legacy UI Code, Probably belongs somewhere else
         /*
         private void SetPlayer2Local()
         {
@@ -168,10 +170,7 @@ namespace HarryPotterUnity.Game
         private void StartGame()
         {
             InitPlayerDecks();
-
-            _player1.NetworkManager = this;
-            _player2.NetworkManager = this;
-
+            
             _player1.NetworkId = 0;
             _player2.NetworkId = 1;
 

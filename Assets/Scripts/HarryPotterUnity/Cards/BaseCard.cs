@@ -193,8 +193,9 @@ namespace HarryPotterUnity.Cards
 
             if(IsActivatable())
             {
-                    //TODO: Gather input here if needed for the InPlay Action
-                    Player.NetworkManager.photonView.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
+                //TODO: Gather input here if needed for the InPlay Action
+                GameManager.Network.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
+                    
             }
             else if (IsPlayableFromHand())
             {
@@ -204,7 +205,7 @@ namespace HarryPotterUnity.Cards
                 }
                 else
                 {
-                    Player.NetworkManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+                    GameManager.Network.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
                 }
             }   
 

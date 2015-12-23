@@ -112,7 +112,7 @@ namespace HarryPotterUnity.Game
         {
             if (!CanDrawCard()) return;
 
-            _player.NetworkManager.photonView.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
+            GameManager.Network.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
         }
 
         [UsedImplicitly]
