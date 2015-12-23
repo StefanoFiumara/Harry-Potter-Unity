@@ -101,6 +101,7 @@ namespace HarryPotterUnity.Game
             _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", Cards.Count);
         }
         */
+
         private void GameOver()
         {
             _player.DisableAllCards();
