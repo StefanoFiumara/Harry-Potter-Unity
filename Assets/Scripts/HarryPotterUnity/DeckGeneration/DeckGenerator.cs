@@ -24,7 +24,9 @@ namespace HarryPotterUnity.DeckGeneration
             {
                 if (_cardLibrary == null)
                 {
-                    var cards = Resources.LoadAll("Cards/").Cast<GameObject>().Select(o => o.GetComponent<BaseCard>());
+                    var cards = Resources.LoadAll("Cards/")
+                        .Cast<GameObject>()
+                        .Select( o => o.GetComponent<BaseCard>() );
 
                     _cardLibrary = new List<BaseCard>();
                     _cardLibrary.AddRange( cards );

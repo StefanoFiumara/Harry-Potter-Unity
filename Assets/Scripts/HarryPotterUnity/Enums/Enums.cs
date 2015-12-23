@@ -24,7 +24,7 @@ namespace HarryPotterUnity.Enums
 
     public enum LessonTypes
     {
-        Creatures = 0, Charms, Transfiguration, Potions, Quidditch
+        Creatures, Charms, Transfiguration, Potions, Quidditch
     }
 
 
