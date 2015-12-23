@@ -8,7 +8,6 @@ namespace HarryPotterUnity.UI
     {
         private BaseMenu _currentMenu;
         
-        [UsedImplicitly]
         public void ShowMenu(BaseMenu menu)
         {
             if (menu.IsOpen)
@@ -20,7 +19,6 @@ namespace HarryPotterUnity.UI
             _currentMenu.IsOpen = true;
         }
 
-        [UsedImplicitly]
         public void HideMenu()
         {
             if (_currentMenu == null) return;
