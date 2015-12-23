@@ -447,7 +447,8 @@ namespace Photon
         /// #endif
         /// public PhotonView networkView
         /// </remarks>
-        new public PhotonView networkView
+        /*
+        public new PhotonView networkView
         {
             get
             {
@@ -455,6 +456,7 @@ namespace Photon
                 return PhotonView.Get(this);
             }
         }
+        */
     }
 
 
