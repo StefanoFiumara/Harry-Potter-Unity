@@ -187,7 +187,7 @@ namespace ExitGames.Client.Photon.Chat
             if (this.HasPeer && (Environment.TickCount - msTimestampOfLastServiceCall > msDeltaForServiceCalls || msTimestampOfLastServiceCall == 0))
             {
                 msTimestampOfLastServiceCall = Environment.TickCount;
-                this.chatPeer.Service();  //TODO: make sure to call service regularly. in best case it could be integrated into PhotonHandler.FallbackSendAckThread()!
+                this.chatPeer.Service();  
             }
         }
 

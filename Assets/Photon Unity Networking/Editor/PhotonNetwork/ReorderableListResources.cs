@@ -216,7 +216,7 @@ namespace Rotorz.ReorderableList.Internal
         private static GUIStyle s_TempStyle = new GUIStyle();
 
         /// <summary>
-        /// Draw texture using <see cref="GUIStyle"/> to workaround bug in Unity where
+        /// Draw texture using <see cref="GUIStyle"/> to workaround error in Unity where
         /// <see cref="GUI.DrawTexture"/> flickers when embedded inside a property drawer.
         /// </summary>
         /// <param name="position">Position of which to draw texture in space of GUI.</param>

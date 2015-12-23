@@ -119,7 +119,7 @@ public class PhotonPingManager
     {
         region.Ping = Attempts*MaxMilliseconsPerPing;
 
-        this.PingsRunning++;        // TODO: Add try-catch to make sure the PingsRunning are reduced at the end and that the lib does not crash the app
+        this.PingsRunning++;        // 
         PhotonPing ping;
         //Debug.Log("PhotonHandler.PingImplementation " + PhotonHandler.PingImplementation);
         if (PhotonHandler.PingImplementation == typeof(PingNativeDynamic))

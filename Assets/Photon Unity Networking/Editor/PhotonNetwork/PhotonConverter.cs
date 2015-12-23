@@ -99,7 +99,7 @@ public class PhotonConverter : Photon.MonoBehaviour
             if (converted2 > 0)
             {
                 //This will correct all prefabs: The prefabs have gotten new components, but the correct ID's were lost in this case
-                PhotonViewHandler.HierarchyChange();    //TODO: most likely this is triggered on change or on save
+                PhotonViewHandler.HierarchyChange();  
 
                 Output("Replaced " + converted2 + " NetworkViews with PhotonViews in scene: " + sceneName);
                 EditorSceneManager.SaveOpenScenes();

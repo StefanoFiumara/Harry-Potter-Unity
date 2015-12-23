@@ -169,7 +169,7 @@ namespace HarryPotterUnity.Game
             var cards = new List<BaseCard>();
             for (int i = 0; i < amount; i++)
             {
-                // TODO: Check all the buffers based on damage source? if(CanBeDamagedBySource(BaseCard source)) {
+                // TODO: Check all the buffers based on damage source
                 if (sourceCard.Type == Type.Creature && CreatureDamageBuffer > 0)
                 {
                     CreatureDamageBuffer--;

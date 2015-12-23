@@ -129,8 +129,7 @@ namespace HarryPotterUnity.DeckGeneration
                                    card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) && 
                                    card.MeetsRarityRequirements() &&
                                    deck.Count(c => c.CardName.Equals(card.CardName)) < 4;
-
-                //TODO: Enable the second check when enough cards have been implemented (20 of each classification?)
+                
                 if (canBeAdded)
                 {
                     deck.Add(card);

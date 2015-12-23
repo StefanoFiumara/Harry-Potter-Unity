@@ -91,7 +91,7 @@ namespace HarryPotterUnity.Cards
 
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)
         {
-            //TODO: there's a bug that causes damage to count towards the enemy player when a player plays a card that causes himself to take damage.
+            //BUG: Causes damage to count towards the enemy player when a player plays a card that causes himself to take damage.
             Player playerDealingDamage = sourceCard.Player;
 
             if (playerDealingDamage == _player1)
@@ -104,18 +104,6 @@ namespace HarryPotterUnity.Cards
             }
         }
 
-        private void IncreasePlayer2Progress(int amount)
-        {
-            _p2Progress += amount;
-            UpdateProgressLabels();
-
-            if (_p2Progress >= _goal)
-            {
-                Player.Discard.Add(this);
-                OnPlayerHasWonMatch(_player2, _player1);
-            }
-        }
-
         private void IncreasePlayer1Progress(int amount)
         {
             _p1Progress += amount;
@@ -124,10 +112,22 @@ namespace HarryPotterUnity.Cards
             if (_p1Progress >= _goal)
             {
                 Player.Discard.Add(this);
-                OnPlayerHasWonMatch(_player1, _player2);
+                OnPlayerHasWonMatch(winner: _player1, loser: _player2);
             }
         }
 
+        private void IncreasePlayer2Progress(int amount)
+        {
+            _p2Progress += amount;
+            UpdateProgressLabels();
+
+            if (_p2Progress >= _goal)
+            {
+                Player.Discard.Add(this);
+                OnPlayerHasWonMatch(winner: _player2, loser: _player1);
+            }
+        }
+        
         protected override Type GetCardType()
         {
             return Type.Match;

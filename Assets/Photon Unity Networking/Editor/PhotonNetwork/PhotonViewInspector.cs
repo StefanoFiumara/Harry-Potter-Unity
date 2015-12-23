@@ -134,7 +134,7 @@ public class PhotonViewInspector : Editor
         if (GUI.changed)
         {
             EditorUtility.SetDirty(m_Target);
-            PhotonViewHandler.HierarchyChange(); // TODO: check if needed
+            PhotonViewHandler.HierarchyChange(); 
         }
 
         GUI.color = Color.white;
