@@ -23,7 +23,7 @@ namespace HarryPotterUnity.UI.Menu
             rect.offsetMax = rect.offsetMin = Vector2.zero;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Open") == false)
             {

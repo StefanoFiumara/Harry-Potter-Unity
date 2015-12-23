@@ -4,10 +4,8 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
-using HarryPotterUnity.UI;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityLogWrapper;
 
 namespace HarryPotterUnity.Game
@@ -45,7 +43,7 @@ namespace HarryPotterUnity.Game
 
         public int CreatureDamageBuffer { private get; set; }
 
-        private int ActionsAvailable { get; set; }
+        public int ActionsAvailable { get; private set; }
 
         public bool IsLocalPlayer { get; set; }
         public byte NetworkId { get; set; }
@@ -108,8 +106,6 @@ namespace HarryPotterUnity.Game
             AddActions(2);
             if (ActionsAvailable < 1) ActionsAvailable = 1;
 
-            //TODO: loop through creatures to send each source?
-            //OppositePlayer.TakeDamage(null, DamagePerTurn);
             foreach (var creature in InPlay.GetCreaturesInPlay().Cast<BaseCreature>())
             {
                 OppositePlayer.TakeDamage(creature, creature.DamagePerTurn);
@@ -153,8 +149,7 @@ namespace HarryPotterUnity.Game
             var cards = new List<BaseCard>();
             for (int i = 0; i < amount; i++)
             {
-                //TODO: Only perform this check if the damage source is a creature!
-                // OR check all the buffers based on damage source?? if(CanBeDamagedBySource(BaseCard source)) {
+                // TODO: Check all the buffers based on damage source? if(CanBeDamagedBySource(BaseCard source)) {
                 if (sourceCard.Type == Type.Creature && CreatureDamageBuffer > 0)
                 {
                     CreatureDamageBuffer--;

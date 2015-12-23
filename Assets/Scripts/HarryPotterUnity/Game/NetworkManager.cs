@@ -63,7 +63,7 @@ namespace HarryPotterUnity.Game
 
             if (PhotonNetwork.room.playerCount == 2)
             {
-                var rotation = Quaternion.Euler(0f, 0f, 180f);
+                Quaternion rotation = Quaternion.Euler(0f, 0f, 180f);
 
                 Camera.main.transform.rotation = rotation;
                 GameManager.PreviewCamera.transform.rotation = rotation;
@@ -75,7 +75,7 @@ namespace HarryPotterUnity.Game
         {
             int seed = Random.Range(int.MinValue, int.MaxValue);
 
-            Log.Write("New player has connected, starting game");
+            Log.Write("New Player has Connected, Starting Game...");
             photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
         
@@ -89,7 +89,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnPhotonPlayerDisconnected()
         {
-            Log.Write("Opponent Disconnected, Return to Main Menu");
+            Log.Write("Opponent Disconnected, Back to Main Menu...");
             if (PhotonNetwork.inRoom)
             {
                 PhotonNetwork.LeaveRoom();
@@ -105,14 +105,16 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
+            //Synchronize the Random Number Generator for both clients with the given seed
             Random.seed = rngSeed;
-            
-            _menuManager.ShowMenu( _allMenuScreens.First(m => m.name.Contains("GameplayMenuContainer")));
 
             SpawnPlayers();
-            StartGame();
+            SetPlayerProperties();
+            SetUpGameplayHud();
+            InitPlayerDecks();
+            BeginGame();
         }
-
+        
         private void SpawnPlayers()
         {
             var playerObject = Resources.Load("Player");
@@ -122,10 +124,7 @@ namespace HarryPotterUnity.Game
             if (!_player1 || !_player2)
             {
                 Log.Error("One of the players was not properly instantiated, Report this error!");
-                return;
             }
-
-            SetPlayerProperties();
         }
 
         private void SetPlayerProperties()
@@ -137,7 +136,28 @@ namespace HarryPotterUnity.Game
             _player2.OppositePlayer = _player1;
 
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+
+            _player1.NetworkId = 0;
+            _player2.NetworkId = 1;
         }
+
+        private void SetUpGameplayHud()
+        {
+            var gameplayMenu = _allMenuScreens.First(m => m.name.Contains("GameplayMenuContainer")) as GameplayMenu;
+
+            if (gameplayMenu != null)
+            {
+                gameplayMenu.LocalPlayer = _player1.IsLocalPlayer ? _player1 : _player2;
+                gameplayMenu.RemotePlayer = _player1.IsLocalPlayer ? _player2 : _player1;
+
+                _menuManager.ShowMenu(gameplayMenu);
+            }
+            else
+            {
+                Log.Error("SetUpGameplayHud() Failed, could not find GameplayMenuContainer, Report this error!");
+            }
+        }
+        
 
         #region Legacy UI Code, Probably belongs somewhere else
         /*
@@ -166,16 +186,7 @@ namespace HarryPotterUnity.Game
         }
         */
         #endregion
-
-        private void StartGame()
-        {
-            InitPlayerDecks();
             
-            _player1.NetworkId = 0;
-            _player2.NetworkId = 1;
-
-            BeginGameSequence();
-        }
 
         private void InitPlayerDecks()
         {
@@ -204,7 +215,7 @@ namespace HarryPotterUnity.Game
             _player2.InitDeck(p2SelectedLessons);
         }
 
-        private void BeginGameSequence()
+        private void BeginGame()
         {
             Log.Write("Game setup complete, starting match");
             _player1.Deck.SpawnStartingCharacter();

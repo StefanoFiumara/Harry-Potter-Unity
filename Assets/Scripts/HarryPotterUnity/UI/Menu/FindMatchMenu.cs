@@ -34,7 +34,7 @@ namespace HarryPotterUnity.UI.Menu
             _startMatchmakingButton = allButtons.Find(b => b.name.Contains("StartMatchmakingButton"));
             _cancelMatchmakingButton = allButtons.Find(b => b.name.Contains("BackToMainMenuButton"));
 
-            _findMatchStatus = FindObjectsOfType<Text>().Single(t => t.name.Contains("FindMatchStatus"));
+            _findMatchStatus = FindObjectsOfType<Text>().First(t => t.name.Contains("FindMatchStatus"));
         }
 
         [UsedImplicitly]
