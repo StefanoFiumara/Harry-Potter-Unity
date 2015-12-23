@@ -10,6 +10,7 @@ namespace HarryPotterUnity.UI.Menu
         private Player _localPlayer;
         private Player _remotePlayer;
 
+        //TODO: Use animator to toggle the labels
         public Player LocalPlayer
         {
             private get { return _localPlayer; }
@@ -75,6 +76,16 @@ namespace HarryPotterUnity.UI.Menu
                 _actionsLeftLabelRemote.text = string.Format("Actions Left: {0}", RemotePlayer.ActionsAvailable);
                 _cardsLeftLabelRemote.text = string.Format("Cards Left: {0}", RemotePlayer.Deck.Cards.Count);
             }
+        }
+
+        public override void OnShowMenu()
+        {
+            //Hide Main Menu Background and Logo
+        }
+
+        public override void OnHideMenu()
+        {
+            //Show Main Menu Background and Logo
         }
     }
 }
