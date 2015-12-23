@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using HarryPotterUnity.Game;
-using UnityEngine;
 using UnityEngine.UI;
 using UnityLogWrapper;
 
@@ -8,14 +7,38 @@ namespace HarryPotterUnity.UI.Menu
 {
     public class GameplayMenu : BaseMenu
     {
-        public Player LocalPlayer { private get; set; }
-        public Player RemotePlayer { private get; set; }
+        private Player _localPlayer;
+        private Player _remotePlayer;
+
+        public Player LocalPlayer
+        {
+            private get { return _localPlayer; }
+            set
+            {
+                _localPlayer = value;
+                _localPlayer.OnTurnStart += () => _actionsLeftLabelLocal.gameObject.SetActive(true);
+                _localPlayer.OnTurnEnd += () => _actionsLeftLabelLocal.gameObject.SetActive(false);
+            }
+        }
+
+        public Player RemotePlayer
+        {
+            private get { return _remotePlayer; }
+            set
+            {
+                _remotePlayer = value;
+                _remotePlayer.OnTurnStart += () => _actionsLeftLabelRemote.gameObject.SetActive(true);
+                _remotePlayer.OnTurnEnd += () => _actionsLeftLabelRemote.gameObject.SetActive(false);
+
+            }
+        }
 
         private Text _actionsLeftLabelLocal;
         private Text _actionsLeftLabelRemote;
 
         private Text _cardsLeftLabelLocal;
         private Text _cardsLeftLabelRemote;
+        
 
         protected override void Awake()
         {

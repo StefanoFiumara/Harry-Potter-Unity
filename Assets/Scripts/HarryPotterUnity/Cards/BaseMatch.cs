@@ -10,12 +10,6 @@ namespace HarryPotterUnity.Cards
 {
     public abstract class BaseMatch : BaseCard, IPersistentCard
     {
-
-        protected override Type GetCardType()
-        {
-            return Type.Match;
-        }
-
         private Player _player1;
         private Player _player2;
 
@@ -85,14 +79,14 @@ namespace HarryPotterUnity.Cards
 
         private void SubscribeToMatchProgressEvents()
         {
-            _player1.OnDamageTakenEvent += OnDamageTakenEvent;
-            _player2.OnDamageTakenEvent += OnDamageTakenEvent;
+            _player1.OnDamageTaken += OnDamageTakenEvent;
+            _player2.OnDamageTaken += OnDamageTakenEvent;
         }
 
         private void UnsubscribeToMatchProgressEvents()
         {
-            _player1.OnDamageTakenEvent -= OnDamageTakenEvent;
-            _player2.OnDamageTakenEvent -= OnDamageTakenEvent;
+            _player1.OnDamageTaken -= OnDamageTakenEvent;
+            _player2.OnDamageTaken -= OnDamageTakenEvent;
         }
 
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)
@@ -133,7 +127,12 @@ namespace HarryPotterUnity.Cards
                 OnPlayerHasWonMatch(_player1, _player2);
             }
         }
-        
+
+        protected override Type GetCardType()
+        {
+            return Type.Match;
+        }
+
         public virtual void OnInPlayBeforeTurnAction() { }
         public virtual void OnInPlayAfterTurnAction() { }
         public virtual void OnSelectedAction() { }

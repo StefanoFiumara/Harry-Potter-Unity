@@ -46,7 +46,7 @@ namespace HarryPotterUnity.Cards
 
         }
 
-        public State State { get; set; }
+        public State State { private get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
 
         public Type Type { get { return GetCardType(); } }

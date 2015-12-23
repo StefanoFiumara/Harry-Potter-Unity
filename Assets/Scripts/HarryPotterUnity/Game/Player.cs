@@ -7,6 +7,7 @@ using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityLogWrapper;
+using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
 {
@@ -48,19 +49,24 @@ namespace HarryPotterUnity.Game
         public bool IsLocalPlayer { get; set; }
         public byte NetworkId { get; set; }
         
-        public delegate void OnTurnStartActions();
-        public event OnTurnStartActions OnTurnStartEvent;
+        public delegate void TurnEvents();
+        public delegate void CardPlayedEvent(BaseCard card, List<BaseCard> targets = null);
+        public delegate void DamageTakenEvent(BaseCard sourceCard, int amount);
 
-        public delegate void OnCardPlayedActions(BaseCard card, List<BaseCard> targets = null);
-        public event OnCardPlayedActions OnCardPlayedEvent;
+        public event TurnEvents OnNextTurnStart;
+        public event TurnEvents OnTurnStart;
+        public event TurnEvents OnTurnEnd;
+        public event CardPlayedEvent OnCardPlayedEvent;
+        public event DamageTakenEvent OnDamageTaken;
 
-        public void OnCardPlayed(BaseCard card, List<BaseCard> targets = null)
+        public void OnDestroy()
         {
-            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
+            OnNextTurnStart = null;
+            OnTurnStart = null;
+            OnTurnEnd = null;
+            OnCardPlayedEvent = null;
+            OnDamageTaken = null;
         }
-
-        public delegate void OnDamageTakenAction(BaseCard sourceCard, int amount);
-        public event OnDamageTakenAction OnDamageTakenEvent;
 
         public void Awake()
         {
@@ -89,12 +95,22 @@ namespace HarryPotterUnity.Game
             ActionsAvailable += amount;
         }
 
+        public void OnCardPlayed(BaseCard card, List<BaseCard> targets = null)
+        {
+            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
+        }
+
         public void BeginTurn()
         {
-            if (OnTurnStartEvent != null)
+            if (OnNextTurnStart != null)
             {
-                OnTurnStartEvent();
-                OnTurnStartEvent = null;
+                OnNextTurnStart();
+                OnNextTurnStart = null;
+            }
+
+            if (OnTurnStart != null)
+            {
+                OnTurnStart();
             }
 
             foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
@@ -117,6 +133,10 @@ namespace HarryPotterUnity.Game
 
         private void EndTurn()
         {
+            if (OnTurnEnd != null)
+            {
+                OnTurnEnd();
+            }
             ActionsAvailable = 0;
 
             foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
@@ -168,9 +188,9 @@ namespace HarryPotterUnity.Game
 
             Discard.AddAll(cards);
 
-            if (OnDamageTakenEvent != null && sourceCard != null)
+            if (OnDamageTaken != null && sourceCard != null)
             {
-                OnDamageTakenEvent(sourceCard, amount);
+                OnDamageTaken(sourceCard, amount);
             }
         }
         

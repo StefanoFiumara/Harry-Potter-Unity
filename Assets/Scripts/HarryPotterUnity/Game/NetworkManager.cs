@@ -100,6 +100,25 @@ namespace HarryPotterUnity.Game
             _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
 
             GameManager.TweenQueue.Reset();
+            
+        }
+
+        [UsedImplicitly]
+        public void OnLeftRoom()
+        {
+            Log.Write("Player Chose to Disconnect, Back to Main Menu");
+
+            DestroyPlayerObjects();
+
+            _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
+
+            GameManager.TweenQueue.Reset();
+        }
+
+        private void DestroyPlayerObjects()
+        {
+            Destroy(_player1.gameObject);
+            Destroy(_player2.gameObject);
         }
 
         [PunRPC, UsedImplicitly]
@@ -143,7 +162,7 @@ namespace HarryPotterUnity.Game
 
         private void SetUpGameplayHud()
         {
-            var gameplayMenu = _allMenuScreens.First(m => m.name.Contains("GameplayMenuContainer")) as GameplayMenu;
+            var gameplayMenu = _allMenuScreens.FirstOrDefault(m => m.name.Contains("GameplayMenuContainer")) as GameplayMenu;
 
             if (gameplayMenu != null)
             {
@@ -157,37 +176,7 @@ namespace HarryPotterUnity.Game
                 Log.Error("SetUpGameplayHud() Failed, could not find GameplayMenuContainer, Report this error!");
             }
         }
-        
-
-        #region Legacy UI Code, Probably belongs somewhere else
-        /*
-        private void SetPlayer2Local()
-        {
-            _player1.TurnIndicator = _hudManager.TurnIndicatorRemote;
-            _player2.TurnIndicator = _hudManager.TurnIndicatorLocal;
-
-            _player1.ActionsLeftLabel = _hudManager.ActionsLeftRemote;
-            _player2.ActionsLeftLabel = _hudManager.ActionsLeftLocal;
-
-            _player1.CardsLeftLabel = _hudManager.CardsLeftRemote;
-            _player2.CardsLeftLabel = _hudManager.CardsLeftLocal;
-        }
-
-        private void SetPlayer1Local()
-        {
-            _player1.TurnIndicator = _hudManager.TurnIndicatorLocal;
-            _player2.TurnIndicator = _hudManager.TurnIndicatorRemote;
-
-            _player1.ActionsLeftLabel = _hudManager.ActionsLeftLocal;
-            _player2.ActionsLeftLabel = _hudManager.ActionsLeftRemote;
-
-            _player1.CardsLeftLabel = _hudManager.CardsLeftLocal;
-            _player2.CardsLeftLabel = _hudManager.CardsLeftRemote;
-        }
-        */
-        #endregion
             
-
         private void InitPlayerDecks()
         {
             int p1Id = PhotonNetwork.isMasterClient ? 0 : 1;
@@ -198,7 +187,7 @@ namespace HarryPotterUnity.Game
 
             if (p1LessonsBytes == null || p2LessonsBytes == null)
             {
-                Log.Error("p1 or p2 selected lessons are null!");
+                Log.Error("p1 or p2 selected lessons are null, report this error!");
                 return;
             }
 
@@ -229,13 +218,7 @@ namespace HarryPotterUnity.Game
 
             _player1.BeginTurn();
         }
-
-        private void DestroyPlayerObjects()
-        {
-            Destroy(_player1.gameObject);
-            Destroy(_player2.gameObject);
-        }
-
+        
         [PunRPC, UsedImplicitly]
         public void ExecutePlayActionById(byte id)
         {
