@@ -408,7 +408,7 @@ namespace ExitGames.Client.Photon
                 opParameters[ParameterCode.EventForward] = true;
             }
 
-            UnityEngine.Debug.Log(opParameters.ToStringFull());
+            //UnityEngine.Debug.Log(opParameters.ToStringFull());
             return this.OpCustom((byte)OperationCode.SetProperties, opParameters, true, 0, false);
         }
 

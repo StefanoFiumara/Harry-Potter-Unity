@@ -31,7 +31,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
     private static bool sendThreadShouldRun;
 
     private static Stopwatch timerToStopConnectionInBackground;
-    
+
     protected internal static bool AppQuits;
 
     protected internal static Type PingImplementation = null;
@@ -81,7 +81,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
             {
                 timerToStopConnectionInBackground.Reset();
                 timerToStopConnectionInBackground.Start();
-                
+
             }
             else
             {
@@ -154,7 +154,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
     protected void OnLevelWasLoaded(int level)
     {
         PhotonNetwork.networkingPeer.NewSceneLoaded();
-        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(Application.loadedLevelName);
+        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(SceneManagerHelper.ActiveSceneName);
     }
 
     protected void OnJoinedRoom()
@@ -164,7 +164,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
 
     protected void OnCreatedRoom()
     {
-        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(Application.loadedLevelName);
+        PhotonNetwork.networkingPeer.SetLevelInPropsIfSynced(SceneManagerHelper.ActiveSceneName);
     }
 
     public static void StartFallbackSendAckThread()
@@ -209,7 +209,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
 
         return sendThreadShouldRun;
     }
-    
+
 
     #region Photon Cloud Ping Evaluation
 

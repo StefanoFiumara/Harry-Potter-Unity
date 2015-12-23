@@ -1,3 +1,13 @@
+v1.65 (16. December 2015)
+Fixed: Potential NullReference Exception when transfering ownership. The PhotonView which gets transfered might get destroyed before the transfer is complete and that case is now handled.
+Fixed: PUN Wizard for Unity 5, which incorrectly pointed out that you need PUN+ to export to iOS or Android. This was the case in Unity 4 but it's no longer true. Removed this note.
+Fixed: Automatic configuration of the demos, when you import PUN (with demos) into a new, empty project and have no saved (named) scene open. This is done once per Editor only. You can do this in the Editor Main Menu: Window, Photon Unity Networking, Configure Demos.
+Fixed: Compatibility with Unity 5.3. The new SceneManager class is re-implemented for our needs for older Editors and the code got adjusted. No "obsolete" warnings anymore.
+Added: Useful component to select a color per player (out of a configurable list of available colors). Check out: ColorPerPlayer.
+Updated: Boxes Demo. This demo now uses the ColorPerPlayer and ColorPerPlayerApply scripts to colorize each player's cubes. Also, it shows more clearly how RPCs work. There are more tips at runtime, too.
+Fixed: Friends And Custom Authentication Demo. A script was waiting for the client to join the lobby, which isn't done anymore by default. Now the UI is fixed to show when connected to the Master Server, where FindFriend() can be called.
+
+
 v1.64.2 (6. November 2015)
 Fixed: SetCustomProperties in PhotonPlayer and Room classes. It applies set properties locally, unless you do a server-side Check and Swap with expected properties. It also does the callbacks as before (CAS delays the callback by one roundtrip, as the server sets it). In OfflineMode, CAS gets ignored but props stored.
 Changed: The Mecanim Demo minimally with a new scene / meshes.
@@ -11,7 +21,6 @@ Updated: SetCustomProperties() in Room and PhotonPlayer classes. There is now an
 Changed: SetCustomProperties() in Room and PhotonPlayer now update the locally cached Custom Properties, as if the client was online. Note: The callbacks (OnPhotonCustomRoomPropertiesChanged and OnPhotonPlayerPropertiesChanged, respectively) get called immediately by SetCustomProperties().
 Changed: PhotonTransformView*Control classes now also update their internally cached values when sending. When transferring ownership, this gives them a recent value as "last networked update", so smoothing and extrapolation works better.
 Updated: To Photon3Unity3d.dll v4.0.0.12.
-
 
 v1.63 (27. October 2015)
 Changed: The case "no match found" is now logged as Warning, instead of Error. This happens and it was confusing if you used "Break on Error" in the Editor.
@@ -68,7 +77,6 @@ Chat API:
     Note: All users should have a UserId. You can set chatClient.UserId before you connect, or you can set the AuthenticationValues in Connect(..., authValues) to set a UserId.
     Added: ChatChannel.ToStringMessages(), which gets all messages in a single string, line by line. The format is "Sender:Message".
     Added: ChatClient.TryGetChannel() to find a channel only by name, no matter if public or private.
-
 
 v1.58 (30. June 2015)
 Fixed: Compile warning about last remaining reference to RPC attribute (in Unity 5.1) by suppressing the warning. This reference is only in the Editor scripts and works unless RPC gets removed.

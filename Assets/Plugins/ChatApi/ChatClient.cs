@@ -82,6 +82,16 @@ namespace ExitGames.Client.Photon.Chat
             }
         }
 
+        /// <summary>If greater than 0, new channels will limit the number of messages they cache locally.</summary>
+        /// <remarks>
+        /// This can be useful to limit the amount of memory used by chats.
+        /// You can set a MessageLimit per channel but this value gets applied to new ones.
+        /// 
+        /// Note:
+        /// Changing this value, does not affect ChatChannels that are already in use!
+        /// </remarks>
+        public int MessageLimit;
+
         public readonly Dictionary<string, ChatChannel> PublicChannels;
         public readonly Dictionary<string, ChatChannel> PrivateChannels;
 
@@ -758,6 +768,7 @@ namespace ExitGames.Client.Photon.Chat
             {
                 channel = new ChatChannel(channelName);
                 channel.IsPrivate = true;
+                channel.MessageLimit = this.MessageLimit;
                 this.PrivateChannels.Add(channel.Name, channel);
             }
 
@@ -795,6 +806,7 @@ namespace ExitGames.Client.Photon.Chat
                     if (!this.PublicChannels.ContainsKey(channelName))
                     {
                         ChatChannel channel = new ChatChannel(channelName);
+                        channel.MessageLimit = this.MessageLimit;
                         this.PublicChannels.Add(channel.Name, channel);
                     }
                 }

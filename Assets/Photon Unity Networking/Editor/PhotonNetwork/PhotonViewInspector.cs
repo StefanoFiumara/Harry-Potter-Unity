@@ -8,6 +8,11 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+#if UNITY_5 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2
+#define UNITY_MIN_5_3
+#endif
+
+
 using System;
 using UnityEditor;
 using UnityEngine;
@@ -133,7 +138,9 @@ public class PhotonViewInspector : Editor
         }
 
         GUI.color = Color.white;
+        #if !UNITY_MIN_5_3
         EditorGUIUtility.LookLikeControls();
+        #endif
     }
 
     private void DrawSpecificTypeSerializationOptions()
