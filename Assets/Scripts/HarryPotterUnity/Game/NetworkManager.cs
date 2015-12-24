@@ -117,8 +117,8 @@ namespace HarryPotterUnity.Game
 
         private void DestroyPlayerObjects()
         {
-            Destroy(_player1.gameObject);
-            Destroy(_player2.gameObject);
+            if(_player1 != null) Destroy(_player1.gameObject);
+            if(_player2 != null) Destroy(_player2.gameObject);
         }
 
         [PunRPC, UsedImplicitly]
@@ -166,7 +166,7 @@ namespace HarryPotterUnity.Game
 
             if (gameplayMenu != null)
             {
-                gameplayMenu.LocalPlayer = _player1.IsLocalPlayer ? _player1 : _player2;
+                gameplayMenu.LocalPlayer  = _player1.IsLocalPlayer ? _player1 : _player2;
                 gameplayMenu.RemotePlayer = _player1.IsLocalPlayer ? _player2 : _player1;
 
                 _menuManager.ShowMenu(gameplayMenu);
@@ -222,7 +222,7 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecutePlayActionById(byte id)
         {
-            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
 
             if (card == null)
             {   
@@ -270,7 +270,7 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecuteInputCardById(byte id, params byte[] selectedCardIds)
         {
-            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
             
             var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
             

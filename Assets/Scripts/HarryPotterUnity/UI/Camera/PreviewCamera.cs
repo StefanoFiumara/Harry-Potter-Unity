@@ -3,7 +3,7 @@ using HarryPotterUnity.Cards.Interfaces;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.UI
+namespace HarryPotterUnity.UI.Camera
 {
     [UsedImplicitly]
     public class PreviewCamera : MonoBehaviour
@@ -19,13 +19,13 @@ namespace HarryPotterUnity.UI
         private void RotateHorizontal()
         {
             _renderTexture.anchoredPosition = HorizontalPreviewPosition;
-            _renderTexture.rotation = Quaternion.Euler(0f,0f,270f);
+            _renderTexture.localRotation = Quaternion.Euler(0f,0f,270f);
         }
 
         private void RotateVertical()
         {
             _renderTexture.anchoredPosition = VerticalPreviewPosition;
-            _renderTexture.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            _renderTexture.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
         public void ShowPreview(BaseCard card)

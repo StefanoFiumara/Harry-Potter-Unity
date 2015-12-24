@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HarryPotterUnity.Game;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityLogWrapper;
 
@@ -17,8 +18,8 @@ namespace HarryPotterUnity.UI.Menu
             set
             {
                 _localPlayer = value;
-                _localPlayer.OnTurnStart += () => _actionsLeftLabelLocal.gameObject.SetActive(true);
-                _localPlayer.OnTurnEnd += () => _actionsLeftLabelLocal.gameObject.SetActive(false);
+                _localPlayer.OnTurnStart += () => _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
+                _localPlayer.OnTurnEnd   += () => _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
             }
         }
 
@@ -28,8 +29,8 @@ namespace HarryPotterUnity.UI.Menu
             set
             {
                 _remotePlayer = value;
-                _remotePlayer.OnTurnStart += () => _actionsLeftLabelRemote.gameObject.SetActive(true);
-                _remotePlayer.OnTurnEnd += () => _actionsLeftLabelRemote.gameObject.SetActive(false);
+                _remotePlayer.OnTurnStart += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
+                _remotePlayer.OnTurnEnd   += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
 
             }
         }
@@ -76,6 +77,11 @@ namespace HarryPotterUnity.UI.Menu
                 _actionsLeftLabelRemote.text = string.Format("Actions Left: {0}", RemotePlayer.ActionsAvailable);
                 _cardsLeftLabelRemote.text = string.Format("Cards Left: {0}", RemotePlayer.Deck.Cards.Count);
             }
+        }
+
+        public void SkipAction()
+        {
+            GameManager.Network.RPC("ExecuteSkipAction", PhotonTargets.All);
         }
 
         public override void OnShowMenu()
