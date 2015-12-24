@@ -42,8 +42,7 @@ namespace HarryPotterUnity.UI
             
             _currentMenu = menu;
             _currentMenu.IsOpen = true;
-            _currentMenu.OnShowMenu();
-
+            
             _subMenuManager.HideMenu();
         }
 
@@ -54,7 +53,6 @@ namespace HarryPotterUnity.UI
             if (menu.IsOpen)
             {
                 menu.IsOpen = false;
-                menu.OnHideMenu();
                 _currentMenu = null;
             }
         }

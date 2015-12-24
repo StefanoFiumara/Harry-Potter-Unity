@@ -11,7 +11,18 @@ namespace HarryPotterUnity.UI.Menu
         public bool IsOpen
         {
             get { return _animator.GetBool("IsOpen"); }
-            set { _animator.SetBool("IsOpen", value); }
+            set
+            {
+                if (value == false)
+                {
+                    OnHideMenu();
+                }
+                else
+                {
+                    OnShowMenu();
+                }
+                _animator.SetBool("IsOpen", value);
+            }
         }
 
         protected virtual void Awake()

@@ -66,6 +66,7 @@ namespace HarryPotterUnity.Game
                 Quaternion rotation = Quaternion.Euler(0f, 0f, 180f);
 
                 Camera.main.transform.rotation = rotation;
+                Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, 132f, Camera.main.transform.localPosition.z);
                 GameManager.PreviewCamera.transform.rotation = rotation;
             }
         }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using HarryPotterUnity.Game;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityLogWrapper;
@@ -10,8 +11,7 @@ namespace HarryPotterUnity.UI.Menu
     {
         private Player _localPlayer;
         private Player _remotePlayer;
-
-        //TODO: Use animator to toggle the labels
+        
         public Player LocalPlayer
         {
             private get { return _localPlayer; }
@@ -40,7 +40,9 @@ namespace HarryPotterUnity.UI.Menu
 
         private Text _cardsLeftLabelLocal;
         private Text _cardsLeftLabelRemote;
-        
+
+        private Text _mainMenuTitle;
+        private Image _mainMenuBackground;
 
         protected override void Awake()
         {
@@ -48,13 +50,21 @@ namespace HarryPotterUnity.UI.Menu
 
             var allText = FindObjectsOfType<Text>();
 
+            _mainMenuBackground = FindObjectsOfType<Image>().FirstOrDefault(i => i.name.Contains("MainMenuBackground"));
+            _mainMenuTitle = allText.FirstOrDefault(i => i.name.Contains("MainMenuTitle"));
+
             _actionsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Local"));
             _actionsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Remote"));
 
             _cardsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Local"));
             _cardsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Remote"));
-
-            if (_actionsLeftLabelLocal == null || _actionsLeftLabelRemote == null || _cardsLeftLabelLocal == null || _cardsLeftLabelRemote == null)
+            
+            if (_actionsLeftLabelLocal  == null || 
+                _actionsLeftLabelRemote == null || 
+                _cardsLeftLabelLocal    == null || 
+                _cardsLeftLabelRemote   == null || 
+                _mainMenuTitle          == null || 
+                _mainMenuBackground     == null)
             {
                 Log.Error("Could not find all needed HUD elements in gameplay menu, report this error!");
             }
@@ -79,6 +89,7 @@ namespace HarryPotterUnity.UI.Menu
             }
         }
 
+        [UsedImplicitly]
         public void SkipAction()
         {
             GameManager.Network.RPC("ExecuteSkipAction", PhotonTargets.All);
@@ -86,12 +97,14 @@ namespace HarryPotterUnity.UI.Menu
 
         public override void OnShowMenu()
         {
-            //Hide Main Menu Background and Logo
+            _mainMenuBackground.GetComponent<Animator>().SetBool("IsVisible", false);
+            _mainMenuTitle.GetComponent<Animator>().SetBool("IsVisible", false);
         }
 
         public override void OnHideMenu()
         {
-            //Show Main Menu Background and Logo
+            _mainMenuBackground.GetComponent<Animator>().SetBool("IsVisible", true);
+            _mainMenuTitle.GetComponent<Animator>().SetBool("IsVisible", true);
         }
     }
 }
