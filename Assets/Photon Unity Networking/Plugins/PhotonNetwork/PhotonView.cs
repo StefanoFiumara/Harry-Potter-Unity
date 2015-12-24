@@ -158,7 +158,7 @@ public class PhotonView : Photon.MonoBehaviour
             // if ID was 0 for an awakened PhotonView, the view should add itself into the networkingPeer.photonViewList after setup
             bool viewMustRegister = this.didAwake && this.viewIdField == 0;
 
-            // TODO: decide if a viewID can be changed once it wasn't 0. most likely that is not a good idea
+            
             // check if this view is in networkingPeer.photonViewList and UPDATE said list (so we don't keep the old viewID with a reference to this object)
             // PhotonNetwork.networkingPeer.RemovePhotonView(this, true);
 
@@ -304,7 +304,7 @@ public class PhotonView : Photon.MonoBehaviour
         {
             bool wasInList = PhotonNetwork.networkingPeer.LocalCleanPhotonView(this);
             bool loading = false;
-            
+
             #if !UNITY_5 || UNITY_5_0 || UNITY_5_1
             loading = Application.isLoadingLevel;
             #endif

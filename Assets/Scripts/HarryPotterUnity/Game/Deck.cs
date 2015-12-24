@@ -40,7 +40,8 @@ namespace HarryPotterUnity.Game
             
             for (int i = 0; i < Cards.Count; i++)
             {
-                Cards[i] = Instantiate(Cards[i]);
+                Cards[i] = Instantiate( Cards[i] );
+
                 Cards[i].transform.parent = transform;
                 Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
                 Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
@@ -89,21 +90,22 @@ namespace HarryPotterUnity.Game
                 GameOver();
             }
 
-            UpdateCardsLeftLabel();
+           // UpdateCardsLeftLabel();
 
             return card;
         }
 
+        /*
         private void UpdateCardsLeftLabel()
         {
             _player.CardsLeftLabel.text = string.Format("Cards Left: {0}", Cards.Count);
         }
+        */
 
         private void GameOver()
         {
             _player.DisableAllCards();
             _player.OppositePlayer.DisableAllCards();
-            StartCoroutine(NetworkManager.WaitForGameOverMessage(_player));
         }
 
         [UsedImplicitly]
@@ -111,7 +113,7 @@ namespace HarryPotterUnity.Game
         {
             if (!CanDrawCard()) return;
 
-            _player.NetworkManager.photonView.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
+            GameManager.Network.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
         }
 
         [UsedImplicitly]
@@ -168,7 +170,7 @@ namespace HarryPotterUnity.Game
         protected override void Remove(BaseCard card)
         {
             Cards.Remove(card);
-            UpdateCardsLeftLabel();
+            //UpdateCardsLeftLabel();
         }
 
         /// <summary>
@@ -180,7 +182,7 @@ namespace HarryPotterUnity.Game
 
             Cards.Insert(0, card);
             
-            UpdateCardsLeftLabel();
+            //UpdateCardsLeftLabel();
 
             card.transform.parent = transform;
 

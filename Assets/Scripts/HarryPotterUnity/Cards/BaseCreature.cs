@@ -58,7 +58,7 @@ namespace HarryPotterUnity.Cards
             _uiCanvas.SetActive(false);
         }
 
-        //TODO: Need source?
+        //TODO: Creature.TakeDamage needs source of damage?
         public void TakeDamage(int amount)
         {
             _health -= amount;
@@ -70,7 +70,7 @@ namespace HarryPotterUnity.Cards
             }
         }
 
-        //TODO: Prevent from healing above starting health.
+        //TODO: Prevent creature from healing above starting health.
         public void Heal(int amount)
         {
             _health += amount;

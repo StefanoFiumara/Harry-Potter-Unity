@@ -136,7 +136,7 @@ public class PhotonStreamQueue
     /// <param name="stream">The PhotonStream you receive as a parameter in OnPhotonSerializeView</param>
     public void Serialize(PhotonStream stream)
     {
-        // TODO: find a better solution for this:
+        
         // the "if" is a workaround for packages which have only 1 sample/frame. in that case, SendNext didn't set the obj per sample.
         if (m_Objects.Count > 0 && this.m_ObjectsPerSample < 0)
         {

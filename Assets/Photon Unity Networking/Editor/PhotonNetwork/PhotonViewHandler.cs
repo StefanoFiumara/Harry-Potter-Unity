@@ -1,3 +1,7 @@
+#if UNITY_5 && !UNITY_5_0 && !UNITY_5_1 && !UNITY_5_2
+#define UNITY_MIN_5_3
+#endif
+
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -5,6 +9,7 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections;
 using Debug = UnityEngine.Debug;
+using UnityEditor.SceneManagement;
 
 [InitializeOnLoad]
 public class PhotonViewHandler : EditorWindow
@@ -45,9 +50,9 @@ public class PhotonViewHandler : EditorWindow
         //PhotonView[] pvObjects = GameObject.FindSceneObjectsOfType(typeof(PhotonView)) as PhotonView[];
         //Debug.Log("HierarchyChange. PV Count: " + pvObjects.Length);
 
-        string levelName = Application.loadedLevelName;
+        string levelName = SceneManagerHelper.ActiveSceneName;
         #if UNITY_EDITOR
-        levelName = System.IO.Path.GetFileNameWithoutExtension(EditorApplication.currentScene);
+        levelName = SceneManagerHelper.EditorActiveSceneName;
         #endif
         int minViewIdInThisScene = PunSceneSettings.MinViewIdForScene(levelName);
         //Debug.Log("Level '" + Application.loadedLevelName + "' has a minimum ViewId of: " + minViewIdInThisScene);
@@ -87,7 +92,7 @@ public class PhotonViewHandler : EditorWindow
                 Debug.Log("Re-Setting Owner ID of: " + view);
             }
             view.ownerId = 0;   // simply make sure no owner is set (cause room always uses 0)
-            view.prefix = -1;   // TODO: prefix could be settable via inspector per scene?!
+            view.prefix = -1;   
 
             if (view.viewID != 0)
             {
@@ -146,7 +151,7 @@ public class PhotonViewHandler : EditorWindow
                 fixedSomeId = true;
             }
         }
-        
+
 
         if (fixedSomeId)
         {
@@ -154,8 +159,7 @@ public class PhotonViewHandler : EditorWindow
         }
     }
 
-    // TODO fail if no ID was available anymore
-    // TODO look up lower numbers if offset hits max?!
+    
     public static int GetID(int idOffset, HashSet<int> usedInstanceViewNumbers)
     {
         while (idOffset < PhotonNetwork.MAX_VIEW_IDS)
@@ -169,19 +173,16 @@ public class PhotonViewHandler : EditorWindow
 
         return idOffset;
     }
-
-    //TODO: check if this can be internal protected (as source in editor AND as dll)
+    
     public static void LoadAllScenesToFix()
     {
         string[] scenes = System.IO.Directory.GetFiles(".", "*.unity", SearchOption.AllDirectories);
 
         foreach (string scene in scenes)
         {
-            EditorApplication.OpenScene(scene);
-
-            PhotonViewHandler.HierarchyChange();//TODO: most likely on load also triggers a hierarchy change
-
-            EditorApplication.SaveScene();
+            EditorSceneManager.OpenScene(scene);
+            PhotonViewHandler.HierarchyChange();//NOTE: most likely on load also triggers a hierarchy change
+            EditorSceneManager.SaveOpenScenes();
         }
 
         Debug.Log("Corrected scene views where needed.");

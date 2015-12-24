@@ -197,7 +197,7 @@ namespace ExitGames.Client.Photon
                 if (opParams.PlayerProperties != null && opParams.PlayerProperties.Count > 0)
                 {
                     op[ParameterCode.PlayerProperties] = opParams.PlayerProperties;
-                    op[ParameterCode.Broadcast] = true; // TODO: check if this also makes sense when creating a room?! // broadcast actor properties
+                    op[ParameterCode.Broadcast] = true; 
                 }
 
                 this.RoomOptionsToOpParameters(op, opParams.RoomOptions);
@@ -408,7 +408,7 @@ namespace ExitGames.Client.Photon
                 opParameters[ParameterCode.EventForward] = true;
             }
 
-            UnityEngine.Debug.Log(opParameters.ToStringFull());
+            //UnityEngine.Debug.Log(opParameters.ToStringFull());
             return this.OpCustom((byte)OperationCode.SetProperties, opParameters, true, 0, false);
         }
 

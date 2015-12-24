@@ -25,6 +25,7 @@ namespace HarryPotterUnity.Cards
 
         private void PreviewSpell()
         {
+            //TODO: Why is the State set here and in the callback?
             State = State.Discarded;
             var rotateType = Player.OppositePlayer.IsLocalPlayer ? TweenRotationType.Rotate180 : TweenRotationType.NoRotate;
 

@@ -4,11 +4,10 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
-using HarryPotterUnity.UI;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityLogWrapper;
+using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
 {
@@ -45,32 +44,29 @@ namespace HarryPotterUnity.Game
 
         public int CreatureDamageBuffer { private get; set; }
 
-        private int ActionsAvailable { get; set; }
+        public int ActionsAvailable { get; private set; }
 
         public bool IsLocalPlayer { get; set; }
-        public NetworkManager NetworkManager { get; set; }
         public byte NetworkId { get; set; }
-
-        public Text ActionsLeftLabel { private get; set; }
-        public Image TurnIndicator { private get; set; }
-        public RectTransform EndGamePanel { private get; set; }
-        public Text CardsLeftLabel { get; set; }
         
-        private HudManager _hudManager;
-        
-        public delegate void OnTurnStartActions();
-        public event OnTurnStartActions OnTurnStartEvent;
+        public delegate void TurnEvents();
+        public delegate void CardPlayedEvent(BaseCard card, List<BaseCard> targets = null);
+        public delegate void DamageTakenEvent(BaseCard sourceCard, int amount);
 
-        public delegate void OnCardPlayedActions(BaseCard card, List<BaseCard> targets = null);
-        public event OnCardPlayedActions OnCardPlayedEvent;
+        public event TurnEvents OnNextTurnStart;
+        public event TurnEvents OnTurnStart;
+        public event TurnEvents OnTurnEnd;
+        public event CardPlayedEvent OnCardPlayedEvent;
+        public event DamageTakenEvent OnDamageTaken;
 
-        public void OnCardPlayed(BaseCard card, List<BaseCard> targets = null)
+        public void OnDestroy()
         {
-            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
+            OnNextTurnStart = null;
+            OnTurnStart = null;
+            OnTurnEnd = null;
+            OnCardPlayedEvent = null;
+            OnDamageTaken = null;
         }
-
-        public delegate void OnDamageTakenAction(BaseCard sourceCard, int amount);
-        public event OnDamageTakenAction OnDamageTakenEvent;
 
         public void Awake()
         {
@@ -80,10 +76,6 @@ namespace HarryPotterUnity.Game
             Deck = transform.GetComponentInChildren<Deck>();
             InPlay = transform.GetComponentInChildren<InPlay>();
             Discard = transform.GetComponentInChildren<Discard>();
-
-            _hudManager = FindObjectOfType<HudManager>();
-
-            if (!_hudManager) throw new System.Exception("Player could not find HudManager!");
         }
 
         public void InitDeck(List<LessonTypes> selectedLessons)
@@ -94,28 +86,31 @@ namespace HarryPotterUnity.Game
         public void UseActions(int amount = 1)
         {
             ActionsAvailable -= amount;
-
-            ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
-
+            
             if (ActionsAvailable <= 0) EndTurn(); 
         }
         
         public void AddActions(int amount)
         {
             ActionsAvailable += amount;
-            ActionsLeftLabel.text = string.Format("Actions Left: {0}", ActionsAvailable);
         }
 
-        public void BeginTurn(bool firstTurn = false)
+        public void OnCardPlayed(BaseCard card, List<BaseCard> targets = null)
         {
-            TurnIndicator.gameObject.SetActive(true);
-            
-            if( !firstTurn ) _hudManager.ToggleSkipActionButton();
+            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
+        }
 
-            if (OnTurnStartEvent != null)
+        public void BeginTurn()
+        {
+            if (OnNextTurnStart != null)
             {
-                OnTurnStartEvent();
-                OnTurnStartEvent = null;
+                OnNextTurnStart();
+                OnNextTurnStart = null;
+            }
+
+            if (OnTurnStart != null)
+            {
+                OnTurnStart();
             }
 
             foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
@@ -127,8 +122,6 @@ namespace HarryPotterUnity.Game
             AddActions(2);
             if (ActionsAvailable < 1) ActionsAvailable = 1;
 
-            //TODO: loop through creatures to send each source?
-            //OppositePlayer.TakeDamage(null, DamagePerTurn);
             foreach (var creature in InPlay.GetCreaturesInPlay().Cast<BaseCreature>())
             {
                 OppositePlayer.TakeDamage(creature, creature.DamagePerTurn);
@@ -140,8 +133,11 @@ namespace HarryPotterUnity.Game
 
         private void EndTurn()
         {
+            if (OnTurnEnd != null)
+            {
+                OnTurnEnd();
+            }
             ActionsAvailable = 0;
-            TurnIndicator.gameObject.SetActive(false);
 
             foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
             {
@@ -165,33 +161,7 @@ namespace HarryPotterUnity.Game
                 Hand.Add(card, preview: false, adjustSpacing: false);
             }       
         }
-
-        public void ShowGameOverLoseMessage()
-        {
-            var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
-            var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
-
-            EndGamePanel.GetComponent<Image>().color = new Color32(0xAE, 0x3D, 0x3D, 0xFF);
-
-            titleLabel.text = "Sorry!";
-            messageLabel.text = "Your Opponent Defeated You!";
-
-            EndGamePanel.gameObject.SetActive(true);
-        }
-
-        public void ShowGameOverWinMesssage()
-        {
-            var titleLabel = EndGamePanel.FindChild("Title").GetComponent<Text>();
-            var messageLabel = EndGamePanel.FindChild("Message").GetComponent<Text>();
-
-            EndGamePanel.GetComponent<Image>().color = new Color32(0x3D, 0xAE, 0x50, 0xFF);
-            
-            titleLabel.text = "Congratulations!";
-            messageLabel.text = "You won the game!";
-
-            EndGamePanel.gameObject.SetActive(true);
-        }
-
+        
         public void TakeDamage(BaseCard sourceCard, int amount)
         {
             if (amount <= 0) return;
@@ -199,8 +169,7 @@ namespace HarryPotterUnity.Game
             var cards = new List<BaseCard>();
             for (int i = 0; i < amount; i++)
             {
-                //TODO: Only perform this check if the damage source is a creature!
-                // OR check all the buffers based on damage source?? if(CanBeDamagedBySource(BaseCard source)) {
+                // TODO: Check all the buffers based on damage source
                 if (sourceCard.Type == Type.Creature && CreatureDamageBuffer > 0)
                 {
                     CreatureDamageBuffer--;
@@ -219,9 +188,9 @@ namespace HarryPotterUnity.Game
 
             Discard.AddAll(cards);
 
-            if (OnDamageTakenEvent != null && sourceCard != null)
+            if (OnDamageTaken != null && sourceCard != null)
             {
-                OnDamageTakenEvent(sourceCard, amount);
+                OnDamageTaken(sourceCard, amount);
             }
         }
         

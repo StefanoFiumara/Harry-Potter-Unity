@@ -31,7 +31,6 @@ public class PhotonAnimatorViewEditor : Editor
         }
 
         DrawWeightInspector();
-        //TODO: in Unity 5, it seems the layerCount is empty unless we use the controller?!
         if (GetLayerCount() == 0)
         {
             GUILayout.BeginVertical(GUI.skin.box);

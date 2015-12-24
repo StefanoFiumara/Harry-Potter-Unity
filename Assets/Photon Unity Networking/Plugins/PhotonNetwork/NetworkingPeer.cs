@@ -4,6 +4,7 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
 using ExitGames.Client.Photon;
 using System;
 using System.Collections;
@@ -200,7 +201,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
 
     private HashSet<int> blockSendingGroups = new HashSet<int>();
 
-    internal protected Dictionary<int, PhotonView> photonViewList = new Dictionary<int, PhotonView>(); //TODO: make private again
+    internal protected Dictionary<int, PhotonView> photonViewList = new Dictionary<int, PhotonView>(); 
 
     private readonly Dictionary<int, Hashtable> dataPerGroupReliable = new Dictionary<int, Hashtable>();    // only used in RunViewUpdate()
     private readonly Dictionary<int, Hashtable> dataPerGroupUnreliable = new Dictionary<int, Hashtable>();  // only used in RunViewUpdate()
@@ -224,7 +225,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     private readonly Dictionary<string, int> rpcShortcuts;  // lookup "table" for the index (shortcut) of an RPC name
 
 
-    // TODO: CAS must be implemented for OfflineMode
+    
 
     public NetworkingPeer(string playername, ConnectionProtocol connectionProtocol) : base(connectionProtocol)
     {
@@ -686,6 +687,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             }
         }
 
+        string debug = "";
+        foreach (PhotonPlayer player in mPlayerListCopy)
+        {
+            debug += player != null ? player.name : "null";
+        }
+
         this.mOtherPlayerListCopy = otherP.ToArray();
     }
 
@@ -1143,7 +1150,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             }
             else if (operationResponse.ReturnCode == ErrorCode.NoRandomMatchFound)
             {
-                Debug.LogWarning("Operation failed: " + operationResponse.ToStringFull());
+                //Debug.LogWarning("Operation failed: " + operationResponse.ToStringFull());
             }
             else
             {
@@ -1610,7 +1617,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             case StatusCode.EncryptionFailedToEstablish:
                 Debug.LogError("Encryption wasn't established: " + statusCode + ". Going to authenticate anyways.");
                 AuthenticationValues authV = this.CustomAuthenticationValues ?? new AuthenticationValues() { UserId = this.PlayerName };
-                this.OpAuthenticate(this.mAppId, this.mAppVersionPun, authV, this.CloudRegion.ToString(), requestLobbyStatistics);     // TODO: check if there are alternatives
+                this.OpAuthenticate(this.mAppId, this.mAppVersionPun, authV, this.CloudRegion.ToString(), requestLobbyStatistics);     
                 break;
 
             case StatusCode.Disconnect:
@@ -1823,7 +1830,10 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
                     int newOwnerId = transferViewToUserID[1];
 
                     PhotonView pv = PhotonView.Find(requestedViewId);
-                    pv.ownerId = newOwnerId;
+                    if (pv != null)
+                    {
+                        pv.ownerId = newOwnerId;
+                    }
 
                     break;
                 }
@@ -2369,7 +2379,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         for (int index = 0; index < callParameterTypes.Length; index++)
         {
             Type type = methodParameters[index].ParameterType;
-            //todo: check metro type usage
+            
             if (callParameterTypes[index] != null && !type.Equals(callParameterTypes[index]))
             {
                 return false;
@@ -2384,7 +2394,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         // first viewID is now also the gameobject's instantiateId
         int instantiateId = viewIDs[0];   // LIMITS PHOTONVIEWS&PLAYERS
 
-        //TODO: reduce hashtable key usage by using a parameter array for the various values
+        
         Hashtable instantiateEvent = new Hashtable(); // This players info is sent via ActorID
         instantiateEvent[(byte)0] = prefabName;
 
@@ -2978,7 +2988,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     {
         RaiseEventOptions options = new RaiseEventOptions() { CachingOption = EventCaching.RemoveFromRoomCache, Receivers = ReceiverGroup.MasterClient };
         this.OpRaiseEvent(0, null, true, options);
-        //this.OpRaiseEvent(0, null, true, 0, EventCaching.RemoveFromRoomCache, ReceiverGroup.MasterClient);  // TODO: check who gets this event?
+        //this.OpRaiseEvent(0, null, true, 0, EventCaching.RemoveFromRoomCache, ReceiverGroup.MasterClient);  
     }
 
     /// This clears the cache of any player/actor who's no longer in the room (making it a simple clean-up option for a new master)
@@ -3029,7 +3039,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
     public void SetLevelPrefix(short prefix)
     {
         this.currentLevelPrefix = prefix;
-        // TODO: should we really change the prefix for existing PVs?! better keep it!
+        
         //foreach (PhotonView view in this.photonViewList.Values)
         //{
         //    view.prefix = prefix;
@@ -3043,7 +3053,7 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
             return; // Block sending on this group
         }
 
-        if (view.viewID < 1)    //TODO: check why 0 should be illegal
+        if (view.viewID < 1)    
         {
             Debug.LogError("Illegal view ID:" + view.viewID + " method: " + methodName + " GO:" + view.gameObject.name);
         }
@@ -3842,12 +3852,12 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         object sceneId = PhotonNetwork.room.customProperties[NetworkingPeer.CurrentSceneProperty];
         if (sceneId is int)
         {
-            if (Application.loadedLevel != (int)sceneId)
+            if (SceneManagerHelper.ActiveSceneBuildIndex != (int)sceneId)
                 PhotonNetwork.LoadLevel((int)sceneId);
         }
         else if (sceneId is string)
         {
-            if (Application.loadedLevelName != (string)sceneId)
+            if (SceneManagerHelper.ActiveSceneName != (string)sceneId)
                 PhotonNetwork.LoadLevel((string)sceneId);
         }
     }
@@ -3868,11 +3878,11 @@ internal class NetworkingPeer : LoadbalancingPeer, IPhotonPeerListener
         if (PhotonNetwork.room.customProperties.ContainsKey(NetworkingPeer.CurrentSceneProperty))
         {
             object levelIdInProps = PhotonNetwork.room.customProperties[NetworkingPeer.CurrentSceneProperty];
-            if (levelIdInProps is int && Application.loadedLevel == (int)levelIdInProps)
+            if (levelIdInProps is int && SceneManagerHelper.ActiveSceneBuildIndex == (int)levelIdInProps)
             {
                 return;
             }
-            if (levelIdInProps is string && Application.loadedLevelName.Equals((string)levelIdInProps))
+            if (levelIdInProps is string && SceneManagerHelper.ActiveSceneName != null && SceneManagerHelper.ActiveSceneName.Equals((string)levelIdInProps))
             {
                 return;
             }

@@ -46,7 +46,7 @@ namespace HarryPotterUnity.Cards
 
         }
 
-        public State State { get; set; }
+        public State State { private get; set; }
         public ClassificationTypes Classification { get { return _classification; } }
 
         public Type Type { get { return GetCardType(); } }
@@ -193,8 +193,9 @@ namespace HarryPotterUnity.Cards
 
             if(IsActivatable())
             {
-                    //TODO: Gather input here if needed for the InPlay Action
-                    Player.NetworkManager.photonView.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
+                //TODO: Gather input for InPlay Action
+                GameManager.Network.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
+                    
             }
             else if (IsPlayableFromHand())
             {
@@ -204,7 +205,7 @@ namespace HarryPotterUnity.Cards
                 }
                 else
                 {
-                    Player.NetworkManager.photonView.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
+                    GameManager.Network.RPC("ExecutePlayActionById", PhotonTargets.All, NetworkId);
                 }
             }   
 
@@ -216,14 +217,10 @@ namespace HarryPotterUnity.Cards
             bool meetsPlayRequirements = _playRequirements.Count == 0 ||
                                      _playRequirements.TrueForAll(req => req.MeetsRequirement());
             
-            //TODO: Check Player Constraints here
-            //bool meetsPlayerConstraints = true;
-
             return Player.IsLocalPlayer &&
                    State == State.InHand &&
                    Player.CanUseActions(ActionCost) &&
                    meetsPlayRequirements &&
-                  // meetsPlayerConstraints &&
                    IsUnique() &&
                    MeetsAdditionalPlayRequirements();
         }

@@ -2,6 +2,7 @@
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.UI;
+using HarryPotterUnity.UI.Camera;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
@@ -15,14 +16,14 @@ namespace HarryPotterUnity.Game
         public const int DECK_LAYER = 12;
 
         public static byte _networkIdCounter;
-
-        public static bool _gameInProgress;
         
         public static readonly List<BaseCard> AllCards = new List<BaseCard>(); 
 
         public static readonly PreviewCamera PreviewCamera = GameObject.Find("Preview Camera").GetComponent<PreviewCamera>();
         
         public static readonly TweenQueue TweenQueue = new TweenQueue();
+
+        public static PhotonView Network;
         
         public static void DisableCards(List<BaseCard> cards)
         {

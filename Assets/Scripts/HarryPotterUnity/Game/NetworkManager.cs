@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.UI;
+using HarryPotterUnity.UI.Menu;
 using JetBrains.Annotations;
 using UnityLogWrapper;
 using UnityEngine;
@@ -18,53 +18,57 @@ namespace HarryPotterUnity.Game
         private Player _player1;
         private Player _player2;
 
-        private HudManager _hudManager;
+        private MenuManager _menuManager;
+        private List<BaseMenu> _allMenuScreens;
 
         private const string LOBBY_VERSION = "v0.2-dev";
 
-        public void Start()
+        private static readonly TypedLobby DefaultLobby = new TypedLobby(LOBBY_VERSION, LobbyType.Default);
+
+        public void Awake()
         {
             Log.Init("HP-TCG", "Harry Potter TCG Log");
             Log.Write("Initialize Log File");
+            
+            _menuManager = FindObjectOfType<MenuManager>();
+            _allMenuScreens = FindObjectsOfType<BaseMenu>().ToList();
 
-            Log.Write("Connecting to Photon Master Server");
+            GameManager.Network = photonView;
 
             PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
-            
-            _hudManager = FindObjectOfType<HudManager>();
-
-            if (!_hudManager)
-            {
-                Debug.LogError("Network Manager could not find Hud Manager in Scene!");
-            }
         }
 
         [UsedImplicitly]
         public void OnConnectedToMaster()
         {
             Log.Write("Connected to Photon Master Server");
+            ConnectToPhotonLobby();
+        }
 
-            Log.Write("Joining {0} Lobby", LOBBY_VERSION);
-            PhotonNetwork.JoinLobby(new TypedLobby(LOBBY_VERSION, LobbyType.Default));
+        public static void ConnectToPhotonLobby()
+        {
+            PhotonNetwork.JoinLobby( DefaultLobby );
         }
 
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
             Log.Write("Joined {0} Lobby", LOBBY_VERSION);
-            _hudManager.InitMainMenu();
         }
 
         [UsedImplicitly]
         public void OnJoinedRoom()
         {
-            if (PhotonNetwork.room.playerCount == 1)
+            Log.Write("Joined Photon Room, Waiting for Players...");
+
+            if (PhotonNetwork.room.playerCount == 2)
             {
-                Log.Write("Joined Photon Room, waiting for players");
-                return;
+                Quaternion rotation = Quaternion.Euler(0f, 0f, 180f);
+
+                Camera.main.transform.rotation = rotation;
+                Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, 132f, Camera.main.transform.localPosition.z);
+                GameManager.PreviewCamera.transform.rotation = rotation;
             }
-            
-            _hudManager.SetPlayer2CameraRotation();
         }
 
         [UsedImplicitly]
@@ -72,10 +76,10 @@ namespace HarryPotterUnity.Game
         {
             int seed = Random.Range(int.MinValue, int.MaxValue);
 
-            Log.Write("New player has connected, starting game");
+            Log.Write("New Player has Connected, Starting Game...");
             photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
-
+        
         [UsedImplicitly]
         public void OnPhotonRandomJoinFailed()
         {
@@ -86,21 +90,51 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnPhotonPlayerDisconnected()
         {
-            Log.Write("Opponent disconnected, return to main menu");
-            _hudManager.BackToMainMenu();
+            Log.Write("Opponent Disconnected, Back to Main Menu...");
+            if (PhotonNetwork.inRoom)
+            {
+                PhotonNetwork.LeaveRoom();
+            }
+
+            DestroyPlayerObjects();
+
+            _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
+
+            GameManager.TweenQueue.Reset();
+            
+        }
+
+        [UsedImplicitly]
+        public void OnLeftRoom()
+        {
+            Log.Write("Player Chose to Disconnect, Back to Main Menu");
+
+            DestroyPlayerObjects();
+
+            _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
+
+            GameManager.TweenQueue.Reset();
+        }
+
+        private void DestroyPlayerObjects()
+        {
+            if(_player1 != null) Destroy(_player1.gameObject);
+            if(_player2 != null) Destroy(_player2.gameObject);
         }
 
         [PunRPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
-            _hudManager.DisableMainMenuHud();
-            _hudManager.EnableGameplayHud();
-
+            //Synchronize the Random Number Generator for both clients with the given seed
             Random.seed = rngSeed;
-            SpawnPlayers();
-            StartGame();
-        }
 
+            SpawnPlayers();
+            SetPlayerProperties();
+            SetUpGameplayHud();
+            InitPlayerDecks();
+            BeginGame();
+        }
+        
         private void SpawnPlayers()
         {
             var playerObject = Resources.Load("Player");
@@ -109,11 +143,8 @@ namespace HarryPotterUnity.Game
 
             if (!_player1 || !_player2)
             {
-                Log.Error("One of the players was not properly instantiated!");
-                return;
+                Log.Error("One of the players was not properly instantiated, Report this error!");
             }
-
-            SetPlayerProperties();
         }
 
         private void SetPlayerProperties()
@@ -126,56 +157,27 @@ namespace HarryPotterUnity.Game
 
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
 
-            _player1.EndGamePanel = _hudManager.EndGamePanel;
-            _player2.EndGamePanel = _hudManager.EndGamePanel;
+            _player1.NetworkId = 0;
+            _player2.NetworkId = 1;
+        }
 
-            if (_player1.IsLocalPlayer)
+        private void SetUpGameplayHud()
+        {
+            var gameplayMenu = _allMenuScreens.FirstOrDefault(m => m.name.Contains("GameplayMenuContainer")) as GameplayMenu;
+
+            if (gameplayMenu != null)
             {
-                SetPlayer1Local();
+                gameplayMenu.LocalPlayer  = _player1.IsLocalPlayer ? _player1 : _player2;
+                gameplayMenu.RemotePlayer = _player1.IsLocalPlayer ? _player2 : _player1;
+
+                _menuManager.ShowMenu(gameplayMenu);
             }
             else
             {
-                SetPlayer2Local();
+                Log.Error("SetUpGameplayHud() Failed, could not find GameplayMenuContainer, Report this error!");
             }
         }
-
-        private void SetPlayer2Local()
-        {
-            _player1.TurnIndicator = _hudManager.TurnIndicatorRemote;
-            _player2.TurnIndicator = _hudManager.TurnIndicatorLocal;
-
-            _player1.ActionsLeftLabel = _hudManager.ActionsLeftRemote;
-            _player2.ActionsLeftLabel = _hudManager.ActionsLeftLocal;
-
-            _player1.CardsLeftLabel = _hudManager.CardsLeftRemote;
-            _player2.CardsLeftLabel = _hudManager.CardsLeftLocal;
-        }
-
-        private void SetPlayer1Local()
-        {
-            _player1.TurnIndicator = _hudManager.TurnIndicatorLocal;
-            _player2.TurnIndicator = _hudManager.TurnIndicatorRemote;
-
-            _player1.ActionsLeftLabel = _hudManager.ActionsLeftLocal;
-            _player2.ActionsLeftLabel = _hudManager.ActionsLeftRemote;
-
-            _player1.CardsLeftLabel = _hudManager.CardsLeftLocal;
-            _player2.CardsLeftLabel = _hudManager.CardsLeftRemote;
-        }
-
-        private void StartGame()
-        {
-            InitPlayerDecks();
-
-            _player1.NetworkManager = this;
-            _player2.NetworkManager = this;
-
-            _player1.NetworkId = 0;
-            _player2.NetworkId = 1;
-
-            BeginGameSequence();
-        }
-
+            
         private void InitPlayerDecks()
         {
             int p1Id = PhotonNetwork.isMasterClient ? 0 : 1;
@@ -186,7 +188,7 @@ namespace HarryPotterUnity.Game
 
             if (p1LessonsBytes == null || p2LessonsBytes == null)
             {
-                Log.Error("p1 or p2 selected lessons are null!");
+                Log.Error("p1 or p2 selected lessons are null, report this error!");
                 return;
             }
 
@@ -197,12 +199,13 @@ namespace HarryPotterUnity.Game
             GameManager.AllCards.Clear();
 
             DeckGenerator.ResetStartingCharacterPool();
+
             Log.Write("Generating Player Decks");
             _player1.InitDeck(p1SelectedLessons);
             _player2.InitDeck(p2SelectedLessons);
         }
 
-        private void BeginGameSequence()
+        private void BeginGame()
         {
             Log.Write("Game setup complete, starting match");
             _player1.Deck.SpawnStartingCharacter();
@@ -214,19 +217,13 @@ namespace HarryPotterUnity.Game
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
-            _player1.BeginTurn(firstTurn: true);
+            _player1.BeginTurn();
         }
-
-        public void DestroyPlayerObjects()
-        {
-            Destroy(_player1.gameObject);
-            Destroy(_player2.gameObject);
-        }
-
+        
         [PunRPC, UsedImplicitly]
         public void ExecutePlayActionById(byte id)
         {
-            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
 
             if (card == null)
             {   
@@ -274,7 +271,7 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecuteInputCardById(byte id, params byte[] selectedCardIds)
         {
-            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
             
             var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
             
@@ -309,23 +306,6 @@ namespace HarryPotterUnity.Game
             else
             {
                 Log.Error("ExecuteSkipAction() failed to identify which player wants to skip their Action!");
-            }
-        }
-
-        public static IEnumerator WaitForGameOverMessage(Player sender)
-        {
-            while (GameManager.TweenQueue.TweenQueueIsEmpty == false)
-            {
-                yield return new WaitForSeconds(0.2f);
-            }
-
-            if (sender.IsLocalPlayer)
-            {
-                sender.ShowGameOverLoseMessage();
-            }
-            else
-            {
-                sender.ShowGameOverWinMesssage();
             }
         }
     }

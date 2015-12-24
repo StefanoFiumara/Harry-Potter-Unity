@@ -180,7 +180,7 @@ public class PhotonPlayer
         //}
         if (properties.ContainsKey(ActorProperties.IsInactive))
         {
-            // TODO: implement isinactive
+            
         }
 
         this.customProperties.MergeStringKeys(properties);

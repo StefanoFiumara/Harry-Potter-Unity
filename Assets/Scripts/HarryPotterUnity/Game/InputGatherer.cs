@@ -11,7 +11,7 @@ using MonoBehaviour = UnityEngine.MonoBehaviour;
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    class InputGatherer : MonoBehaviour
+    public class InputGatherer : MonoBehaviour
     {
         private BaseCard _cardInfo;
         
@@ -41,7 +41,7 @@ namespace HarryPotterUnity.Game
 
             var validCards = _cardInfo.GetValidTargets();
 
-            foreach (var card in validCards)
+            foreach (BaseCard card in validCards)
             {
                 card.SetHighlight();
                 card.Enable();
@@ -74,7 +74,7 @@ namespace HarryPotterUnity.Game
                         if (selectedCards.Count == _inputRequired)
                         {
                             var selectedCardIds = selectedCards.Select(c => c.NetworkId).ToArray();
-                            _cardInfo.Player.NetworkManager.photonView.RPC("ExecuteInputCardById", PhotonTargets.All, _cardInfo.NetworkId, selectedCardIds);
+                            GameManager.Network.RPC("ExecuteInputCardById", PhotonTargets.All, _cardInfo.NetworkId, selectedCardIds);
                         }
                     }
                 }
