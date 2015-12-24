@@ -8,6 +8,7 @@
 
         public override void OnSelectedAction()
         {
+            Player.UseActions();
             Player.Discard.Add(this);
 
             Player.Deck.DrawCard();
