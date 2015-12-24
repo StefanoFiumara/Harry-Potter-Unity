@@ -83,6 +83,13 @@ namespace HarryPotterUnity.Game
             Deck.InitDeck( DeckGenerator.GenerateDeck(selectedLessons), DeckGenerator.GetRandomStartingCharacter() );
         }
 
+        /// <summary>
+        /// Remember to always call this function after the card's effect,
+        /// otherwise the action will be used before the card activates.
+        /// possibly beginning the next turn and causing a chain of actions to occur
+        /// such as drawing the opponent's card and dealing his creature's damage before your card's effect activates.
+        /// </summary>
+        /// <param name="amount"></param>
         public void UseActions(int amount = 1)
         {
             ActionsAvailable -= amount;
