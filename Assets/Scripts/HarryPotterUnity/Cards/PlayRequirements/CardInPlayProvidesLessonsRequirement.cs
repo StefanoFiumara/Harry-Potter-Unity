@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Cards.Interfaces;
+﻿using System.Linq;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
@@ -8,7 +9,6 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 {
     public class CardInPlayProvidesLessonsRequirement : MonoBehaviour, ICardPlayRequirement
     {
-
         private Player _player;
 
         [UsedImplicitly, SerializeField]
@@ -17,17 +17,16 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         [UsedImplicitly, SerializeField]
         private int _amountProvided;
     
-        [UsedImplicitly]
-        void Start()
+        private void Start()
         {
             _player = GetComponent<BaseCard>().Player;
         }
 
         public bool MeetsRequirement()
         {
-            return _player.InPlay.Cards.Exists(card => card is ILessonProvider &&
-                                                       ((ILessonProvider) card).AmountLessonsProvided >= _amountProvided &&
-                                                       ((ILessonProvider) card).LessonType == _lessonType);
+            return _player.InPlay.Cards
+                .OfType<ILessonProvider>()
+                .Count(c => c.LessonType == LessonTypes.Charms) >= _amountProvided;
         }
 
         public void OnRequirementMet() { }
