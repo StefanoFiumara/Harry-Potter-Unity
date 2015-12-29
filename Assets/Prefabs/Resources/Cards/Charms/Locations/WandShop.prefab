@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maximumAmountAllowed: 4
+  _maximumAmountAllowed: 2
 --- !u!114 &11430014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _classification: 1
-  _rarity: 0
+  _rarity: 1
   Tags: 
 --- !u!1001 &100100000
 Prefab:
@@ -238,11 +238,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _rarity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _maximumAmountAllowed
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
