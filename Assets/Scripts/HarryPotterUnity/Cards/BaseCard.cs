@@ -146,18 +146,20 @@ namespace HarryPotterUnity.Cards
 
             var inputRequirement = _playRequirements.OfType<InputRequirement>().SingleOrDefault();
 
-            if (inputRequirement == null) return;
-
-            _inputRequired = inputRequirement.InputRequired;
+            if (inputRequirement != null)
+            {
+                _inputRequired = inputRequirement.InputRequired;
+            }
         }
 
         private void AddCollider()
         {
-            if (gameObject.GetComponent<Collider>() != null) return;
-
-            var col = gameObject.AddComponent<BoxCollider>();
-            col.isTrigger = true;
-            col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
+            if (gameObject.GetComponent<Collider>() == null)
+            {
+                var col = gameObject.AddComponent<BoxCollider>();
+                col.isTrigger = true;
+                col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
+            }
         }
         
         [UsedImplicitly]
@@ -175,8 +177,8 @@ namespace HarryPotterUnity.Cards
         private bool IsActivatable()
         {
             return State == State.InPlay && 
-                            ((IPersistentCard)this).CanPerformInPlayAction() && 
-                            Player.IsLocalPlayer;
+                   ((IPersistentCard)this).CanPerformInPlayAction() && 
+                   Player.IsLocalPlayer;
         }
 
         [UsedImplicitly]

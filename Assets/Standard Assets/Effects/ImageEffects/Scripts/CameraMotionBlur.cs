@@ -78,7 +78,7 @@ namespace UnityStandardAssets.ImageEffects
             wasActive = gameObject.activeInHierarchy;
             CalculateViewProjection ();
             Remember ();
-            wasActive = false; // hack to fake position/rotation update and prevent bad blurs
+            wasActive = false; 
         }
 
         void OnEnable () {
