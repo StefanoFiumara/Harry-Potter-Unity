@@ -1,7 +1,7 @@
 ﻿using HarryPotterUnity.Cards.BasicBehavior;
 using JetBrains.Annotations;
 
-namespace HarryPotterUnity.Cards.Charms
+namespace HarryPotterUnity.Cards.Charms.Items
 {
     [UsedImplicitly]
     public class BrokenWand : ItemLessonProvider

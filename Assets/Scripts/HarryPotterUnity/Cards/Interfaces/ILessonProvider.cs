@@ -6,6 +6,6 @@ namespace HarryPotterUnity.Cards.Interfaces
     {
         LessonTypes LessonType { get; }
 
-        int AmountLessonsProvided { get; }
+        int AmountLessonsProvided { get; set; }
     }
 }

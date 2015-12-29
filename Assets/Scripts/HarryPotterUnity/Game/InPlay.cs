@@ -91,9 +91,9 @@ namespace HarryPotterUnity.Game
             return Cards.FindAll(c => c is BaseLesson);
         }
 
-        public IEnumerable<BaseCard> GetLessonsOfType(LessonTypes type, int amount = 1)
+        public IEnumerable<BaseCard> GetLessonsOfType(LessonTypes type)
         {
-            return GetLessonsInPlay().Where(x => ((ILessonProvider)x).LessonType == type).Take(amount);
+            return GetLessonsInPlay().Where(x => ((ILessonProvider)x).LessonType == type);
         }
 
         public int GetAmountOfLessonsOfType(LessonTypes type)

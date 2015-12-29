@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Cards.Interfaces;
+﻿using System;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -16,6 +17,17 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         #endregion
 
         public LessonTypes LessonType { get {return _lessonType; } }
-        public int AmountLessonsProvided { get {return _amountLessonsProvided;} }
+
+        public int AmountLessonsProvided
+        {
+            get
+            {
+                return _amountLessonsProvided;
+            }
+            set
+            {
+                throw new InvalidOperationException("Cannot change the amount of lessons provided by ItemLessonProvider");
+            }
+        }
     }
 }

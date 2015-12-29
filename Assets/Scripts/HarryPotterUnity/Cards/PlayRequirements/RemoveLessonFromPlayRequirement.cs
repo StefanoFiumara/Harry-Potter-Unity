@@ -33,7 +33,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public void OnRequirementMet()
         {
-            var lessons = _player.InPlay.GetLessonsOfType(_lessonType, _amountRequired).ToList();
+            var lessons = _player.InPlay.GetLessonsOfType(_lessonType).Take(_amountRequired).ToList();
 
             if(_returnToHand)
                 _player.Hand.AddAll(lessons);

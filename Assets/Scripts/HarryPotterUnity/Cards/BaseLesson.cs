@@ -16,16 +16,24 @@ namespace HarryPotterUnity.Cards {
         #endregion
         
         public LessonTypes LessonType { get { return _lessonType; } }
-        public int AmountLessonsProvided { get { return 1; } }
-        
+        public int AmountLessonsProvided { get; set; }
+
+        protected override void Start()
+        {
+            base.Start();
+            AmountLessonsProvided = 1;
+        }
+
         protected override Type GetCardType() { return Type.Lesson; }
 
         public bool CanPerformInPlayAction() { return false; }
+        public void OnSelectedAction() { }
 
         public void OnEnterInPlayAction() { }
         public void OnExitInPlayAction() { }
+
         public void OnInPlayBeforeTurnAction() { }
         public void OnInPlayAfterTurnAction() { }
-        public void OnSelectedAction() { }
+        
     }
 }
