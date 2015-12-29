@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
-    public class CardInPlayProvidesLessonsRequirement : MonoBehaviour, ICardPlayRequirement
+    public class SpecificLessonTypeRequirement : MonoBehaviour, ICardPlayRequirement
     {
         private Player _player;
 
@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         {
             return _player.InPlay.Cards
                 .OfType<ILessonProvider>()
-                .Count(c => c.LessonType == LessonTypes.Charms) >= _amountProvided;
+                .Count(c => c.LessonType == _lessonType) >= _amountProvided;
         }
 
         public void OnRequirementMet() { }
