@@ -10,12 +10,12 @@ The initial focus of this project was a single player experience through AI oppo
 
 Once the main game is implemented the plan is to create a tutorial scene that introduces players to the game and allows them to try out many deck combinations before hopping into the matchmaking service.
 
-Planned Features
-----------------
+Features
+--------
 * Multiplayer Matchmaking, pits two players with randomly generated decks against each other.
-* A basic tutorial system for introducing a new player to the game, this will have separate mechanics to walk the player through how the card game works and will probably include a pre-built deck to ease the player into the concept.
-* A progress system to track the player's achievements and wins/losses, maybe an achievement system to track the player's various accomplishments in each game.
-* A deck editor for constructed play further down the line.
+* A basic tutorial explaning how the game works. (WIP)
+* A progress system to track the player's achievements and wins/losses, maybe an achievement system to track the player's various accomplishments in each game. (WIP)
+* A deck editor for constructed play further down the line. (WIP)
 
 To Test the Project
 -------------------
