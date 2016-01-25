@@ -18,8 +18,17 @@ namespace HarryPotterUnity.UI.Menu
             set
             {
                 _localPlayer = value;
-                _localPlayer.OnTurnStart += () => _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
-                _localPlayer.OnTurnEnd   += () => _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
+                _localPlayer.OnTurnStart += () =>
+                {
+                    _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
+                    _skipActionButton.interactable = true;
+                };
+                
+                _localPlayer.OnTurnEnd   += () =>
+                {
+                    _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
+                    _skipActionButton.interactable = false;
+                };
             }
         }
 
@@ -31,7 +40,6 @@ namespace HarryPotterUnity.UI.Menu
                 _remotePlayer = value;
                 _remotePlayer.OnTurnStart += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
                 _remotePlayer.OnTurnEnd   += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
-
             }
         }
 
@@ -40,6 +48,8 @@ namespace HarryPotterUnity.UI.Menu
 
         private Text _cardsLeftLabelLocal;
         private Text _cardsLeftLabelRemote;
+
+        private Button _skipActionButton;
 
         private Text _mainMenuTitle;
         private Image _mainMenuBackground;
@@ -58,13 +68,16 @@ namespace HarryPotterUnity.UI.Menu
 
             _cardsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Local"));
             _cardsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Remote"));
-            
+
+            _skipActionButton = FindObjectsOfType<Button>().FirstOrDefault(b => b.name.Contains("SkipActionButton"));
+
             if (_actionsLeftLabelLocal  == null || 
                 _actionsLeftLabelRemote == null || 
                 _cardsLeftLabelLocal    == null || 
                 _cardsLeftLabelRemote   == null || 
                 _mainMenuTitle          == null || 
-                _mainMenuBackground     == null)
+                _mainMenuBackground     == null ||
+                _skipActionButton       == null)
             {
                 Log.Error("Could not find all needed HUD elements in gameplay menu, report this error!");
             }
@@ -92,6 +105,12 @@ namespace HarryPotterUnity.UI.Menu
         [UsedImplicitly]
         public void SkipAction()
         {
+            var player = LocalPlayer.CanUseActions() ? LocalPlayer : RemotePlayer;
+
+            if (player.ActionsAvailable == 1)
+            {
+                _skipActionButton.interactable = false;
+            }
             GameManager.Network.RPC("ExecuteSkipAction", PhotonTargets.All);
         }
 
