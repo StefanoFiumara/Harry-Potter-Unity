@@ -93,7 +93,6 @@ namespace HarryPotterUnity.Game
         public void UseActions(int amount = 1)
         {
             ActionsAvailable -= amount;
-            
             if (ActionsAvailable <= 0) EndTurn(); 
         }
         

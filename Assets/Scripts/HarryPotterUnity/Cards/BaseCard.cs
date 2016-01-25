@@ -25,7 +25,6 @@ namespace HarryPotterUnity.Cards
         [UsedImplicitly] public List<Tag> Tags;
         #endregion
 
-        #region Properties
         private CardCollection _collection;
         public CardCollection PreviousCollection { get; private set; }
         public CardCollection CurrentCollection
@@ -57,6 +56,7 @@ namespace HarryPotterUnity.Cards
 
         public Player Player { get; set; }
 
+        private List<IDeckGenerationRequirement> _deckGenerationRequirements;
         public List<IDeckGenerationRequirement> DeckGenerationRequirements
         {
             get
@@ -84,9 +84,8 @@ namespace HarryPotterUnity.Cards
 
         public byte NetworkId { get; set; }
         public string CardName { get { return string.Format("{0}: {1}", Type, transform.name.Replace("(Clone)", "")); } }
-        #endregion
 
-        #region Private Variables
+        
         private InputGatherer _inputGatherer;
         private int _inputRequired;
         
@@ -97,9 +96,8 @@ namespace HarryPotterUnity.Cards
         private GameObject _highlight;
 
         private List<ICardPlayRequirement> _playRequirements;
-        private List<IDeckGenerationRequirement> _deckGenerationRequirements;
-        #endregion
-
+        
+        
         [UsedImplicitly]
         protected virtual void Start()
         {
@@ -176,9 +174,8 @@ namespace HarryPotterUnity.Cards
 
         private bool IsActivatable()
         {
-            return State == State.InPlay && 
-                   ((IPersistentCard)this).CanPerformInPlayAction() && 
-                   Player.IsLocalPlayer;
+            return State == State.InPlay &&
+                   ((IPersistentCard) this).CanPerformInPlayAction();
         }
 
         [UsedImplicitly]

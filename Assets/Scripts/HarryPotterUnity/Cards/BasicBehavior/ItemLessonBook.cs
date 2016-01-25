@@ -3,7 +3,7 @@
     public class ItemLessonBook : ItemLessonProvider {
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions();
+            return Player.CanUseActions() && Player.IsLocalPlayer;
         }
 
         public override void OnSelectedAction()

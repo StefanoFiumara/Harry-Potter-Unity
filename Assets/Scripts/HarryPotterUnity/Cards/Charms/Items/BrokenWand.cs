@@ -24,7 +24,7 @@ namespace HarryPotterUnity.Cards.Charms.Items
 
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions();
+            return Player.CanUseActions() && Player.IsLocalPlayer;
         }
     }
 }

@@ -19,7 +19,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions();
+            return Player.CanUseActions() && Player.IsLocalPlayer;
         }
     }
 }

@@ -11,7 +11,8 @@ namespace HarryPotterUnity.Cards.Characters
         {
             return Player.CanUseActions() && 
                    Player.Hand.Cards.Count(c => c.Type == Type.Lesson) >= 2 &&
-                   Player.AmountLessonsInPlay >= 2;
+                   Player.AmountLessonsInPlay >= 2 &&
+                   Player.IsLocalPlayer;
         }
 
         public override void OnSelectedAction()

@@ -78,6 +78,10 @@ namespace HarryPotterUnity.Game
 
             Log.Write("New Player has Connected, Starting Game...");
             photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
+
+            //TODO: Load new scene here instead?
+            //PhotonNetwork.automaticallySyncScene = true;
+            //PhotonNetwork.LoadLevel("GameScene");
         }
         
         [UsedImplicitly]
@@ -95,31 +99,23 @@ namespace HarryPotterUnity.Game
             {
                 PhotonNetwork.LeaveRoom();
             }
-
-            DestroyPlayerObjects();
-
-            _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
-
-            GameManager.TweenQueue.Reset();
-            
         }
 
         [UsedImplicitly]
         public void OnLeftRoom()
         {
             Log.Write("Player Chose to Disconnect, Back to Main Menu");
-
+            
+            GameManager.TweenQueue.Reset();
             DestroyPlayerObjects();
 
             _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
-
-            GameManager.TweenQueue.Reset();
         }
 
         private void DestroyPlayerObjects()
         {
-            if(_player1 != null) Destroy(_player1.gameObject);
-            if(_player2 != null) Destroy(_player2.gameObject);
+            Destroy(_player1.gameObject);
+            Destroy(_player2.gameObject);
         }
 
         [PunRPC, UsedImplicitly]

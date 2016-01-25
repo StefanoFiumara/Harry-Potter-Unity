@@ -9,8 +9,9 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
     { 
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() && 
-                   Player.Discard.CountCards(c => c.Type == Type.Lesson) > 0;
+            return Player.CanUseActions() 
+                && Player.Discard.CountCards(c => c.Type == Type.Lesson) > 0
+                && Player.IsLocalPlayer;
         }
 
         public override void OnSelectedAction()
