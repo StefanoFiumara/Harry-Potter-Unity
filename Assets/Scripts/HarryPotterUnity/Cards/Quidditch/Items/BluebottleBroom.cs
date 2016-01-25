@@ -10,7 +10,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
         public override void OnSelectedAction()
         {
             var card = Player.Discard.GetHealableCards(1).Single();
-
             
             Player.Deck.Add(card);
 

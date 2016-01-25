@@ -13,7 +13,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         {
             Player.OppositePlayer.OnNextTurnStart += () =>
             {
-                Player.CreatureDamageBuffer = Player.OppositePlayer.InPlay.Cards.OfType<BaseCreature>().Sum(card => card.DamagePerTurn);
+                Player.CreatureDamageBuffer = Player.OppositePlayer.InPlay.Creatures.Cast<BaseCreature>().Sum(card => card.DamagePerTurn);
             };
             
         }

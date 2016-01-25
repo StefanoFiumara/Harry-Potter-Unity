@@ -35,7 +35,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
             if (_canTargetPlayer) targets.Add(Player.OppositePlayer.Deck.StartingCharacter);
 
-            targets.AddRange(Player.OppositePlayer.InPlay.GetCreaturesInPlay());
+            targets.AddRange(Player.OppositePlayer.InPlay.Creatures);
 
             return targets;
         }

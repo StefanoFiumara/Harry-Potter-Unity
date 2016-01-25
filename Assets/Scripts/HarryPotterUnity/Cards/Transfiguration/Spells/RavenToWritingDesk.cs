@@ -10,12 +10,12 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         public override List<BaseCard> GetValidTargets()
         {
-            return Player.OppositePlayer.InPlay.GetCreaturesInPlay();
+            return Player.OppositePlayer.InPlay.Creatures;
         }
 
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.OppositePlayer.InPlay.GetCreaturesInPlay().Count >= 2;
+            return Player.OppositePlayer.InPlay.Creatures.Count >= 2;
         }
 
         protected override void SpellAction(List<BaseCard> targets)

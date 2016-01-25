@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards;
+using HarryPotterUnity.Enums;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
@@ -7,6 +9,21 @@ namespace HarryPotterUnity.Game
     public abstract class CardCollection : MonoBehaviour
     {
         public List<BaseCard> Cards { get; protected set; }
+
+        public List<BaseCard> Lessons
+        {
+            get { return Cards.Where(c => c.Type == Type.Lesson).ToList(); }
+        }
+
+        public List<BaseCard> Items
+        {
+            get { return Cards.Where(c => c.Type == Type.Item).ToList(); }
+        }
+
+        public List<BaseCard> Creatures
+        {
+            get { return Cards.Where(c => c.Type == Type.Creature).ToList(); }
+        }
 
         public abstract void Add(BaseCard card);
         public abstract void AddAll(IEnumerable<BaseCard> cards);

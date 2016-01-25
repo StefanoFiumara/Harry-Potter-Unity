@@ -9,15 +9,15 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.InPlay.GetCreaturesInPlay()
-                                .Concat(Player.OppositePlayer.InPlay.GetCreaturesInPlay())
+            return Player.InPlay.Creatures
+                                .Concat(Player.OppositePlayer.InPlay.Creatures)
                                 .Any();
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var playerCreatures = Player.InPlay.GetCreaturesInPlay();
-            var enemyCreatures = Player.OppositePlayer.InPlay.GetCreaturesInPlay();
+            var playerCreatures = Player.InPlay.Creatures;
+            var enemyCreatures = Player.OppositePlayer.InPlay.Creatures;
 
             Player.OppositePlayer.Discard.AddAll(enemyCreatures);
             Player.Discard.AddAll(playerCreatures);

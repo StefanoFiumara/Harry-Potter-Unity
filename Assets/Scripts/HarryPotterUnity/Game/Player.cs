@@ -128,7 +128,7 @@ namespace HarryPotterUnity.Game
             AddActions(2);
             if (ActionsAvailable < 1) ActionsAvailable = 1;
 
-            foreach (var creature in InPlay.GetCreaturesInPlay().Cast<BaseCreature>())
+            foreach (var creature in InPlay.Creatures.Cast<BaseCreature>())
             {
                 OppositePlayer.TakeDamage(creature, creature.DamagePerTurn);
             }

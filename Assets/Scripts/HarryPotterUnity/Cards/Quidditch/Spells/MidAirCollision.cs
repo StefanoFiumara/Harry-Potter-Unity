@@ -11,6 +11,8 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     [RequireComponent(typeof(InputRequirement))]
     public class MidAirCollision : BaseSpell, IDamageSpell
     {
+        public int DamageAmount { get { return 10; } }
+
         protected override void SpellAction(List<BaseCard> targets)
         {
             var target = targets.Single();
@@ -24,7 +26,5 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
         {
             return Player.InPlay.CardsExceptStartingCharacter;
         }
-
-        public int DamageAmount { get { return 10; } }
     }
 }

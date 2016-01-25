@@ -3,6 +3,5 @@
     public interface IDamageSpell
     {
         int DamageAmount { get; }
-
     }
 }

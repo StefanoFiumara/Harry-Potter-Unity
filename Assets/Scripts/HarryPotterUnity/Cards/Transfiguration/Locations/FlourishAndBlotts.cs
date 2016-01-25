@@ -10,7 +10,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
             var player = Player.IsLocalPlayer ? Player : Player.OppositePlayer;
 
             return player.CanUseActions() &&
-                   player.InPlay.Cards.Count(c => c.Type == Type.Lesson) >= 2;
+                   player.InPlay.Lessons.Count >= 2;
         }
 
         public override void OnSelectedAction()
@@ -18,7 +18,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
             //HACK: Need a nicer way to determine which player is activating this effect
             var player = Player.CanUseActions() ? Player : Player.OppositePlayer;
 
-            var lessons = player.InPlay.Cards.Where(c => c.Type == Type.Lesson).Take(2);
+            var lessons = player.InPlay.Lessons.Take(2);
 
             player.Discard.AddAll(lessons);
 

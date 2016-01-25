@@ -16,8 +16,8 @@ namespace HarryPotterUnity.Game
         public List<BaseCard> CardsExceptStartingCharacter
         {
             get { return Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
-        } 
-
+        }
+        
         private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
         private static readonly Vector3 TopRowPositionOffset = new Vector3(-255f, 0f, 15f);
         private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);
@@ -27,12 +27,7 @@ namespace HarryPotterUnity.Game
         private static readonly Vector2 TopRowSpacing = new Vector2(80f, 0f);
         private static readonly Vector2 CreatureSpacing = new Vector2(80f, 55f);
         private static readonly Vector2 CharacterSpacing = new Vector2(80f, 0f);
-
-        public InPlay()
-        {
-            Cards = new List<BaseCard>();
-        }
-
+        
         public override void Add(BaseCard card)
         {
             Cards.Add(card);
@@ -81,24 +76,15 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public List<BaseCard> GetCreaturesInPlay()
-        {
-            return Cards.FindAll(c => c is BaseCreature);
-        }
-
-        private IEnumerable<BaseCard> GetLessonsInPlay()
-        {
-            return Cards.FindAll(c => c is BaseLesson);
-        }
 
         public IEnumerable<BaseCard> GetLessonsOfType(LessonTypes type)
         {
-            return GetLessonsInPlay().Where(x => ((ILessonProvider)x).LessonType == type);
+            return Lessons.Where(x => ((ILessonProvider)x).LessonType == type);
         }
 
         public int GetAmountOfLessonsOfType(LessonTypes type)
         {
-            return GetLessonsInPlay().Count(x => ((ILessonProvider)x).LessonType == type);
+            return Lessons.Count(x => ((ILessonProvider)x).LessonType == type);
         }
 
         private void TweenCardToPosition(BaseCard card)

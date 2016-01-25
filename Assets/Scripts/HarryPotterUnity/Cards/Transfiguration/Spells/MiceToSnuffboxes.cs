@@ -8,8 +8,8 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     public class MiceToSnuffboxes : BaseSpell {
         public override List<BaseCard> GetValidTargets()
         {
-            var validCards = Player.InPlay.GetCreaturesInPlay();
-            validCards.AddRange(Player.OppositePlayer.InPlay.GetCreaturesInPlay());
+            var validCards = Player.InPlay.Creatures;
+            validCards.AddRange(Player.OppositePlayer.InPlay.Creatures);
 
             return validCards;
         }

@@ -10,15 +10,15 @@ namespace HarryPotterUnity.Cards.Characters
         public override bool CanPerformInPlayAction()
         {
             return Player.CanUseActions() && 
-                   Player.Hand.Cards.Count(c => c.Type == Type.Lesson) >= 2 &&
+                   Player.Hand.Lessons.Count>= 2 &&
                    Player.AmountLessonsInPlay >= 2 &&
                    Player.IsLocalPlayer;
         }
 
         public override void OnSelectedAction()
         {
-            var firstLesson = Player.Hand.Cards.Find(c => c.Type == Type.Lesson);
-            var secondLesson = Player.Hand.Cards.FindLast(c => c.Type == Type.Lesson);
+            var firstLesson = Player.Hand.Lessons.First();
+            var secondLesson = Player.Hand.Lessons.Last();
 
             Player.InPlay.AddAll(new [] {firstLesson, secondLesson });
             Player.UseActions();

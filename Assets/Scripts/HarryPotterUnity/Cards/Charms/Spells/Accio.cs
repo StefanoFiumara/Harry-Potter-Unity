@@ -10,14 +10,14 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var lessons = Player.Discard.Cards.Where(card => card.Type == Type.Lesson).Take(2).ToList();
+            var lessons = Player.Discard.Lessons.Take(2).ToList();
            
             Player.Hand.AddAll(lessons);
         }
 
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.Discard.Cards.Count(c => c.Type == Type.Lesson) >= 2;
+            return Player.Discard.Lessons.Count >= 2;
         }
     }
 }

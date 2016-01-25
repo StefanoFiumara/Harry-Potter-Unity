@@ -9,7 +9,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     public class HalloweenFeast : BaseSpell {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var creatures = Player.Discard.Cards.Where(card => card.Type == Type.Creature).Take(4).ToList();
+            var creatures = Player.Discard.Creatures.Take(4).ToList();
 
             Player.Hand.AddAll(creatures);
         }

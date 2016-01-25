@@ -11,7 +11,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 
         public override void OnInPlayBeforeTurnAction()
         {
-            if (Player.OppositePlayer.InPlay.GetCreaturesInPlay().Count() != 0) return;
+            if (Player.OppositePlayer.InPlay.Creatures.Count != 0) return;
 
             _damagePerTurn += 2;
             _attackLabel.text = (_damagePerTurn).ToString();
