@@ -24,10 +24,13 @@ namespace HarryPotterUnity.Cards
         public int DamagePerTurn { get { return _damagePerTurn; } }
         public int Health { get { return _health; } }
 
+        private int _maxHealth;
         protected override void Start()
         {
             base.Start();
             LoadUiOverlay();
+
+            _maxHealth = _health;
         }
 
         private void LoadUiOverlay()
@@ -73,8 +76,9 @@ namespace HarryPotterUnity.Cards
         //TODO: Prevent creature from healing above starting health.
         public void Heal(int amount)
         {
-            _health += amount;
-            _healthLabel.text = Mathf.Clamp(_health, 0, int.MaxValue).ToString();
+            _health = Mathf.Clamp(_health + amount, 0, _maxHealth);
+
+            _healthLabel.text = _health.ToString();
         }
 
         public virtual bool CanPerformInPlayAction() { return false; }
