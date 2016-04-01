@@ -30,7 +30,7 @@ namespace HarryPotterUnity.Utils
                     buttonPressed[i] = true;
                 }
 
-                Rect buttonPos = new Rect(position.x + EditorGUIUtility.labelWidth + buttonWidth * i, position.y, buttonWidth, position.height);
+                var buttonPos = new Rect(position.x + EditorGUIUtility.labelWidth + buttonWidth * i, position.y, buttonWidth, position.height);
 
                 buttonPressed[i] = GUI.Toggle(buttonPos, buttonPressed[i], property.enumNames[i], "Button");
 
