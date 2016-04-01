@@ -21,8 +21,14 @@ namespace HarryPotterUnity.Cards
         [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
         [SerializeField, UsedImplicitly] private Rarity _rarity;
 
+        /*
+            TODO: Convert to EnumFlags attribute
+            TODO: Replace all Tags.Contains with Tags.HasFlag
+            TODO: Reassign Tags to all card prefabs
+        */
+
         [Header("Basic Card Settings")]
-        [UsedImplicitly] public List<Tag> Tags;
+        [UsedImplicitly] public List<Tag> Tags; 
         #endregion
 
         private CardCollection _collection;

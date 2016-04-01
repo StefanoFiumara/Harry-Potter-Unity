@@ -64,7 +64,7 @@ namespace HarryPotterUnity.Game
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000f, 1 << 11))
+                    if (Physics.Raycast(ray, out hit, 1000f, 1 << 11)) //TODO: Make layermask a constant
                     {
                         //BUG: If the player clicks on a non-card collider (e.g. the Deck Collider) Will this give a null reference?
                         var target = hit.transform.gameObject.GetComponent<BaseCard>();
