@@ -126,7 +126,11 @@ namespace HarryPotterUnity.Game
 
             Deck.DrawCard();
             AddActions(2);
-            if (ActionsAvailable < 1) ActionsAvailable = 1;
+
+            if (ActionsAvailable < 1)
+            {
+                ActionsAvailable = 1;
+            }
 
             foreach (var creature in InPlay.Creatures.Cast<BaseCreature>())
             {
