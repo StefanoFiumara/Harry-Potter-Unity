@@ -46,10 +46,12 @@ namespace HarryPotterUnity.UI.Menu
                     if (player == _localPlayer)
                     {
                         //TODO: Show Lose message
+                        Log.Write("Local player has lost");
                     }
                     else
                     {
                         //TODO: Show Win message
+                        Log.Write("Local player has won");
                     }
                 };
             }
@@ -68,9 +70,13 @@ namespace HarryPotterUnity.UI.Menu
                 {
                     if (player == _remotePlayer)
                     {
+                        //TODO: Show Lose message
+                        Log.Write("Remote player has lost");
                     }
                     else
                     {
+                        //TODO: Show Win message
+                        Log.Write("Remote player has won");
                     }
                 };
             }
