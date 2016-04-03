@@ -177,6 +177,7 @@ namespace HarryPotterUnity.Game
             if (amount <= 0) return;
             
             var cards = new List<BaseCard>();
+
             for (int i = 0; i < amount; i++)
             {
                 // TODO: Check all the buffers based on damage source
@@ -200,7 +201,7 @@ namespace HarryPotterUnity.Game
 
             if (OnDamageTaken != null && sourceCard != null)
             {
-                OnDamageTaken(sourceCard, amount);
+                OnDamageTaken(sourceCard, cards.Count); 
             }
         }
         

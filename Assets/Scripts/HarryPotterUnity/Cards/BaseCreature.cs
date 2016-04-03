@@ -73,7 +73,6 @@ namespace HarryPotterUnity.Cards
             }
         }
 
-        //TODO: Prevent creature from healing above starting health.
         public void Heal(int amount)
         {
             _health = Mathf.Clamp(_health + amount, 0, _maxHealth);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
@@ -6,6 +7,8 @@ using HarryPotterUnity.Tween;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityLogWrapper;
+using Random = UnityEngine.Random;
+using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
 {
@@ -17,7 +20,9 @@ namespace HarryPotterUnity.Game
         private readonly Vector2 _deckPositionOffset = new Vector2(-355f, -124f);
         
         public BaseCard StartingCharacter { get; private set; }
-        
+
+        public event Action<Player> OnDeckIsOutOfCards;
+
         [UsedImplicitly]
         public void Awake()
         {
@@ -97,6 +102,12 @@ namespace HarryPotterUnity.Game
         {
             _player.DisableAllCards();
             _player.OppositePlayer.DisableAllCards();
+
+            if (OnDeckIsOutOfCards != null)
+            {
+                OnDeckIsOutOfCards(_player);
+            }
+                
         }
 
         [UsedImplicitly]

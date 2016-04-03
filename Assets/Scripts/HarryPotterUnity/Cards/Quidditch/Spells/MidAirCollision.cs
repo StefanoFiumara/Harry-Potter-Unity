@@ -17,6 +17,8 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
         {
             var target = targets.Single();
 
+            target.RemoveHighlight();
+
             Player.Discard.Add(target);
             
             Player.OppositePlayer.TakeDamage(this, DamageAmount);

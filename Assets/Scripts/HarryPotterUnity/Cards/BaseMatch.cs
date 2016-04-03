@@ -58,6 +58,8 @@ namespace HarryPotterUnity.Cards
             _p1ProgressLabel.text = string.Format("{0}/{1}",_p1Progress, _goal);
             _p2ProgressLabel.text = string.Format("{0}/{1}", _p2Progress, _goal);
         }
+
+        //Ensure no other matches are in play
         protected override bool MeetsAdditionalPlayRequirements()
         {
             return Player.InPlay.Cards

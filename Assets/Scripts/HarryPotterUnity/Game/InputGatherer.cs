@@ -14,9 +14,13 @@ namespace HarryPotterUnity.Game
     public class InputGatherer : MonoBehaviour
     {
         private BaseCard _cardInfo;
-        
 
         private int _inputRequired;
+
+        private static int LayerMask
+        {
+            get { return 1 << 11; }
+        }
 
         [UsedImplicitly]
         private void Start()
@@ -64,7 +68,7 @@ namespace HarryPotterUnity.Game
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000f, 1 << 11)) //TODO: Make layermask a constant
+                    if (Physics.Raycast(ray, out hit, 1000f, LayerMask)) //TODO: Make layermask a constant
                     {
                         //BUG: If the player clicks on a non-card collider (e.g. the Deck Collider) Will this give a null reference?
                         var target = hit.transform.gameObject.GetComponent<BaseCard>();
@@ -74,6 +78,11 @@ namespace HarryPotterUnity.Game
 
                         if (selectedCards.Count == _inputRequired)
                         {
+                            foreach (var card in selectedCards)
+                            {
+                                card.RemoveHighlight();
+                            }
+
                             var selectedCardIds = selectedCards.Select(c => c.NetworkId).ToArray();
                             GameManager.Network.RPC("ExecuteInputCardById", PhotonTargets.All, _cardInfo.NetworkId, selectedCardIds);
                         }

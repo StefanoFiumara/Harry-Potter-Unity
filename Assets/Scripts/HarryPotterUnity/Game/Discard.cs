@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
-using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
 using JetBrains.Annotations;
@@ -13,7 +12,7 @@ namespace HarryPotterUnity.Game
     [UsedImplicitly]
     public class Discard : CardCollection
     {
-        private static readonly Vector2 DiscardPositionOffset = new Vector2(-355f, -30f);
+        private static readonly Vector2 _discardPositionOffset = new Vector2(-355f, -30f);
 
         [UsedImplicitly]
         public void Start () {
@@ -22,7 +21,7 @@ namespace HarryPotterUnity.Game
             var col = gameObject.AddComponent<BoxCollider>();
             col.isTrigger = true;
             col.size = new Vector3(50f, 70f, 1f);
-            col.center = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 0f);
+            col.center = new Vector3(_discardPositionOffset.x, _discardPositionOffset.y, 0f);
         }
 
         public override void Add(BaseCard card) 
@@ -32,7 +31,7 @@ namespace HarryPotterUnity.Game
             
             card.transform.parent = transform;
 
-            var cardPos = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 16f);
+            var cardPos = new Vector3(_discardPositionOffset.x, _discardPositionOffset.y, 16f);
             cardPos.z -=  Cards.Count * 0.2f;
 
             Vector3 cardPreviewPos = cardPos;
@@ -112,7 +111,7 @@ namespace HarryPotterUnity.Game
 
             int position = Cards.IndexOf(card);
 
-            var cardPos = new Vector3(DiscardPositionOffset.x, DiscardPositionOffset.y, 16f);
+            var cardPos = new Vector3(_discardPositionOffset.x, _discardPositionOffset.y, 16f);
             cardPos.z -= position * 0.2f;
             
             return cardPos;

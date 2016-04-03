@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
@@ -7,6 +8,7 @@ using HarryPotterUnity.Tween;
 using JetBrains.Annotations;
 using UnityLogWrapper;
 using UnityEngine;
+using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
 {
@@ -18,15 +20,15 @@ namespace HarryPotterUnity.Game
             get { return Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
         }
         
-        private static readonly Vector3 LessonPositionOffset = new Vector3(-255f, -60f, 15f);
-        private static readonly Vector3 TopRowPositionOffset = new Vector3(-255f, 0f, 15f);
-        private static readonly Vector3 CreaturePositionOffset = new Vector3(5f, -60f, 15f);
-        private static readonly Vector3 CharacterPositionOffset = new Vector3(-356f, -207, 15f);
+        private static readonly Vector3 _lessonPositionOffset = new Vector3(-255f, -60f, 15f);
+        private static readonly Vector3 _topRowPositionOffset = new Vector3(-255f, 0f, 15f);
+        private static readonly Vector3 _creaturePositionOffset = new Vector3(5f, -60f, 15f);
+        private static readonly Vector3 _characterPositionOffset = new Vector3(-356f, -207, 15f);
 
-        private static readonly Vector2 LessonSpacing = new Vector2(80f, 15f);
-        private static readonly Vector2 TopRowSpacing = new Vector2(80f, 0f);
-        private static readonly Vector2 CreatureSpacing = new Vector2(80f, 55f);
-        private static readonly Vector2 CharacterSpacing = new Vector2(80f, 0f);
+        private static readonly Vector2 _lessonSpacing = new Vector2(80f, 15f);
+        private static readonly Vector2 _topRowSpacing = new Vector2(80f, 0f);
+        private static readonly Vector2 _creatureSpacing = new Vector2(80f, 55f);
+        private static readonly Vector2 _characterSpacing = new Vector2(80f, 0f);
         
         public override void Add(BaseCard card)
         {
@@ -103,9 +105,17 @@ namespace HarryPotterUnity.Game
 
         private void RearrangeCardsOfType(Type type)
         {
+            Func<Type, bool> isTopRow =
+                t => t == Type.Item || t == Type.Location || t == Type.Adventure || t == Type.Match;
+
+            var targets = 
+                isTopRow(type) ? 
+                    Cards.FindAll(c => isTopRow(c.Type)) : 
+                    Cards.FindAll(c => c.Type == type);
+
             var tween = new AsyncMoveTween
             {
-                Targets = Cards.FindAll(c => c.Type == type),
+                Targets = targets,
                 GetPosition = GetTargetPositionForCard
             };
             GameManager.TweenQueue.AddTweenToQueue(tween);
@@ -122,18 +132,18 @@ namespace HarryPotterUnity.Game
             switch (card.Type)
             {
                 case Type.Lesson:
-                    cardPosition = LessonPositionOffset;
-                    cardPosition.x += (position % 3) * LessonSpacing.x;
-                    cardPosition.y -= (int)(position / 3) * LessonSpacing.y;
+                    cardPosition = _lessonPositionOffset;
+                    cardPosition.x += (position % 3) * _lessonSpacing.x;
+                    cardPosition.y -= (int)(position / 3) * _lessonSpacing.y;
                     break;
                 case Type.Creature:
-                    cardPosition = CreaturePositionOffset;
-                    cardPosition.x += (position % 4) * CreatureSpacing.x;
-                    cardPosition.y -= (int)(position / 4) * CreatureSpacing.y;
+                    cardPosition = _creaturePositionOffset;
+                    cardPosition.x += (position % 4) * _creatureSpacing.x;
+                    cardPosition.y -= (int)(position / 4) * _creatureSpacing.y;
                     break;
                 case Type.Character:
-                    cardPosition = CharacterPositionOffset;
-                    cardPosition.x += (position % 3) * CharacterSpacing.x;
+                    cardPosition = _characterPositionOffset;
+                    cardPosition.x += (position % 3) * _characterSpacing.x;
                     break;
                 case Type.Item:
                 case Type.Location:
@@ -141,8 +151,8 @@ namespace HarryPotterUnity.Game
                 case Type.Match:
                     int topRowIndex = Cards.FindAll(c => c.Type == Type.Match || c.Type == Type.Adventure ||
                                                          c.Type == Type.Item || c.Type == Type.Location).IndexOf(card);
-                    cardPosition = TopRowPositionOffset;
-                    cardPosition.x += (topRowIndex % 9) * TopRowSpacing.x;
+                    cardPosition = _topRowPositionOffset;
+                    cardPosition.x += (topRowIndex % 9) * _topRowSpacing.x;
                     break;
                 default:
                     Log.Error("GetTargetPositionForCard could not identify cardType");

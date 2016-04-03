@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace HarryPotterUnity.UI.Menu
             set
             {
                 _localPlayer = value;
+
                 _localPlayer.OnTurnStart += () =>
                 {
                     _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
@@ -28,6 +30,27 @@ namespace HarryPotterUnity.UI.Menu
                 {
                     _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
                     _skipActionButton.interactable = false;
+                };
+                
+                _localPlayer.OnCardPlayedEvent += (card, targets) =>
+                {
+                    if (card.Type == Type.Lesson)
+                    {
+                        //TODO: Update player hud lessons panel, should this be an InPlayEvent? OnCardEnteredPlay, OnCardExitedPlay
+                        //BUG: Need to update this panel when a lesson is removed
+                    }
+                };
+
+                _localPlayer.Deck.OnDeckIsOutOfCards += player =>
+                {
+                    if (player == _localPlayer)
+                    {
+                        //TODO: Show Lose message
+                    }
+                    else
+                    {
+                        //TODO: Show Win message
+                    }
                 };
             }
         }
@@ -40,6 +63,16 @@ namespace HarryPotterUnity.UI.Menu
                 _remotePlayer = value;
                 _remotePlayer.OnTurnStart += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
                 _remotePlayer.OnTurnEnd   += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
+
+                _remotePlayer.Deck.OnDeckIsOutOfCards += player =>
+                {
+                    if (player == _remotePlayer)
+                    {
+                    }
+                    else
+                    {
+                    }
+                };
             }
         }
 
@@ -111,6 +144,7 @@ namespace HarryPotterUnity.UI.Menu
             {
                 _skipActionButton.interactable = false;
             }
+
             GameManager.Network.RPC("ExecuteSkipAction", PhotonTargets.All);
         }
 
