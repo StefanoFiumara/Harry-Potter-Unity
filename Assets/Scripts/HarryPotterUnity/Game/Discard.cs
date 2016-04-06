@@ -118,7 +118,7 @@ namespace HarryPotterUnity.Game
 
         public void OnMouseUp()
         {
-            Debug.Log("Discard Clicked");
+            Debug.Log("Discard Clicked"); //TODO: Needed?
         }
     }
 }

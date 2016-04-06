@@ -49,12 +49,10 @@ namespace HarryPotterUnity.Tween
                     yield return new WaitForSeconds(_timeUntilNextTween);
                     ITweenObject tween = _queue.Dequeue();
 
-                    if(tween.TweenSource != null) tween.TweenSource.SetHighlight();
                     tween.ExecuteTween();
                     _timeUntilNextTween = tween.TimeUntilNextTween;
-                    yield return new WaitForSeconds(tween.CompletionTime);
-                    if (tween.TweenSource != null) tween.TweenSource.RemoveHighlight();
 
+                    yield return new WaitForSeconds(tween.CompletionTime);
                 }
             }
         }

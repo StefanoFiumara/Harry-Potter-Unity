@@ -12,7 +12,6 @@ using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
 {
-    [UsedImplicitly]
     public class Deck : CardCollection
     {
         private Player _player;
@@ -23,8 +22,7 @@ namespace HarryPotterUnity.Game
 
         public event Action<Player> OnDeckIsOutOfCards;
 
-        [UsedImplicitly]
-        public void Awake()
+        private void Awake()
         {
             _player = transform.GetComponentInParent<Player>();
 
@@ -33,8 +31,6 @@ namespace HarryPotterUnity.Game
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         }
-
-        
 
         public void InitDeck (IEnumerable<BaseCard> cardList, BaseCard startingCharacter)
         {
@@ -100,6 +96,7 @@ namespace HarryPotterUnity.Game
         
         private void GameOver()
         {
+            //TODO: Refactor this logic to occur on player class by subscribing to event
             _player.DisableAllCards();
             _player.OppositePlayer.DisableAllCards();
 
@@ -110,15 +107,13 @@ namespace HarryPotterUnity.Game
                 
         }
 
-        [UsedImplicitly]
-        public void OnMouseUp()
+        private void OnMouseUp()
         {
             if (!CanDrawCard()) return;
 
             GameManager.Network.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
         }
 
-        [UsedImplicitly]
         private void OnMouseOver()
         {
             if (CanDrawCard())
@@ -127,7 +122,6 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        [UsedImplicitly]
         private void OnMouseExit()
         {
             Cards[Cards.Count - 1].RemoveHighlight();
@@ -163,12 +157,7 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue(new ShuffleDeckTween(Cards));
             
         }
-
-        public IEnumerable<BaseCard> GetCardsOfType(Type type, int amount)
-        {
-            return Cards.FindAll(card => card.Type == type).Take(amount);
-        }
-
+        
         protected override void Remove(BaseCard card)
         {
             Cards.Remove(card);

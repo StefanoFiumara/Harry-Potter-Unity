@@ -12,7 +12,6 @@ namespace HarryPotterUnity.Tween
         
         public float CompletionTime { get { return 2f; } }
         public float TimeUntilNextTween { get { return 0f; } }
-        public BaseCard TweenSource { get; set; }
 
         public ShuffleDeckTween(IEnumerable<BaseCard> cards)
         {

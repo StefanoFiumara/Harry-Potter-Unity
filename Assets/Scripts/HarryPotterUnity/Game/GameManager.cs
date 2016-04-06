@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Tween;
-using HarryPotterUnity.UI;
 using HarryPotterUnity.UI.Camera;
 using UnityEngine;
 

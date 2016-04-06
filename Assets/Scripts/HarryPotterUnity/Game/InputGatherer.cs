@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.PlayRequirements;
-using JetBrains.Annotations;
 using UnityEngine;
 using MonoBehaviour = UnityEngine.MonoBehaviour;
 
 namespace HarryPotterUnity.Game
 {
-    [UsedImplicitly]
+    [RequireComponent(typeof(BaseCard))]
+    [RequireComponent(typeof(InputRequirement))]
     public class InputGatherer : MonoBehaviour
     {
         private BaseCard _cardInfo;
@@ -22,7 +22,6 @@ namespace HarryPotterUnity.Game
             get { return 1 << 11; }
         }
 
-        [UsedImplicitly]
         private void Start()
         {
             _cardInfo = GetComponent<BaseCard>();
@@ -45,7 +44,7 @@ namespace HarryPotterUnity.Game
 
             var validCards = _cardInfo.GetValidTargets();
 
-            foreach (BaseCard card in validCards)
+            foreach (var card in validCards)
             {
                 card.SetHighlight();
                 card.Enable();
@@ -68,7 +67,7 @@ namespace HarryPotterUnity.Game
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     RaycastHit hit;
-                    if (Physics.Raycast(ray, out hit, 1000f, LayerMask)) //TODO: Make layermask a constant
+                    if (Physics.Raycast(ray, out hit, 1000f, LayerMask))
                     {
                         //BUG: If the player clicks on a non-card collider (e.g. the Deck Collider) Will this give a null reference?
                         var target = hit.transform.gameObject.GetComponent<BaseCard>();

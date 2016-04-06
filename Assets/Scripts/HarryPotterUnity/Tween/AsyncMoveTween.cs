@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Tween
 {
-    class AsyncMoveTween : ITweenObject
+    public class AsyncMoveTween : ITweenObject
     {
 
         public List<BaseCard> Targets { get; set; }
@@ -17,8 +17,6 @@ namespace HarryPotterUnity.Tween
             get { return 0.2f; }
         }
         
-        public BaseCard TweenSource { get; set; }
-
         public void ExecuteTween()
         {
             foreach (var target in Targets)

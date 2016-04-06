@@ -23,7 +23,7 @@ namespace HarryPotterUnity.Game
 
         private const string LOBBY_VERSION = "v0.2-dev";
 
-        private static readonly TypedLobby DefaultLobby = new TypedLobby(LOBBY_VERSION, LobbyType.Default);
+        private static readonly TypedLobby _defaultLobby = new TypedLobby(LOBBY_VERSION, LobbyType.Default);
 
         public void Awake()
         {
@@ -47,7 +47,7 @@ namespace HarryPotterUnity.Game
 
         public static void ConnectToPhotonLobby()
         {
-            PhotonNetwork.JoinLobby( DefaultLobby );
+            PhotonNetwork.JoinLobby( _defaultLobby );
         }
 
         [UsedImplicitly]
@@ -104,7 +104,7 @@ namespace HarryPotterUnity.Game
         [UsedImplicitly]
         public void OnLeftRoom()
         {
-            Log.Write("Player Chose to Disconnect, Back to Main Menu");
+            Log.Write("Player Disconnected, Back to Main Menu");
             
             GameManager.TweenQueue.Reset();
             DestroyPlayerObjects();

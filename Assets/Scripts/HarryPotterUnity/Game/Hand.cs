@@ -8,24 +8,17 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
-    [UsedImplicitly]
     public class Hand : CardCollection
     {   
         private Player _player;
 
-        private static readonly Vector3 HandPreviewPosition = new Vector3(-80f, -13f, -336f);
+        private static readonly Vector3 _handPreviewPosition = new Vector3(-80f, -13f, -336f);
 
-        private static readonly Vector3 HandCardsOffset = new Vector3(-240f, -200f, 0f);
+        private static readonly Vector3 _handCardsOffset = new Vector3(-240f, -200f, 0f);
 
         private const float SPACING = 55f;
 
-        public Hand()
-        {
-            Cards = new List<BaseCard>();
-        }
-
-        [UsedImplicitly]
-        public void Awake()
+        private void Awake()
         {
             _player = transform.GetComponentInParent<Player>();
         }
@@ -102,7 +95,7 @@ namespace HarryPotterUnity.Game
         {
             if (!Cards.Contains(card)) return card.transform.localPosition;
 
-            var cardPosition = HandCardsOffset;
+            var cardPosition = _handCardsOffset;
 
             float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
             
@@ -122,7 +115,7 @@ namespace HarryPotterUnity.Game
                 var previewTween = new MoveTween
                 {
                     Target = card.gameObject,
-                    Position = HandPreviewPosition,
+                    Position = _handPreviewPosition,
                     Time = 0.5f,
                     Flip = flipState,
                     Rotate = TweenRotationType.NoRotate,

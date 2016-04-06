@@ -25,6 +25,8 @@ namespace HarryPotterUnity.Game
             get { return Cards.Where(c => c.Type == Type.Creature).ToList(); }
         }
 
+        //TODO: Add Shortcut property for Adventures...Matches...Locations, and all other types
+
         public abstract void Add(BaseCard card);
         public abstract void AddAll(IEnumerable<BaseCard> cards);
 

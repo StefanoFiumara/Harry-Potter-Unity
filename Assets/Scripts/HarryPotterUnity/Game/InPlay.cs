@@ -76,6 +76,7 @@ namespace HarryPotterUnity.Game
         }
 
 
+        //TODO: Look into removing these methods
         public IEnumerable<BaseCard> GetLessonsOfType(LessonTypes type)
         {
             return Lessons.Where(x => ((ILessonProvider)x).LessonType == type);
