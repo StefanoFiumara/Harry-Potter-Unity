@@ -1,11 +1,9 @@
 ﻿using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
-    [UsedImplicitly]
     public class LessonRequirement : MonoBehaviour, ICardPlayRequirement
     {
 
@@ -29,7 +27,6 @@ namespace HarryPotterUnity.Cards.PlayRequirements
             set { _lessonType = value; }
         }
 
-        [UsedImplicitly]
         private void Start()
         {
             _player = GetComponent<BaseCard>().Player;

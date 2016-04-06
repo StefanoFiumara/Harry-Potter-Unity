@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
-    [UsedImplicitly]
     class DiscardPileContainsRequirement : MonoBehaviour, ICardPlayRequirement
     {
         [SerializeField, UsedImplicitly]

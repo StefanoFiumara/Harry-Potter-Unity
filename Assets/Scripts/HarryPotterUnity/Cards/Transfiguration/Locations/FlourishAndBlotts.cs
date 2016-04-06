@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using HarryPotterUnity.Enums;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Locations
 {

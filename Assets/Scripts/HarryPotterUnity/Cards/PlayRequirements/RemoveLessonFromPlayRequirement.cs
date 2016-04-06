@@ -6,7 +6,6 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
-    [UsedImplicitly]
     public class RemoveLessonFromPlayRequirement : MonoBehaviour, ICardPlayRequirement
     {
 
@@ -21,8 +20,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         private Player _player;
 
-        [UsedImplicitly]
-        void Start()
+        private void Start()
         {
             _player = GetComponent<BaseCard>().Player;
         }

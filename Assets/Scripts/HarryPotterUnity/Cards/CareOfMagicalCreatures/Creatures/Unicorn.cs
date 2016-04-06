@@ -1,8 +1,5 @@
-﻿using JetBrains.Annotations;
-
-namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
+﻿namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 {
-    [UsedImplicitly]
     public class Unicorn : BaseCreature {
 
         public override void OnInPlayBeforeTurnAction()

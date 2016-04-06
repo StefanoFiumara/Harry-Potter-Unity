@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
+using HarryPotterUnity.Cards.PlayRequirements;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
-    [UsedImplicitly]
+    [RequireComponent(typeof(InputRequirement))]
     public class Incarcifors : BaseSpell
     {
         public override List<BaseCard> GetValidTargets()
@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var target = targets.First();
+            var target = targets.Single();
             
             Player.OppositePlayer.Discard.Add(target);
         }

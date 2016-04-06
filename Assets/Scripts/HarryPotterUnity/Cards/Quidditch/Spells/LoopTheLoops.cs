@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Interfaces;
-using JetBrains.Annotations;
-using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Quidditch.Spells
 {
-    [UsedImplicitly]
     public class LoopTheLoops : BaseSpell, IDamageSpell
     {
         public int DamageAmount { get { return 4; } }

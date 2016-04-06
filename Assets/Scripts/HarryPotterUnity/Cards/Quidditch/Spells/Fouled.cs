@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Interfaces;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Quidditch.Spells
 {
-    [UsedImplicitly]
     public class Fouled : BaseSpell, IDamageSpell
     {
         protected override void SpellAction(List<BaseCard> targets)

@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards {
 
-    [UsedImplicitly]
-    public class BaseLesson : BaseCard, IPersistentCard, ILessonProvider
+    public sealed class BaseLesson : BaseCard, IPersistentCard, ILessonProvider
     {
         #region Inspector Settings
         [Header("Lesson Settings")]
@@ -30,7 +29,12 @@ namespace HarryPotterUnity.Cards {
         public void OnSelectedAction() { }
 
         public void OnEnterInPlayAction() { }
-        public void OnExitInPlayAction() { }
+
+        public void OnExitInPlayAction()
+        {
+            //Reset Amount Provided, cards like wand shop may alter this value during play
+            AmountLessonsProvided = 1;
+        }
 
         public void OnInPlayBeforeTurnAction() { }
         public void OnInPlayAfterTurnAction() { }

@@ -1,16 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HarryPotterUnity.Enums;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
-    [UsedImplicitly]
-    public class Accio : BaseSpell {
-
+    public class Accio : BaseSpell
+    {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var lessons = Player.Discard.Lessons.Take(2).ToList();
+            var lessons = Player.Discard.Lessons.Take(2);
            
             Player.Hand.AddAll(lessons);
         }

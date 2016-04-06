@@ -2,12 +2,10 @@
 using System.Linq;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Cards.PlayRequirements;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Quidditch.Spells
 {
-    [UsedImplicitly]
     [RequireComponent(typeof(InputRequirement))]
     public class MidAirCollision : BaseSpell, IDamageSpell
     {

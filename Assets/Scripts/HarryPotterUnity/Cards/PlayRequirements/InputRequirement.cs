@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
-    [UsedImplicitly]
     public class InputRequirement : MonoBehaviour, ICardPlayRequirement
     {
         private BaseCard _cardInfo;
@@ -14,8 +13,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public int InputRequired { get { return _inputRequired; } }
 
-        [UsedImplicitly]
-        void Awake()
+        private void Awake()
         {
             _cardInfo = GetComponent<BaseCard>();
             if (GetComponent<InputGatherer>() == null)

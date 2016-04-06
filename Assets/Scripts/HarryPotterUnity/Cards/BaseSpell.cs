@@ -9,7 +9,7 @@ namespace HarryPotterUnity.Cards
 {
     public abstract class BaseSpell : BaseCard {
 
-        private static readonly Vector3 SpellOffset = new Vector3(0f, 0f, -400f);
+        private static readonly Vector3 _spellOffset = new Vector3(0f, 0f, -400f);
 
         protected sealed override void OnClickAction(List<BaseCard> targets)
         {
@@ -32,7 +32,7 @@ namespace HarryPotterUnity.Cards
             var tween = new MoveTween
             {
                 Target = gameObject,
-                Position = SpellOffset,
+                Position = _spellOffset,
                 Time = 0.5f,
                 Flip = FlipState.FaceUp,
                 Rotate = rotateType,

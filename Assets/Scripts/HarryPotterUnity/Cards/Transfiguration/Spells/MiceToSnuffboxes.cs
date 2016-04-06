@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
+using HarryPotterUnity.Cards.PlayRequirements;
+using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
-    [UsedImplicitly]
-    public class MiceToSnuffboxes : BaseSpell {
+    [RequireComponent(typeof(InputRequirement))]
+    public class MiceToSnuffboxes : BaseSpell
+    {
         public override List<BaseCard> GetValidTargets()
         {
-            var validCards = Player.InPlay.Creatures;
-            validCards.AddRange(Player.OppositePlayer.InPlay.Creatures);
+            var validCards = Player.InPlay.Creatures
+                .Concat(Player.OppositePlayer.InPlay.Creatures)
+                .ToList();
 
             return validCards;
         }

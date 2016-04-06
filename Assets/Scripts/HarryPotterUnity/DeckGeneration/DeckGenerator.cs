@@ -28,8 +28,7 @@ namespace HarryPotterUnity.DeckGeneration
                         .Cast<GameObject>()
                         .Select( o => o.GetComponent<BaseCard>() );
 
-                    _cardLibrary = new List<BaseCard>();
-                    _cardLibrary.AddRange( cards );
+                    _cardLibrary = new List<BaseCard>(cards);
                 }
 
                 return _cardLibrary;
@@ -66,7 +65,7 @@ namespace HarryPotterUnity.DeckGeneration
         
         public static BaseCard GetRandomStartingCharacter()
         {
-            BaseCard character = AvailableStartingCharacters.Skip(Random.Range(0, AvailableStartingCharacters.Count)).First();
+            var character = AvailableStartingCharacters.Skip(Random.Range(0, AvailableStartingCharacters.Count)).First();
 
             AvailableStartingCharacters.Remove(character);
 
@@ -104,7 +103,9 @@ namespace HarryPotterUnity.DeckGeneration
         
         private static void AddLessonsToDeck(ref List<BaseCard> deck, LessonTypes lessonType, int amount)
         {
-            BaseCard card = CardLibrary.Where(c => c.Classification == ClassificationTypes.Lesson).First(l => ((ILessonProvider) l).LessonType == lessonType);
+            var card = CardLibrary
+                .Where(c => c.Classification == ClassificationTypes.Lesson)
+                .First(l => ((ILessonProvider) l).LessonType == lessonType);
 
             for (int i = 0; i < amount; i++)
             {
@@ -126,7 +127,7 @@ namespace HarryPotterUnity.DeckGeneration
                 var deckCopy = deck.ToList();
 
                 bool canBeAdded = (card.DeckGenerationRequirements.Count == 0 || 
-                                   card.DeckGenerationRequirements.TrueForAll(req => req.MeetsRequirement(deckCopy))) && 
+                                   card.DeckGenerationRequirements.All(req => req.MeetsRequirement(deckCopy))) && 
                                    card.MeetsRarityRequirements() &&
                                    deck.Count(c => c.CardName.Equals(card.CardName)) < 4;
                 

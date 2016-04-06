@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
+using HarryPotterUnity.Cards.PlayRequirements;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
-    [UsedImplicitly]
+    [RequireComponent(typeof(InputRequirement))]
     public class RavenToWritingDesk : BaseSpell
     {
         public override List<BaseCard> GetValidTargets()

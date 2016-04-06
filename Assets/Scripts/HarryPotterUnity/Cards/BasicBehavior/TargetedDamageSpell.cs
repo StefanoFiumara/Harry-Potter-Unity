@@ -8,8 +8,8 @@ using UnityEngine;
 namespace HarryPotterUnity.Cards.BasicBehavior
 {
     [RequireComponent(typeof(InputRequirement))]
-    public class TargetedDamageSpell : BaseSpell, IDamageSpell {
-        
+    public class TargetedDamageSpell : BaseSpell, IDamageSpell
+    {
         [Header("Targeted Damage Spell Settings"), Space(10)]
         [UsedImplicitly, SerializeField]
         private int _damageAmount;
@@ -23,10 +23,15 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         {
             var target = targets.Single();
 
-            if (target is BaseCreature)            
+            if (target is BaseCreature)
+            {
                 (target as BaseCreature).TakeDamage(_damageAmount);
+            }
             else
+            {
                 Player.OppositePlayer.TakeDamage(this, _damageAmount);
+            }
+                
         }
 
         public override List<BaseCard> GetValidTargets()

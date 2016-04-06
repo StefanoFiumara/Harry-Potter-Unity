@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using HarryPotterUnity.Cards.BasicBehavior;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Quidditch.Items
 {
-    [UsedImplicitly]
     public class NimbusTwoThousand : ItemLessonProvider
     {
         private bool _hasEffectedTriggered;

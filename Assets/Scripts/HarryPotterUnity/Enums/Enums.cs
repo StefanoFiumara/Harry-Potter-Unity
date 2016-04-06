@@ -70,9 +70,9 @@ namespace HarryPotterUnity.Enums
         public static bool IsTopRow(this Type type)
         {
             return type == Type.Item
-                   || type == Type.Location
-                   || type == Type.Adventure
-                   || type == Type.Match;
+                || type == Type.Location
+                || type == Type.Adventure
+                || type == Type.Match;
         }
     }
 }

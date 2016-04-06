@@ -1,10 +1,7 @@
 ﻿using System.Linq;
-using HarryPotterUnity.Enums;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
-    [UsedImplicitly]
     public class Remembrall : BaseItem
     { 
         public override bool CanPerformInPlayAction()

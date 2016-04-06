@@ -1,16 +1,13 @@
 ﻿using System.Linq;
-using HarryPotterUnity.Enums;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Characters
 {
-    [UsedImplicitly]
     public class HermioneGranger : BaseCharacter
     {
         public override bool CanPerformInPlayAction()
         {
             return Player.CanUseActions() && 
-                   Player.Hand.Lessons.Count>= 2 &&
+                   Player.Hand.Lessons.Count  >= 2 &&
                    Player.AmountLessonsInPlay >= 2 &&
                    Player.IsLocalPlayer;
         }

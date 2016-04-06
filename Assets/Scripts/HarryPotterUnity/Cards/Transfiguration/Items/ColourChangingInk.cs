@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
-    [UsedImplicitly]
     public class ColourChangingInk : BaseItem
     { 
         public override bool CanPerformInPlayAction()

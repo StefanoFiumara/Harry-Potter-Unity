@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
-using JetBrains.Annotations;
 using UnityLogWrapper;
 using UnityEngine;
 using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
 {
-    [UsedImplicitly]
     public class InPlay : CardCollection
     {
         public List<BaseCard> CardsExceptStartingCharacter

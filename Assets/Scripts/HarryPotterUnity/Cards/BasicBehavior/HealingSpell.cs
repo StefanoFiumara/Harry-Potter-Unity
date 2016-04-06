@@ -1,15 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace HarryPotterUnity.Cards.Potions.Spells
+namespace HarryPotterUnity.Cards.BasicBehavior
 {
-    [UsedImplicitly]
-    class HealingSpell : BaseSpell
+    public class HealingSpell : BaseSpell
     {
-
         [Header("Healing Spell Settings")]
         [SerializeField, UsedImplicitly]
         private int _healingAmount;

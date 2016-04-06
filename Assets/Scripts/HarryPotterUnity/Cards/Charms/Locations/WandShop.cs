@@ -6,13 +6,19 @@ namespace HarryPotterUnity.Cards.Charms.Locations
 {
     public class WandShop : BaseLocation
     {
+
+        private IEnumerable<BaseLesson> AllLessons
+        {
+            get
+            {
+                return Player.InPlay.GetLessonsOfType(LessonTypes.Charms)
+                    .Concat(Player.OppositePlayer.InPlay.GetLessonsOfType(LessonTypes.Charms))
+                    .Cast<BaseLesson>();
+            }
+        }
         public override void OnEnterInPlayAction()
         {
-            var allLessons =
-                Player.InPlay.GetLessonsOfType(LessonTypes.Charms)
-                    .Concat(Player.OppositePlayer.InPlay.GetLessonsOfType(LessonTypes.Charms)).Cast<BaseLesson>();
-
-            foreach (var lesson in allLessons)
+            foreach (var lesson in AllLessons)
             {
                 lesson.AmountLessonsProvided = 2;
             }
@@ -23,12 +29,7 @@ namespace HarryPotterUnity.Cards.Charms.Locations
         
         public override void OnExitInPlayAction()
         {
-            var allLessons =
-                Player.InPlay.GetLessonsOfType(LessonTypes.Charms)
-                    .Concat( Player.OppositePlayer.InPlay.GetLessonsOfType(LessonTypes.Charms) )
-                    .Cast<BaseLesson>();
-
-            foreach (var lesson in allLessons)
+            foreach (var lesson in AllLessons)
             {
                 lesson.AmountLessonsProvided = 1;
             }

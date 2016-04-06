@@ -1,19 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.Enums;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
-    [UsedImplicitly]
+    [RequireComponent(typeof(InputRequirement))]
     public class PetrificusTotalus : BaseSpell
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
             return Player.OppositePlayer.
-                            Discard.Cards.Any(c => c.Type == Type.Lesson) && 
-                            GetValidTargets().Count > 0;
+                Discard.Cards.Any(c => c.Type == Type.Lesson);
         }
 
         public override List<BaseCard> GetValidTargets()

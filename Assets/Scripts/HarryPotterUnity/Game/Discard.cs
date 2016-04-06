@@ -4,18 +4,16 @@ using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
-    [UsedImplicitly]
     public class Discard : CardCollection
     {
         private static readonly Vector2 _discardPositionOffset = new Vector2(-355f, -30f);
 
-        [UsedImplicitly]
-        public void Start () {
+        private void Start ()
+        {
             Cards = new List<BaseCard>();
 
             var col = gameObject.AddComponent<BoxCollider>();
@@ -90,11 +88,6 @@ namespace HarryPotterUnity.Game
             }
         }
         
-        public int CountCards(Func<BaseCard, bool> predicate)
-        {
-            return Cards.Count(predicate);
-        }
-
         private void AdjustCardSpacing()
         {
             ITweenObject tween = new AsyncMoveTween
@@ -117,11 +110,10 @@ namespace HarryPotterUnity.Game
             return cardPos;
         }
 
-        public List<BaseCard> GetHealableCards(int amount)
+        public IEnumerable<BaseCard> GetHealableCards(int amount)
         {
             return Cards.Where(c => c.HasTag(Tag.Healing) == false)
-                .Take(amount)
-                .ToList(); 
+                .Take(amount);
         }
 
         public void OnMouseUp()

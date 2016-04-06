@@ -1,10 +1,5 @@
-﻿using System.Linq;
-using HarryPotterUnity.Cards.Interfaces;
-using JetBrains.Annotations;
-
-namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
+﻿namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
 {
-    [UsedImplicitly]
     public class MarbleGargoyle : BaseCreature 
     {
         private bool _hasAddedDamage;

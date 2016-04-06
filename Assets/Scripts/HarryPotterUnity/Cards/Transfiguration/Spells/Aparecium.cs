@@ -3,11 +3,9 @@ using System.Linq;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Tween;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
-    [UsedImplicitly]
     public class Aparecium : BaseSpell
     {
         protected override void SpellAction(List<BaseCard> targets)

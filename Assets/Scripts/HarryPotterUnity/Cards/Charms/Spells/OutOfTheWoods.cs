@@ -3,14 +3,11 @@ using System.Linq;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Tween;
-using HarryPotterUnity.Utils;
-using JetBrains.Annotations;
-using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
-    [UsedImplicitly]
-    public class OutOfTheWoods : BaseSpell {
+    public class OutOfTheWoods : BaseSpell
+    {
         protected override void SpellAction(List<BaseCard> targets)
         {
             int handCount = Player.OppositePlayer.Hand.Cards.Count;

@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
+using HarryPotterUnity.Cards.PlayRequirements;
+using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
-    [UsedImplicitly]
-    public class HoverCharm : BaseSpell {
+    [RequireComponent(typeof(InputRequirement))]
+    public class HoverCharm : BaseSpell
+    {
         public override List<BaseCard> GetValidTargets()
         {
             return Player.OppositePlayer.InPlay.CardsExceptStartingCharacter;
@@ -13,7 +15,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var target = targets.First();
+            var target = targets.Single();
 
             Player.OppositePlayer.Hand.Add(target);
         }

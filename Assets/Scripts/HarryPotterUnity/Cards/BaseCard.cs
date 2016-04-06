@@ -99,8 +99,6 @@ namespace HarryPotterUnity.Cards
 
         private List<ICardPlayRequirement> _playRequirements;
         
-        
-        [UsedImplicitly]
         protected virtual void Start()
         {
             FlipState = FlipState.FaceDown;

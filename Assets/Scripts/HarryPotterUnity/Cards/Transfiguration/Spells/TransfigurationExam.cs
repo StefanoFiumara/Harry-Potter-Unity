@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
-    [UsedImplicitly]
     public class TransfigurationExam : BaseSpell
     {
         protected override bool MeetsAdditionalPlayRequirements()

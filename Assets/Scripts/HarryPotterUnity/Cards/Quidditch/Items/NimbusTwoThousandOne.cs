@@ -1,8 +1,5 @@
-﻿using JetBrains.Annotations;
-
-namespace HarryPotterUnity.Cards.Quidditch.Items
+﻿namespace HarryPotterUnity.Cards.Quidditch.Items
 {
-    [UsedImplicitly]
     public class NimbusTwoThousandOne : NimbusTwoThousand
     {
        
