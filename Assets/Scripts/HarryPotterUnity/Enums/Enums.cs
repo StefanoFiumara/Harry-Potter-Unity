@@ -12,7 +12,6 @@ namespace HarryPotterUnity.Enums
         Lesson, Creature, Spell, Item, Location, Match, Adventure, Character
     }
 
-    //TODO: Add [Flags] attribute and proper values
     [Flags]
     public enum Tag
     {

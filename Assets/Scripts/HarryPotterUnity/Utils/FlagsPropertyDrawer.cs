@@ -10,6 +10,7 @@ namespace HarryPotterUnity.Utils
     public class EnumFlagsAttributeDrawer : PropertyDrawer
     {
 
+        //TODO: Draw toggle buttons on separate rows
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             int buttonsIntValue = 0;
