@@ -12,7 +12,6 @@ using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterExtensions
 {
-    [UsedImplicitly]
     public class CreateCardWindow : EditorWindow 
     {
         private struct CreateCardRequest

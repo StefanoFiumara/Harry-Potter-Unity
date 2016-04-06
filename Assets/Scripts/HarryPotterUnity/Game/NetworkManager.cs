@@ -114,8 +114,8 @@ namespace HarryPotterUnity.Game
 
         private void DestroyPlayerObjects()
         {
-            if (_player1.gameObject != null) Destroy(_player1.gameObject);
-            if (_player2.gameObject != null) Destroy(_player2.gameObject);
+            if (_player1 != null) Destroy(_player1.gameObject);
+            if (_player2 != null) Destroy(_player2.gameObject);
         }
 
         [PunRPC, UsedImplicitly]

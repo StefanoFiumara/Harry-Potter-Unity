@@ -5,26 +5,25 @@ using UnityEngine;
 
 namespace HarryPotterUnity.UI.Camera
 {
-    [UsedImplicitly]
     public class PreviewCamera : MonoBehaviour
     {
         [SerializeField, UsedImplicitly]
         private RectTransform _renderTexture;
 
-        private static readonly Vector3 DefaultPreviewCameraPosition = new Vector3(-400, 255, -70);
+        private static readonly Vector3 _defaultPreviewCameraPosition = new Vector3(-400, 255, -70);
 
-        private static readonly Vector2 HorizontalPreviewPosition = new Vector2(350f, 0f);
-        private static readonly Vector2 VerticalPreviewPosition = Vector2.zero;
+        private static readonly Vector2 _horizontalPreviewPosition = new Vector2(350f, 0f);
+        private static readonly Vector2 _verticalPreviewPosition = Vector2.zero;
         
         private void RotateHorizontal()
         {
-            _renderTexture.anchoredPosition = HorizontalPreviewPosition;
+            _renderTexture.anchoredPosition = _horizontalPreviewPosition;
             _renderTexture.localRotation = Quaternion.Euler(0f,0f,270f);
         }
 
         private void RotateVertical()
         {
-            _renderTexture.anchoredPosition = VerticalPreviewPosition;
+            _renderTexture.anchoredPosition = _verticalPreviewPosition;
             _renderTexture.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
@@ -43,7 +42,7 @@ namespace HarryPotterUnity.UI.Camera
         {
             _renderTexture.gameObject.SetActive(false);
             RotateVertical();
-            transform.position = DefaultPreviewCameraPosition;
+            transform.position = _defaultPreviewCameraPosition;
         }
     }
 }

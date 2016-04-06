@@ -7,31 +7,30 @@ namespace HarryPotterUnity.Utils
     public class StaticCoroutine : MonoBehaviour
     {
 
-        private static StaticCoroutine _mInstance;
+        private static StaticCoroutine _instance;
 
         private static StaticCoroutine Instance
         {
             get
             {
-                if (_mInstance != null) return _mInstance;
+                if (_instance != null) return _instance;
                 
-                _mInstance = FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine ??
+                _instance = FindObjectOfType(typeof(StaticCoroutine)) as StaticCoroutine ??
                              new GameObject("TweenQueueManager").AddComponent<StaticCoroutine>();
 
-                return _mInstance;
+                return _instance;
             }
         }
 
-        [UsedImplicitly]
-        void Awake()
+        private void Awake()
         {
-            if (_mInstance == null)
+            if (_instance == null)
             {
-                _mInstance = this;
+                _instance = this;
             }
         }
 
-        IEnumerator Perform(IEnumerator coroutine)
+        private IEnumerator Perform(IEnumerator coroutine)
         {
             yield return StartCoroutine(coroutine);
             Die();
@@ -48,18 +47,18 @@ namespace HarryPotterUnity.Utils
 
         public static void Die()
         {
-            if (_mInstance != null)
+            if (_instance != null)
             {
-                _mInstance.StopAllCoroutines();
-                Destroy(_mInstance.gameObject);
+                _instance.StopAllCoroutines();
+                Destroy(_instance.gameObject);
             }
-            _mInstance = null;
+            _instance = null;
         }
 
         [UsedImplicitly]
         void OnApplicationQuit()
         {
-            _mInstance = null;
+            _instance = null;
         }
     }
 }
