@@ -6,6 +6,7 @@ using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
+using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityLogWrapper;
@@ -21,14 +22,9 @@ namespace HarryPotterUnity.Cards
         [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
         [SerializeField, UsedImplicitly] private Rarity _rarity;
 
-        /*
-            TODO: Convert to EnumFlags attribute
-            TODO: Replace all Tags.Contains with Tags.HasFlag
-            TODO: Reassign Tags to all card prefabs
-        */
-
         [Header("Basic Card Settings")]
-        [UsedImplicitly] public List<Tag> Tags; 
+        [SerializeField, EnumFlags]
+        [UsedImplicitly] private Tag _tags; 
         #endregion
 
         private CardCollection _collection;
@@ -95,7 +91,7 @@ namespace HarryPotterUnity.Cards
         private InputGatherer _inputGatherer;
         private int _inputRequired;
         
-        private static readonly Vector2 ColliderSize = new Vector2(50f, 70f);
+        private static readonly Vector2 _colliderSize = new Vector2(50f, 70f);
 
         private GameObject _cardFace;
         private GameObject _outline;
@@ -162,11 +158,10 @@ namespace HarryPotterUnity.Cards
             {
                 var col = gameObject.AddComponent<BoxCollider>();
                 col.isTrigger = true;
-                col.size = new Vector3(ColliderSize.x, ColliderSize.y, 0.2f);
+                col.size = new Vector3(_colliderSize.x, _colliderSize.y, 0.2f);
             }
         }
         
-        [UsedImplicitly]
         public void OnMouseOver()
         {
             ShowPreview();
@@ -184,14 +179,12 @@ namespace HarryPotterUnity.Cards
                    ((IPersistentCard) this).CanPerformInPlayAction();
         }
 
-        [UsedImplicitly]
         public void OnMouseExit()
         {
             HidePreview();
             _outline.SetActive(false);
         }
 
-        [UsedImplicitly]
         public void OnMouseUp()
         {
             if (_outline.activeSelf == false) return; //Do not call OnMouseUp if cursor has left the object
@@ -230,9 +223,14 @@ namespace HarryPotterUnity.Cards
                    MeetsAdditionalPlayRequirements();
         }
 
+        public bool HasTag(Tag t)
+        {
+            return (_tags & t) == t;    
+        }
+
         private bool IsUnique()
         {
-            if (!Tags.Contains(Tag.Unique)) return true;
+            if (HasTag(Tag.Unique) == false) return true;
 
             var allInPlayCards = Player.InPlay.Cards.Concat(
                 Player.OppositePlayer.InPlay.Cards)

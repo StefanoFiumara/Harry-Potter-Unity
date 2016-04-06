@@ -119,7 +119,9 @@ namespace HarryPotterUnity.Game
 
         public List<BaseCard> GetHealableCards(int amount)
         {
-            return Cards.Where(card => !card.Tags.Contains(Tag.Healing)).Take(amount).ToList(); 
+            return Cards.Where(c => c.HasTag(Tag.Healing) == false)
+                .Take(amount)
+                .ToList(); 
         }
 
         public void OnMouseUp()

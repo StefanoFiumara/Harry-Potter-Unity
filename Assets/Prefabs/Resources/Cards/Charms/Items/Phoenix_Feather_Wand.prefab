@@ -26,11 +26,11 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 467526}
-  - 114: {fileID: 11478128}
   - 114: {fileID: 11445366}
   - 114: {fileID: 11445780}
   - 114: {fileID: 11421842}
   - 114: {fileID: 11464184}
+  - 114: {fileID: 11434642}
   m_Layer: 10
   m_Name: Phoenix_Feather_Wand
   m_TagString: Untagged
@@ -197,6 +197,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 7
   _lessonType: 1
+--- !u!114 &11434642
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132464}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 81982ab93cf8b534fb33b6c1063227e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: 4
 --- !u!114 &11445366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -223,7 +235,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 1
   _rarity: 2
-  Tags: 02000000
+  _tags: 4
   _lessonType: 1
   _amountLessonsProvided: 4
 --- !u!114 &11464184
@@ -238,18 +250,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maximumAmountAllowed: 2
---- !u!114 &11478128
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 132464}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81982ab93cf8b534fb33b6c1063227e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _tag: 2
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -296,6 +296,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _type
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _tags
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _tag
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

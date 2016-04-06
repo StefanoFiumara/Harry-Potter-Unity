@@ -220,7 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 4
   _rarity: 1
-  Tags: 01000000
+  _tags: 2
   _goal: 15
 --- !u!1001 &100100000
 Prefab:
@@ -248,6 +248,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _goal
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _tags
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

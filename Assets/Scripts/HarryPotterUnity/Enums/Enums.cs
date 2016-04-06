@@ -13,9 +13,14 @@ namespace HarryPotterUnity.Enums
     }
 
     //TODO: Add [Flags] attribute and proper values
+    [Flags]
     public enum Tag
     {
-        Unique, Healing, Wand, Cauldron, Broom
+        Unique      = 1 << 0,
+        Healing     = 1 << 1,
+        Wand        = 1 << 2,
+        Cauldron    = 1 << 3,
+        Broom       = 1 << 4
     }
 
     public enum Rarity

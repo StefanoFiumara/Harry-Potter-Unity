@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace HarryPotterUnity.Utils.Editor
+namespace HarryPotterUnity.Utils
 {
     public class EnumFlagsAttribute : PropertyAttribute { }
 

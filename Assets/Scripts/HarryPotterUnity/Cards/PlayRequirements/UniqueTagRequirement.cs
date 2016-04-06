@@ -12,8 +12,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         [SerializeField, UsedImplicitly]
         private Tag _tag;
 
-        [UsedImplicitly]
-        void Start()
+        private void Start()
         {
             _player = GetComponent<BaseCard>().Player;
         }
@@ -24,9 +23,9 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public void OnRequirementMet()
         {
-            if (!_player.InPlay.Cards.Exists(c => c.Tags.Contains(_tag))) return;
+            if (!_player.InPlay.Cards.Exists(c => c.HasTag(_tag))) return;
 
-            var card =_player.InPlay.Cards.Find(c => c.Tags.Contains(_tag));
+            var card =_player.InPlay.Cards.Find(c => c.HasTag(_tag));
 
             _player.Discard.Add(card);
         }
