@@ -105,12 +105,9 @@ namespace HarryPotterUnity.Game
 
         private void RearrangeCardsOfType(Type type)
         {
-            Func<Type, bool> isTopRow =
-                t => t == Type.Item || t == Type.Location || t == Type.Adventure || t == Type.Match;
-
             var targets = 
-                isTopRow(type) ? 
-                    Cards.FindAll(c => isTopRow(c.Type)) : 
+                type.IsTopRow() ? 
+                    Cards.FindAll(c => c.Type.IsTopRow()) : 
                     Cards.FindAll(c => c.Type == type);
 
             var tween = new AsyncMoveTween
@@ -149,8 +146,7 @@ namespace HarryPotterUnity.Game
                 case Type.Location:
                 case Type.Adventure:
                 case Type.Match:
-                    int topRowIndex = Cards.FindAll(c => c.Type == Type.Match || c.Type == Type.Adventure ||
-                                                         c.Type == Type.Item || c.Type == Type.Location).IndexOf(card);
+                    int topRowIndex = Cards.FindAll(c => c.Type.IsTopRow()).IndexOf(card);
                     cardPosition = _topRowPositionOffset;
                     cardPosition.x += (topRowIndex % 9) * _topRowSpacing.x;
                     break;

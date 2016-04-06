@@ -66,5 +66,13 @@ namespace HarryPotterUnity.Enums
                     throw new ArgumentException("Unable to map lesson type");
             }
         }
+
+        public static bool IsTopRow(this Type type)
+        {
+            return type == Type.Item
+                   || type == Type.Location
+                   || type == Type.Adventure
+                   || type == Type.Match;
+        }
     }
 }
