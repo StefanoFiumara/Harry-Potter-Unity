@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Enums;
+using HarryPotterUnity.Utils;
 
 namespace HarryPotterUnity.Cards.Charms.Locations
 {
@@ -11,9 +12,9 @@ namespace HarryPotterUnity.Cards.Charms.Locations
         {
             get
             {
-                return Player.InPlay.Lessons.Cast<BaseLesson>()
-                    .Concat(Player.OppositePlayer.InPlay.Lessons.Cast<BaseLesson>())
-                    .Where(c => c.LessonType == LessonTypes.Charms);
+                return Player.InPlay.LessonsOfType(LessonTypes.Charms)
+                    .Concat(Player.OppositePlayer.InPlay.LessonsOfType(LessonTypes.Charms))
+                    .Cast<BaseLesson>();
             }
         }
         public override void OnEnterInPlayAction()
