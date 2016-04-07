@@ -46,15 +46,15 @@ namespace HarryPotterUnity.UI
             _subMenuManager.HideMenu();
         }
 
-        //TODO: Remove parameter and fix all links in scene
         [UsedImplicitly]
-        public void HideMenu(BaseMenu menu)
+        public void HideMenu()
         {
-            if (menu.IsOpen)
+            if (_currentMenu != null)
             {
-                menu.IsOpen = false;
-                _currentMenu = null;
+                _currentMenu.IsOpen = false;
             }
+            
+            _currentMenu = null;
         }
 
         private void Update()
