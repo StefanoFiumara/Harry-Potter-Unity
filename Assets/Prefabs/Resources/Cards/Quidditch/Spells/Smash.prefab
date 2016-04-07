@@ -194,7 +194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044252d760427a541a54447a12e253ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputRequired: 1
+  _fromHandActionInputRequired: 1
+  _inPlayActionInputRequired: 0
 --- !u!114 &11433552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,7 +221,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 4
   _rarity: 1
-  Tags: 
+  _tags: 0
 --- !u!114 &11487854
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -264,6 +265,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _maximumAmountAllowed
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _fromHandActionInputRequired
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

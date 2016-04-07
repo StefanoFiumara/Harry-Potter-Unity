@@ -15,9 +15,8 @@ using Type = HarryPotterUnity.Enums.Type;
 namespace HarryPotterUnity.Cards
 {
     [SelectionBase]
-    public abstract class BaseCard : MonoBehaviour {
-        
-        #region Inspector Layout
+    public abstract class BaseCard : MonoBehaviour
+    {
         [Header("Deck Generation Options")]
         [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
         [SerializeField, UsedImplicitly] private Rarity _rarity;
@@ -25,7 +24,34 @@ namespace HarryPotterUnity.Cards
         [Header("Basic Card Settings")]
         [SerializeField, EnumFlags]
         [UsedImplicitly] private Tag _tags; 
-        #endregion
+        
+        public State State { private get; set; }
+        public ClassificationTypes Classification { get { return _classification; } }
+
+        public Type Type { get { return GetCardType(); } }
+        protected abstract Type GetCardType();
+
+        public FlipState FlipState { private get; set; }
+        public Rarity Rarity { get { return _rarity; } }
+
+        public Player Player { get; set; }
+
+        public List<IDeckGenerationRequirement> DeckGenerationRequirements { get; private set; }
+        
+        public string CardName { get { return string.Format("{0}: {1}", Type, transform.name.Replace("(Clone)", "")); } }
+        public byte NetworkId { get; set; }
+
+        private InputGatherer _inputGatherer;
+        private int _fromHandActionInputRequired;
+        private int _inPlayActionInputRequired;
+
+        private static readonly Vector2 _colliderSize = new Vector2(50f, 70f);
+
+        private GameObject _cardFace;
+        private GameObject _outline;
+        private GameObject _highlight;
+
+        private List<ICardPlayRequirement> PlayRequirements { get; set; }
 
         private CardCollection _collection;
         public CardCollection PreviousCollection { get; private set; }
@@ -47,28 +73,6 @@ namespace HarryPotterUnity.Cards
 
         }
 
-        public State State { private get; set; }
-        public ClassificationTypes Classification { get { return _classification; } }
-
-        public Type Type { get { return GetCardType(); } }
-        protected abstract Type GetCardType();
-
-        public FlipState FlipState { private get; set; }
-        public Rarity Rarity { get { return _rarity; } }
-
-        public Player Player { get; set; }
-
-        private List<IDeckGenerationRequirement> _deckGenerationRequirements;
-        public List<IDeckGenerationRequirement> DeckGenerationRequirements
-        {
-            get
-            {
-                return _deckGenerationRequirements ??
-                       (_deckGenerationRequirements =
-                           GetComponents<MonoBehaviour>().OfType<IDeckGenerationRequirement>().ToList());
-            }
-        }
-
         private int ActionCost
         {
             get
@@ -84,21 +88,6 @@ namespace HarryPotterUnity.Cards
             }
         }
 
-        public byte NetworkId { get; set; }
-        public string CardName { get { return string.Format("{0}: {1}", Type, transform.name.Replace("(Clone)", "")); } }
-
-        
-        private InputGatherer _inputGatherer;
-        private int _inputRequired;
-        
-        private static readonly Vector2 _colliderSize = new Vector2(50f, 70f);
-
-        private GameObject _cardFace;
-        private GameObject _outline;
-        private GameObject _highlight;
-
-        private List<ICardPlayRequirement> _playRequirements;
-        
         protected virtual void Start()
         {
             FlipState = FlipState.FaceDown;
@@ -106,12 +95,13 @@ namespace HarryPotterUnity.Cards
             gameObject.layer = GameManager.CARD_LAYER;
             _cardFace = transform.FindChild("Front").gameObject;
 
+            DeckGenerationRequirements =
+                GetComponents<MonoBehaviour>().OfType<IDeckGenerationRequirement>().ToList();
+
             AddCollider();
-
-            _inputGatherer = GetComponent<InputGatherer>();
-
+            
             LoadPlayRequirements();
-
+            
             AddOutlineComponent();
             AddHighlightComponent();
         }
@@ -140,13 +130,15 @@ namespace HarryPotterUnity.Cards
 
         private void LoadPlayRequirements()
         {
-            _playRequirements = GetComponents<MonoBehaviour>().OfType<ICardPlayRequirement>().ToList();
+            PlayRequirements = GetComponents<MonoBehaviour>().OfType<ICardPlayRequirement>().ToList();
 
-            var inputRequirement = _playRequirements.OfType<InputRequirement>().SingleOrDefault();
+            var inputRequirement = PlayRequirements.OfType<InputRequirement>().SingleOrDefault();
 
             if (inputRequirement != null)
             {
-                _inputRequired = inputRequirement.InputRequired;
+                _inputGatherer = GetComponent<InputGatherer>();
+                _fromHandActionInputRequired = inputRequirement.FromHandActionInputRequired;
+                _inPlayActionInputRequired = inputRequirement.InPlayActionInputRequired;
             }
         }
 
@@ -190,14 +182,20 @@ namespace HarryPotterUnity.Cards
             if(IsActivatable())
             {
                 //TODO: Gather input for InPlay Action
-                GameManager.Network.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
-                    
+                if (_inPlayActionInputRequired > 0)
+                {
+                    _inputGatherer.GatherInput(InputGatherMode.InPlayAction);
+                }
+                else
+                {
+                    GameManager.Network.RPC("ExecuteInPlayActionById", PhotonTargets.All, NetworkId);
+                }
             }
             else if (IsPlayableFromHand())
             {
-                if (_inputRequired > 0)
+                if (_fromHandActionInputRequired > 0)
                 {
-                    _inputGatherer.GatherInput();
+                    _inputGatherer.GatherInput(InputGatherMode.FromHandAction);
                 }
                 else
                 {
@@ -210,8 +208,8 @@ namespace HarryPotterUnity.Cards
         
         private bool IsPlayableFromHand()
         {            
-            bool meetsPlayRequirements = _playRequirements.Count == 0 ||
-                                     _playRequirements.TrueForAll(req => req.MeetsRequirement());
+            bool meetsPlayRequirements = PlayRequirements.Count == 0 ||
+                                     PlayRequirements.TrueForAll(req => req.MeetsRequirement());
             
             return Player.IsLocalPlayer &&
                    State == State.InHand &&
@@ -239,18 +237,18 @@ namespace HarryPotterUnity.Cards
 
         public void MouseUpAction(List<BaseCard> targets = null)
         {       
-            foreach (var requirement in _playRequirements)
+            foreach (var requirement in PlayRequirements)
             {
                 requirement.OnRequirementMet();
             }
 
-            OnClickAction(targets);
+            OnPlayFromHandAction(targets);
 
             Player.UseActions(ActionCost);
             
         }
 
-        protected virtual void OnClickAction(List<BaseCard> targets)
+        protected virtual void OnPlayFromHandAction(List<BaseCard> targets)
         {
             if (this is IPersistentCard)
             {
@@ -258,7 +256,7 @@ namespace HarryPotterUnity.Cards
             }
             else
             {
-                throw new Exception("OnClickAction must be overriden in cards that do not implement IPersistentCard!");
+                throw new Exception("OnPlayFromHandAction must be overriden in cards that do not implement IPersistentCard!");
             }
         }
         
@@ -295,15 +293,26 @@ namespace HarryPotterUnity.Cards
             _cardFace.GetComponent<Renderer>().material.color = Color.yellow;
         }
 
-        public virtual List<BaseCard> GetValidTargets()
+        public virtual List<BaseCard> GetFromHandActionTargets()
         {
-            if (_inputRequired == 0)
+            if (_fromHandActionInputRequired == 0)
             {
                 return new List<BaseCard>();
             }
 
-            throw new NotSupportedException("Card with input did not define valid targets");
-            
+            throw new NotSupportedException("Card with from hand input did not define valid targets");
+        }
+
+        public virtual List<BaseCard> GetInPlayActionTargets()
+        {
+            if (_inPlayActionInputRequired == 0)
+            {
+                return new List<BaseCard>();
+            }
+            else
+            {
+                throw new NotSupportedException("Card with in play input did not define valid targets.");
+            }
         }
 
         protected virtual bool MeetsAdditionalPlayRequirements()

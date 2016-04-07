@@ -28,7 +28,6 @@ GameObject:
   - 4: {fileID: 489258}
   - 114: {fileID: 11467648}
   - 114: {fileID: 11415730}
-  - 114: {fileID: 11496668}
   - 114: {fileID: 11490156}
   m_Layer: 10
   m_Name: Alchemy
@@ -61,7 +60,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162092}
-  m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 7}
   m_Children: []
@@ -73,7 +72,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 134894}
-  m_LocalRotation: {x: -.00508591719, y: .70708847, z: -.70708853, w: .00508600241}
+  m_LocalRotation: {x: -0.005085917, y: 0.7070885, z: -0.70708853, w: 0.0050860024}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 7}
   m_Children: []
@@ -111,8 +110,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -135,8 +136,10 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
   m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_AutoUVMaxDistance: .5
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
@@ -205,9 +208,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 2
   _rarity: 0
-  _type: 2
-  Tags: 
-  _actionCost: 1
+  _tags: 0
 --- !u!114 &11490156
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -220,18 +221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maximumAmountAllowed: 3
---- !u!114 &11496668
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 158650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _maximumAmountAllowed: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

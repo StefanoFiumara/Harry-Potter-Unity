@@ -80,7 +80,7 @@ namespace HarryPotterUnity.Game
 
         public void InitDeck(List<LessonTypes> selectedLessons)
         {
-            Deck.InitDeck( DeckGenerator.GenerateDeck(selectedLessons), DeckGenerator.GetRandomStartingCharacter() );
+            Deck.Initialize( DeckGenerator.GenerateDeck(selectedLessons), DeckGenerator.GetRandomStartingCharacter() );
         }
 
         /// <summary>

@@ -1,11 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards.BasicBehavior;
 
 namespace HarryPotterUnity.Cards.Quidditch.Items
 {
     public class BluebottleBroom : ItemLessonProvider
     {
-        public override void OnSelectedAction()
+        public override void OnSelectedAction(List<BaseCard> targets = null)
         {
             var card = Player.Discard.GetHealableCards(1).Single();
             

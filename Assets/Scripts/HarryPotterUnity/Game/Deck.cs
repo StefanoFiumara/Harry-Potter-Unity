@@ -29,7 +29,7 @@ namespace HarryPotterUnity.Game
             col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
         }
 
-        public void InitDeck (IEnumerable<BaseCard> cardList, BaseCard startingCharacter)
+        public void Initialize (IEnumerable<BaseCard> cardList, BaseCard startingCharacter)
         {
             Cards = new List<BaseCard>(cardList);
             StartingCharacter = startingCharacter;

@@ -1,4 +1,6 @@
-﻿namespace HarryPotterUnity.Cards.Interfaces
+﻿using System.Collections.Generic;
+
+namespace HarryPotterUnity.Cards.Interfaces
 {
     public interface IPersistentCard {
 
@@ -6,7 +8,8 @@
         void OnInPlayAfterTurnAction();
 
         bool CanPerformInPlayAction();
-        void OnSelectedAction(); 
+        //TODO: Default behavior for OnSelectedAction to preview the card before activating effect.
+        void OnSelectedAction(List<BaseCard> targets = null); 
 
         void OnEnterInPlayAction();
         void OnExitInPlayAction();

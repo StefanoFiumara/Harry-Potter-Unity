@@ -11,7 +11,7 @@ namespace HarryPotterUnity.Cards
 
         private static readonly Vector3 _spellOffset = new Vector3(0f, 0f, -400f);
 
-        protected sealed override void OnClickAction(List<BaseCard> targets)
+        protected sealed override void OnPlayFromHandAction(List<BaseCard> targets)
         {
             Enable();
             PreviewSpell();

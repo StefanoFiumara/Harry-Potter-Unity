@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
@@ -94,6 +95,7 @@ namespace HarryPotterUnity.Cards
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)
         {
             //BUG: Causes damage to count towards the enemy player when a player plays a card that causes himself to take damage.
+            //probably wont fix...not sure if this ever even happens.
             var playerDealingDamage = sourceCard.Player;
 
             if (playerDealingDamage == _player1)
@@ -137,7 +139,7 @@ namespace HarryPotterUnity.Cards
 
         public virtual void OnInPlayBeforeTurnAction() { }
         public virtual void OnInPlayAfterTurnAction() { }
-        public virtual void OnSelectedAction() { }
+        public virtual void OnSelectedAction(List<BaseCard> targets = null) { }
         public virtual bool CanPerformInPlayAction() { return false; }
     }
 }

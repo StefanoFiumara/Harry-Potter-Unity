@@ -51,6 +51,12 @@ namespace HarryPotterUnity.Enums
         NoRotate, Rotate90, Rotate180
     }
 
+    public enum InputGatherMode
+    {
+        FromHandAction,
+        InPlayAction
+    }
+
     public static class EnumExtensions
     {
         public static ClassificationTypes ToClassification(this LessonTypes type)

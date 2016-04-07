@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Items
 {
@@ -11,7 +12,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
                 && Player.IsLocalPlayer;
         }
 
-        public override void OnSelectedAction()
+        public override void OnSelectedAction(List<BaseCard> targets = null)
         {
             var lesson = Player.Discard.Lessons.First();
 

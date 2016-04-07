@@ -82,7 +82,7 @@ namespace HarryPotterUnity.Cards
         public virtual bool CanPerformInPlayAction() { return false; }
         public virtual void OnInPlayBeforeTurnAction() { }
         public virtual void OnInPlayAfterTurnAction() { }
-        public virtual void OnSelectedAction() { }
+        public virtual void OnSelectedAction(List<BaseCard> targets = null) { }
 
         protected sealed override Enums.Type GetCardType()
         {

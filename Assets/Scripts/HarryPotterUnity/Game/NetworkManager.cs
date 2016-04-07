@@ -286,6 +286,28 @@ namespace HarryPotterUnity.Game
         }
 
         [PunRPC, UsedImplicitly]
+        public void ExecuteInPlayInputCardById(byte id, params byte[] selectedCardIds)
+        {
+            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
+
+            var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
+
+            Log.Write("Player {0} activates card {1} targeting {2}",
+                card.Player.NetworkId + 1,
+                card.CardName,
+                string.Join(",", selectedCards.Select(c => c.CardName).ToArray()));
+
+            var persistentCard = card as IPersistentCard;
+            if (persistentCard == null)
+            {
+                Log.Error("ExecuteInPlayInputCardById did not receive a PersistentCard!");
+                return;
+            }
+
+            persistentCard.OnSelectedAction(selectedCards);
+        }
+
+        [PunRPC, UsedImplicitly]
         public void ExecuteSkipAction()
         {
             if (_player1.CanUseActions())

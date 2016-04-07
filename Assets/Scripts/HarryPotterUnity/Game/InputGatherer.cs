@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.PlayRequirements;
+using HarryPotterUnity.Enums;
 using UnityEngine;
 using MonoBehaviour = UnityEngine.MonoBehaviour;
 
@@ -15,12 +16,15 @@ namespace HarryPotterUnity.Game
     {
         private BaseCard _cardInfo;
 
-        private int _inputRequired;
+        private int _fromHandInputRequired;
+        private int _inPlayInputRequired;
 
         private static int LayerMask
         {
             get { return 1 << 11; }
         }
+
+        private InputGatherMode GatherMode { get; set; }
 
         private void Start()
         {
@@ -33,16 +37,18 @@ namespace HarryPotterUnity.Game
                 return;
             }
 
-            _inputRequired = requirement.InputRequired;
+            _fromHandInputRequired = requirement.FromHandActionInputRequired;
+            _inPlayInputRequired = requirement.InPlayActionInputRequired;
 
         }
 
-        public void GatherInput()
+        public void GatherInput(InputGatherMode mode)
         {
+            GatherMode = mode;
             _cardInfo.Player.DisableAllCards();
             _cardInfo.Player.OppositePlayer.DisableAllCards();
 
-            var validCards = _cardInfo.GetValidTargets();
+            var validCards = GetValidTargets();
 
             foreach (var card in validCards)
             {
@@ -56,11 +62,13 @@ namespace HarryPotterUnity.Game
 
         private IEnumerator WaitForPlayerInput()
         {
-            if (_inputRequired <= 0) throw new Exception("_inputRequired field is not set or set to a negative value!");
+            int inputRequired = GetInputRequired();
+
+            if (_fromHandInputRequired <= 0) throw new Exception("_inputRequired field is not set or set to a negative value!");
 
             var selectedCards = new List<BaseCard>();
 
-            while (selectedCards.Count < _inputRequired)
+            while (selectedCards.Count < inputRequired)
             {
                 if (Input.GetKeyDown(KeyCode.Mouse0) && _cardInfo.Player.IsLocalPlayer)
                 {
@@ -75,19 +83,60 @@ namespace HarryPotterUnity.Game
 
                         target.SetSelected();
 
-                        if (selectedCards.Count == _inputRequired)
+                        if (selectedCards.Count == inputRequired)
                         {
                             foreach (var card in selectedCards)
                             {
                                 card.RemoveHighlight();
                             }
 
-                            var selectedCardIds = selectedCards.Select(c => c.NetworkId).ToArray();
-                            GameManager.Network.RPC("ExecuteInputCardById", PhotonTargets.All, _cardInfo.NetworkId, selectedCardIds);
+                            ExecuteAction(selectedCards);
                         }
                     }
                 }
                 yield return null;
+            }
+        }
+
+        private int GetInputRequired()
+        {
+            switch (GatherMode)
+            {
+                case InputGatherMode.FromHandAction:
+                    return _fromHandInputRequired;
+                case InputGatherMode.InPlayAction:
+                    return _inPlayInputRequired;
+            }
+            return 0;
+        }
+
+        private List<BaseCard> GetValidTargets()
+        {
+            switch (GatherMode)
+            {
+                case InputGatherMode.FromHandAction:
+                    return _cardInfo.GetFromHandActionTargets();
+                case InputGatherMode.InPlayAction:
+                    return _cardInfo.GetInPlayActionTargets();
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private void ExecuteAction(List<BaseCard> selectedCards)
+        {
+            var selectedCardIds = selectedCards.Select(c => c.NetworkId).ToArray();
+
+            switch (GatherMode)
+            {
+                case InputGatherMode.FromHandAction:
+                    GameManager.Network.RPC("ExecuteInputCardById", PhotonTargets.All, _cardInfo.NetworkId, selectedCardIds);
+                    break;
+                case InputGatherMode.InPlayAction:
+                    GameManager.Network.RPC("ExecuteInPlayInputCardById", PhotonTargets.All, _cardInfo.NetworkId, selectedCardIds);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
     }

@@ -34,7 +34,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
                 
         }
 
-        public override List<BaseCard> GetValidTargets()
+        public override List<BaseCard> GetFromHandActionTargets()
         {
             var targets = new List<BaseCard>();
 

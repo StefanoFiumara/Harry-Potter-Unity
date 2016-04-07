@@ -9,9 +9,13 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         private BaseCard _cardInfo;
 
         [SerializeField, UsedImplicitly]
-        private int _inputRequired;
+        private int _fromHandActionInputRequired;
 
-        public int InputRequired { get { return _inputRequired; } }
+        [SerializeField, UsedImplicitly]
+        private int _inPlayActionInputRequired;
+
+        public int FromHandActionInputRequired { get { return _fromHandActionInputRequired; } }
+        public int InPlayActionInputRequired { get { return _inPlayActionInputRequired; } }
 
         private void Awake()
         {
@@ -24,7 +28,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public bool MeetsRequirement()
         {
-            return _cardInfo.GetValidTargets().Count >= _inputRequired;
+            return _cardInfo.GetFromHandActionTargets().Count >= _fromHandActionInputRequired;
         }
 
         public void OnRequirementMet() { }

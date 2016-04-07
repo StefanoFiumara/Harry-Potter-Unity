@@ -1,10 +1,11 @@
-﻿using HarryPotterUnity.Cards.BasicBehavior;
+﻿using System.Collections.Generic;
+using HarryPotterUnity.Cards.BasicBehavior;
 
 namespace HarryPotterUnity.Cards.Charms.Items
 {
     public class BrokenWand : ItemLessonProvider
     {
-        public override void OnSelectedAction()
+        public override void OnSelectedAction(List<BaseCard> targets = null)
         {
             var card = Player.Deck.TakeTopCard();
 

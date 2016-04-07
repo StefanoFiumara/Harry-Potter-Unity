@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Cards {
         protected override Type GetCardType() { return Type.Lesson; }
 
         public bool CanPerformInPlayAction() { return false; }
-        public void OnSelectedAction() { }
+        public void OnSelectedAction(List<BaseCard> targets = null) { }
 
         public void OnEnterInPlayAction() { }
 

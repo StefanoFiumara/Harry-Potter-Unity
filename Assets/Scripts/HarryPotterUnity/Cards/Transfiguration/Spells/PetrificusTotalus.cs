@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
                 Discard.Cards.Any(c => c.Type == Type.Lesson);
         }
 
-        public override List<BaseCard> GetValidTargets()
+        public override List<BaseCard> GetFromHandActionTargets()
         {
             return Player.OppositePlayer.InPlay.Creatures;
         }

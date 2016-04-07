@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Locations
 {
@@ -12,7 +13,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
                    player.InPlay.Lessons.Count >= 2;
         }
 
-        public override void OnSelectedAction()
+        public override void OnSelectedAction(List<BaseCard> targets = null)
         {
             //HACK: Need a nicer way to determine which player is activating this effect
             var player = Player.CanUseActions() ? Player : Player.OppositePlayer;

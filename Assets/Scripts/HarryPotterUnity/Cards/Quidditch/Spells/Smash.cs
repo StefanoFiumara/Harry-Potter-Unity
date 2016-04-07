@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     [RequireComponent(typeof(InputRequirement))]
     public class Smash : BaseSpell 
     {
-        public override List<BaseCard> GetValidTargets()
+        public override List<BaseCard> GetFromHandActionTargets()
         {
             return Player.OppositePlayer.InPlay.Items;
         }

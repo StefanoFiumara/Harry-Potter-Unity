@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     [RequireComponent(typeof(InputRequirement))]
     public class Incarcifors : BaseSpell
     {
-        public override List<BaseCard> GetValidTargets()
+        public override List<BaseCard> GetFromHandActionTargets()
         {
             return Player.OppositePlayer.InPlay.Creatures;
         }
