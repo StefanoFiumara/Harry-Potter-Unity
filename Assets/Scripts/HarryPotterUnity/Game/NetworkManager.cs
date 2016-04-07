@@ -227,7 +227,7 @@ namespace HarryPotterUnity.Game
             }
 
             Log.Write("Player {0} Plays {1} from hand", card.Player.NetworkId + 1, card.CardName);
-            card.MouseUpAction();
+            card.PlayFromHand();
             card.Player.OnCardPlayed(card);
         }
 
@@ -266,17 +266,19 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecuteInputCardById(byte id, params byte[] selectedCardIds)
         {
-            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
             
-            var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
+            var targetedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
             
             Log.Write("Player {0} plays card {1} targeting {2}", 
                 card.Player.NetworkId + 1, 
                 card.CardName, 
-                string.Join(",", selectedCards.Select(c => c.CardName).ToArray()));
+                string.Join(",", targetedCards.Select(c => c.CardName).ToArray()));
 
-            card.MouseUpAction(selectedCards);
-            card.Player.OnCardPlayed(card, selectedCards);
+
+            card.PlayFromHand(targetedCards);
+
+            card.Player.OnCardPlayed(card, targetedCards);
 
             card.Player.EnableAllCards();
             card.Player.ClearHighlightComponent();
@@ -288,7 +290,7 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecuteInPlayInputCardById(byte id, params byte[] selectedCardIds)
         {
-            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
 
             var selectedCards = selectedCardIds.Select(cardId => GameManager.AllCards.Find(c => c.NetworkId == cardId)).ToList();
 

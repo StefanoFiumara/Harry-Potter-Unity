@@ -36,4 +36,5 @@ MonoBehaviour:
   - RequestForPickupTimes
   - StartGameRpc
   - ExecuteInPlayActionById
+  - ExecuteInPlayInputCardById
   DisableAutoOpenWizard: 1

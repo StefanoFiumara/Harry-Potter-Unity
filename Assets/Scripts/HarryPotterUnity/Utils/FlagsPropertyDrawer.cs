@@ -15,13 +15,19 @@ namespace HarryPotterUnity.Utils
     public class EnumFlagsAttributeDrawer : PropertyDrawer
     {
 
-        //TODO: Draw toggle buttons on separate rows
+        private const float SPACING = 1.4f;
+        private const float BUTTON_WIDTH = 95f;
+
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return base.GetPropertyHeight(property, label) + (EditorGUIUtility.singleLineHeight + SPACING) * property.enumNames.Length;
+        }
+
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             int buttonsIntValue = 0;
             int enumLength = property.enumNames.Length;
             var buttonPressed = new bool[enumLength];
-            float buttonWidth = (position.width - EditorGUIUtility.labelWidth) / enumLength;
 
             EditorGUI.LabelField(new Rect(position.x, position.y, EditorGUIUtility.labelWidth, position.height), label);
 
@@ -29,14 +35,19 @@ namespace HarryPotterUnity.Utils
 
             for (int i = 0; i < enumLength; i++)
             {
-
                 // Check if the button is/was pressed 
                 if ((property.intValue & (1 << i)) == 1 << i)
                 {
                     buttonPressed[i] = true;
                 }
 
-                var buttonPos = new Rect(position.x + EditorGUIUtility.labelWidth + buttonWidth * i, position.y, buttonWidth, position.height);
+                var buttonPos = new Rect
+                {
+                    x = position.width - BUTTON_WIDTH,
+                    y = position.y + (EditorGUIUtility.singleLineHeight*i*SPACING),
+                    width = BUTTON_WIDTH,
+                    height = EditorGUIUtility.singleLineHeight
+                };
 
                 buttonPressed[i] = GUI.Toggle(buttonPos, buttonPressed[i], property.enumNames[i], "Button");
 

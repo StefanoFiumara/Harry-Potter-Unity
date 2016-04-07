@@ -46,6 +46,7 @@ namespace HarryPotterUnity.Cards
             _uiCanvas.transform.SetParent(transform, true);
             _uiCanvas.transform.localRotation = Player.IsLocalPlayer ? Quaternion.identity : Quaternion.Euler(0f, 0f, 180f);
 
+            //TODO: Set Progress Label colors based on local/remote player
             _p1ProgressLabel = _uiCanvas.transform.FindChild("HealthLabel").gameObject.GetComponent<Text>();
             _p2ProgressLabel = _uiCanvas.transform.FindChild("AttackLabel").gameObject.GetComponent<Text>();
 

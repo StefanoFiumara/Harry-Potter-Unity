@@ -21,7 +21,7 @@ namespace HarryPotterUnity.Cards
         [SerializeField, UsedImplicitly] private ClassificationTypes _classification;
         [SerializeField, UsedImplicitly] private Rarity _rarity;
 
-        [Header("Basic Card Settings")]
+        [Header("Card Settings")]
         [SerializeField, EnumFlags]
         [UsedImplicitly] private Tag _tags; 
         
@@ -181,7 +181,6 @@ namespace HarryPotterUnity.Cards
 
             if(IsActivatable())
             {
-                //TODO: Gather input for InPlay Action
                 if (_inPlayActionInputRequired > 0)
                 {
                     _inputGatherer.GatherInput(InputGatherMode.InPlayAction);
@@ -235,7 +234,7 @@ namespace HarryPotterUnity.Cards
             return allInPlayCards.Contains(CardName) == false;
         }
 
-        public void MouseUpAction(List<BaseCard> targets = null)
+        public void PlayFromHand(List<BaseCard> targets = null)
         {       
             foreach (var requirement in PlayRequirements)
             {
