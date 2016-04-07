@@ -1,4 +1,6 @@
 ﻿using System.Linq;
+using HarryPotterUnity.Cards;
+using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using JetBrains.Annotations;
@@ -32,29 +34,29 @@ namespace HarryPotterUnity.UI.Menu
                     _skipActionButton.interactable = false;
                 };
                 
-                _localPlayer.OnCardPlayedEvent += (card, targets) =>
+                _localPlayer.InPlay.OnCardEnteredPlay += card =>
                 {
-                    if (card.Type == Type.Lesson)
+                    if (card is ILessonProvider)
                     {
                         //TODO: Update player hud lessons panel, should this be an InPlayEvent? OnCardEnteredPlay, OnCardExitedPlay
                         //BUG: Need to update this panel when a lesson is removed
+                        UpdateLessonPanel();
                     }
                 };
 
-                _localPlayer.Deck.OnDeckIsOutOfCards += player =>
-                {
-                    if (player == _localPlayer)
-                    {
-                        //TODO: Show Lose message
-                        Log.Write("Local player has lost");
-                    }
-                    else
-                    {
-                        //TODO: Show Win message
-                        Log.Write("Local player has won");
-                    }
-                };
+                _localPlayer.Deck.OnDeckIsOutOfCards += ShowGameOverMessage;
             }
+        }
+
+        private void ShowGameOverMessage(Player loser)
+        {
+            //TODO: Show game over message
+            //Unsub from the other game over message here, only show the win/lose based on who died first
+        }
+
+        private void UpdateLessonPanel()
+        {
+            
         }
 
         public Player RemotePlayer
@@ -66,19 +68,7 @@ namespace HarryPotterUnity.UI.Menu
                 _remotePlayer.OnTurnStart += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
                 _remotePlayer.OnTurnEnd   += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
 
-                _remotePlayer.Deck.OnDeckIsOutOfCards += player =>
-                {
-                    if (player == _remotePlayer)
-                    {
-                        //TODO: Show Lose message
-                        Log.Write("Remote player has lost");
-                    }
-                    else
-                    {
-                        //TODO: Show Win message
-                        Log.Write("Remote player has won");
-                    }
-                };
+                _remotePlayer.Deck.OnDeckIsOutOfCards += ShowGameOverMessage;
             }
         }
 

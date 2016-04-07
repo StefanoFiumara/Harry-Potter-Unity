@@ -26,7 +26,13 @@ namespace HarryPotterUnity.Game
         private static readonly Vector2 _topRowSpacing = new Vector2(80f, 0f);
         private static readonly Vector2 _creatureSpacing = new Vector2(80f, 55f);
         private static readonly Vector2 _characterSpacing = new Vector2(80f, 0f);
-        
+
+        public delegate void CardEnteredPlayEvent(BaseCard card);
+        public delegate void CardExitedPlayEvent(BaseCard card);
+
+        public event CardEnteredPlayEvent OnCardEnteredPlay;
+        public event CardExitedPlayEvent  OnCardExitedPlay;
+
         public override void Add(BaseCard card)
         {
             Cards.Add(card);
@@ -38,6 +44,8 @@ namespace HarryPotterUnity.Game
             MoveToThisCollection(card);
 
             ((IPersistentCard) card).OnEnterInPlayAction();
+
+            if (OnCardEnteredPlay != null) OnCardEnteredPlay(card);
         }
 
         protected override void Remove(BaseCard card)
@@ -47,6 +55,8 @@ namespace HarryPotterUnity.Game
             RearrangeCardsOfType(card.Type);
 
             ((IPersistentCard) card).OnExitInPlayAction();
+
+            if (OnCardExitedPlay != null) OnCardExitedPlay(card);
         }
 
         public override void AddAll(IEnumerable<BaseCard> cards)
@@ -66,6 +76,9 @@ namespace HarryPotterUnity.Game
             foreach (var card in cardList)
             {
                 Cards.Remove(card);
+
+                if (OnCardExitedPlay != null) OnCardExitedPlay(card);
+
                 ((IPersistentCard)card).OnExitInPlayAction();
             }
 
