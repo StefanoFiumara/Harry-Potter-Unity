@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
+using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -26,17 +27,23 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         }
         public bool MeetsRequirement()
         {
-            return _player.InPlay.GetAmountOfLessonsOfType( _lessonType ) >= _amountRequired;
+            return _player.InPlay
+                .LessonsOfType(_lessonType).Count() >= _amountRequired;
         }
 
         public void OnRequirementMet()
         {
-            var lessons = _player.InPlay.GetLessonsOfType(_lessonType).Take(_amountRequired).ToList();
+            var lessons = _player.InPlay.LessonsOfType(_lessonType)
+                .Take(_amountRequired).ToList();
 
-            if(_returnToHand)
+            if (_returnToHand)
+            {
                 _player.Hand.AddAll(lessons);
+            }
             else
+            {
                 _player.Discard.AddAll(lessons);
+            }
         }
     }
 }

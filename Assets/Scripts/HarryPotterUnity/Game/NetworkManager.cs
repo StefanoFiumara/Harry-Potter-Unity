@@ -27,8 +27,7 @@ namespace HarryPotterUnity.Game
 
         public void Awake()
         {
-            Log.Init("HP-TCG", "Harry Potter TCG Log");
-            Log.Write("Initialize Log File");
+            Log.Write("Initialize Log");
             
             _menuManager = FindObjectOfType<MenuManager>();
             _allMenuScreens = FindObjectsOfType<BaseMenu>().ToList();
@@ -63,7 +62,7 @@ namespace HarryPotterUnity.Game
 
             if (PhotonNetwork.room.playerCount == 2)
             {
-                Quaternion rotation = Quaternion.Euler(0f, 0f, 180f);
+                var rotation = Quaternion.Euler(0f, 0f, 180f);
 
                 Camera.main.transform.rotation = rotation;
                 Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, 132f, Camera.main.transform.localPosition.z);
@@ -303,6 +302,11 @@ namespace HarryPotterUnity.Game
             {
                 Log.Error("ExecuteSkipAction() failed to identify which player wants to skip their Action!");
             }
+        }
+
+        private void OnApplicationQuit()
+        {
+            Log.SaveToFile("HP-TCG", "Harry Potter TCG Log");
         }
     }
 }

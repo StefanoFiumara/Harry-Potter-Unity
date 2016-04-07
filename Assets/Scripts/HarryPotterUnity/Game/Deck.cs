@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
-using JetBrains.Annotations;
 using UnityEngine;
 using UnityLogWrapper;
 using Random = UnityEngine.Random;
-using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
 {

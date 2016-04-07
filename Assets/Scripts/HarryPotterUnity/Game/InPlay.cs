@@ -74,19 +74,7 @@ namespace HarryPotterUnity.Game
                 RearrangeCardsOfType(type.Key);
             }
         }
-
-
-        //TODO: Look into removing these methods
-        public IEnumerable<BaseCard> GetLessonsOfType(LessonTypes type)
-        {
-            return Lessons.Where(x => ((ILessonProvider)x).LessonType == type);
-        }
-
-        public int GetAmountOfLessonsOfType(LessonTypes type)
-        {
-            return Lessons.Count(x => ((ILessonProvider)x).LessonType == type);
-        }
-
+        
         private void TweenCardToPosition(BaseCard card)
         {
             var tween = new MoveTween

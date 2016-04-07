@@ -11,9 +11,9 @@ namespace HarryPotterUnity.Cards.Charms.Locations
         {
             get
             {
-                return Player.InPlay.GetLessonsOfType(LessonTypes.Charms)
-                    .Concat(Player.OppositePlayer.InPlay.GetLessonsOfType(LessonTypes.Charms))
-                    .Cast<BaseLesson>();
+                return Player.InPlay.Lessons.Cast<BaseLesson>()
+                    .Concat(Player.OppositePlayer.InPlay.Lessons.Cast<BaseLesson>())
+                    .Where(c => c.LessonType == LessonTypes.Charms);
             }
         }
         public override void OnEnterInPlayAction()

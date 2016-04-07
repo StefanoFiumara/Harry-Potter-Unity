@@ -10,6 +10,7 @@ namespace HarryPotterUnity.Game
     {
         public List<BaseCard> Cards { get; protected set; }
 
+        #region CardType Shortcuts
         public List<BaseCard> Lessons
         {
             get { return Cards.Where(c => c.Type == Type.Lesson).ToList(); }
@@ -25,19 +26,38 @@ namespace HarryPotterUnity.Game
             get { return Cards.Where(c => c.Type == Type.Creature).ToList(); }
         }
 
-        //TODO: Add Shortcut property for Adventures...Matches...Locations, and all other types
+        public List<BaseCard> Spells
+        {
+            get { return Cards.Where(c => c.Type == Type.Spell).ToList(); }
+        }
+
+        public List<BaseCard> Locations
+        {
+            get { return Cards.Where(c => c.Type == Type.Location).ToList(); }
+        }
+
+        public List<BaseCard> Matches
+        {
+            get { return Cards.Where(c => c.Type == Type.Match).ToList(); }
+        }
+
+        public List<BaseCard> Adventures
+        {
+            get { return Cards.Where(c => c.Type == Type.Adventure).ToList(); }
+        }
+
+        public List<BaseCard> Characters
+        {
+            get { return Cards.Where(c => c.Type == Type.Character).ToList(); }
+        }
+        #endregion
 
         public abstract void Add(BaseCard card);
         public abstract void AddAll(IEnumerable<BaseCard> cards);
 
         protected abstract void Remove(BaseCard card);
         protected abstract void RemoveAll(IEnumerable<BaseCard> cards);
-
-        private bool Contains(BaseCard card)
-        {
-            return Cards.Contains(card);
-        }
-
+        
         protected CardCollection()
         {
             Cards = new List<BaseCard>();
@@ -55,6 +75,11 @@ namespace HarryPotterUnity.Game
             }
 
             card.CurrentCollection = this;
+        }
+
+        private bool Contains(BaseCard card)
+        {
+            return Cards.Contains(card);
         }
     }
 }

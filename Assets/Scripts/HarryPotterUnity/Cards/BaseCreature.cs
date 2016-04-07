@@ -61,7 +61,6 @@ namespace HarryPotterUnity.Cards
             _uiCanvas.SetActive(false);
         }
 
-        //TODO: Creature.TakeDamage needs source of damage?
         public void TakeDamage(int amount)
         {
             _health -= amount;

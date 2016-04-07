@@ -1,11 +1,14 @@
 ﻿using JetBrains.Annotations;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 
 namespace HarryPotterUnity.Utils
 {
     public class EnumFlagsAttribute : PropertyAttribute { }
 
+#if UNITY_EDITOR
     [CustomPropertyDrawer(typeof(EnumFlagsAttribute)), UsedImplicitly]
     public class EnumFlagsAttributeDrawer : PropertyDrawer
     {
@@ -45,4 +48,5 @@ namespace HarryPotterUnity.Utils
             }
         }
     }
+#endif
 }
