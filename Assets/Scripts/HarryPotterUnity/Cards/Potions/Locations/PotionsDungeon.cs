@@ -8,19 +8,19 @@ namespace HarryPotterUnity.Cards.Potions.Locations
         {
             base.OnEnterInPlayAction();
 
-            Player.InPlay.OnCardExitedPlay += ReturnCreatureLessonToHand;
-            Player.OppositePlayer.InPlay.OnCardExitedPlay += ReturnCreatureLessonToHand;
+            Player.InPlay.OnCardExitedPlay += ReturnPotionLessonToHand;
+            Player.OppositePlayer.InPlay.OnCardExitedPlay += ReturnPotionLessonToHand;
         }
 
         public override void OnExitInPlayAction()
         {
             base.OnExitInPlayAction();
 
-            Player.InPlay.OnCardExitedPlay -= ReturnCreatureLessonToHand;
-            Player.OppositePlayer.InPlay.OnCardExitedPlay -= ReturnCreatureLessonToHand;
+            Player.InPlay.OnCardExitedPlay -= ReturnPotionLessonToHand;
+            Player.OppositePlayer.InPlay.OnCardExitedPlay -= ReturnPotionLessonToHand;
         }
 
-        private void ReturnCreatureLessonToHand(BaseCard card)
+        private void ReturnPotionLessonToHand(BaseCard card)
         {
             var lesson = card as BaseLesson;
             if (lesson != null && lesson.LessonType == LessonTypes.Potions)

@@ -16,5 +16,10 @@ namespace HarryPotterUnity.Cards.Potions.Spells
 
             Player.OppositePlayer.TakeDamage(this, damage);
         }
+
+        protected override bool MeetsAdditionalPlayRequirements()
+        {
+            return Player.InPlay.LessonsOfType(LessonTypes.Potions).Any();
+        }
     }
 }

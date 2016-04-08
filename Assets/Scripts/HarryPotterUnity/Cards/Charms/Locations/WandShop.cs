@@ -19,6 +19,8 @@ namespace HarryPotterUnity.Cards.Charms.Locations
         }
         public override void OnEnterInPlayAction()
         {
+            base.OnEnterInPlayAction();
+
             foreach (var lesson in AllLessons)
             {
                 lesson.AmountLessonsProvided = 2;
