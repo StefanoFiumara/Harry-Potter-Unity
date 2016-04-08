@@ -11,11 +11,15 @@ namespace HarryPotterUnity.Cards
         {
             return Type.Location;
         }
+        
+        public virtual void OnInPlayBeforeTurnAction() { }
+        public virtual void OnInPlayAfterTurnAction() { }
 
-        protected override void OnPlayFromHandAction(List<BaseCard> targets)
+        public virtual bool CanPerformInPlayAction() { return false; }
+        public virtual void OnSelectedAction(List<BaseCard> targets = null) { }
+
+        public virtual void OnEnterInPlayAction()
         {
-            base.OnPlayFromHandAction(targets);
-            
             BaseCard existingLocation =
                 Player.InPlay.Cards.Concat(Player.OppositePlayer.InPlay.Cards)
                     .SingleOrDefault(c => c.Type == Type.Location && c != this);
@@ -25,14 +29,6 @@ namespace HarryPotterUnity.Cards
                 existingLocation.Player.Discard.Add(existingLocation);
             }
         }
-
-        public virtual void OnInPlayBeforeTurnAction() { }
-        public virtual void OnInPlayAfterTurnAction() { }
-
-        public virtual bool CanPerformInPlayAction() { return false; }
-        public virtual void OnSelectedAction(List<BaseCard> targets = null) { }
-
-        public virtual void OnEnterInPlayAction() { }
         public virtual void OnExitInPlayAction() { }
     }
 }

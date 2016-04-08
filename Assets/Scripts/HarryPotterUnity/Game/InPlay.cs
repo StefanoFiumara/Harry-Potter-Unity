@@ -77,9 +77,9 @@ namespace HarryPotterUnity.Game
             {
                 Cards.Remove(card);
 
-                if (OnCardExitedPlay != null) OnCardExitedPlay(card);
-
                 ((IPersistentCard)card).OnExitInPlayAction();
+
+                if (OnCardExitedPlay != null) OnCardExitedPlay(card);
             }
 
             foreach (var type in cardList.GroupBy(c => c.Type))

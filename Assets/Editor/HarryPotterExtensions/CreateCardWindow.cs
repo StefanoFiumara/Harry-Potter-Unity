@@ -175,6 +175,7 @@ namespace HarryPotterExtensions
             ChooseCardProperties();
             ChooseAddLessonRequirement();
             ChooseAddCardLimitRequirement();
+            //TODO: Add option to attach any existing card script
             ValidateRequest();
 
             GUILayout.EndVertical();
