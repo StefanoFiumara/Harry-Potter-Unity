@@ -24,8 +24,8 @@ namespace HarryPotterUnity.Cards.Charms.Locations
                 lesson.AmountLessonsProvided = 2;
             }
 
-            Player.OnCardPlayedEvent += DoubleLessonsProvided;
-            Player.OppositePlayer.OnCardPlayedEvent += DoubleLessonsProvided;
+            Player.OnCardPlayed += DoubleLessonsProvided;
+            Player.OppositePlayer.OnCardPlayed += DoubleLessonsProvided;
         }
         
         public override void OnExitInPlayAction()
@@ -35,8 +35,8 @@ namespace HarryPotterUnity.Cards.Charms.Locations
                 lesson.AmountLessonsProvided = 1;
             }
 
-            Player.OnCardPlayedEvent -= DoubleLessonsProvided;
-            Player.OppositePlayer.OnCardPlayedEvent -= DoubleLessonsProvided;
+            Player.OnCardPlayed -= DoubleLessonsProvided;
+            Player.OppositePlayer.OnCardPlayed -= DoubleLessonsProvided;
         }
 
         private void DoubleLessonsProvided(BaseCard card, List<BaseCard> targets)

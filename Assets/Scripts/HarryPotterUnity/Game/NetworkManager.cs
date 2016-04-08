@@ -227,7 +227,7 @@ namespace HarryPotterUnity.Game
             }
 
             Log.Write("Player {0} Plays {1} from hand", card.Player.NetworkId + 1, card.CardName);
-            card.Player.OnCardPlayed(card);
+            card.Player.InvokeCardPlayedEvent(card);
             card.PlayFromHand();
         }
 
@@ -276,7 +276,7 @@ namespace HarryPotterUnity.Game
                 string.Join(",", targetedCards.Select(c => c.CardName).ToArray()));
 
 
-            card.Player.OnCardPlayed(card, targetedCards);
+            card.Player.InvokeCardPlayedEvent(card, targetedCards);
 
             card.PlayFromHand(targetedCards);
 
