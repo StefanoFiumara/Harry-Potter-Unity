@@ -52,18 +52,6 @@ namespace HarryPotterExtensions
                         && validScript;
                 }
             }
-
-            public void Reset()
-            {
-                CardGraphic = null;
-                CardName = string.Empty;
-                AddLessonRequirement = false;
-                LessonAmtRequired = 0;
-                AddCardLimit = false;
-                MaxAllowedInDeck = 0;
-                AddExistingScript = false;
-                AttachedScript = null;
-            }
         }
 
         private CreateCardRequest _cardRequest;
