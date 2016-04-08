@@ -46,6 +46,7 @@ GameObject:
   - 4: {fileID: 464346}
   - 114: {fileID: 11475144}
   - 114: {fileID: 11468828}
+  - 114: {fileID: 11480930}
   m_Layer: 10
   m_Name: VenomousTentacula
   m_TagString: Untagged
@@ -210,6 +211,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 4
   _lessonType: 0
+--- !u!114 &11480930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8f712df5aab2ff4fb74ac9294bf9480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 3
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -228,6 +241,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _health
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _type
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
