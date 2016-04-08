@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Utils
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return base.GetPropertyHeight(property, label) + (EditorGUIUtility.singleLineHeight + SPACING) * property.enumNames.Length;
+            return base.GetPropertyHeight(property, label) + EditorGUIUtility.singleLineHeight * SPACING * property.enumNames.Length * 0.5f;
         }
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
@@ -43,8 +43,8 @@ namespace HarryPotterUnity.Utils
 
                 var buttonPos = new Rect
                 {
-                    x = position.width - BUTTON_WIDTH,
-                    y = position.y + (EditorGUIUtility.singleLineHeight*i*SPACING),
+                    x = i % 2 == 1 ? position.width - BUTTON_WIDTH : position.width - BUTTON_WIDTH*2 - 2*SPACING,
+                    y = i % 2 == 0 ? position.y + (EditorGUIUtility.singleLineHeight*i*SPACING*0.5f) : position.y + EditorGUIUtility.singleLineHeight*(i - 1)*SPACING*0.5f,
                     width = BUTTON_WIDTH,
                     height = EditorGUIUtility.singleLineHeight
                 };

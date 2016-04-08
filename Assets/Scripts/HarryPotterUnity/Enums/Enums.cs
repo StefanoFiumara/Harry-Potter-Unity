@@ -19,7 +19,9 @@ namespace HarryPotterUnity.Enums
         Healing     = 1 << 1,
         Wand        = 1 << 2,
         Cauldron    = 1 << 3,
-        Broom       = 1 << 4
+        Broom       = 1 << 4,
+        Plant       = 1 << 5,
+        Owl         = 1 << 6
     }
 
     public enum Rarity
