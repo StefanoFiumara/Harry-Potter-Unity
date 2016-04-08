@@ -64,6 +64,7 @@ namespace HarryPotterUnity.Cards
 
         public void TakeDamage(int amount)
         {
+            //TODO: Add some animation here to signify damage taken?
             _health -= amount;
             _healthLabel.text = Mathf.Clamp(_health, 0, int.MaxValue).ToString();
 
