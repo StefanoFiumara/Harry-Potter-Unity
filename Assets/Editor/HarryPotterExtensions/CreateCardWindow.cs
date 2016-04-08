@@ -223,8 +223,8 @@ namespace HarryPotterExtensions
 
             if (GUILayout.Button("Create Card"))
             {
-                CreateCard(_cardRequest);
-                _cardRequest.Reset();
+                EditorApplication.delayCall += () => CreateCard(_cardRequest);
+                Close();
             }
         }
 
