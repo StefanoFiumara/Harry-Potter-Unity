@@ -12,7 +12,11 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         [UsedImplicitly, SerializeField]
         private int _damageAmount;
 
-        public int DamageAmount { get { return _damageAmount; } }
+        public int DamageAmount
+        {
+            get { return _damageAmount; }
+            set { _damageAmount = value; }
+        }
 
         protected override void SpellAction(List<BaseCard> targets)
         {

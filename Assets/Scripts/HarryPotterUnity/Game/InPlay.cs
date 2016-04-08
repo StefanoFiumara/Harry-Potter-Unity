@@ -77,7 +77,7 @@ namespace HarryPotterUnity.Game
             {
                 Cards.Remove(card);
 
-                if (OnCardExitedPlay != null) OnCardExitedPlay(card);
+                if (OnCardExitedPlay != null) OnCardExitedPlay(card); //TODO: Verify that this event call will not create animation issues
 
                 ((IPersistentCard)card).OnExitInPlayAction();
             }

@@ -227,8 +227,8 @@ namespace HarryPotterUnity.Game
             }
 
             Log.Write("Player {0} Plays {1} from hand", card.Player.NetworkId + 1, card.CardName);
-            card.PlayFromHand();
             card.Player.OnCardPlayed(card);
+            card.PlayFromHand();
         }
 
         [PunRPC, UsedImplicitly]

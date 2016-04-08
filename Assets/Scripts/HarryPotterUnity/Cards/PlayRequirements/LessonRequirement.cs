@@ -27,9 +27,12 @@ namespace HarryPotterUnity.Cards.PlayRequirements
             set { _lessonType = value; }
         }
 
+        private int _originalAmountRequired; //Some cards may change how many lessons are required to play a card, this variable holds the "printed" amount.
+
         private void Start()
         {
             _player = GetComponent<BaseCard>().Player;
+            _originalAmountRequired = _amountRequired;
         }
         public bool MeetsRequirement()
         {
@@ -38,5 +41,10 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         }
 
         public void OnRequirementMet() { }
+
+        public void ResetRequirement()
+        {
+            AmountRequired = _originalAmountRequired;
+        }
     }
 }

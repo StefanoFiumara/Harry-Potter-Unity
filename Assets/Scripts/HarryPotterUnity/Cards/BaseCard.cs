@@ -36,8 +36,17 @@ namespace HarryPotterUnity.Cards
 
         public Player Player { get; set; }
 
-        public List<IDeckGenerationRequirement> DeckGenerationRequirements { get; private set; }
-        
+        private List<IDeckGenerationRequirement> _deckGenerationRequirements; 
+        public List<IDeckGenerationRequirement> DeckGenerationRequirements
+        {
+            get
+            {
+                return _deckGenerationRequirements ??
+                       (_deckGenerationRequirements =
+                           GetComponents<MonoBehaviour>().OfType<IDeckGenerationRequirement>().ToList());
+            }
+        }
+
         public string CardName { get { return string.Format("{0}: {1}", Type, transform.name.Replace("(Clone)", "")); } }
         public byte NetworkId { get; set; }
 
@@ -94,9 +103,6 @@ namespace HarryPotterUnity.Cards
             
             gameObject.layer = GameManager.CARD_LAYER;
             _cardFace = transform.FindChild("Front").gameObject;
-
-            DeckGenerationRequirements =
-                GetComponents<MonoBehaviour>().OfType<IDeckGenerationRequirement>().ToList();
 
             AddCollider();
             
