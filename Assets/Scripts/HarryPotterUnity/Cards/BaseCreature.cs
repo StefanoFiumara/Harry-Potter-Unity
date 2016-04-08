@@ -24,7 +24,7 @@ namespace HarryPotterUnity.Cards
         public int DamagePerTurn { get { return _damagePerTurn; } }
         public int Health { get { return _health; } }
 
-        protected int MaxHealth { get; private set; }
+        public int MaxHealth { get; private set; }
 
         protected override void Start()
         {
