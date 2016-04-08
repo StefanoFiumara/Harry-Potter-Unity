@@ -207,7 +207,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _classification: 0
-  _rarity: 0
+  _rarity: 1
   _tags: 0
   _damageAmount: 4
   _canTargetPlayer: 1
@@ -241,6 +241,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _fromHandActionInputRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _rarity
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
