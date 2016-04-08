@@ -16,5 +16,10 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
             Player.Hand.AddAll(cardsToDraw);
         }
+
+        protected override bool MeetsAdditionalPlayRequirements()
+        {
+            return Player.Hand.Cards.Count <= 7;
+        }
     }
 }

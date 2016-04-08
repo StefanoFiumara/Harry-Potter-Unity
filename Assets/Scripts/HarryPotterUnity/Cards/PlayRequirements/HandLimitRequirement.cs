@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Cards.PlayRequirements
 {
+    //TODO: Is this used anywhere?
     public class HandLimitRequirement : MonoBehaviour, ICardPlayRequirement
     {
         [SerializeField, UsedImplicitly]
@@ -10,8 +11,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         private BaseCard _cardInfo;
 
-        [UsedImplicitly]
-        void Start()
+        private void Start()
         {
             _cardInfo = GetComponent<BaseCard>();
         }

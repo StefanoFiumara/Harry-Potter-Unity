@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         private int _damageAmount;
 
         [UsedImplicitly, SerializeField]
-        private bool _canTargetPlayer;
+        protected bool _canTargetPlayer;
 
         public int DamageAmount
         {
@@ -44,7 +44,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
             if (_canTargetPlayer) targets.Add(Player.OppositePlayer.Deck.StartingCharacter);
 
-            targets.AddRange(Player.OppositePlayer.InPlay.Creatures);
+            targets.AddRange(Player.OppositePlayer.InPlay.Creatures.Concat(Player.InPlay.Creatures));
 
             return targets;
         }
