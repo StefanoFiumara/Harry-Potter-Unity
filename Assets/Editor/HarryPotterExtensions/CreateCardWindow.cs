@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.DeckGeneration.Requirements;
 using HarryPotterUnity.Enums;
@@ -29,11 +30,26 @@ namespace HarryPotterExtensions
             public bool AddCardLimit { get; set; }
             public int MaxAllowedInDeck { get; set; }
             
+            public bool AddExistingScript { get; set; }
+            public MonoScript AttachedScript { get; set; }
+
             public bool IsValid
             {
                 get
                 {
-                    return CardGraphic != null && !string.IsNullOrEmpty(CardName);
+                    bool validScript = false;
+
+                    if (AddExistingScript == false)
+                    {
+                        validScript = true;
+                    }
+                    else if (AttachedScript != null)
+                    {
+                        validScript = AttachedScript.GetClass().IsSubclassOf(typeof(BaseCard));
+                    }
+
+                    return CardGraphic != null && !string.IsNullOrEmpty(CardName)
+                        && validScript;
                 }
             }
         }
@@ -106,6 +122,16 @@ namespace HarryPotterExtensions
                 var newComponent = card.AddComponent<DeckCardLimitRequirement>();
                 newComponent.MaximumAmountAllowed = request.MaxAllowedInDeck;
             }
+
+            if (request.AddExistingScript)
+            {
+                var scriptType = request.AttachedScript.GetClass();
+
+                if (scriptType.IsSubclassOf(typeof(BaseCard)))
+                {
+                    card.AddComponent(scriptType);
+                }
+            }
         }
 
         private static void CreatePrefab(string newPrefabAssetPath, GameObject card)
@@ -175,7 +201,7 @@ namespace HarryPotterExtensions
             ChooseCardProperties();
             ChooseAddLessonRequirement();
             ChooseAddCardLimitRequirement();
-            //TODO: Add option to attach any existing card script
+            ChooseScript();
             ValidateRequest();
 
             GUILayout.EndVertical();
@@ -235,11 +261,25 @@ namespace HarryPotterExtensions
         {
             GUILayout.Space(10);
 
-            _cardRequest.CardGraphic = (Texture2D) EditorGUILayout.ObjectField("Card Image:", _cardRequest.CardGraphic, typeof (Texture2D), false);
+            _cardRequest.CardGraphic =
+                (Texture2D)
+                    EditorGUILayout.ObjectField("Card Image:", _cardRequest.CardGraphic, typeof (Texture2D), false);
             if (_cardRequest.CardGraphic != null)
             {
                 _cardRequest.CardName = _cardRequest.CardGraphic.name.Replace("_", "").Replace("'", "");
             }
+        }
+
+        private void ChooseScript()
+        {
+            GUILayout.Space(20);
+
+            _cardRequest.AddExistingScript = EditorGUILayout.BeginToggleGroup("Add Existing Script", _cardRequest.AddExistingScript);
+
+            _cardRequest.AttachedScript =
+                (MonoScript) EditorGUILayout.ObjectField("Script:", _cardRequest.AttachedScript, typeof (MonoScript), false);
+
+            EditorGUILayout.EndToggleGroup();
         }
     }
 }
