@@ -276,9 +276,9 @@ namespace HarryPotterUnity.Game
                 string.Join(",", targetedCards.Select(c => c.CardName).ToArray()));
 
 
-            card.PlayFromHand(targetedCards);
-
             card.Player.OnCardPlayed(card, targetedCards);
+
+            card.PlayFromHand(targetedCards);
 
             card.Player.EnableAllCards();
             card.Player.ClearHighlightComponent();

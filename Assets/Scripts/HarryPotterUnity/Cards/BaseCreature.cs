@@ -24,13 +24,14 @@ namespace HarryPotterUnity.Cards
         public int DamagePerTurn { get { return _damagePerTurn; } }
         public int Health { get { return _health; } }
 
-        private int _maxHealth;
+        protected int MaxHealth { get; private set; }
+
         protected override void Start()
         {
             base.Start();
             LoadUiOverlay();
 
-            _maxHealth = _health;
+            MaxHealth = _health;
         }
 
         private void LoadUiOverlay()
@@ -74,7 +75,7 @@ namespace HarryPotterUnity.Cards
 
         public void Heal(int amount)
         {
-            _health = Mathf.Clamp(_health + amount, 0, _maxHealth);
+            _health = Mathf.Clamp(_health + amount, 0, MaxHealth);
 
             _healthLabel.text = _health.ToString();
         }
