@@ -79,20 +79,20 @@ namespace HarryPotterUnity.DeckGeneration
             switch (types.Count)
             {
                 case 2:
-                    AddLessonsToDeck(ref deck, types[0], 16);
-                    AddLessonsToDeck(ref deck, types[1], 14);
+                    AddLessonsToDeck(ref deck, types[0], 13);
+                    AddLessonsToDeck(ref deck, types[1], 10);
 
-                    AddCardsToDeck(ref deck, types[0].ToClassification(), 15);
-                    AddCardsToDeck(ref deck, types[1].ToClassification(), 15);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 20);
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 17);
                     break;
                 case 3:
-                    AddLessonsToDeck(ref deck, types[0], 15);
-                    AddLessonsToDeck(ref deck, types[1], 8);
-                    AddLessonsToDeck(ref deck, types[2], 7);
+                    AddLessonsToDeck(ref deck, types[0], 12);
+                    AddLessonsToDeck(ref deck, types[1], 6);
+                    AddLessonsToDeck(ref deck, types[2], 5);
 
-                    AddCardsToDeck(ref deck, types[0].ToClassification(), 10);
-                    AddCardsToDeck(ref deck, types[1].ToClassification(), 10);                   
-                    AddCardsToDeck(ref deck, types[2].ToClassification(), 10);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 13);
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 12);                   
+                    AddCardsToDeck(ref deck, types[2].ToClassification(), 12);
                     break;
                 default:
                     throw new Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
