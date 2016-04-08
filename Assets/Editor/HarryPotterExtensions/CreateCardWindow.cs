@@ -127,10 +127,7 @@ namespace HarryPotterExtensions
             {
                 var scriptType = request.AttachedScript.GetClass();
 
-                if (scriptType.IsSubclassOf(typeof(BaseCard)))
-                {
-                    card.AddComponent(scriptType);
-                }
+                card.AddComponent(scriptType);
             }
         }
 
@@ -215,6 +212,7 @@ namespace HarryPotterExtensions
             if (GUILayout.Button("Create Card"))
             {
                 CreateCard(_cardRequest);
+                GUILayout.EndVertical();
                 Close();
             }
         }
@@ -274,7 +272,7 @@ namespace HarryPotterExtensions
         {
             GUILayout.Space(20);
 
-            _cardRequest.AddExistingScript = EditorGUILayout.BeginToggleGroup("Add Existing Script", _cardRequest.AddExistingScript);
+            _cardRequest.AddExistingScript = EditorGUILayout.BeginToggleGroup("Add Existing BaseCard Script", _cardRequest.AddExistingScript);
 
             _cardRequest.AttachedScript =
                 (MonoScript) EditorGUILayout.ObjectField("Script:", _cardRequest.AttachedScript, typeof (MonoScript), false);
