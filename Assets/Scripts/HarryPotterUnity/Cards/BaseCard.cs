@@ -26,13 +26,13 @@ namespace HarryPotterUnity.Cards
         [UsedImplicitly] private Tag _tags; 
         
         public State State { private get; set; }
-        public ClassificationTypes Classification { get { return _classification; } }
+        public ClassificationTypes Classification { get { return _classification; } set { _classification = value; } }
 
         public Type Type { get { return GetCardType(); } }
         protected abstract Type GetCardType();
 
         public FlipState FlipState { private get; set; }
-        public Rarity Rarity { get { return _rarity; } }
+        public Rarity Rarity { get { return _rarity; }  set { _rarity = value; } }
 
         public Player Player { get; set; }
 
