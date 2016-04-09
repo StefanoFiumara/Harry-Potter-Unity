@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
@@ -64,7 +63,6 @@ namespace HarryPotterUnity.Cards
 
         public void TakeDamage(int amount)
         {
-            //TODO: Add some animation here to signify damage taken?
             _health -= amount;
             _healthLabel.text = Mathf.Clamp(_health, 0, int.MaxValue).ToString();
 
@@ -86,9 +84,9 @@ namespace HarryPotterUnity.Cards
         public virtual void OnInPlayAfterTurnAction() { }
         public virtual void OnSelectedAction(List<BaseCard> targets = null) { }
 
-        protected sealed override Enums.Type GetCardType()
+        protected sealed override Type GetCardType()
         {
-            return Enums.Type.Creature;
+            return Type.Creature;
         }
     }
 }

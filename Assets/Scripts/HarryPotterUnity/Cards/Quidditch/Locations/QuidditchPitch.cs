@@ -27,7 +27,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Locations
             }
         }
 
-        //TODO: Test this
         public override void OnExitInPlayAction()
         {
             base.OnExitInPlayAction();

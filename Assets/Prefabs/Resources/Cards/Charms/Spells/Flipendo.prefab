@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24e242606c6490c499a43da3ac96ad64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _classification: 0
+  _classification: 1
   _rarity: 0
   _tags: 0
   _damageAmount: 2
@@ -241,6 +241,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _canTargetPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _classification
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
