@@ -18,7 +18,6 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
             {
                 return _maximumAmountAllowed;
             }
-
             set
             {
                 _maximumAmountAllowed = value;
