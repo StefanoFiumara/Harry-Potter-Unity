@@ -2,7 +2,6 @@
 {
     public class CobraLily : BaseCreature
     {
-        //TODO: Test this
         public override void OnInPlayAfterTurnAction()
         {
             Heal(MaxHealth);

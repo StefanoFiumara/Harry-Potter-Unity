@@ -16,7 +16,6 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Locations
             Player.OppositePlayer.OnCardPlayed += AddActionOnPlantPlayed;
         }
 
-        //TODO: test this
         private void AddActionOnPlantPlayed(BaseCard card, List<BaseCard> targets)
         {
             if (HasEffectActivated == false && card.HasTag(Tag.Plant))

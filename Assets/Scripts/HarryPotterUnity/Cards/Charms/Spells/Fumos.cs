@@ -14,7 +14,6 @@ namespace HarryPotterUnity.Cards.Charms.Spells
             DamageAmount = 2;
         }
 
-        //TODO: test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             var allCreatures = Player.InPlay.Creatures.Concat(Player.OppositePlayer.InPlay.Creatures);

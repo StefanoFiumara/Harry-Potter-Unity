@@ -8,7 +8,6 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 {
     public class AntiCheatingSpell : BaseSpell
     {
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             var enemyHand = Player.OppositePlayer.Hand.Cards.Select(card => card.gameObject).ToList();
