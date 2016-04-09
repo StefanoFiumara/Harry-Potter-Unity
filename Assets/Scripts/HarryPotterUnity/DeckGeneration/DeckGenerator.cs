@@ -169,7 +169,8 @@ namespace HarryPotterUnity.DeckGeneration
 
         public static void ResetStartingCharacterPool()
         {
-            _allStartingCharacters = null;
+            _availableStartingCharacters = new List<BaseCard>();
+            _availableStartingCharacters.AddRange(AllStartingCharacters);
         }
     }
 }

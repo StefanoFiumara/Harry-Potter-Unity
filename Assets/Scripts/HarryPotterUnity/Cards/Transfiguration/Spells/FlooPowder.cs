@@ -7,11 +7,13 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var location = Player.Deck.Locations.Skip(Player.Deck.Locations.Count).First();
+            var location = Player.Deck.Locations.Skip(Player.Deck.Locations.Count).FirstOrDefault();
 
-            Player.Hand.Add(location);
-
-            Player.Deck.Shuffle();
+            if (location != null)
+            {
+                Player.Hand.Add(location);
+                Player.Deck.Shuffle();
+            }
         }
     }
 }

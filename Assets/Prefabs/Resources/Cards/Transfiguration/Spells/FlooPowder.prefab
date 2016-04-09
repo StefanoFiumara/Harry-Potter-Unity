@@ -47,6 +47,7 @@ GameObject:
   - 114: {fileID: 11413398}
   - 114: {fileID: 11444084}
   - 114: {fileID: 11406898}
+  - 114: {fileID: 11416858}
   m_Layer: 10
   m_Name: FlooPowder
   m_TagString: Untagged
@@ -209,6 +210,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 2
   _lessonType: 2
+--- !u!114 &11416858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 183166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d82f9dd70e5d3b04aa067b803851882b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _cardType: 4
 --- !u!114 &11444084
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -227,7 +240,11 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _cardType
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 183166}

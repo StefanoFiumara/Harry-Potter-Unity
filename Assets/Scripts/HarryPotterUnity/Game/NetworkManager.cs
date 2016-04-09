@@ -193,6 +193,7 @@ namespace HarryPotterUnity.Game
             GameManager._networkIdCounter = 0;
             GameManager.AllCards.Clear();
 
+            //TODO: Ensure this is resetting the character pool at the right time.
             DeckGenerator.ResetStartingCharacterPool();
 
             Log.Write("Generating Player Decks");
