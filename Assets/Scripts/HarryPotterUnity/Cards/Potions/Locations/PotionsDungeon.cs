@@ -1,4 +1,7 @@
-﻿using HarryPotterUnity.Enums;
+﻿using System.Linq;
+using HarryPotterUnity.Cards.PlayRequirements;
+using HarryPotterUnity.Enums;
+using HarryPotterUnity.Game;
 
 namespace HarryPotterUnity.Cards.Potions.Locations
 {
@@ -8,24 +11,29 @@ namespace HarryPotterUnity.Cards.Potions.Locations
         {
             base.OnEnterInPlayAction();
 
-            Player.InPlay.OnCardExitedPlay += ReturnPotionLessonToHand;
-            Player.OppositePlayer.InPlay.OnCardExitedPlay += ReturnPotionLessonToHand;
+            var removeLessonFromPlayRequirements = GameManager.AllCards
+                .Select(c => c.GetComponent<RemoveLessonFromPlayRequirement>())
+                .Where(req => req != null && req.LessonType == LessonTypes.Potions);
+
+            foreach (var requirement in removeLessonFromPlayRequirements)
+            {
+                requirement.ReturnToHand = true;
+            }
+
+
         }
 
         public override void OnExitInPlayAction()
         {
             base.OnExitInPlayAction();
 
-            Player.InPlay.OnCardExitedPlay -= ReturnPotionLessonToHand;
-            Player.OppositePlayer.InPlay.OnCardExitedPlay -= ReturnPotionLessonToHand;
-        }
+            var removeLessonFromPlayRequirements = GameManager.AllCards
+                .Select(c => c.GetComponent<RemoveLessonFromPlayRequirement>())
+                .Where(req => req != null && req.LessonType == LessonTypes.Potions);
 
-        private void ReturnPotionLessonToHand(BaseCard card)
-        {
-            var lesson = card as BaseLesson;
-            if (lesson != null && lesson.LessonType == LessonTypes.Potions)
+            foreach (var requirement in removeLessonFromPlayRequirements)
             {
-                card.Player.Hand.Add(card);
+                requirement.Reset();
             }
         }
     }

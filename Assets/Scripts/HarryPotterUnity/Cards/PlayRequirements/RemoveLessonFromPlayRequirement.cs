@@ -21,9 +21,14 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         private Player _player;
 
+        public bool ReturnToHand { get; set; }
+
+        public LessonTypes LessonType { get { return _lessonType; } }
+
         private void Start()
         {
             _player = GetComponent<BaseCard>().Player;
+            ReturnToHand = _returnToHand;
         }
         public bool MeetsRequirement()
         {
@@ -36,7 +41,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
             var lessons = _player.InPlay.LessonsOfType(_lessonType)
                 .Take(_amountRequired).ToList();
 
-            if (_returnToHand)
+            if (ReturnToHand)
             {
                 _player.Hand.AddAll(lessons);
             }
@@ -44,6 +49,11 @@ namespace HarryPotterUnity.Cards.PlayRequirements
             {
                 _player.Discard.AddAll(lessons);
             }
+        }
+
+        public void Reset()
+        {
+            ReturnToHand = _returnToHand;
         }
     }
 }

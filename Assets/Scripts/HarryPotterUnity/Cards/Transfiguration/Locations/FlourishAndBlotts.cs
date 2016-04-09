@@ -15,7 +15,6 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
 
         public override void OnSelectedAction(List<BaseCard> targets = null)
         {
-            //HACK: Need a nicer way to determine which player is activating this effect
             var player = Player.CanUseActions() ? Player : Player.OppositePlayer;
 
             var lessons = player.InPlay.Lessons.Take(2);

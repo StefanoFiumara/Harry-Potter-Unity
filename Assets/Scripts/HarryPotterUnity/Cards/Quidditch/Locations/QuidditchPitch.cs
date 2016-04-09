@@ -9,6 +9,8 @@ namespace HarryPotterUnity.Cards.Quidditch.Locations
     {
         public override void OnEnterInPlayAction()
         {
+            base.OnEnterInPlayAction();
+
             var quidditchSpellsLessonRequirements =
                 GameManager.AllCards.Where(c => c.Type == Type.Spell && c.Classification == ClassificationTypes.Quidditch)
                 .Select(spell => spell.GetComponent<LessonRequirement>())
@@ -28,6 +30,8 @@ namespace HarryPotterUnity.Cards.Quidditch.Locations
         //TODO: Test this
         public override void OnExitInPlayAction()
         {
+            base.OnExitInPlayAction();
+
             var lessonRequirements =
                 GameManager.AllCards.Where(c => c.Type == Type.Spell && c.Classification == ClassificationTypes.Quidditch)
                 .Select(spell => spell.GetComponent<LessonRequirement>())
