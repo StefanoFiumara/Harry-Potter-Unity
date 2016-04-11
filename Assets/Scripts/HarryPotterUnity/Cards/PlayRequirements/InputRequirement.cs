@@ -28,6 +28,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public bool MeetsRequirement()
         {
+            //TODO: Need to check whether this needs to check the FromHandActionTargets or the InPlayActionTargets!
             return _cardInfo.GetFromHandActionTargets().Count >= _fromHandActionInputRequired;
         }
 
