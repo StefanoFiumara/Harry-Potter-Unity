@@ -65,8 +65,19 @@ namespace HarryPotterUnity.Game
                 var rotation = Quaternion.Euler(0f, 0f, 180f);
 
                 Camera.main.transform.rotation = rotation;
-                Camera.main.transform.localPosition = new Vector3(Camera.main.transform.localPosition.x, 132f, Camera.main.transform.localPosition.z);
+                Camera.main.transform.localPosition = new Vector3
+                {
+                    x = Camera.main.transform.localPosition.x,
+                    y = 132f,
+                    z = Camera.main.transform.localPosition.z
+                };
+
                 GameManager.PreviewCamera.transform.rotation = rotation;
+            }
+            else
+            {
+                Camera.main.transform.rotation = Quaternion.identity;
+                GameManager.PreviewCamera.transform.rotation = Quaternion.identity;
             }
         }
 
@@ -150,6 +161,7 @@ namespace HarryPotterUnity.Game
             _player1.OppositePlayer = _player2;
             _player2.OppositePlayer = _player1;
 
+            _player1.transform.localRotation = Quaternion.identity;
             _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
 
             _player1.NetworkId = 0;
@@ -193,7 +205,6 @@ namespace HarryPotterUnity.Game
             GameManager._networkIdCounter = 0;
             GameManager.AllCards.Clear();
 
-            //TODO: Ensure this is resetting the character pool at the right time.
             DeckGenerator.ResetStartingCharacterPool();
 
             Log.Write("Generating Player Decks");

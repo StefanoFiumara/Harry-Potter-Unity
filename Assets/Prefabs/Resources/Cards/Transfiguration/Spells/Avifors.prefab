@@ -221,7 +221,7 @@ MonoBehaviour:
   _classification: 2
   _rarity: 0
   _tags: 0
-  _lessonType: 2
+  _lessonType: 0
   _amount: 1
 --- !u!1001 &100100000
 Prefab:
@@ -236,7 +236,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _lessonType
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: _classification

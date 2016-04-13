@@ -6,8 +6,8 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
-    public static class GameManager {
-
+    public static class GameManager
+    {
         public const int PREVIEW_LAYER = 9;
         public const int CARD_LAYER = 10;
         public const int VALID_CHOICE_LAYER = 11;

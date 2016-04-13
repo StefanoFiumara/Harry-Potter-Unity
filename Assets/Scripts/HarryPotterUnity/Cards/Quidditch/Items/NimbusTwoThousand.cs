@@ -31,7 +31,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
             if (_hasEffectedTriggered) return;
 
             _hasEffectedTriggered = true;
-            //TODO: Add damage to the card's IDamageSpell property instead
+
             ((IDamageSpell) cardPlayed).DamageAmount += _damageAmount;
         }
 
