@@ -187,7 +187,7 @@ namespace HarryPotterUnity.Game
             
         private void InitPlayerDecks()
         {
-            int p1Id = PhotonNetwork.isMasterClient ? 0 : 1;
+            int p1Id = PhotonNetwork.isMasterClient ? 1 : 0;
             int p2Id = p1Id == 0 ? 1 : 0;
 
             var p1LessonsBytes = PhotonNetwork.playerList[p1Id].customProperties["lessons"] as byte[];
