@@ -112,6 +112,11 @@ namespace HarryPotterUnity.UI.Menu
             }
         }
 
+        private void Start()
+        {
+            _skipActionButton.interactable = false;
+        }
+
         protected override void Update()
         {
             base.Update();

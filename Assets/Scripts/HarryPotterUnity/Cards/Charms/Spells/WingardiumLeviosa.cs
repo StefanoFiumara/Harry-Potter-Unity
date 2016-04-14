@@ -9,6 +9,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         {
             Player.OppositePlayer.OnNextTurnStart += () =>
             {
+                //TODO: Make player immune to all damage from creature cards, not just whatever amount the enemy currently has
                 Player.CreatureDamageBuffer = 
                 Player.OppositePlayer.InPlay.Creatures
                     .Cast<BaseCreature>()
