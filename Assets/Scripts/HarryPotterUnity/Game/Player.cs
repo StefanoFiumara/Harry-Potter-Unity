@@ -12,7 +12,8 @@ using Type = HarryPotterUnity.Enums.Type;
 namespace HarryPotterUnity.Game
 {
     [UsedImplicitly]
-    public class Player : MonoBehaviour {
+    public class Player : MonoBehaviour
+    {
 
         public Player OppositePlayer { get; set; }
         public Hand Hand { get; private set; }
@@ -42,7 +43,7 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public int CreatureDamageBuffer { private get; set; }
+        public HashSet<Type> TypeImmunity { get; set; }
 
         public int ActionsAvailable { get; private set; }
 
@@ -76,6 +77,8 @@ namespace HarryPotterUnity.Game
             Deck = transform.GetComponentInChildren<Deck>();
             InPlay = transform.GetComponentInChildren<InPlay>();
             Discard = transform.GetComponentInChildren<Discard>();
+
+            TypeImmunity = new HashSet<Type>();
         }
 
         public void InitDeck(List<LessonTypes> selectedLessons)
@@ -136,9 +139,6 @@ namespace HarryPotterUnity.Game
             {
                 OppositePlayer.TakeDamage(creature, creature.DamagePerTurn);
             }
-
-            //reset the damage buffer in case it was set last turn.
-            OppositePlayer.CreatureDamageBuffer = 0;
         }
 
         private void EndTurn()
@@ -180,10 +180,8 @@ namespace HarryPotterUnity.Game
 
             for (int i = 0; i < amount; i++)
             {
-                // TODO: Check all the buffers based on damage source
-                if (sourceCard.Type == Type.Creature && CreatureDamageBuffer > 0)
+                if (TypeImmunity.Contains(sourceCard.Type))
                 {
-                    CreatureDamageBuffer--;
                     continue;
                 }
 

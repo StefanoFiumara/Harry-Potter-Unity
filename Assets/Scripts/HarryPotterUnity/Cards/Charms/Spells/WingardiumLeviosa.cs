@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using HarryPotterUnity.Enums;
 
 namespace HarryPotterUnity.Cards.Charms.Spells
 {
@@ -7,15 +8,10 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.OnNextTurnStart += () =>
-            {
-                //TODO: Make player immune to all damage from creature cards, not just whatever amount the enemy currently has
-                Player.CreatureDamageBuffer = 
-                Player.OppositePlayer.InPlay.Creatures
-                    .Cast<BaseCreature>()
-                    .Sum(card => card.DamagePerTurn);
-            };
-            
+            Player.TypeImmunity.Add(Type.Creature);
+
+            Player.OnNextTurnStart += () => Player.TypeImmunity.Clear();
+
         }
     }
 }
