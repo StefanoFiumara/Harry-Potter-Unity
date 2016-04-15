@@ -139,7 +139,8 @@ namespace HarryPotterUnity.Game
                     break;
                 case Type.Character:
                     cardPosition = _characterPositionOffset;
-                    cardPosition.x += (position % 3) * _characterSpacing.x;
+                    cardPosition.x += (position % 3) * _characterSpacing.x * 0.5f;
+                    cardPosition.z += 1;
                     break;
                 case Type.Item:
                 case Type.Location:

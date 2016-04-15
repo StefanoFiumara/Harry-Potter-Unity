@@ -87,26 +87,50 @@ namespace HarryPotterExtensions
             }
         }
 
-        private static void TryCreatePrefab(CreateCardRequest request, GameObject card)
+        private static GameObject InstantiateCardTemplate()
         {
-            string newPrefabAssetPath = string.Format("Assets/Prefabs/Resources/Cards/{0}/{1}/{2}.prefab",
-                request.Classification,
+            string templatePath =
+                AssetDatabase.GetAllAssetPaths().Single(path => path.Contains("CardTemplate.prefab"));
+
+            var template = AssetDatabase.LoadAssetAtPath(templatePath, typeof (GameObject)) as GameObject;
+
+            return (GameObject) Instantiate(template, Vector3.zero, Quaternion.identity);
+        }
+
+        private static Material CreateNewMaterial(CreateCardRequest request)
+        {
+            string newMaterialAssetPath = string.Format("Assets/Materials/{0}/{1}/{2}Mat.mat",
                 request.CardType == Type.Match ? "Matches" : request.CardType + "s",
+                request.Classification,
                 request.CardName);
 
-            if (AssetDatabase.LoadAssetAtPath(newPrefabAssetPath, typeof (GameObject)))
+            if (request.Classification == ClassificationTypes.Character || request.Classification == ClassificationTypes.Adventure)
             {
-                string message = string.Format("A prefab already exists at\n{0}\nReplace?", newPrefabAssetPath);
+                var stringToRemove = request.Classification + "/";
+                newMaterialAssetPath = newMaterialAssetPath.Replace(stringToRemove, "");
+            }
 
-                if (EditorUtility.DisplayDialog("Prefab already exists", message, "Yes", "No"))
+            var material = new Material(Shader.Find("Diffuse"))
+            {
+                mainTexture = request.CardGraphic
+            };
+            
+            if (AssetDatabase.GetAllAssetPaths().Contains(newMaterialAssetPath) == false)
+            {
+                var path = Path.GetDirectoryName(newMaterialAssetPath);
+                if (path != null && !Directory.Exists(path))
                 {
-                    CreatePrefab(newPrefabAssetPath, card);
+                    Directory.CreateDirectory(path);
                 }
+                AssetDatabase.CreateAsset(material, newMaterialAssetPath);
             }
             else
             {
-                CreatePrefab(newPrefabAssetPath, card);
+                Debug.LogError(string.Format("Asset at {0} already exists!", newMaterialAssetPath));
+                return null;
             }
+            
+            return material;
         }
 
         private static void AddChosenComponents(CreateCardRequest request, GameObject card)
@@ -134,6 +158,34 @@ namespace HarryPotterExtensions
             }
         }
 
+        private static void TryCreatePrefab(CreateCardRequest request, GameObject card)
+        {
+            string newPrefabAssetPath = string.Format("Assets/Prefabs/Resources/Cards/{0}/{1}/{2}.prefab",
+                request.Classification,
+                request.CardType == Type.Match ? "Matches" : request.CardType + "s",
+                request.CardName);
+
+            if (request.Classification == ClassificationTypes.Character || request.Classification == ClassificationTypes.Adventure)
+            {
+                var stringToRemove = request.Classification + "/";
+                newPrefabAssetPath = newPrefabAssetPath.Replace(stringToRemove, "");
+            }
+
+            if (AssetDatabase.LoadAssetAtPath(newPrefabAssetPath, typeof (GameObject)))
+            {
+                string message = string.Format("A prefab already exists at\n{0}\nReplace?", newPrefabAssetPath);
+
+                if (EditorUtility.DisplayDialog("Prefab already exists", message, "Yes", "No"))
+                {
+                    CreatePrefab(newPrefabAssetPath, card);
+                }
+            }
+            else
+            {
+                CreatePrefab(newPrefabAssetPath, card);
+            }
+        }
+
         private static void CreatePrefab(string newPrefabAssetPath, GameObject card)
         {
             var path = Path.GetDirectoryName(newPrefabAssetPath);
@@ -148,46 +200,6 @@ namespace HarryPotterExtensions
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(newPrefabAssetPath);
             EditorGUIUtility.PingObject(card);
             EditorUtility.FocusProjectWindow();
-        }
-
-        private static Material CreateNewMaterial(CreateCardRequest request)
-        {
-            string newMaterialAssetPath = string.Format("Assets/Materials/{0}/{1}/{2}Mat.mat",
-                request.CardType == Type.Match ? "Matches" : request.CardType + "s",
-                request.Classification,
-                request.CardName);
-
-            var material = new Material(Shader.Find("Diffuse"))
-            {
-                mainTexture = request.CardGraphic
-            };
-            
-            if (AssetDatabase.GetAllAssetPaths().Contains(newMaterialAssetPath) == false)
-            {
-                var path = Path.GetDirectoryName(newMaterialAssetPath);
-                if (path != null && !Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                AssetDatabase.CreateAsset(material, newMaterialAssetPath);
-            }
-            else
-            {
-                Debug.LogError(string.Format("Asset at {0} already exists!", newMaterialAssetPath));
-                return null;
-            }
-            
-            return material;
-        }
-
-        private static GameObject InstantiateCardTemplate()
-        {
-            string templatePath =
-                AssetDatabase.GetAllAssetPaths().Single(path => path.Contains("CardTemplate.prefab"));
-
-            var template = AssetDatabase.LoadAssetAtPath(templatePath, typeof (GameObject)) as GameObject;
-
-            return (GameObject) Instantiate(template, Vector3.zero, Quaternion.identity);
         }
 
         [UsedImplicitly]

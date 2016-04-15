@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 442958}
   - 114: {fileID: 11411804}
+  - 114: {fileID: 11469368}
   m_Layer: 10
   m_Name: HermioneGranger
   m_TagString: Untagged
@@ -194,6 +195,18 @@ MonoBehaviour:
   _classification: 6
   _rarity: 2
   _tags: 1
+--- !u!114 &11469368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 132350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8c282e6a0d71d846b4ff50d62c7ae89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maximumAmountAllowed: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

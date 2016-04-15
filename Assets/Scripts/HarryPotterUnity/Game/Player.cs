@@ -21,6 +21,11 @@ namespace HarryPotterUnity.Game
         public InPlay InPlay { get; private set; }
         public Discard Discard { get; private set; }
 
+        public List<BaseCard> AllCards
+        {
+            get { return Hand.Cards.Concat(Deck.Cards).Concat(InPlay.Cards).Concat(Discard.Cards).ToList(); }
+        }
+
         private readonly HashSet<LessonTypes> _lessonTypesInPlay = new HashSet<LessonTypes>(); 
         public HashSet<LessonTypes> LessonTypesInPlay
         {

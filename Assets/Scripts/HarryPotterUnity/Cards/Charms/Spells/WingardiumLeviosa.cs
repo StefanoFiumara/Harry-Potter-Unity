@@ -10,7 +10,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         {
             Player.TypeImmunity.Add(Type.Creature);
 
-            Player.OnNextTurnStart += () => Player.TypeImmunity.Clear();
+            Player.OnNextTurnStart += () => Player.TypeImmunity.Remove(Type.Creature);
 
         }
     }
