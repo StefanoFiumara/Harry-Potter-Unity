@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Cards
 {
     public abstract class BaseItem : BaseCard, IPersistentCard
     {
-        protected override Type GetCardType()
+        protected sealed override Type GetCardType()
         {
             return Type.Item;
         }

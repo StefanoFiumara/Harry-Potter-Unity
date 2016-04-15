@@ -133,7 +133,7 @@ namespace HarryPotterUnity.Cards
             }
         }
         
-        protected override Type GetCardType()
+        protected sealed override Type GetCardType()
         {
             return Type.Match;
         }

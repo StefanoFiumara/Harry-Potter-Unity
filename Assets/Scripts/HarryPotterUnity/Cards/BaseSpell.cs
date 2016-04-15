@@ -42,7 +42,7 @@ namespace HarryPotterUnity.Cards
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
-        protected override Type GetCardType()
+        protected sealed override Type GetCardType()
         {
             return Type.Spell;
         }

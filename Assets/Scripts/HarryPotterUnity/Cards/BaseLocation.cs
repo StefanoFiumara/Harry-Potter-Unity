@@ -7,7 +7,7 @@ namespace HarryPotterUnity.Cards
 {
     public class BaseLocation : BaseCard, IPersistentCard
     {
-        protected override Type GetCardType()
+        protected sealed override Type GetCardType()
         {
             return Type.Location;
         }
