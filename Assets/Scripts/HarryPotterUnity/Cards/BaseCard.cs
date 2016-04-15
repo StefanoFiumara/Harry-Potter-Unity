@@ -214,7 +214,7 @@ namespace HarryPotterUnity.Cards
         private bool IsPlayableFromHand()
         {            
             bool meetsPlayRequirements = PlayRequirements.Count == 0 ||
-                                     PlayRequirements.TrueForAll(req => req.MeetsRequirement());
+                                     PlayRequirements.All(req => req.MeetsRequirement());
             
             return Player.IsLocalPlayer &&
                    State == State.InHand &&
@@ -314,10 +314,8 @@ namespace HarryPotterUnity.Cards
             {
                 return new List<BaseCard>();
             }
-            else
-            {
-                throw new NotSupportedException("Card with in play input did not define valid targets.");
-            }
+
+            throw new NotSupportedException("Card with in play input did not define valid targets.");
         }
 
         protected virtual bool MeetsAdditionalPlayRequirements()
