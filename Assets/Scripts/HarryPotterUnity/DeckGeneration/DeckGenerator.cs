@@ -6,6 +6,7 @@ using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
+using UnityLogWrapper;
 using Random = UnityEngine.Random;
 using Type = HarryPotterUnity.Enums.Type;
 
@@ -63,7 +64,7 @@ namespace HarryPotterUnity.DeckGeneration
             }
         }
         
-        public static BaseCard GetRandomStartingCharacter()
+        public static BaseCard GetRandomCharacter()
         {
             var character = AvailableStartingCharacters.Skip(Random.Range(0, AvailableStartingCharacters.Count)).First();
 
@@ -82,7 +83,8 @@ namespace HarryPotterUnity.DeckGeneration
                     AddLessonsToDeck(ref deck, types[0], 13);
                     AddLessonsToDeck(ref deck, types[1], 10);
 
-                    AddCardsToDeck(ref deck, types[0].ToClassification(), 20);
+                    AddSupportCharacters(ref deck, 1);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 19);
                     AddCardsToDeck(ref deck, types[1].ToClassification(), 17);
                     break;
                 case 3:
@@ -90,7 +92,8 @@ namespace HarryPotterUnity.DeckGeneration
                     AddLessonsToDeck(ref deck, types[1], 6);
                     AddLessonsToDeck(ref deck, types[2], 5);
 
-                    AddCardsToDeck(ref deck, types[0].ToClassification(), 13);
+                    AddSupportCharacters(ref deck, 1);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 12);
                     AddCardsToDeck(ref deck, types[1].ToClassification(), 12);                   
                     AddCardsToDeck(ref deck, types[2].ToClassification(), 12);
                     break;
@@ -98,9 +101,21 @@ namespace HarryPotterUnity.DeckGeneration
                     throw new Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
             }
 
+            if (deck.Count != 60)
+            {
+                Log.Error("Deck did not initialize with the correct amount of cards, deck.count = {0}", deck.Count);
+            }
             return deck;
         }
-        
+
+        private static void AddSupportCharacters(ref List<BaseCard> deck, int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                deck.Add( GetRandomCharacter() );
+            }
+        }
+
         private static void AddLessonsToDeck(ref List<BaseCard> deck, LessonTypes lessonType, int amount)
         {
             var card = CardLibrary
