@@ -57,10 +57,7 @@ namespace HarryPotterUnity.Game
                 AnimateCardToHand(card, flipState);
             }
 
-            foreach (var card in cardList)
-            {
-                MoveToThisCollection(card);
-            }
+            MoveToThisCollection(cardList);
 
             AdjustHandSpacing();
         }

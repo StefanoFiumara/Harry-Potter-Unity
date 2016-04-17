@@ -26,7 +26,7 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
 
         public bool MeetsRequirement(List<BaseCard> currentDeck)
         {
-            return currentDeck.Count(c => c.CardName == _cardInfo.CardName) < MaximumAmountAllowed;
+            return currentDeck.Count(c => c == _cardInfo) < MaximumAmountAllowed;
         }
     }
 }

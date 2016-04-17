@@ -29,8 +29,7 @@ namespace HarryPotterUnity.Game
             
             card.transform.parent = transform;
 
-            var cardPos = new Vector3(_discardPositionOffset.x, _discardPositionOffset.y, 16f);
-            cardPos.z -=  Cards.Count * 0.2f;
+            var cardPos = GetTargetPositionForCard(card);
 
             Vector3 cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
@@ -76,7 +75,6 @@ namespace HarryPotterUnity.Game
                 Add(card);
             }
 
-
             AdjustCardSpacing();
         }
 
@@ -86,6 +84,8 @@ namespace HarryPotterUnity.Game
             {
                 Cards.Remove(card);
             }
+
+            AdjustCardSpacing();
         }
         
         private void AdjustCardSpacing()

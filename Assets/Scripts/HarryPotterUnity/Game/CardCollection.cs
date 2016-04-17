@@ -77,6 +77,28 @@ namespace HarryPotterUnity.Game
             card.CurrentCollection = this;
         }
 
+        protected void MoveToThisCollection(IEnumerable<BaseCard> cards)
+        {
+            var cardList = cards as IList<BaseCard> ?? cards.ToList();
+
+            var cardCollection = cardList.First().CurrentCollection;
+            var prevCollection = cardList.First().PreviousCollection;
+
+            if (cardList.All(c => c.CurrentCollection.Contains(c) && c.CurrentCollection == cardCollection))
+            {
+                cardCollection.RemoveAll(cardList);
+            }
+            else if (cardList.All(c => c.PreviousCollection != null && c.PreviousCollection.Contains(c)))
+            {
+                prevCollection.RemoveAll(cardList);
+            }
+
+            foreach (var card in cardList)
+            {
+                card.CurrentCollection = this;
+            }
+        }
+
         private bool Contains(BaseCard card)
         {
             return Cards.Contains(card);

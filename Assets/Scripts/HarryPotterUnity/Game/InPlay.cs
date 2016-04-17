@@ -131,31 +131,35 @@ namespace HarryPotterUnity.Game
                     cardPosition = _lessonPositionOffset;
                     cardPosition.x += (position % 3) * _lessonSpacing.x;
                     cardPosition.y -= (int)(position / 3) * _lessonSpacing.y;
+                    cardPosition.z -= (int)(position / 3);
                     break;
                 case Type.Creature:
                     cardPosition = _creaturePositionOffset;
                     cardPosition.x += (position % 4) * _creatureSpacing.x;
                     cardPosition.y -= (int)(position / 4) * _creatureSpacing.y;
+                    cardPosition.z -= (int)(position / 4);
                     break;
                 case Type.Character:
                     cardPosition = _characterPositionOffset;
                     cardPosition.x += (position % 3) * _characterSpacing.x * 0.5f;
-                    cardPosition.z += 1;
+                    cardPosition.z += position;
                     break;
                 case Type.Item:
                 case Type.Location:
                 case Type.Adventure:
                 case Type.Match:
+                    //TODO: Introduce shrink factor here
                     int topRowIndex = Cards.FindAll(c => c.Type.IsTopRow()).IndexOf(card);
                     cardPosition = _topRowPositionOffset;
                     cardPosition.x += (topRowIndex % 9) * _topRowSpacing.x;
+                    cardPosition.z -= topRowIndex;
                     break;
                 default:
                     Log.Error("GetTargetPositionForCard could not identify cardType");
                     break;
             }
 
-            cardPosition.z -= (int)(position / 3);
+            
 
             return cardPosition;
         }
