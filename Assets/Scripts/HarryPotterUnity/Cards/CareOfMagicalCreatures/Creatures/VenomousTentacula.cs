@@ -12,7 +12,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
             return Player.CanUseActions() && Player.Discard.LessonsOfType(LessonTypes.Potions).Any();
         }
 
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             Player.Discard.Add(this);
 

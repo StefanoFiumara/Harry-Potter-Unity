@@ -12,7 +12,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
                 && Player.IsLocalPlayer;
         }
 
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             var cardsInHand = Player.Hand.Cards.ToList();
             int cardCount = cardsInHand.Count;

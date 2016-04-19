@@ -13,7 +13,7 @@ namespace HarryPotterUnity.Cards.Characters
                    Player.IsLocalPlayer;
         }
 
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             var firstLesson = Player.Hand.Lessons.First();
             var secondLesson = Player.Hand.Lessons.Last();

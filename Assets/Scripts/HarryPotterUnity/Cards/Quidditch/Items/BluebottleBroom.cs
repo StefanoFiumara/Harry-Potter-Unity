@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 {
     public class BluebottleBroom : ItemLessonProvider
     {
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             var card = Player.Discard.GetHealableCards().FirstOrDefault();
 

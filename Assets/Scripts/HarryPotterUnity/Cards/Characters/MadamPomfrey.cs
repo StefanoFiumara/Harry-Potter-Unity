@@ -14,7 +14,7 @@ namespace HarryPotterUnity.Cards.Characters
                 && Player.IsLocalPlayer;
         }
 
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             HasUsedAbility = true;
 

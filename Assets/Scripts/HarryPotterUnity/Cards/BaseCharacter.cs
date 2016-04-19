@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Cards
             return false;
         }
 
-        public virtual void OnSelectedAction(List<BaseCard> targets = null) { }
+        public virtual void OnInPlayAction(List<BaseCard> targets = null) { }
         public virtual void OnInPlayBeforeTurnAction() { }
         public virtual void OnInPlayAfterTurnAction() { }
         public virtual void OnEnterInPlayAction() { }

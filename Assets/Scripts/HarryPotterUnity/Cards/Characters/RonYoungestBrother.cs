@@ -11,7 +11,7 @@ namespace HarryPotterUnity.Cards.Characters
                 && Player.CanUseActions();
         }
 
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             for (int i = 0; i < 5; i++)
             {

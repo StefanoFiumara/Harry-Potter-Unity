@@ -262,7 +262,7 @@ namespace HarryPotterUnity.Game
             }
             
             Log.Write("Player {0} Activates {1}'s effect", card.Player.NetworkId + 1, card.CardName);
-            persistentCard.OnSelectedAction();
+            persistentCard.OnInPlayAction();
         }
 
         [PunRPC, UsedImplicitly]
@@ -318,7 +318,7 @@ namespace HarryPotterUnity.Game
                 return;
             }
 
-            persistentCard.OnSelectedAction(selectedCards);
+            persistentCard.OnInPlayAction(selectedCards);
         }
 
         [PunRPC, UsedImplicitly]

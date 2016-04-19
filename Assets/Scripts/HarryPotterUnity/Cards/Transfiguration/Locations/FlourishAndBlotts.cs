@@ -13,7 +13,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
                    player.InPlay.Lessons.Count >= 2;
         }
 
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             var player = Player.CanUseActions() ? Player : Player.OppositePlayer;
 

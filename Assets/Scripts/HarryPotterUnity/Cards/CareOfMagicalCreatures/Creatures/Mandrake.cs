@@ -13,7 +13,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
         }
 
         //TODO: Test this
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             Player.Discard.Add(this);
 

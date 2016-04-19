@@ -5,7 +5,7 @@ namespace HarryPotterUnity.Cards.Charms.Items
 {
     public class BrokenWand : ItemLessonProvider
     {
-        public override void OnSelectedAction(List<BaseCard> targets = null)
+        public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             var card = Player.Deck.TakeTopCard();
 
