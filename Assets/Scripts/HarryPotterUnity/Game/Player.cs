@@ -57,7 +57,7 @@ namespace HarryPotterUnity.Game
         
         public delegate void TurnEvents();
         public delegate void CardPlayedEvent(BaseCard card, List<BaseCard> targets = null);
-        public delegate void DamageTakenEvent(BaseCard sourceCard, int amount);
+        public delegate void DamageTakenEvent(BaseCard source, int amount);
 
         public event TurnEvents OnNextTurnStart;
         public event TurnEvents OnTurnStart;
