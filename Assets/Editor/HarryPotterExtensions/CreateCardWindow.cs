@@ -78,6 +78,9 @@ namespace HarryPotterExtensions
                 AddChosenComponents(request, card);
 
                 TryCreatePrefab(request, card);
+
+                //remove card from scene here
+                DestroyImmediate(card);
             }
             catch (Exception e)
             {
@@ -195,10 +198,10 @@ namespace HarryPotterExtensions
             }
 
             Object empty = PrefabUtility.CreateEmptyPrefab(newPrefabAssetPath);
-            card = PrefabUtility.ReplacePrefab(card, empty);
+            var newPrefab = PrefabUtility.ReplacePrefab(card, empty);
 
             Selection.activeObject = AssetDatabase.LoadMainAssetAtPath(newPrefabAssetPath);
-            EditorGUIUtility.PingObject(card);
+            EditorGUIUtility.PingObject(newPrefab);
             EditorUtility.FocusProjectWindow();
         }
 
