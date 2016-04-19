@@ -8,9 +8,12 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
     {
         public override void OnSelectedAction(List<BaseCard> targets = null)
         {
-            var card = Player.Discard.GetHealableCards(1).Single();
-            
-            Player.Deck.Add(card);
+            var card = Player.Discard.GetHealableCards().FirstOrDefault();
+
+            if (card != null)
+            {
+                Player.Deck.Add(card);
+            }
 
             Player.UseActions();
         }

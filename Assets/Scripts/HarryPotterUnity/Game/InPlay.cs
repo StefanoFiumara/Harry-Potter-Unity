@@ -148,10 +148,11 @@ namespace HarryPotterUnity.Game
                 case Type.Location:
                 case Type.Adventure:
                 case Type.Match:
-                    //TODO: Introduce shrink factor here
+                    //TODO: Test this
                     int topRowIndex = Cards.FindAll(c => c.Type.IsTopRow()).IndexOf(card);
+                    float shrinkFactor = topRowIndex >= 5 ? 0.5f : 1f;
                     cardPosition = _topRowPositionOffset;
-                    cardPosition.x += (topRowIndex % 9) * _topRowSpacing.x;
+                    cardPosition.x += topRowIndex * _topRowSpacing.x * shrinkFactor;
                     cardPosition.z -= topRowIndex;
                     break;
                 default:

@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Game;
+﻿using System.Linq;
+using HarryPotterUnity.Game;
 
 namespace HarryPotterUnity.Cards.Quidditch.Matches
 {
@@ -6,7 +7,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Matches
     {
         protected override void OnPlayerHasWonMatch(Player winner, Player loser)
         {
-            var cards = winner.Discard.GetHealableCards(15);
+            var cards = winner.Discard.GetHealableCards().Take(15);
 
             winner.Deck.AddAll(cards);
             winner.Deck.Shuffle();

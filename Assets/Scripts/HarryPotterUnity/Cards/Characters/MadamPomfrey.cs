@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace HarryPotterUnity.Cards.Characters
 {
@@ -17,7 +18,7 @@ namespace HarryPotterUnity.Cards.Characters
         {
             HasUsedAbility = true;
 
-            var cards = Player.Discard.GetHealableCards(12);
+            var cards = Player.Discard.GetHealableCards().Take(12);
 
             Player.Deck.AddAll(cards);
 
