@@ -169,13 +169,6 @@ namespace HarryPotterUnity.Cards
 
         }
 
-        private bool IsActivatable()
-        {
-            return State == State.InPlay 
-                && ((IPersistentCard) this).CanPerformInPlayAction()
-                && GetInPlayActionTargets().Count > 0;
-        }
-
         public void OnMouseExit()
         {
             HidePreview();
@@ -211,7 +204,15 @@ namespace HarryPotterUnity.Cards
 
             _outline.SetActive(false);
         }
-        
+
+        private bool IsActivatable()
+        {
+            return State == State.InPlay 
+                   && Player.IsLocalPlayer
+                   && ((IPersistentCard) this).CanPerformInPlayAction()
+                   && GetInPlayActionTargets().Count > 0;
+        }
+
         private bool IsPlayableFromHand()
         {            
             bool meetsPlayRequirements = PlayRequirements.Count == 0 ||
