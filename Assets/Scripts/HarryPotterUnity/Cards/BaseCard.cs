@@ -171,8 +171,9 @@ namespace HarryPotterUnity.Cards
 
         private bool IsActivatable()
         {
-            return State == State.InPlay &&
-                   ((IPersistentCard) this).CanPerformInPlayAction();
+            return State == State.InPlay 
+                && ((IPersistentCard) this).CanPerformInPlayAction()
+                && GetInPlayActionTargets().Count > 0;
         }
 
         public void OnMouseExit()
