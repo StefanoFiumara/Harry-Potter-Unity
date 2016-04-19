@@ -38,8 +38,14 @@ namespace HarryPotterUnity.UI.Menu
                 {
                     if (card is ILessonProvider)
                     {
-                        //TODO: Update player hud lessons panel, should this be an InPlayEvent? OnCardEnteredPlay, OnCardExitedPlay
-                        //BUG: Need to update this panel when a lesson is removed
+                        UpdateLessonPanel();
+                    }
+                };
+
+                _localPlayer.InPlay.OnCardExitedPlay += card =>
+                {
+                    if (card is ILessonProvider)
+                    {
                         UpdateLessonPanel();
                     }
                 };
@@ -56,7 +62,7 @@ namespace HarryPotterUnity.UI.Menu
 
         private void UpdateLessonPanel()
         {
-            
+            //TODO: Update player hud lessons panel
         }
 
         public Player RemotePlayer

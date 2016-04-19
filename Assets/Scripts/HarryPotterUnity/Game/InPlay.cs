@@ -33,6 +33,12 @@ namespace HarryPotterUnity.Game
         public event CardEnteredPlayEvent OnCardEnteredPlay;
         public event CardExitedPlayEvent  OnCardExitedPlay;
 
+        private void OnDestroy()
+        {
+            OnCardEnteredPlay = null;
+            OnCardExitedPlay = null;
+        }
+
         public override void Add(BaseCard card)
         {
             Cards.Add(card);

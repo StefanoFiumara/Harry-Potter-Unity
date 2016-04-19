@@ -19,6 +19,11 @@ namespace HarryPotterUnity.Game
 
         public event Action<Player> OnDeckIsOutOfCards;
 
+        private void OnDestroy()
+        {
+            OnDeckIsOutOfCards = null;
+        }
+
         private void Awake()
         {
             _player = transform.GetComponentInParent<Player>();
