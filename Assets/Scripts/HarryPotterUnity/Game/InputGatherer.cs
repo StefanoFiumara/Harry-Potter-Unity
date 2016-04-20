@@ -64,7 +64,7 @@ namespace HarryPotterUnity.Game
         {
             int inputRequired = GetInputRequired();
 
-            if (_fromHandInputRequired <= 0) throw new Exception("_inputRequired field is not set or set to a negative value!");
+            if (inputRequired <= 0) throw new Exception("Input required field is not set or set to a negative value!");
 
             var selectedCards = new List<BaseCard>();
 

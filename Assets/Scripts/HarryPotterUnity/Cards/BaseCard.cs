@@ -210,7 +210,7 @@ namespace HarryPotterUnity.Cards
             return State == State.InPlay 
                    && Player.IsLocalPlayer
                    && ((IPersistentCard) this).CanPerformInPlayAction()
-                   && GetInPlayActionTargets().Count > 0;
+                   && GetInPlayActionTargets().Count >= _fromHandActionInputRequired;
         }
 
         private bool IsPlayableFromHand()

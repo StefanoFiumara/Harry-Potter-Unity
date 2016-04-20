@@ -319,6 +319,12 @@ namespace HarryPotterUnity.Game
             }
 
             persistentCard.OnInPlayAction(selectedCards);
+
+            card.Player.EnableAllCards();
+            card.Player.ClearHighlightComponent();
+
+            card.Player.OppositePlayer.EnableAllCards();
+            card.Player.OppositePlayer.ClearHighlightComponent();
         }
 
         [PunRPC, UsedImplicitly]
