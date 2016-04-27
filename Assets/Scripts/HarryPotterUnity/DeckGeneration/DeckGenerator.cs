@@ -73,7 +73,7 @@ namespace HarryPotterUnity.DeckGeneration
             return character;
         }
 
-        public static IEnumerable<BaseCard> GenerateDeck(List<LessonTypes> types)
+        public static List<BaseCard> GenerateDeck(List<LessonTypes> types)
         {
             var deck = new List<BaseCard>();
 
@@ -105,6 +105,42 @@ namespace HarryPotterUnity.DeckGeneration
             {
                 Log.Error("Deck did not initialize with the correct amount of cards, deck.count = {0}", deck.Count);
             }
+            return deck;
+        }
+
+        public static List<BaseCard> GenerateDeck(List<BaseCard> prebuiltDeck, List<LessonTypes> types)
+        {
+            var deck = prebuiltDeck.ToList();
+
+            switch (types.Count)
+            {
+                case 2:
+                    AddLessonsToDeck(ref deck, types[0], 13);
+                    AddLessonsToDeck(ref deck, types[1], 10);
+
+                    AddSupportCharacters(ref deck, 1);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 19 - (prebuiltDeck.Count / 2));
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 17 - (prebuiltDeck.Count / 2));
+                    break;
+                case 3:
+                    AddLessonsToDeck(ref deck, types[0], 12);
+                    AddLessonsToDeck(ref deck, types[1], 6);
+                    AddLessonsToDeck(ref deck, types[2], 5);
+
+                    AddSupportCharacters(ref deck, 1);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 12 - (prebuiltDeck.Count / 3));
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 12 - (prebuiltDeck.Count / 3));
+                    AddCardsToDeck(ref deck, types[2].ToClassification(), 12 - (prebuiltDeck.Count / 3));
+                    break;
+                default:
+                    throw new Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
+            }
+
+            if (deck.Count != 60)
+            {
+                Log.Warning("Generate Deck with Prebuilt Deck finished with CardCount = {0}", deck.Count);
+            }
+
             return deck;
         }
 

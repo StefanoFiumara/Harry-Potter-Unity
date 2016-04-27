@@ -52,7 +52,7 @@ namespace HarryPotterUnity.Game
 
                 Cards[i].Player = _player;
 
-                Cards[i].NetworkId = GameManager._networkIdCounter++;
+                Cards[i].NetworkId = GameManager.NetworkIdCounter++;
                 
                 GameManager.AllCards.Add(Cards[i]);
 
@@ -70,7 +70,7 @@ namespace HarryPotterUnity.Game
 
             StartingCharacter.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
 
-            StartingCharacter.NetworkId = GameManager._networkIdCounter++;
+            StartingCharacter.NetworkId = GameManager.NetworkIdCounter++;
             
             GameManager.AllCards.Add(StartingCharacter);
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Tween;
 using HarryPotterUnity.UI.Camera;
@@ -14,16 +15,30 @@ namespace HarryPotterUnity.Game
         public const int IGNORE_RAYCAST_LAYER = 2;
         public const int DECK_LAYER = 12;
 
-        public static byte _networkIdCounter;
-        
-        public static readonly List<BaseCard> AllCards = new List<BaseCard>(); 
+        public static byte NetworkIdCounter { get; set; }
+
+        public static readonly List<BaseCard> AllCards = new List<BaseCard>();
 
         public static readonly PreviewCamera PreviewCamera = GameObject.Find("Preview Camera").GetComponent<PreviewCamera>();
-        
+
         public static readonly TweenQueue TweenQueue = new TweenQueue();
 
-        public static PhotonView Network;
+        public static PhotonView Network { get; set; }
         
+        public static bool DebugModeEnabled { get; set; }
+
+        public static List<GameObject> Player1Deck { private get; set; }
+        public static List<GameObject> Player2Deck { private get; set; }
+
+        public static List<BaseCard> GetPlayerTestDeck(int playerId)
+        {
+            var prefabList = playerId == 0
+                ? Player1Deck
+                : Player2Deck;
+
+            return prefabList.Select(o => o.GetComponent<BaseCard>()).ToList();
+        }
+
         public static void DisableCards(List<BaseCard> cards)
         {
             cards.ForEach(card => card.Disable());

@@ -88,7 +88,20 @@ namespace HarryPotterUnity.Game
 
         public void InitDeck(List<LessonTypes> selectedLessons)
         {
-            Deck.Initialize( DeckGenerator.GenerateDeck(selectedLessons), DeckGenerator.GetRandomCharacter() );
+            List<BaseCard> cards;
+
+            if (GameManager.DebugModeEnabled)
+            {
+                //TODO: Test Debug Mode Functionality
+                var prebuiltCards = GameManager.GetPlayerTestDeck(NetworkId);
+                cards = DeckGenerator.GenerateDeck(prebuiltCards, selectedLessons);
+            }
+            else
+            {
+                cards = DeckGenerator.GenerateDeck(selectedLessons);
+            }
+
+            Deck.Initialize( cards, DeckGenerator.GetRandomCharacter() );
         }
 
         /// <summary>

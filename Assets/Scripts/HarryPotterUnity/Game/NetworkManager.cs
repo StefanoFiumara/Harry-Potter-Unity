@@ -202,7 +202,7 @@ namespace HarryPotterUnity.Game
             var p1SelectedLessons = p1LessonsBytes.Select(n => (LessonTypes) n).ToList();
             var p2SelectedLessons = p2LessonsBytes.Select(n => (LessonTypes) n).ToList();
 
-            GameManager._networkIdCounter = 0;
+            GameManager.NetworkIdCounter = 0;
             GameManager.AllCards.Clear();
 
             DeckGenerator.ResetStartingCharacterPool();

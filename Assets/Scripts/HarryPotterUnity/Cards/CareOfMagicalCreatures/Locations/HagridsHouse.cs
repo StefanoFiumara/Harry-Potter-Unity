@@ -20,8 +20,6 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Locations
             {
                 requirement.ReturnToHand = true;
             }
-
-
         }
 
         public override void OnExitInPlayAction()
