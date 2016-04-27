@@ -218,9 +218,13 @@ namespace HarryPotterUnity.Game
             _player1.Deck.SpawnStartingCharacter();
             _player2.Deck.SpawnStartingCharacter();
 
-            _player1.Deck.Shuffle();
-            _player2.Deck.Shuffle();
-
+            if (GameManager.DebugModeEnabled == false)
+            {
+                //Leave the decks in predictable order when Debug Mode is enabled
+                _player1.Deck.Shuffle();
+                _player2.Deck.Shuffle();
+            }
+            
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
