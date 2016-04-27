@@ -14,7 +14,6 @@ namespace HarryPotterUnity.Game
     [UsedImplicitly]
     public class Player : MonoBehaviour
     {
-
         public Player OppositePlayer { get; set; }
         public Hand Hand { get; private set; }
         public Deck Deck { get; private set; }

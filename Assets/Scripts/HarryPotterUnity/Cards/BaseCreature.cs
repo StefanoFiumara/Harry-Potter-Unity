@@ -21,7 +21,6 @@ namespace HarryPotterUnity.Cards
         protected Text _attackLabel;
         
         public int DamagePerTurn { get { return _damagePerTurn; } }
-        public int Health { get { return _health; } }
 
         public int MaxHealth { get; private set; }
 
