@@ -7,7 +7,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Matches
     {
         protected override void OnPlayerHasWonMatch(Player winner, Player loser)
         {
-            var cards = winner.Discard.GetHealableCards().Take(15);
+            var cards = winner.Discard.NonHealingCards.Take(15);
 
             winner.Deck.AddAll(cards);
             winner.Deck.Shuffle();

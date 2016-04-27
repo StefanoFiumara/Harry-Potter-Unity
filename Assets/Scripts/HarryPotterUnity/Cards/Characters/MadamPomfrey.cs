@@ -18,7 +18,7 @@ namespace HarryPotterUnity.Cards.Characters
         {
             HasUsedAbility = true;
 
-            var cards = Player.Discard.GetHealableCards().Take(12);
+            var cards = Player.Discard.NonHealingCards.Take(12);
 
             Player.Deck.AddAll(cards);
 

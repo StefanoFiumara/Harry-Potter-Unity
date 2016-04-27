@@ -12,11 +12,6 @@ namespace HarryPotterUnity.Game
 {
     public class InPlay : CardCollection
     {
-        public List<BaseCard> CardsExceptStartingCharacter
-        {
-            get { return Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
-        }
-        
         private static readonly Vector3 _lessonPositionOffset = new Vector3(-255f, -60f, 15f);
         private static readonly Vector3 _topRowPositionOffset = new Vector3(-255f, 0f, 15f);
         private static readonly Vector3 _creaturePositionOffset = new Vector3(5f, -60f, 15f);

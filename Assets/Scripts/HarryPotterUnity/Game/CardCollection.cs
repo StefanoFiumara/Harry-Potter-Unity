@@ -50,6 +50,16 @@ namespace HarryPotterUnity.Game
         {
             get { return Cards.Where(c => c.Type == Type.Character).ToList(); }
         }
+
+        public List<BaseCard> NonHealingCards
+        {
+            get { return Cards.Where(c => c.HasTag(Tag.Healing) == false).ToList(); }
+        }
+
+        public List<BaseCard> CardsExceptStartingCharacter
+        {
+            get { return Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
+        }
         #endregion
 
         public abstract void Add(BaseCard card);

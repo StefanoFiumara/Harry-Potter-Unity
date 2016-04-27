@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
     {
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var card = Player.Discard.GetHealableCards().FirstOrDefault();
+            var card = Player.Discard.NonHealingCards.FirstOrDefault();
 
             if (card != null)
             {
