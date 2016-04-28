@@ -4191,13 +4191,13 @@ MonoBehaviour:
   - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
   - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
   _player2Deck:
-  - {fileID: 120504, guid: 7005c58a99f17504db87d68bd96947ba, type: 2}
   - {fileID: 184820, guid: a8479b8a98571eb48abb56ff9288436f, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
+  - {fileID: 108926, guid: 826d72b1ae9f2be4e973b5215a8bd92c, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
 --- !u!4 &1413583626
 Transform:
   m_ObjectHideFlags: 0
