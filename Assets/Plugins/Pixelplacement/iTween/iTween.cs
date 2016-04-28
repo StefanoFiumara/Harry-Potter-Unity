@@ -8056,7 +8056,7 @@ public class iTween : MonoBehaviour
             }
             else
             {
-                Debug.LogError("iTween Error: Callback method references must be passed as a String! (or action! --Fano)");
+                Debug.LogError("iTween Error: Callback method references must be passed as a String! (or Action! --Fano)");
                 Destroy(this);
             }
         }

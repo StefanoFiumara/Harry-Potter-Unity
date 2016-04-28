@@ -2,13 +2,12 @@
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
 using HarryPotterUnity.Tween;
-using HarryPotterUnity.Utils;
 using UnityEngine;
 
 namespace HarryPotterUnity.Cards
 {
-    public abstract class BaseSpell : BaseCard {
-
+    public abstract class BaseSpell : BaseCard
+    {
         private static readonly Vector3 _spellOffset = new Vector3(0f, 0f, -400f);
 
         protected sealed override void OnPlayFromHandAction(List<BaseCard> targets)
