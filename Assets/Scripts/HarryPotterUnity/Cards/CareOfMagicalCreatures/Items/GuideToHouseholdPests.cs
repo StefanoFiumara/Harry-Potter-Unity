@@ -20,7 +20,6 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Items
                    && Player.CanUseActions();
         }
 
-        //TODO: Test this
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             if (targets != null)
