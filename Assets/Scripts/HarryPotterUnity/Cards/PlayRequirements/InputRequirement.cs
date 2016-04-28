@@ -1,4 +1,5 @@
-﻿using HarryPotterUnity.Game;
+﻿using HarryPotterUnity.Enums;
+using HarryPotterUnity.Game;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -28,8 +29,16 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public bool MeetsRequirement()
         {
-            //TODO: Need to check whether this needs to check the FromHandActionTargets or the InPlayActionTargets!
-            return _cardInfo.GetFromHandActionTargets().Count >= _fromHandActionInputRequired;
+            switch (_cardInfo.State)
+            {
+                case State.InHand:
+                    return _cardInfo.GetFromHandActionTargets().Count >= _fromHandActionInputRequired;
+                case State.InPlay:
+                    return _cardInfo.GetInPlayActionTargets().Count >= _inPlayActionInputRequired;
+            }
+
+            return false;
+
         }
 
         public void OnRequirementMet() { }

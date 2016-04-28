@@ -110,7 +110,7 @@ namespace HarryPotterUnity.DeckGeneration
 
         public static List<BaseCard> GenerateDeck(List<BaseCard> prebuiltDeck, List<LessonTypes> types)
         {
-            var deck = prebuiltDeck.ToList();
+            var deck = new List<BaseCard>();
 
             switch (types.Count)
             {
@@ -140,6 +140,8 @@ namespace HarryPotterUnity.DeckGeneration
             {
                 Log.Warning("Generate Deck with Prebuilt Deck finished with CardCount = {0}", deck.Count);
             }
+
+            deck.AddRange(prebuiltDeck);
 
             return deck;
         }

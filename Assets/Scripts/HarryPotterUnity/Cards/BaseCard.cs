@@ -25,7 +25,7 @@ namespace HarryPotterUnity.Cards
         [SerializeField, EnumFlags]
         [UsedImplicitly] private Tag _tags; 
         
-        public State State { private get; set; }
+        public State State { get; set; }
         public ClassificationTypes Classification { get { return _classification; } set { _classification = value; } }
 
         public Type Type { get { return GetCardType(); } }

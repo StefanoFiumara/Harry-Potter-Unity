@@ -88,10 +88,6 @@ namespace HarryPotterUnity.Game
 
             Log.Write("New Player has Connected, Starting Game...");
             photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
-
-            //TODO: Load new scene here instead?
-            //PhotonNetwork.automaticallySyncScene = true;
-            //PhotonNetwork.LoadLevel("GameScene");
         }
         
         [UsedImplicitly]
@@ -218,9 +214,9 @@ namespace HarryPotterUnity.Game
             _player1.Deck.SpawnStartingCharacter();
             _player2.Deck.SpawnStartingCharacter();
 
+            //Shuffle after drawing the initial hand if debug mode is enabled
             if (GameManager.DebugModeEnabled == false)
             {
-                //Leave the decks in predictable order when Debug Mode is enabled
                 _player1.Deck.Shuffle();
                 _player2.Deck.Shuffle();
             }
@@ -228,13 +224,18 @@ namespace HarryPotterUnity.Game
             _player1.DrawInitialHand();
             _player2.DrawInitialHand();
 
+            if (GameManager.DebugModeEnabled)
+            {
+                _player1.Deck.Shuffle();
+                _player2.Deck.Shuffle();
+            }
             _player1.BeginTurn();
         }
         
         [PunRPC, UsedImplicitly]
         public void ExecutePlayActionById(byte id)
         {
-            BaseCard card = GameManager.AllCards.Find(c => c.NetworkId == id);
+            var card = GameManager.AllCards.Find(c => c.NetworkId == id);
 
             if (card == null)
             {   

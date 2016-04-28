@@ -91,7 +91,6 @@ namespace HarryPotterUnity.Game
 
             if (GameManager.DebugModeEnabled)
             {
-                //TODO: Test Debug Mode Functionality
                 var prebuiltCards = GameManager.GetPlayerTestDeck(NetworkId);
                 cards = DeckGenerator.GenerateDeck(prebuiltCards, selectedLessons);
             }
