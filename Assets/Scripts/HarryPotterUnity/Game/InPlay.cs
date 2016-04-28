@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Game
         private static readonly Vector2 _lessonSpacing = new Vector2(80f, 15f);
         private static readonly Vector2 _topRowSpacing = new Vector2(80f, 0f);
         private static readonly Vector2 _creatureSpacing = new Vector2(80f, 55f);
-        private static readonly Vector2 _characterSpacing = new Vector2(80f, 0f);
+        private static readonly Vector2 _characterSpacing = new Vector2(80f, 27f);
 
         public delegate void CardEnteredPlayEvent(BaseCard card);
         public delegate void CardExitedPlayEvent(BaseCard card);
@@ -142,8 +142,16 @@ namespace HarryPotterUnity.Game
                     break;
                 case Type.Character:
                     cardPosition = _characterPositionOffset;
-                    cardPosition.x += (position % 3) * _characterSpacing.x * 0.5f;
-                    cardPosition.z += position;
+                    cardPosition.x += (position % 2) * _characterSpacing.x * 0.5f;
+                    cardPosition.y -= (int) (position/2)*_characterSpacing.y;
+
+                    int zPosOffset = 2*(position/2);
+                    if (position%2 == 1)
+                    {
+                        zPosOffset -= 2;
+                    }
+
+                    cardPosition.z -= zPosOffset;
                     break;
                 case Type.Item:
                 case Type.Location:
