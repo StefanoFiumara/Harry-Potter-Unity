@@ -8,7 +8,6 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
     {
         private readonly List<BaseCard> _enemyCreatures = new List<BaseCard>();
 
-        //TODO: Test this
         public override void OnInPlayBeforeTurnAction()
         {
             foreach (var creature in _enemyCreatures.Cast<BaseCreature>())
