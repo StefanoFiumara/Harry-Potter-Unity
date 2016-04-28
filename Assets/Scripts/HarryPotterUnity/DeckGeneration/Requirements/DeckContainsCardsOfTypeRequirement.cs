@@ -13,8 +13,8 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
 
         public bool MeetsRequirement(List<BaseCard> currentDeck)
         {
-            var valid = currentDeck.Any(c => c.Type == _cardType);
-            return valid; //TODO: Ensure this Requirement is working
+            return currentDeck.Any(c => c.Type == _cardType);
+            
         }
     }
 }
