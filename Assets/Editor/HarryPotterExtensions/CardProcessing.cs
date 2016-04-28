@@ -13,18 +13,21 @@ namespace HarryPotterExtensions
         /// Template for applying changes to all card objects in the library
         /// </summary>
         [UsedImplicitly]
-        //[MenuItem("Harry Potter TCG/Find HandLimitRequirement")]
+        [MenuItem("Harry Potter TCG/Find Requirement")]
         public static void DoWork()
         {
-            
-            //var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
 
-            //foreach (string path in assetFolderPaths)
-            //{
-            //    var obj = (GameObject)AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
+            var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
 
-            //    //do stuff
-            //}
+            foreach (string path in assetFolderPaths)
+            {
+                var obj = (GameObject)AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
+
+                if (obj.GetComponent<DeckDoesNotContainCardWithNameRequirement>() != null)
+                {
+                    Debug.Log(obj.name);
+                }
+            }
         }
     }
 }

@@ -72,14 +72,13 @@ namespace HarryPotterExtensions
             {
                 card.transform.name = request.CardName;
 
-                Material newMaterial = CreateNewMaterial(request);
+                var newMaterial = CreateNewMaterial(request);
                 card.transform.FindChild("Front").gameObject.GetComponent<Renderer>().material = newMaterial;
 
                 AddChosenComponents(request, card);
 
                 TryCreatePrefab(request, card);
 
-                //remove card from scene here
                 DestroyImmediate(card);
             }
             catch (Exception e)
