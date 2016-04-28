@@ -2,8 +2,8 @@
 
 namespace HarryPotterUnity.Cards.Interfaces
 {
-    public interface IPersistentCard {
-
+    public interface IPersistentCard
+    {
         void OnInPlayBeforeTurnAction();
         void OnInPlayAfterTurnAction();
 

@@ -17,9 +17,11 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
         {
             Player.Discard.Add(this);
 
-            var character = Player.Discard.Characters
-                .Where(c => c.HasTag(Tag.Healing))
-                .Skip(Random.Range(0, Player.Discard.Characters.Count))
+            var possibleCharacters = Player.Discard.Characters
+                .Where(c => c.HasTag(Tag.Healing) == false).ToList();
+
+            var character = possibleCharacters
+                .Skip(Random.Range(0, possibleCharacters.Count))
                 .First();
 
             Player.Hand.Add(character);
