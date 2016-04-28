@@ -14,6 +14,8 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
         //TODO: Test This
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
+            Player.Discard.Add(this);
+
             var allCards = Player.Discard.NonHealingCards;
 
             var lessons = allCards.Where(c => c.Type == Type.Lesson);
