@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using UnityEngine;
@@ -26,14 +27,19 @@ namespace HarryPotterUnity.Tween
         
         public void ExecuteTween()
         {
-            iTween.MoveTo(Target, iTween.Hash(
-                        "time", Time,
-                        "delay", Delay,
-                        "position", Position,
-                        "easetype", iTween.EaseType.EaseInOutSine,
-                        "islocal", true,
-                        "oncomplete", OnCompleteCallback
-                        ));
+            var args = iTween.Hash(
+                "time", Time,
+                "delay", Delay,
+                "position", Position,
+                "easetype", iTween.EaseType.EaseInOutSine,
+                "islocal", true);
+
+            if (OnCompleteCallback != null)
+            {
+                args["oncomplete"] = OnCompleteCallback;
+            }
+
+            iTween.MoveTo(Target, args);
 
             RotateAndFlipCard();
         }
