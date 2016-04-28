@@ -4187,12 +4187,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enableDebugMode: 1
   _player1Deck:
-  - {fileID: 174812, guid: 50e967ea59fd21e46ad91d05837a0112, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100000, guid: f407288974040e04f9564845118a7ba5, type: 2}
-  - {fileID: 100004, guid: 9e3cdb6092f258a47a502af6466442f7, type: 2}
+  - {fileID: 158650, guid: fe1b60a249c668143b06f1ca0420399c, type: 2}
+  - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
   - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
   _player2Deck:
   - {fileID: 120504, guid: 7005c58a99f17504db87d68bd96947ba, type: 2}

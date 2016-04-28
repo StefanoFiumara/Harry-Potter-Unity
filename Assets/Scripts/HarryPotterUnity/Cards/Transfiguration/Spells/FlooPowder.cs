@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 namespace HarryPotterUnity.Cards.Transfiguration.Spells
 {
@@ -7,7 +8,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var location = Player.Deck.Locations.Skip(Player.Deck.Locations.Count).FirstOrDefault();
+            var location = Player.Deck.Locations.Skip(Random.Range(0,Player.Deck.Locations.Count)).FirstOrDefault();
 
             if (location != null)
             {
