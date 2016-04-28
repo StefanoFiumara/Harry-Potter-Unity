@@ -12,7 +12,6 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
             return Player.Discard.Characters.Any(c => c.HasTag(Tag.Healing) == false);
         }
 
-        //TODO: Test this
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             Player.Discard.Add(this);
