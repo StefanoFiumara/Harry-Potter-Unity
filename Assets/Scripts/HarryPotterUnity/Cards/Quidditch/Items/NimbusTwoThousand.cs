@@ -35,6 +35,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
             ((IDamageSpell) cardPlayed).DamageAmount += _damageAmount;
         }
 
+        //TODO: Look into turning this into an extension method
         private bool IsQuidditchDamageCard(BaseCard card)
         {
             return card is IDamageSpell &&
