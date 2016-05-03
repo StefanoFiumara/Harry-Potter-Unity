@@ -8,6 +8,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     {
         private bool _hasEffectedTriggered;
 
+        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             _hasEffectedTriggered = false;
