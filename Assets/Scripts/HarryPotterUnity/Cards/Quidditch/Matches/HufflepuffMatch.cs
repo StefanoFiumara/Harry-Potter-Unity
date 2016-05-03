@@ -4,7 +4,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Matches
 {
     public class HufflepuffMatch : BaseMatch
     {
-        protected override void OnPlayerHasWonMatch(Player winner, Player loser)
+        public override void OnPlayerHasWonMatch(Player winner, Player loser)
         {
             for (int i = 0; i < 5; i++)
             {

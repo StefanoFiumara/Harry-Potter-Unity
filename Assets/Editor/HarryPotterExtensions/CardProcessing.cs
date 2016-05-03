@@ -17,17 +17,17 @@ namespace HarryPotterExtensions
         public static void DoWork()
         {
 
-            var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
+            //var assetFolderPaths = AssetDatabase.GetAllAssetPaths().Where(path => path.EndsWith(".prefab") && path.Contains("/Cards/"));
 
-            foreach (string path in assetFolderPaths)
-            {
-                var obj = (GameObject)AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
+            //foreach (string path in assetFolderPaths)
+            //{
+            //    var obj = (GameObject)AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
 
-                //if (obj.GetComponent<DeckDoesNotContainCardWithNameRequirement>() != null)
-                //{
-                //    Debug.Log(obj.name);
-                //}
-            }
+            //    if (obj.GetComponent<DeckDoesNotContainCardWithNameRequirement>() != null)
+            //    {
+            //        Debug.Log(obj.name);
+            //    }
+            //}
         }
     }
 }

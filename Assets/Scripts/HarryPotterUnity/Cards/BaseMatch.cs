@@ -25,7 +25,7 @@ namespace HarryPotterUnity.Cards
         [SerializeField, UsedImplicitly]
         private int _goal;
 
-        protected abstract void OnPlayerHasWonMatch(Player winner, Player loser);
+        public abstract void OnPlayerHasWonMatch(Player winner, Player loser);
 
         protected override void Start()
         {
