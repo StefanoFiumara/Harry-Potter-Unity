@@ -23,10 +23,10 @@ namespace HarryPotterExtensions
             {
                 var obj = (GameObject)AssetDatabase.LoadAssetAtPath(path, typeof(GameObject));
 
-                if (obj.GetComponent<DeckDoesNotContainCardWithNameRequirement>() != null)
-                {
-                    Debug.Log(obj.name);
-                }
+                //if (obj.GetComponent<DeckDoesNotContainCardWithNameRequirement>() != null)
+                //{
+                //    Debug.Log(obj.name);
+                //}
             }
         }
     }
