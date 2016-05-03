@@ -35,6 +35,7 @@ namespace HarryPotterUnity.Game
             
             Cards.Add(card);
 
+            //TODO: Add option to show the card to both players before putting it into the player's hand
             var flipState = _player.IsLocalPlayer ? FlipState.FaceUp : FlipState.FaceDown;
             
             AnimateCardToHand(card, flipState, preview);
