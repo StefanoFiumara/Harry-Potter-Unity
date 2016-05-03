@@ -13,7 +13,7 @@ namespace HarryPotterExtensions
         /// Template for applying changes to all card objects in the library
         /// </summary>
         [UsedImplicitly]
-        [MenuItem("Harry Potter TCG/Find Requirement")]
+        //[MenuItem("Harry Potter TCG/Find Requirement")]
         public static void DoWork()
         {
 
