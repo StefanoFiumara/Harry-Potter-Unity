@@ -12,15 +12,20 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         [UsedImplicitly, SerializeField]
         private int _damageAmount;
 
-        public int DamageAmount
+        public int DamageAmount { get; set; }
+
+        protected override void Start()
         {
-            get { return _damageAmount; }
-            set { _damageAmount = value; }
+            base.Start();
+            DamageAmount = _damageAmount;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.TakeDamage(this, _damageAmount);
+            //TODO: Test intereaction with Hawkshead Formation + Nimbus 2k
+            Player.OppositePlayer.TakeDamage(this, DamageAmount);
+
+            DamageAmount = _damageAmount;
         }
     }
 }
