@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Interfaces;
-using HarryPotterUnity.Enums;
 
 namespace HarryPotterUnity.Cards.Potions.Spells
 {
