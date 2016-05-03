@@ -96,14 +96,13 @@ namespace HarryPotterUnity.Cards
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)
         {
             //BUG: Causes damage to count towards the enemy player when a player plays a card that causes himself to take damage.
-            //probably wont fix...not sure if this ever even happens.
-            var playerDealingDamage = sourceCard.Player;
-
-            if (playerDealingDamage == _player1)
+            var cardOwner = sourceCard.Player;
+            
+            if (cardOwner == _player1)
             {
                 IncreasePlayer1Progress(amount);
             }
-            else if (playerDealingDamage == _player2)
+            else if (cardOwner == _player2)
             {
                 IncreasePlayer2Progress(amount);
             }
