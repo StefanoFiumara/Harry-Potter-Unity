@@ -22,7 +22,6 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            //TODO: Test intereaction with Hawkshead Formation + Nimbus 2k
             Player.OppositePlayer.TakeDamage(this, DamageAmount);
 
             DamageAmount = _damageAmount;

@@ -14,7 +14,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Locations
             return player.CanUseActions();
         }
 
-        //TODO: Test this
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             var player = Player.CanUseActions() ? Player : Player.OppositePlayer;

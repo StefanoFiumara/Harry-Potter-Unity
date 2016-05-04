@@ -30,6 +30,7 @@ GameObject:
   - 114: {fileID: 11450366}
   - 114: {fileID: 11475854}
   - 114: {fileID: 11445988}
+  - 114: {fileID: 11423870}
   m_Layer: 10
   m_Name: BaneberryPotion
   m_TagString: Untagged
@@ -196,6 +197,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 3
   _lessonType: 3
+--- !u!114 &11423870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 156670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0caeccd82450d04cbdf9f1137c9af3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 2
+  _lessonType: 3
+  _returnToHand: 0
 --- !u!114 &11445988
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,8 +225,8 @@ MonoBehaviour:
   _classification: 3
   _rarity: 1
   _tags: 0
-  _damageAmount: 0
-  _canTargetPlayer: 0
+  _damageAmount: 8
+  _canTargetPlayer: 1
 --- !u!114 &11450366
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -235,7 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044252d760427a541a54447a12e253ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fromHandActionInputRequired: 0
+  _fromHandActionInputRequired: 1
   _inPlayActionInputRequired: 0
 --- !u!1001 &100100000
 Prefab:
@@ -243,7 +258,27 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _canTargetPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _damageAmount
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _fromHandActionInputRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _amountRequired
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _lessonType
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 156670}

@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _classification: 2
-  _rarity: 0
+  _rarity: 1
   _tags: 0
   _lessonType: 4
   _amount: 1
@@ -241,6 +241,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: _classification
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _rarity
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

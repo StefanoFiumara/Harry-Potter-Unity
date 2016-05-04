@@ -10,7 +10,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
             return Player.InPlay.Matches.Any() || Player.OppositePlayer.InPlay.Matches.Any();
         }
 
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             var topCard = Player.Deck.TakeTopCard();

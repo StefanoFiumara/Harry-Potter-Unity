@@ -17,21 +17,22 @@ namespace HarryPotterUnity.Cards.Potions.Spells
             LessonTargetCount = 1;
         }
 
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             LessonsFound = 0;
 
-            DamageAmount = 1;
+            DamageAmount = 0;
 
             while (LessonsFound < LessonTargetCount)
             {
-                if (Player.OppositePlayer.Deck.Cards.Count - DamageAmount < 0)
+                int cardIndex = (Player.OppositePlayer.Deck.Cards.Count - 1) - DamageAmount;
+
+                if (cardIndex < 0)
                 {
                     break;
                 }
 
-                var card = Player.OppositePlayer.Deck.Cards[Player.OppositePlayer.Deck.Cards.Count - DamageAmount];
+                var card = Player.OppositePlayer.Deck.Cards[cardIndex];
 
                 if (card is BaseLesson)
                 {

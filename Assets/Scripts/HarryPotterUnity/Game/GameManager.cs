@@ -15,6 +15,8 @@ namespace HarryPotterUnity.Game
         public const int IGNORE_RAYCAST_LAYER = 2;
         public const int DECK_LAYER = 12;
 
+        public static bool IsInputGathererActive { get; set; }
+
         public static byte NetworkIdCounter { get; set; }
 
         public static readonly List<BaseCard> AllCards = new List<BaseCard>();
@@ -27,14 +29,16 @@ namespace HarryPotterUnity.Game
         
         public static bool DebugModeEnabled { get; set; }
 
-        public static List<GameObject> Player1Deck { private get; set; }
-        public static List<GameObject> Player2Deck { private get; set; }
+        public static List<GameObject> Debug_Player1Deck { private get; set; }
+        public static List<GameObject> Debug_Player2Deck { private get; set; }
+        public static GameObject Debug_Player1StartingCharacter { private get; set; }
+        public static GameObject Debug_Player2StartingCharacter { private get; set; }
 
         public static List<BaseCard> GetPlayerTestDeck(int playerId)
         {
             var prefabList = playerId == 0
-                ? Player1Deck
-                : Player2Deck;
+                ? Debug_Player1Deck
+                : Debug_Player2Deck;
 
             return prefabList.Select(o => o.GetComponent<BaseCard>()).ToList();
         }
@@ -47,6 +51,15 @@ namespace HarryPotterUnity.Game
         public static void EnableCards(List<BaseCard> cards)
         {
             cards.ForEach(card => card.Enable());
+        }
+
+        public static BaseCard GetPlayerTestCharacter(int playerId)
+        {
+            var obj = playerId == 0
+                ? Debug_Player1StartingCharacter
+                : Debug_Player2StartingCharacter;
+
+            return obj.GetComponent<BaseCard>();
         }
     }
 }

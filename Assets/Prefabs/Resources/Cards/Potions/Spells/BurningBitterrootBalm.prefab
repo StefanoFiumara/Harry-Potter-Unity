@@ -28,6 +28,7 @@ GameObject:
   - 4: {fileID: 476520}
   - 114: {fileID: 11416026}
   - 114: {fileID: 11421274}
+  - 114: {fileID: 11479714}
   m_Layer: 10
   m_Name: BurningBitterrootBalm
   m_TagString: Untagged
@@ -207,16 +208,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 3
   _rarity: 1
-  _tags: 0
-  _healingAmount: 0
-  _shuffleDeckAfterHeal: 0
+  _tags: 2
+  _healingAmount: 10
+  _shuffleDeckAfterHeal: 1
+--- !u!114 &11479714
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0caeccd82450d04cbdf9f1137c9af3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 1
+  _lessonType: 3
+  _returnToHand: 0
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _healingAmount
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _shuffleDeckAfterHeal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _tags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _lessonType
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _amountRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 172708}

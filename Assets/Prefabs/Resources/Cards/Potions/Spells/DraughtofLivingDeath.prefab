@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 044252d760427a541a54447a12e253ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fromHandActionInputRequired: 0
+  _fromHandActionInputRequired: 1
   _inPlayActionInputRequired: 0
 --- !u!114 &11490356
 MonoBehaviour:
@@ -235,15 +235,27 @@ MonoBehaviour:
   _classification: 3
   _rarity: 2
   _tags: 0
-  _damageAmount: 0
-  _canTargetPlayer: 0
+  _damageAmount: 12
+  _canTargetPlayer: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _damageAmount
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _canTargetPlayer
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _fromHandActionInputRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120516}

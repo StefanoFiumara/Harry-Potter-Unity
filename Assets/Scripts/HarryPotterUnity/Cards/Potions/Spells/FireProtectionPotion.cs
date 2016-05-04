@@ -14,7 +14,6 @@ namespace HarryPotterUnity.Cards.Potions.Spells
             DamageAmount = 3;
         }
 
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             Player.OppositePlayer.TakeDamage(this, DamageAmount);

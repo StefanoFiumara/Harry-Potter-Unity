@@ -10,6 +10,7 @@ GameObject:
   - 4: {fileID: 418240}
   - 114: {fileID: 11414306}
   - 114: {fileID: 11479256}
+  - 114: {fileID: 11476478}
   m_Layer: 10
   m_Name: WeaknessPotion
   m_TagString: Untagged
@@ -194,6 +195,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 7
   _lessonType: 3
+--- !u!114 &11476478
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0caeccd82450d04cbdf9f1137c9af3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 1
+  _lessonType: 3
+  _returnToHand: 0
 --- !u!114 &11479256
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,7 +229,15 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _amountRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _lessonType
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 111218}

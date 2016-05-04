@@ -7,7 +7,6 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
 {
     public class DumbledoresOffice : BaseLocation
     {
-        //TODO: Test this
         public override void OnEnterInPlayAction()
         {
             base.OnEnterInPlayAction();

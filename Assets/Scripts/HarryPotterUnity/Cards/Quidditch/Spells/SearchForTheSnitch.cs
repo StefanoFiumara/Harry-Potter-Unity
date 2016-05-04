@@ -7,7 +7,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
 {
     public class SearchForTheSnitch : BaseSpell
     {
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             var cards =

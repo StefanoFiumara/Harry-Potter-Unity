@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.BasicBehavior;
 using HarryPotterUnity.Cards.Interfaces;
-using HarryPotterUnity.Enums;
+using HarryPotterUnity.Utils;
 
 namespace HarryPotterUnity.Cards.Quidditch.Items
 {
@@ -27,21 +27,14 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 
         private void AddDamageToQuidditchCards(BaseCard cardPlayed, List<BaseCard> targets)
         {
-            if (!IsQuidditchDamageCard(cardPlayed)) return;
+            if (cardPlayed.IsQuidditchDamageCard() == false) return;
             if (_hasEffectedTriggered) return;
 
             _hasEffectedTriggered = true;
 
             ((IDamageSpell) cardPlayed).DamageAmount += _damageAmount;
         }
-
-        //TODO: Look into turning this into an extension method
-        private bool IsQuidditchDamageCard(BaseCard card)
-        {
-            return card is IDamageSpell &&
-                   card.Classification == ClassificationTypes.Quidditch;
-        }
-
+        
         public override void OnExitInPlayAction()
         {
             Player.OnCardPlayed -= AddDamageToQuidditchCards;

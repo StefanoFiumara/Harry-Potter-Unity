@@ -6,7 +6,6 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.PlayRequirements;
 using HarryPotterUnity.Enums;
 using UnityEngine;
-using MonoBehaviour = UnityEngine.MonoBehaviour;
 
 namespace HarryPotterUnity.Game
 {
@@ -21,7 +20,7 @@ namespace HarryPotterUnity.Game
 
         private static int LayerMask
         {
-            get { return 1 << 11; }
+            get { return 1 << GameManager.VALID_CHOICE_LAYER; }
         }
 
         private InputGatherMode GatherMode { get; set; }
@@ -57,6 +56,8 @@ namespace HarryPotterUnity.Game
                 card.gameObject.layer = GameManager.VALID_CHOICE_LAYER;
             }
 
+            GameManager.IsInputGathererActive = true;
+
             StartCoroutine(WaitForPlayerInput());
         }
 
@@ -70,14 +71,13 @@ namespace HarryPotterUnity.Game
 
             while (selectedCards.Count < inputRequired)
             {
-                if (Input.GetKeyDown(KeyCode.Mouse0) && _cardInfo.Player.IsLocalPlayer)
+                if (Input.GetKeyUp(KeyCode.Mouse0) && _cardInfo.Player.IsLocalPlayer)
                 {
                     var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                     RaycastHit hit;
                     if (Physics.Raycast(ray, out hit, 1000f, LayerMask))
                     {
-                        //BUG: If the player clicks on a non-card collider (e.g. the Deck Collider) Will this give a null reference?
                         var target = hit.transform.gameObject.GetComponent<BaseCard>();
                         selectedCards.Add(target);
 
@@ -138,6 +138,8 @@ namespace HarryPotterUnity.Game
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            GameManager.IsInputGathererActive = false;
         }
     }
 }

@@ -4187,20 +4187,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enableDebugMode: 1
   _player1Deck:
-  - {fileID: 184820, guid: a8479b8a98571eb48abb56ff9288436f, type: 2}
-  - {fileID: 116522, guid: c429829353c98ad47911ee539053cc9d, type: 2}
-  - {fileID: 132350, guid: 3a2bb6b542404bc4c907c8e722560d8b, type: 2}
-  - {fileID: 122042, guid: a7b762871c0afe7449bb43ca05abc885, type: 2}
-  - {fileID: 102784, guid: 9de668281ba3347489959ad33c03ec24, type: 2}
-  - {fileID: 101178, guid: 48e1bf03ab3152e4480b0cc85367d3b1, type: 2}
+  - {fileID: 155994, guid: 70523133aed56274ca2d83d4513513bf, type: 2}
+  - {fileID: 126714, guid: cb75a7eaa58f50a4e9a5422032251045, type: 2}
+  - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
+  - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
   _player2Deck:
-  - {fileID: 184820, guid: a8479b8a98571eb48abb56ff9288436f, type: 2}
-  - {fileID: 108926, guid: 826d72b1ae9f2be4e973b5215a8bd92c, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 121896, guid: 8eafc95f11aecd244b5fd4e528e75a05, type: 2}
+  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
+  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
+  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
+  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
+  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
+  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
+  _player1StartingCharacter: {fileID: 132350, guid: 3a2bb6b542404bc4c907c8e722560d8b,
+    type: 2}
+  _player2StartingCharacter: {fileID: 132350, guid: 3a2bb6b542404bc4c907c8e722560d8b,
+    type: 2}
 --- !u!4 &1413583626
 Transform:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
+using HarryPotterUnity.Utils;
 
 namespace HarryPotterUnity.Cards.Quidditch.Spells
 {
@@ -8,7 +9,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     {
         private bool _hasEffectedTriggered;
 
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             _hasEffectedTriggered = false;
@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
 
         private void AddDamageToQuidditchCards(BaseCard card, List<BaseCard> targets)
         {
-            if (!IsQuidditchDamageCard(card)) return;
+            if (card.IsQuidditchDamageCard() == false) return;
             if (_hasEffectedTriggered) return;
 
             _hasEffectedTriggered = true;
@@ -28,11 +28,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
             ((IDamageSpell)card).DamageAmount += 5;
         }
 
-        //TODO: Look into turning this into an extension method
-        private bool IsQuidditchDamageCard(BaseCard card)
-        {
-            return card is IDamageSpell &&
-                   card.Classification == ClassificationTypes.Quidditch;
-        }
+        
     }
 }

@@ -47,6 +47,7 @@ GameObject:
   - 114: {fileID: 11442180}
   - 114: {fileID: 11487632}
   - 114: {fileID: 11427136}
+  - 114: {fileID: 11443734}
   m_Layer: 10
   m_Name: PhoenixTears
   m_TagString: Untagged
@@ -195,9 +196,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _classification: 3
   _rarity: 3
-  _tags: 0
-  _healingAmount: 0
-  _shuffleDeckAfterHeal: 0
+  _tags: 2
+  _healingAmount: 16
+  _shuffleDeckAfterHeal: 1
 --- !u!114 &11442180
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -211,6 +212,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amountRequired: 10
   _lessonType: 3
+--- !u!114 &11443734
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 144574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0caeccd82450d04cbdf9f1137c9af3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _amountRequired: 4
+  _lessonType: 3
+  _returnToHand: 1
 --- !u!114 &11487632
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,7 +244,31 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: _healingAmount
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _shuffleDeckAfterHeal
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _tags
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _amountRequired
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _returnToHand
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: _lessonType
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 144574}

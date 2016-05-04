@@ -5,7 +5,6 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
 {
     public class Defence : BaseSpell
     {
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             //Creature, Spell, Item, Location, Match, Adventure, Character
