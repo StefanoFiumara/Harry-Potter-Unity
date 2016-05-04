@@ -22,12 +22,11 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
             return new List<BaseCard> { Player.Deck.StartingCharacter, Player.OppositePlayer.Deck.StartingCharacter };
         }
 
-        //TODO: Test this
         protected override void SpellAction(List<BaseCard> targets)
         {
             var target = targets.Single();
 
-            if (target.Player.IsLocalPlayer)
+            if (target.Player == Player)
             {
                 Player.Deck.DrawCard();
                 Player.Deck.DrawCard();

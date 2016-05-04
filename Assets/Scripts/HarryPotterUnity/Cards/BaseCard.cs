@@ -162,7 +162,7 @@ namespace HarryPotterUnity.Cards
         {
             ShowPreview();
 
-            if (IsPlayableFromHand() || IsActivatable())
+            if ( (IsPlayableFromHand() || IsActivatable()) && GameManager.IsInputGathererActive == false)
             {
                 _outline.SetActive(true);
             }
@@ -177,7 +177,9 @@ namespace HarryPotterUnity.Cards
 
         public void OnMouseUp()
         {
-            if (_outline.activeSelf == false) return; //Do not call OnMouseUp if cursor has left the object
+            if (_outline.activeSelf == false) return; //Do not call OnMouseDown if cursor has left the object
+
+            if(GameManager.IsInputGathererActive) return; //Player clicked on this card as a target, not to activate its effect.
 
             if(IsActivatable())
             {

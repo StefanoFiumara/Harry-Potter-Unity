@@ -102,6 +102,7 @@ namespace HarryPotterUnity.Game
                 startingCharacter = DeckGenerator.GetRandomCharacter();
             }
 
+            Deck.Initialize( cards, startingCharacter);
         }
 
         /// <summary>
