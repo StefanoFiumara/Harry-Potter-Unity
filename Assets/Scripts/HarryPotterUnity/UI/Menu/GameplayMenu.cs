@@ -14,7 +14,7 @@ namespace HarryPotterUnity.UI.Menu
     {
         private Player _localPlayer;
         private Player _remotePlayer;
-        
+
         public Player LocalPlayer
         {
             private get { return _localPlayer; }
@@ -27,13 +27,13 @@ namespace HarryPotterUnity.UI.Menu
                     _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
                     _skipActionButton.interactable = true;
                 };
-                
-                _localPlayer.OnTurnEnd   += () =>
+
+                _localPlayer.OnTurnEnd += () =>
                 {
                     _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
                     _skipActionButton.interactable = false;
                 };
-                
+
                 _localPlayer.InPlay.OnCardEnteredPlay += card =>
                 {
                     if (card is ILessonProvider)
@@ -51,18 +51,9 @@ namespace HarryPotterUnity.UI.Menu
                 };
 
                 _localPlayer.Deck.OnDeckIsOutOfCards += ShowGameOverMessage;
+
+                UpdateLessonPanel();
             }
-        }
-
-        private void ShowGameOverMessage(Player loser)
-        {
-            //TODO: Show game over message
-            //Unsub from the other game over message here, only show the win/lose based on who died first
-        }
-
-        private void UpdateLessonPanel()
-        {
-            //TODO: Update player hud lessons panel
         }
 
         public Player RemotePlayer
@@ -71,8 +62,10 @@ namespace HarryPotterUnity.UI.Menu
             set
             {
                 _remotePlayer = value;
-                _remotePlayer.OnTurnStart += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
-                _remotePlayer.OnTurnEnd   += () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
+                _remotePlayer.OnTurnStart +=
+                    () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
+                _remotePlayer.OnTurnEnd +=
+                    () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
 
                 _remotePlayer.Deck.OnDeckIsOutOfCards += ShowGameOverMessage;
             }
@@ -89,13 +82,22 @@ namespace HarryPotterUnity.UI.Menu
         private Text _mainMenuTitle;
         private Image _mainMenuBackground;
 
+        private Text _lessonCountLabel;
+
+        private Image _lessonIndicatorCreatures;
+        private Image _lessonIndicatorCharms;
+        private Image _lessonIndicatorTransfiguration;
+        private Image _lessonIndicatorPotions;
+        private Image _lessonIndicatorQuidditch;
+
         protected override void Awake()
         {
             base.Awake();
 
             var allText = FindObjectsOfType<Text>();
+            var allImages = FindObjectsOfType<Image>();
 
-            _mainMenuBackground = FindObjectsOfType<Image>().FirstOrDefault(i => i.name.Contains("MainMenuBackground"));
+            _mainMenuBackground = allImages.FirstOrDefault(i => i.name.Contains("MainMenuBackground"));
             _mainMenuTitle = allText.FirstOrDefault(i => i.name.Contains("MainMenuTitle"));
 
             _actionsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Local"));
@@ -106,13 +108,27 @@ namespace HarryPotterUnity.UI.Menu
 
             _skipActionButton = FindObjectsOfType<Button>().FirstOrDefault(b => b.name.Contains("SkipActionButton"));
 
-            if (_actionsLeftLabelLocal  == null || 
-                _actionsLeftLabelRemote == null || 
-                _cardsLeftLabelLocal    == null || 
-                _cardsLeftLabelRemote   == null || 
-                _mainMenuTitle          == null || 
-                _mainMenuBackground     == null ||
-                _skipActionButton       == null)
+            _lessonCountLabel = allText.FirstOrDefault(t => t.name.Contains("LessonCountLabel"));
+            _lessonIndicatorCreatures = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Creatures"));
+            _lessonIndicatorCharms = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Charms"));
+            _lessonIndicatorTransfiguration =
+                allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Transfiguration"));
+            _lessonIndicatorPotions = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Potions"));
+            _lessonIndicatorQuidditch = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Quidditch"));
+
+            if (_actionsLeftLabelLocal == null ||
+                _actionsLeftLabelRemote == null ||
+                _cardsLeftLabelLocal == null ||
+                _cardsLeftLabelRemote == null ||
+                _mainMenuTitle == null ||
+                _mainMenuBackground == null ||
+                _skipActionButton == null ||
+                _lessonCountLabel == null ||
+                _lessonIndicatorCreatures == null ||
+                _lessonIndicatorCharms == null ||
+                _lessonIndicatorTransfiguration == null ||
+                _lessonIndicatorPotions == null ||
+                _lessonIndicatorQuidditch == null)
             {
                 Log.Error("Could not find all needed HUD elements in gameplay menu, report this error!");
             }
@@ -140,6 +156,25 @@ namespace HarryPotterUnity.UI.Menu
                 _actionsLeftLabelRemote.text = string.Format("Actions Left: {0}", RemotePlayer.ActionsAvailable);
                 _cardsLeftLabelRemote.text = string.Format("Cards Left: {0}", RemotePlayer.Deck.Cards.Count);
             }
+        }
+
+        private void ShowGameOverMessage(Player loser)
+        {
+            //TODO: Test how this function behaves
+            //Unsub from the other game over message here, only show the win/lose based on who died first
+            Log.Write("Player {0} has lost the game.", loser.NetworkId+1);
+        }
+
+        private void UpdateLessonPanel()
+        {
+            //TODO: Test this
+            _lessonCountLabel.text = string.Format("Lesson Power: {0:D2}", LocalPlayer.AmountLessonsInPlay);
+
+            _lessonIndicatorCreatures.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Creatures));
+            _lessonIndicatorCharms.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Charms));
+            _lessonIndicatorTransfiguration.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Transfiguration));
+            _lessonIndicatorPotions.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Potions));
+            _lessonIndicatorQuidditch.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Quidditch));
         }
 
         [UsedImplicitly]
