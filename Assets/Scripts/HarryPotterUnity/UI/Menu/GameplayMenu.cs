@@ -3,6 +3,7 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
+using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -160,23 +161,22 @@ namespace HarryPotterUnity.UI.Menu
 
         private void ShowGameOverMessage(Player loser)
         {
-            //TODO: Test how this function behaves
+            //TODO: Test how this function behaves, show pop up here or use NetworkManager to RPC the event to both players
             //Unsub from the other game over message here, only show the win/lose based on who died first
             Log.Write("Player {0} has lost the game.", loser.NetworkId+1);
         }
 
         private void UpdateLessonPanel()
         {
-            //TODO: Test this
-            _lessonCountLabel.text = string.Format("Lesson Power: {0:D2}", LocalPlayer.AmountLessonsInPlay);
+            _lessonCountLabel.text = LocalPlayer.AmountLessonsInPlay <= 0 ? string.Empty : LocalPlayer.AmountLessonsInPlay.ToString();
 
-            _lessonIndicatorCreatures.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Creatures));
-            _lessonIndicatorCharms.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Charms));
-            _lessonIndicatorTransfiguration.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Transfiguration));
-            _lessonIndicatorPotions.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Potions));
-            _lessonIndicatorQuidditch.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Quidditch));
+            _lessonIndicatorCreatures.color = _lessonIndicatorCreatures.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Creatures) ? 1f : 0f);
+            _lessonIndicatorCharms.color = _lessonIndicatorCharms.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Charms) ? 1f : 0f);
+            _lessonIndicatorTransfiguration.color = _lessonIndicatorTransfiguration.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Transfiguration) ? 1f : 0f);
+            _lessonIndicatorPotions.color = _lessonIndicatorPotions.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Potions) ? 1f : 0f);
+            _lessonIndicatorQuidditch.color = _lessonIndicatorQuidditch.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Quidditch) ? 1f : 0f);
         }
-
+        
         [UsedImplicitly]
         public void SkipAction()
         {

@@ -4,6 +4,7 @@ using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
+using UnityEngine;
 
 namespace HarryPotterUnity.Utils
 {
@@ -18,6 +19,12 @@ namespace HarryPotterUnity.Utils
         {
             return card is IDamageSpell &&
                    card.Classification == ClassificationTypes.Quidditch;
+        }
+
+        public static Color WithAlpha(this Color color, float target)
+        {
+            color.a = target;
+            return color;
         }
     }
 }
