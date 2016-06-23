@@ -169,19 +169,18 @@ namespace HarryPotterUnity.UI.Menu
         private void UpdateLessonPanel()
         {
             _lessonCountLabel.text = LocalPlayer.AmountLessonsInPlay <= 0 ? string.Empty : LocalPlayer.AmountLessonsInPlay.ToString();
-
-            _lessonIndicatorCreatures.color = _lessonIndicatorCreatures.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Creatures) ? 1f : 0f);
-            _lessonIndicatorCharms.color = _lessonIndicatorCharms.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Charms) ? 1f : 0f);
-            _lessonIndicatorTransfiguration.color = _lessonIndicatorTransfiguration.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Transfiguration) ? 1f : 0f);
-            _lessonIndicatorPotions.color = _lessonIndicatorPotions.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Potions) ? 1f : 0f);
-            _lessonIndicatorQuidditch.color = _lessonIndicatorQuidditch.color.WithAlpha(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Quidditch) ? 1f : 0f);
+            _lessonIndicatorCreatures.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Creatures));
+            _lessonIndicatorCharms.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Charms));
+            _lessonIndicatorTransfiguration.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Transfiguration));
+            _lessonIndicatorPotions.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Potions));
+            _lessonIndicatorQuidditch.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Quidditch));
         }
         
         [UsedImplicitly]
         public void SkipAction()
         {
             var player = LocalPlayer.CanUseActions() ? LocalPlayer : RemotePlayer;
-
+            
             if (player.ActionsAvailable == 1)
             {
                 _skipActionButton.interactable = false;
