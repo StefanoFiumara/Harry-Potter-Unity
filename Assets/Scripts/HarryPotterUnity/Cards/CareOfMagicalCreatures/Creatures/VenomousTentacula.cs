@@ -9,7 +9,9 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
     {
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() && Player.Discard.LessonsOfType(LessonTypes.Potions).Any();
+            return Player.CanUseActions() 
+                && Player.IsLocalPlayer
+                && Player.Discard.LessonsOfType(LessonTypes.Potions).Any();
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
