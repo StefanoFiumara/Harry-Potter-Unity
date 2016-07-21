@@ -4534,6 +4534,7 @@ MonoBehaviour:
   _enableDebugMode: 1
   _player1Deck:
   - {fileID: 189382, guid: f00af1531dfff424293e9ed1d44e9b01, type: 2}
+  - {fileID: 189382, guid: f00af1531dfff424293e9ed1d44e9b01, type: 2}
   _player2Deck:
   - {fileID: 189382, guid: f00af1531dfff424293e9ed1d44e9b01, type: 2}
   - {fileID: 189382, guid: f00af1531dfff424293e9ed1d44e9b01, type: 2}
