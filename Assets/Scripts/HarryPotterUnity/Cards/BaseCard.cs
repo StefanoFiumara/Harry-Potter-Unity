@@ -210,7 +210,7 @@ namespace HarryPotterUnity.Cards
         private bool IsActivatable()
         {
             return State == State.InPlay 
-                   && Player.IsLocalPlayer
+                   //&& Player.IsLocalPlayer TODO: Check if this condition should be here
                    && ((IPersistentCard) this).CanPerformInPlayAction()
                    && GetInPlayActionTargets().Count >= _fromHandActionInputRequired;
         }
@@ -219,11 +219,15 @@ namespace HarryPotterUnity.Cards
         {            
             bool meetsPlayRequirements = PlayRequirements.Count == 0 ||
                                      PlayRequirements.All(req => req.MeetsRequirement());
-            
+
+            bool meetsPlayerConstraints = Player.Constraints.Count == 0 ||
+                                          Player.Constraints.All(req => req.MeetsConstraint(this));
+
             return Player.IsLocalPlayer &&
                    State == State.InHand &&
                    Player.CanUseActions(ActionCost) &&
                    meetsPlayRequirements &&
+                   meetsPlayerConstraints &&
                    IsUnique() &&
                    MeetsAdditionalPlayRequirements();
         }

@@ -17,11 +17,11 @@ namespace HarryPotterUnity.Game
         
         public BaseCard StartingCharacter { get; private set; }
 
-        public event Action<Player> OnDeckIsOutOfCards;
+        public event Action<Player> OnDeckIsOutOfCardsEvent;
 
         private void OnDestroy()
         {
-            OnDeckIsOutOfCards = null;
+            OnDeckIsOutOfCardsEvent = null;
         }
 
         private void Awake()
@@ -90,7 +90,7 @@ namespace HarryPotterUnity.Game
 
             if (Cards.Count <= 0)
             {
-                GameOver();
+                GameOver(); //TODO: call OnDeckIsOutOfCards event here
             }
             
             return card;
@@ -102,9 +102,9 @@ namespace HarryPotterUnity.Game
             _player.DisableAllCards();
             _player.OppositePlayer.DisableAllCards();
 
-            if (OnDeckIsOutOfCards != null)
+            if (OnDeckIsOutOfCardsEvent != null)
             {
-                OnDeckIsOutOfCards(_player);
+                OnDeckIsOutOfCardsEvent(_player);
             }
                 
         }

@@ -23,13 +23,13 @@ namespace HarryPotterUnity.UI.Menu
             {
                 _localPlayer = value;
 
-                _localPlayer.OnTurnStart += () =>
+                _localPlayer.OnStartTurnEvent += () =>
                 {
                     _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
                     _skipActionButton.interactable = true;
                 };
 
-                _localPlayer.OnTurnEnd += () =>
+                _localPlayer.OnEndTurnEvent += () =>
                 {
                     _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
                     _skipActionButton.interactable = false;
@@ -51,7 +51,7 @@ namespace HarryPotterUnity.UI.Menu
                     }
                 };
 
-                _localPlayer.Deck.OnDeckIsOutOfCards += ShowGameOverMessage;
+                _localPlayer.Deck.OnDeckIsOutOfCardsEvent += ShowGameOverMessage;
 
                 UpdateLessonPanel();
             }
@@ -63,12 +63,12 @@ namespace HarryPotterUnity.UI.Menu
             set
             {
                 _remotePlayer = value;
-                _remotePlayer.OnTurnStart +=
+                _remotePlayer.OnStartTurnEvent +=
                     () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
-                _remotePlayer.OnTurnEnd +=
+                _remotePlayer.OnEndTurnEvent +=
                     () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
 
-                _remotePlayer.Deck.OnDeckIsOutOfCards += ShowGameOverMessage;
+                _remotePlayer.Deck.OnDeckIsOutOfCardsEvent += ShowGameOverMessage;
             }
         }
 

@@ -4514,7 +4514,7 @@ GameObject:
   - 4: {fileID: 1413583626}
   - 114: {fileID: 1413583625}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameConfiguration
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4531,23 +4531,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d15fed80da6ea7f4b8b629f669650132, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enableDebugMode: 0
+  _enableDebugMode: 1
   _player1Deck:
-  - {fileID: 155994, guid: 70523133aed56274ca2d83d4513513bf, type: 2}
-  - {fileID: 126714, guid: cb75a7eaa58f50a4e9a5422032251045, type: 2}
-  - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
-  - {fileID: 100000, guid: 7f27ebf6e6e7c9649a4da4c02ff1f3b3, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
-  - {fileID: 100000, guid: 718a2f8722fbdd542be52ad1ea855671, type: 2}
+  - {fileID: 189382, guid: f00af1531dfff424293e9ed1d44e9b01, type: 2}
   _player2Deck:
-  - {fileID: 121896, guid: 8eafc95f11aecd244b5fd4e528e75a05, type: 2}
-  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
-  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
-  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
-  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
-  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
-  - {fileID: 100000, guid: c5638dc1853b2454f84cdd0a4d582494, type: 2}
+  - {fileID: 189382, guid: f00af1531dfff424293e9ed1d44e9b01, type: 2}
+  - {fileID: 189382, guid: f00af1531dfff424293e9ed1d44e9b01, type: 2}
   _player1StartingCharacter: {fileID: 132350, guid: 3a2bb6b542404bc4c907c8e722560d8b,
     type: 2}
   _player2StartingCharacter: {fileID: 132350, guid: 3a2bb6b542404bc4c907c8e722560d8b,

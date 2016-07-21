@@ -2,11 +2,11 @@
 using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
+using HarryPotterUnity.Cards.PlayerConstraints;
 using HarryPotterUnity.DeckGeneration;
 using HarryPotterUnity.Enums;
 using JetBrains.Annotations;
 using UnityEngine;
-using UnityLogWrapper;
 using Type = HarryPotterUnity.Enums.Type;
 
 namespace HarryPotterUnity.Game
@@ -47,29 +47,30 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public HashSet<Type> TypeImmunity { get; set; }
+        public HashSet<Type> TypeImmunity { get; private set; }
 
         public int ActionsAvailable { get; private set; }
 
         public bool IsLocalPlayer { get; set; }
         public byte NetworkId { get; set; }
-        
-        public delegate void TurnEvents();
+        public List<IPlayerConstraint> Constraints { get; private set; }
+
+        public delegate void TurnEvent();
         public delegate void CardPlayedEvent(BaseCard card, List<BaseCard> targets = null);
         public delegate void DamageTakenEvent(BaseCard source, int amount);
 
-        public event TurnEvents OnNextTurnStart;
-        public event TurnEvents OnTurnStart;
-        public event TurnEvents OnTurnEnd;
-        public event CardPlayedEvent OnCardPlayed;
+        public event TurnEvent OnNextTurnStart;
+        public event TurnEvent OnStartTurnEvent;
+        public event TurnEvent OnEndTurnEvent;
+        public event CardPlayedEvent OnCardPlayedEvent;
         public event DamageTakenEvent OnDamageTaken;
 
         public void OnDestroy()
         {
             OnNextTurnStart = null;
-            OnTurnStart = null;
-            OnTurnEnd = null;
-            OnCardPlayed = null;
+            OnStartTurnEvent = null;
+            OnEndTurnEvent = null;
+            OnCardPlayedEvent = null;
             OnDamageTaken = null;
         }
 
@@ -83,6 +84,7 @@ namespace HarryPotterUnity.Game
             Discard = transform.GetComponentInChildren<Discard>();
 
             TypeImmunity = new HashSet<Type>();
+            Constraints = new List<IPlayerConstraint>();
         }
 
         public void InitDeck(List<LessonTypes> selectedLessons)
@@ -102,7 +104,7 @@ namespace HarryPotterUnity.Game
                 startingCharacter = DeckGenerator.GetRandomCharacter();
             }
 
-            Deck.Initialize( cards, startingCharacter);
+            Deck.Initialize(cards, startingCharacter);
         }
 
         /// <summary>
@@ -125,7 +127,7 @@ namespace HarryPotterUnity.Game
 
         public void InvokeCardPlayedEvent(BaseCard card, List<BaseCard> targets = null)
         {
-            if (OnCardPlayed != null) OnCardPlayed(card, targets);
+            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
         }
 
         public void BeginTurn()
@@ -136,9 +138,9 @@ namespace HarryPotterUnity.Game
                 OnNextTurnStart = null;
             }
 
-            if (OnTurnStart != null)
+            if (OnStartTurnEvent != null)
             {
-                OnTurnStart();
+                OnStartTurnEvent();
             }
 
             foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
@@ -162,9 +164,9 @@ namespace HarryPotterUnity.Game
 
         private void EndTurn()
         {
-            if (OnTurnEnd != null)
+            if (OnEndTurnEvent != null)
             {
-                OnTurnEnd();
+                OnEndTurnEvent();
             }
             ActionsAvailable = 0;
 
@@ -208,7 +210,6 @@ namespace HarryPotterUnity.Game
 
                 if (card == null)
                 {
-                    Log.Write("Game Over");
                     break;
                 }
                 cards.Add(card);

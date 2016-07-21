@@ -12,11 +12,11 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Locations
         {
             base.OnEnterInPlayAction();
 
-            Player.OnCardPlayed += AddActionOnPlantPlayed;
-            Player.OppositePlayer.OnCardPlayed += AddActionOnPlantPlayed;
+            Player.OnCardPlayedEvent += AddActionOnPlantPlayedEvent;
+            Player.OppositePlayer.OnCardPlayedEvent += AddActionOnPlantPlayedEvent;
         }
 
-        private void AddActionOnPlantPlayed(BaseCard card, List<BaseCard> targets)
+        private void AddActionOnPlantPlayedEvent(BaseCard card, List<BaseCard> targets)
         {
             if (HasEffectActivated == false && card.HasTag(Tag.Plant))
             {
@@ -36,8 +36,8 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Locations
 
             HasEffectActivated = false;
 
-            Player.OnCardPlayed -= AddActionOnPlantPlayed;
-            Player.OppositePlayer.OnCardPlayed -= AddActionOnPlantPlayed;
+            Player.OnCardPlayedEvent -= AddActionOnPlantPlayedEvent;
+            Player.OppositePlayer.OnCardPlayedEvent -= AddActionOnPlantPlayedEvent;
         }
     }
 }

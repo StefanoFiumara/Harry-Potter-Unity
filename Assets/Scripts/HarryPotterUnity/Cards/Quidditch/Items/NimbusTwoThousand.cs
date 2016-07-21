@@ -22,7 +22,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 
         public override void OnEnterInPlayAction()
         {
-            Player.OnCardPlayed += AddDamageToQuidditchCards;
+            Player.OnCardPlayedEvent += AddDamageToQuidditchCards;
         }
 
         private void AddDamageToQuidditchCards(BaseCard cardPlayed, List<BaseCard> targets)
@@ -37,7 +37,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
         
         public override void OnExitInPlayAction()
         {
-            Player.OnCardPlayed -= AddDamageToQuidditchCards;
+            Player.OnCardPlayedEvent -= AddDamageToQuidditchCards;
         }
     }
 }

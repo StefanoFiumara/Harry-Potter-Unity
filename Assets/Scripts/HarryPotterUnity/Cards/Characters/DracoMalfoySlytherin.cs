@@ -9,10 +9,10 @@ namespace HarryPotterUnity.Cards.Characters
 
         public override void OnEnterInPlayAction()
         {
-            Player.OnCardPlayed += AddActionOnItemPlayed;
+            Player.OnCardPlayedEvent += AddActionOnItemPlayedEvent;
         }
 
-        private void AddActionOnItemPlayed(BaseCard card, List<BaseCard> targets)
+        private void AddActionOnItemPlayedEvent(BaseCard card, List<BaseCard> targets)
         {
             if (HasEffectActivated == false && card.Type == Type.Item)
             {
@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Cards.Characters
         {
             HasEffectActivated = false;
 
-            Player.OnCardPlayed -= AddActionOnItemPlayed;
+            Player.OnCardPlayedEvent -= AddActionOnItemPlayedEvent;
         }
 
         public override void OnInPlayAfterTurnAction()

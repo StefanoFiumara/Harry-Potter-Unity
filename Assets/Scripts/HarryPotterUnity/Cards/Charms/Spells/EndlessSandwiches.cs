@@ -11,6 +11,9 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
             while (amountCardsToDraw-- > 0)
             {
+                var card = Player.Deck.TakeTopCard();
+                if (card == null) break;
+
                 cardsToDraw.Add( Player.Deck.TakeTopCard() );
             }
 
