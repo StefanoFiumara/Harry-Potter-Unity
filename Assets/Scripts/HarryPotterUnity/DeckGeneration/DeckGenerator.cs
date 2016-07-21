@@ -84,8 +84,9 @@ namespace HarryPotterUnity.DeckGeneration
                     AddLessonsToDeck(ref deck, types[1], 10);
 
                     AddSupportCharacters(ref deck, 1);
-                    AddCardsToDeck(ref deck, types[0].ToClassification(), 19);
-                    AddCardsToDeck(ref deck, types[1].ToClassification(), 17);
+                    AddAdventures(ref deck, 3);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 17);
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 16);
                     break;
                 case 3:
                     AddLessonsToDeck(ref deck, types[0], 12);
@@ -93,9 +94,10 @@ namespace HarryPotterUnity.DeckGeneration
                     AddLessonsToDeck(ref deck, types[2], 5);
 
                     AddSupportCharacters(ref deck, 1);
-                    AddCardsToDeck(ref deck, types[0].ToClassification(), 12);
-                    AddCardsToDeck(ref deck, types[1].ToClassification(), 12);                   
-                    AddCardsToDeck(ref deck, types[2].ToClassification(), 12);
+                    AddAdventures(ref deck, 3);
+                    AddCardsToDeck(ref deck, types[0].ToClassification(), 11);
+                    AddCardsToDeck(ref deck, types[1].ToClassification(), 11);                   
+                    AddCardsToDeck(ref deck, types[2].ToClassification(), 11);
                     break;
                 default:
                     throw new Exception(types.Count + " type(s) sent to GenerateDeck, unsupported");
@@ -144,6 +146,22 @@ namespace HarryPotterUnity.DeckGeneration
             deck.AddRange(prebuiltDeck);
 
             return deck;
+        }
+
+        private static void AddAdventures(ref List<BaseCard> deck, int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                deck.Add(GetRandomAdventure());
+            }
+        }
+
+        private static BaseCard GetRandomAdventure()
+        {
+            var adventures = CardLibrary.Where(c => c.Classification == ClassificationTypes.Adventure).ToList();
+            var card = adventures.Skip(Random.Range(0, adventures.Count)).First();
+
+            return card;
         }
 
         private static void AddSupportCharacters(ref List<BaseCard> deck, int amount)
