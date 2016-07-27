@@ -9,7 +9,7 @@ namespace HarryPotterUnity.Cards.BasicBehavior
     {
         [Header("Adventure Settings")]
         [SerializeField, UsedImplicitly]
-        protected List<IPlayerConstraint> _constraints = new List<IPlayerConstraint>();
+        protected readonly List<IPlayerConstraint> _constraints = new List<IPlayerConstraint>();
 
         protected abstract void AddConstraints();
 
