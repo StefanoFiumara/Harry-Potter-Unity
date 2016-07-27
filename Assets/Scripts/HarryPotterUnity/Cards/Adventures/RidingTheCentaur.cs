@@ -7,7 +7,7 @@ namespace HarryPotterUnity.Cards.Adventures
         public override void OnInPlayAfterTurnAction()
         {
             Player.TypeImmunity.Add(Type.Creature);
-            Player.OnNextTurnStart += () => Player.TypeImmunity.Remove(Type.Creature);
+            Player.OnNextTurnStartEvent += () => Player.TypeImmunity.Remove(Type.Creature);
         }
 
         protected override bool CanOpponentSolve()

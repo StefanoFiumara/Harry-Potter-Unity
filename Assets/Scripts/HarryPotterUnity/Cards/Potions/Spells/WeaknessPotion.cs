@@ -19,7 +19,7 @@ namespace HarryPotterUnity.Cards.Potions.Spells
             Player.OppositePlayer.TakeDamage(this, DamageAmount);
 
             Player.TypeImmunity.Add(Type.Creature);
-            Player.OnNextTurnStart += () => Player.TypeImmunity.Remove(Type.Creature);
+            Player.OnNextTurnStartEvent += () => Player.TypeImmunity.Remove(Type.Creature);
         }
     }
 }

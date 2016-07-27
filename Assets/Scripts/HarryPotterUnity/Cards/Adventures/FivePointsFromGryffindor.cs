@@ -4,7 +4,7 @@
     {
         public override void OnInPlayAfterTurnAction()
         {
-            Player.OppositePlayer.OnNextTurnStart += () => Player.OppositePlayer.AddActions(-1);
+            Player.OppositePlayer.OnNextTurnStartEvent += () => Player.OppositePlayer.AddActions(-1);
         }
 
         protected override bool CanOpponentSolve()

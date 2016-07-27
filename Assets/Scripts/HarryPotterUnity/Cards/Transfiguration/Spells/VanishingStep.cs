@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.OnNextTurnStart += () => Player.OppositePlayer.AddActions(-1);
+            Player.OppositePlayer.OnNextTurnStartEvent += () => Player.OppositePlayer.AddActions(-1);
         }
     }
 }

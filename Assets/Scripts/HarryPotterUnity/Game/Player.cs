@@ -59,19 +59,19 @@ namespace HarryPotterUnity.Game
         public delegate void CardPlayedEvent(BaseCard card, List<BaseCard> targets = null);
         public delegate void DamageTakenEvent(BaseCard source, int amount);
 
-        public event TurnEvent OnNextTurnStart;
+        public event TurnEvent OnNextTurnStartEvent;
         public event TurnEvent OnStartTurnEvent;
         public event TurnEvent OnEndTurnEvent;
         public event CardPlayedEvent OnCardPlayedEvent;
-        public event DamageTakenEvent OnDamageTaken;
+        public event DamageTakenEvent OnDamageTakenEvent;
 
         public void OnDestroy()
         {
-            OnNextTurnStart = null;
+            OnNextTurnStartEvent = null;
             OnStartTurnEvent = null;
             OnEndTurnEvent = null;
             OnCardPlayedEvent = null;
-            OnDamageTaken = null;
+            OnDamageTakenEvent = null;
         }
 
         public void Awake()
@@ -132,10 +132,10 @@ namespace HarryPotterUnity.Game
 
         public void BeginTurn()
         {
-            if (OnNextTurnStart != null)
+            if (OnNextTurnStartEvent != null)
             {
-                OnNextTurnStart();
-                OnNextTurnStart = null;
+                OnNextTurnStartEvent();
+                OnNextTurnStartEvent = null;
             }
 
             if (OnStartTurnEvent != null)
@@ -217,9 +217,9 @@ namespace HarryPotterUnity.Game
 
             Discard.AddAll(cards);
 
-            if (OnDamageTaken != null && sourceCard != null)
+            if (OnDamageTakenEvent != null && sourceCard != null)
             {
-                OnDamageTaken(sourceCard, cards.Count); 
+                OnDamageTakenEvent(sourceCard, cards.Count); 
             }
         }
         

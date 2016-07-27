@@ -14,7 +14,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
             _hasEffectedTriggered = false;
             Player.OnCardPlayedEvent += AddDamageToQuidditchCards;
 
-            Player.OnNextTurnStart += () => Player.OnCardPlayedEvent -= AddDamageToQuidditchCards;
+            Player.OnNextTurnStartEvent += () => Player.OnCardPlayedEvent -= AddDamageToQuidditchCards;
 
         }
 

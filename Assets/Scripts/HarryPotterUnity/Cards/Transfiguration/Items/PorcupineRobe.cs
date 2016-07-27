@@ -20,12 +20,12 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
 
         public override void OnEnterInPlayAction()
         {
-            Player.OnDamageTaken += CountCreatureDamage;
+            Player.OnDamageTakenEvent += CountCreatureDamage;
         }
 
         public override void OnExitInPlayAction()
         {
-            Player.OnDamageTaken -= CountCreatureDamage;
+            Player.OnDamageTakenEvent -= CountCreatureDamage;
         }
 
         private void CountCreatureDamage(BaseCard source, int amount)

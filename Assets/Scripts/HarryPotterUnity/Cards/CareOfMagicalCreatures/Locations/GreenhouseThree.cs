@@ -26,7 +26,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Locations
 
                 player.AddActions(1);
 
-                player.OppositePlayer.OnNextTurnStart += () => HasEffectActivated = false;
+                player.OppositePlayer.OnNextTurnStartEvent += () => HasEffectActivated = false;
             }
         }
 

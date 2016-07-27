@@ -83,14 +83,14 @@ namespace HarryPotterUnity.Cards
 
         private void SubscribeToMatchProgressEvents()
         {
-            _player1.OnDamageTaken += OnDamageTakenEvent;
-            _player2.OnDamageTaken += OnDamageTakenEvent;
+            _player1.OnDamageTakenEvent += OnDamageTakenEvent;
+            _player2.OnDamageTakenEvent += OnDamageTakenEvent;
         }
 
         private void UnsubscribeToMatchProgressEvents()
         {
-            _player1.OnDamageTaken -= OnDamageTakenEvent;
-            _player2.OnDamageTaken -= OnDamageTakenEvent;
+            _player1.OnDamageTakenEvent -= OnDamageTakenEvent;
+            _player2.OnDamageTakenEvent -= OnDamageTakenEvent;
         }
 
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)

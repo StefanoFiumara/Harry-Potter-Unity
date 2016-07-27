@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Matches
     {
         public override void OnPlayerHasWonMatch(Player winner, Player loser)
         {
-            winner.OnNextTurnStart += () => winner.AddActions(2);
+            winner.OnNextTurnStartEvent += () => winner.AddActions(2);
         }
     }
 }

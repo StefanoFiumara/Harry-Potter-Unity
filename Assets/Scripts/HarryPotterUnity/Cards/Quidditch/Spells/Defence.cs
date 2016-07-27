@@ -16,7 +16,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
             Player.TypeImmunity.Add(Type.Adventure);
             Player.TypeImmunity.Add(Type.Character);
 
-            Player.OnNextTurnStart += () =>
+            Player.OnNextTurnStartEvent += () =>
             {
                 Player.TypeImmunity.Remove(Type.Creature);
                 Player.TypeImmunity.Remove(Type.Spell);
