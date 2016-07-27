@@ -114,6 +114,12 @@ namespace HarryPotterUnity.Game
             return Cards.Skip(Random.Range(0, Cards.Count)).First();
         }
 
+        public BaseCard GetRandomCard(Type ofType)
+        {
+            var cardsOfType = Cards.Where(c => c.Type == ofType).ToList();
+            return cardsOfType.Skip(Random.Range(0, cardsOfType.Count)).First();
+        }
+
         private bool Contains(BaseCard card)
         {
             return Cards.Contains(card);
