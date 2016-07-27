@@ -148,9 +148,11 @@ namespace HarryPotterUnity.Game
                 card.OnInPlayBeforeTurnAction();
             }
 
+            
+             //TODO: some adventures prevent this step from happening, need a check of some kind.
             Deck.DrawCard();
-            AddActions(2);
 
+            AddActions(2);
             if (ActionsAvailable < 1)
             {
                 ActionsAvailable = 1;
