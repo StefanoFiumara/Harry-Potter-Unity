@@ -139,9 +139,17 @@ namespace HarryPotterExtensions
         {
             if (request.AddLessonRequirement)
             {
-                var newComponent = card.AddComponent<LessonRequirement>();
-                newComponent.AmountRequired = request.LessonAmtRequired;
-                newComponent.LessonType = request.LessonType;
+                if (request.CardType == Type.Adventure)
+                {
+                    var newComponent = card.AddComponent<GenericLessonRequirement>();
+                    newComponent.AmountRequired = request.LessonAmtRequired;
+                }
+                else
+                {
+                    var newComponent = card.AddComponent<LessonRequirement>();
+                    newComponent.AmountRequired = request.LessonAmtRequired;
+                    newComponent.LessonType = request.LessonType;
+                }
             }
 
             if (request.AddCardLimit)
@@ -252,8 +260,11 @@ namespace HarryPotterExtensions
             GUILayout.Space(10);
 
             _cardRequest.AddLessonRequirement = EditorGUILayout.BeginToggleGroup("Add Lesson Requirement", _cardRequest.AddLessonRequirement);
-            
-            _cardRequest.LessonType = (LessonTypes) EditorGUILayout.EnumPopup("Lesson Type: ", _cardRequest.LessonType);
+
+            if (_cardRequest.CardType != Type.Adventure)
+            {
+                _cardRequest.LessonType = (LessonTypes)EditorGUILayout.EnumPopup("Lesson Type: ", _cardRequest.LessonType);
+            }
 
             GUILayout.BeginHorizontal();
             GUILayout.Label("Amount Required: ");

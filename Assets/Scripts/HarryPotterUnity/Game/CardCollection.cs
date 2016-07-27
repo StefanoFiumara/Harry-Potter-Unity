@@ -109,6 +109,11 @@ namespace HarryPotterUnity.Game
             }
         }
 
+        public BaseCard GetRandomCard()
+        {
+            return Cards.Skip(Random.Range(0, Cards.Count)).First();
+        }
+
         private bool Contains(BaseCard card)
         {
             return Cards.Contains(card);
