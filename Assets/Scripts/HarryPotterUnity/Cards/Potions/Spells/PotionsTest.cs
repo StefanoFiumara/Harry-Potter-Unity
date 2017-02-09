@@ -5,7 +5,7 @@
         protected override void Start()
         {
             base.Start();
-            LessonTargetCount = 3;
+            this.LessonTargetCount = 3;
         }
     }
 }

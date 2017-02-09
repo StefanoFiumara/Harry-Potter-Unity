@@ -10,13 +10,13 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     {
         public override List<BaseCard> GetFromHandActionTargets()
         {
-            return Player.OppositePlayer.InPlay.Items;
+            return this.Player.OppositePlayer.InPlay.Items;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
             var target = targets.Single();
-            Player.OppositePlayer.Discard.Add(target);
+            this.Player.OppositePlayer.Discard.Add(target);
         }
     }
 }

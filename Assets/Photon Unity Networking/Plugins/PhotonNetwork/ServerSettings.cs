@@ -106,6 +106,6 @@ public class ServerSettings : ScriptableObject
 
     public override string ToString()
     {
-        return "ServerSettings: " + HostType + " " + ServerAddress;
+        return "ServerSettings: " + this.HostType + " " + this.ServerAddress;
     }
 }

@@ -14,12 +14,12 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         protected override void Start()
         {
             base.Start();
-            DamageAmount = 3;
+            this.DamageAmount = 3;
         }
 
         public override List<BaseCard> GetFromHandActionTargets()
         {
-            return Player.OppositePlayer.InPlay.Creatures;
+            return this.Player.OppositePlayer.InPlay.Creatures;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
@@ -28,10 +28,10 @@ namespace HarryPotterUnity.Cards.Charms.Spells
 
             if (creature != null)
             {
-                creature.TakeDamage(DamageAmount);
+                creature.TakeDamage(this.DamageAmount);
             }
 
-            Player.OppositePlayer.TakeDamage(this, DamageAmount);
+            this.Player.OppositePlayer.TakeDamage(this, this.DamageAmount);
         }
     }
 }

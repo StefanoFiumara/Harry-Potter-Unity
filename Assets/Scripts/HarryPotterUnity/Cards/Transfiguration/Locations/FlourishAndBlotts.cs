@@ -7,7 +7,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
     {
         public override bool CanPerformInPlayAction()
         {
-            var player = Player.IsLocalPlayer ? Player : Player.OppositePlayer;
+            var player = this.Player.IsLocalPlayer ? this.Player : this.Player.OppositePlayer;
 
             return player.CanUseActions() &&
                    player.InPlay.Lessons.Count >= 2;
@@ -15,7 +15,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Locations
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var player = Player.CanUseActions() ? Player : Player.OppositePlayer;
+            var player = this.Player.CanUseActions() ? this.Player : this.Player.OppositePlayer;
 
             var lessons = player.InPlay.Lessons.Take(2);
 

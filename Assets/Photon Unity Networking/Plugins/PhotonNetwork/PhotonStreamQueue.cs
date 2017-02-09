@@ -90,7 +90,7 @@ public class PhotonStreamQueue
     {
         if (Time.frameCount != this.m_LastFrameCount)
         {
-            BeginWritePackage();
+            this.BeginWritePackage();
         }
 
         this.m_LastFrameCount = Time.frameCount;
@@ -138,9 +138,9 @@ public class PhotonStreamQueue
     {
         
         // the "if" is a workaround for packages which have only 1 sample/frame. in that case, SendNext didn't set the obj per sample.
-        if (m_Objects.Count > 0 && this.m_ObjectsPerSample < 0)
+        if (this.m_Objects.Count > 0 && this.m_ObjectsPerSample < 0)
         {
-            this.m_ObjectsPerSample = m_Objects.Count;
+            this.m_ObjectsPerSample = this.m_Objects.Count;
         }
 
         stream.SendNext(this.m_SampleCount);

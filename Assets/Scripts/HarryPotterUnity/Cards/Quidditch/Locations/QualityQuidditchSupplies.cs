@@ -9,14 +9,14 @@ namespace HarryPotterUnity.Cards.Quidditch.Locations
     {
         public override bool CanPerformInPlayAction()
         {
-            var player = Player.IsLocalPlayer ? Player : Player.OppositePlayer;
+            var player = this.Player.IsLocalPlayer ? this.Player : this.Player.OppositePlayer;
 
             return player.CanUseActions();
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var player = Player.CanUseActions() ? Player : Player.OppositePlayer;
+            var player = this.Player.CanUseActions() ? this.Player : this.Player.OppositePlayer;
 
             var items = player.Deck.Items.Where(c => c.Classification == ClassificationTypes.Quidditch).ToList();
 

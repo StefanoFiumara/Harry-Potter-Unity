@@ -15,9 +15,9 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public bool MeetsRequirement()
         {
-            var player = GetComponent<BaseCard>().Player;
+            var player = this.GetComponent<BaseCard>().Player;
 
-            return player.Discard.Cards.Count(card => card.Type == _type) >= _minimumAmount;
+            return player.Discard.Cards.Count(card => card.Type == this._type) >= this._minimumAmount;
         }
 
         public void OnRequirementMet() { }

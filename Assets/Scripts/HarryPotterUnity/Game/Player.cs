@@ -22,7 +22,7 @@ namespace HarryPotterUnity.Game
 
         public List<BaseCard> AllCards
         {
-            get { return Hand.Cards.Concat(Deck.Cards).Concat(InPlay.Cards).Concat(Discard.Cards).ToList(); }
+            get { return this.Hand.Cards.Concat(this.Deck.Cards).Concat(this.InPlay.Cards).Concat(this.Discard.Cards).ToList(); }
         }
 
         private readonly HashSet<LessonTypes> _lessonTypesInPlay = new HashSet<LessonTypes>(); 
@@ -30,12 +30,12 @@ namespace HarryPotterUnity.Game
         {
             get
             {
-                _lessonTypesInPlay.Clear();
-                foreach (var providers in InPlay.Cards.OfType<ILessonProvider>())
+                this._lessonTypesInPlay.Clear();
+                foreach (var providers in this.InPlay.Cards.OfType<ILessonProvider>())
                 {
-                    _lessonTypesInPlay.Add(providers.LessonType);
+                    this._lessonTypesInPlay.Add(providers.LessonType);
                 }
-                return _lessonTypesInPlay;
+                return this._lessonTypesInPlay;
             }
         }
  
@@ -43,7 +43,7 @@ namespace HarryPotterUnity.Game
         {
             get
             {
-                return InPlay.Cards.OfType<ILessonProvider>().Sum(card => card.AmountLessonsProvided);
+                return this.InPlay.Cards.OfType<ILessonProvider>().Sum(card => card.AmountLessonsProvided);
             }
         }
 
@@ -67,24 +67,24 @@ namespace HarryPotterUnity.Game
 
         public void OnDestroy()
         {
-            OnNextTurnStartEvent = null;
-            OnStartTurnEvent = null;
-            OnEndTurnEvent = null;
-            OnCardPlayedEvent = null;
-            OnDamageTakenEvent = null;
+            this.OnNextTurnStartEvent = null;
+            this.OnStartTurnEvent = null;
+            this.OnEndTurnEvent = null;
+            this.OnCardPlayedEvent = null;
+            this.OnDamageTakenEvent = null;
         }
 
         public void Awake()
         {
-            ActionsAvailable = 0;
+            this.ActionsAvailable = 0;
 
-            Hand = transform.GetComponentInChildren<Hand>();
-            Deck = transform.GetComponentInChildren<Deck>();
-            InPlay = transform.GetComponentInChildren<InPlay>();
-            Discard = transform.GetComponentInChildren<Discard>();
+            this.Hand = this.transform.GetComponentInChildren<Hand>();
+            this.Deck = this.transform.GetComponentInChildren<Deck>();
+            this.InPlay = this.transform.GetComponentInChildren<InPlay>();
+            this.Discard = this.transform.GetComponentInChildren<Discard>();
 
-            TypeImmunity = new HashSet<Type>();
-            Constraints = new List<IPlayerConstraint>();
+            this.TypeImmunity = new HashSet<Type>();
+            this.Constraints = new List<IPlayerConstraint>();
         }
 
         public void InitDeck(List<LessonTypes> selectedLessons)
@@ -94,9 +94,9 @@ namespace HarryPotterUnity.Game
 
             if (GameManager.DebugModeEnabled)
             {
-                var prebuiltCards = GameManager.GetPlayerTestDeck(NetworkId);
+                var prebuiltCards = GameManager.GetPlayerTestDeck(this.NetworkId);
                 cards = DeckGenerator.GenerateDeck(prebuiltCards, selectedLessons);
-                startingCharacter = GameManager.GetPlayerTestCharacter(NetworkId);
+                startingCharacter = GameManager.GetPlayerTestCharacter(this.NetworkId);
             }
             else
             {
@@ -104,7 +104,7 @@ namespace HarryPotterUnity.Game
                 startingCharacter = DeckGenerator.GetRandomCharacter();
             }
 
-            Deck.Initialize(cards, startingCharacter);
+            this.Deck.Initialize(cards, startingCharacter);
         }
 
         /// <summary>
@@ -116,82 +116,82 @@ namespace HarryPotterUnity.Game
         /// <param name="amount"></param>
         public void UseActions(int amount = 1)
         {
-            ActionsAvailable -= amount;
-            if (ActionsAvailable <= 0) EndTurn(); 
+            this.ActionsAvailable -= amount;
+            if (this.ActionsAvailable <= 0) this.EndTurn(); 
         }
         
         public void AddActions(int amount)
         {
-            ActionsAvailable += amount;
+            this.ActionsAvailable += amount;
         }
 
         public void InvokeCardPlayedEvent(BaseCard card, List<BaseCard> targets = null)
         {
-            if (OnCardPlayedEvent != null) OnCardPlayedEvent(card, targets);
+            if (this.OnCardPlayedEvent != null) this.OnCardPlayedEvent(card, targets);
         }
 
         public void BeginTurn()
         {
-            if (OnNextTurnStartEvent != null)
+            if (this.OnNextTurnStartEvent != null)
             {
-                OnNextTurnStartEvent();
-                OnNextTurnStartEvent = null;
+                this.OnNextTurnStartEvent();
+                this.OnNextTurnStartEvent = null;
             }
 
-            if (OnStartTurnEvent != null)
+            if (this.OnStartTurnEvent != null)
             {
-                OnStartTurnEvent();
+                this.OnStartTurnEvent();
             }
 
-            foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
+            foreach (var card in this.InPlay.Cards.Cast<IPersistentCard>())
             {
                 card.OnInPlayBeforeTurnAction();
             }
 
             
              //TODO: some adventures prevent this step from happening, need a check of some kind.
-            Deck.DrawCard();
+            this.Deck.DrawCard();
 
-            AddActions(2);
-            if (ActionsAvailable < 1)
+            this.AddActions(2);
+            if (this.ActionsAvailable < 1)
             {
-                ActionsAvailable = 1;
+                this.ActionsAvailable = 1;
             }
 
-            foreach (var creature in InPlay.Creatures.Cast<BaseCreature>())
+            foreach (var creature in this.InPlay.Creatures.Cast<BaseCreature>())
             {
-                OppositePlayer.TakeDamage(creature, creature.DamagePerTurn);
+                this.OppositePlayer.TakeDamage(creature, creature.DamagePerTurn);
             }
         }
 
         private void EndTurn()
         {
-            if (OnEndTurnEvent != null)
+            if (this.OnEndTurnEvent != null)
             {
-                OnEndTurnEvent();
+                this.OnEndTurnEvent();
             }
-            ActionsAvailable = 0;
+            this.ActionsAvailable = 0;
 
-            foreach (var card in InPlay.Cards.Cast<IPersistentCard>())
+            foreach (var card in this.InPlay.Cards.Cast<IPersistentCard>())
             {
                 card.OnInPlayAfterTurnAction();
             }
-            
-            Hand.AdjustHandSpacing();
-            OppositePlayer.BeginTurn();
+
+            this.Hand.AdjustHandSpacing();
+            this.OppositePlayer.BeginTurn();
         }
 
         public bool CanUseActions(int amount = 1)
         {
-            return ActionsAvailable >= amount;
+            return this.ActionsAvailable >= amount;
         }
 
         public void DrawInitialHand()
         {
             for (int i = 0; i < 7; i++)
             {
-                var card = Deck.TakeTopCard();
-                Hand.Add(card, preview: false, adjustSpacing: false);
+                var card = this.Deck.TakeTopCard();
+                this.Hand.Add(card, preview: false, adjustSpacing: false);
             }       
         }
         
@@ -203,12 +203,12 @@ namespace HarryPotterUnity.Game
 
             for (int i = 0; i < amount; i++)
             {
-                if (TypeImmunity.Contains(sourceCard.Type))
+                if (this.TypeImmunity.Contains(sourceCard.Type))
                 {
                     continue;
                 }
 
-                var card = Deck.TakeTopCard();
+                var card = this.Deck.TakeTopCard();
 
                 if (card == null)
                 {
@@ -217,41 +217,41 @@ namespace HarryPotterUnity.Game
                 cards.Add(card);
             }
 
-            Discard.AddAll(cards);
+            this.Discard.AddAll(cards);
 
-            if (OnDamageTakenEvent != null && sourceCard != null)
+            if (this.OnDamageTakenEvent != null && sourceCard != null)
             {
-                OnDamageTakenEvent(sourceCard, cards.Count); 
+                this.OnDamageTakenEvent(sourceCard, cards.Count); 
             }
         }
         
         public void DisableAllCards()
         {
-            Deck.gameObject.layer = GameManager.IGNORE_RAYCAST_LAYER;
-            GameManager.DisableCards(Hand.Cards);
-            GameManager.DisableCards(InPlay.Cards);
+            this.Deck.gameObject.layer = GameManager.IGNORE_RAYCAST_LAYER;
+            GameManager.DisableCards(this.Hand.Cards);
+            GameManager.DisableCards(this.InPlay.Cards);
         }
 
         public void EnableAllCards()
         {
-            Deck.gameObject.layer = GameManager.DECK_LAYER;
-            GameManager.EnableCards(Hand.Cards);
-            GameManager.EnableCards(InPlay.Cards);
+            this.Deck.gameObject.layer = GameManager.DECK_LAYER;
+            GameManager.EnableCards(this.Hand.Cards);
+            GameManager.EnableCards(this.InPlay.Cards);
         }
 
         public void ClearHighlightComponent()
         {
-            foreach (var card in Hand.Cards)
+            foreach (var card in this.Hand.Cards)
             {
                 card.RemoveHighlight();
             }
 
-            foreach (var card in InPlay.Cards)
+            foreach (var card in this.InPlay.Cards)
             {
                 card.RemoveHighlight();
             }
 
-            foreach (var card in Discard.Cards)
+            foreach (var card in this.Discard.Cards)
             {
                 card.RemoveHighlight();
             }

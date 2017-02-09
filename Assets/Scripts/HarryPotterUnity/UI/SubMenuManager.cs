@@ -14,18 +14,18 @@ namespace HarryPotterUnity.UI
             {
                 return;
             }
-            
-            _currentMenu = menu;
-            _currentMenu.IsOpen = true;
+
+            this._currentMenu = menu;
+            this._currentMenu.IsOpen = true;
         }
 
         public void HideMenu()
         {
-            if (_currentMenu == null) return;
+            if (this._currentMenu == null) return;
 
-            _currentMenu.IsOpen = false;
-            _currentMenu.OnHideMenu();
-            _currentMenu = null;
+            this._currentMenu.IsOpen = false;
+            this._currentMenu.OnHideMenu();
+            this._currentMenu = null;
         }
     }
 }

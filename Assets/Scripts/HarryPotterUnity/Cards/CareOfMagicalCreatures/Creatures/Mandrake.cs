@@ -9,21 +9,21 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
     {
         public override bool CanPerformInPlayAction()
         {
-            return Player.Discard.Characters.Any(c => c.HasTag(Tag.Healing) == false) && Player.IsLocalPlayer;
+            return this.Player.Discard.Characters.Any(c => c.HasTag(Tag.Healing) == false) && this.Player.IsLocalPlayer;
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            Player.Discard.Add(this);
+            this.Player.Discard.Add(this);
 
-            var possibleCharacters = Player.Discard.Characters
+            var possibleCharacters = this.Player.Discard.Characters
                 .Where(c => c.HasTag(Tag.Healing) == false).ToList();
 
             var character = possibleCharacters
                 .Skip(Random.Range(0, possibleCharacters.Count))
                 .First();
 
-            Player.Hand.Add(character);
+            this.Player.Hand.Add(character);
         }
     }
 }

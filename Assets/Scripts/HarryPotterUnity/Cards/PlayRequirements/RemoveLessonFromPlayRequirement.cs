@@ -23,37 +23,37 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public bool ReturnToHand { get; set; }
 
-        public LessonTypes LessonType { get { return _lessonType; } }
+        public LessonTypes LessonType { get { return this._lessonType; } }
 
         private void Start()
         {
-            _player = GetComponent<BaseCard>().Player;
-            ReturnToHand = _returnToHand;
+            this._player = this.GetComponent<BaseCard>().Player;
+            this.ReturnToHand = this._returnToHand;
         }
         public bool MeetsRequirement()
         {
-            return _player.InPlay
-                .LessonsOfType(_lessonType).Count() >= _amountRequired;
+            return this._player.InPlay
+                .LessonsOfType(this._lessonType).Count() >= this._amountRequired;
         }
 
         public void OnRequirementMet()
         {
-            var lessons = _player.InPlay.LessonsOfType(_lessonType)
-                .Take(_amountRequired).ToList();
+            var lessons = this._player.InPlay.LessonsOfType(this._lessonType)
+                .Take(this._amountRequired).ToList();
 
-            if (ReturnToHand)
+            if (this.ReturnToHand)
             {
-                _player.Hand.AddAll(lessons);
+                this._player.Hand.AddAll(lessons);
             }
             else
             {
-                _player.Discard.AddAll(lessons);
+                this._player.Discard.AddAll(lessons);
             }
         }
 
         public void Reset()
         {
-            ReturnToHand = _returnToHand;
+            this.ReturnToHand = this._returnToHand;
         }
     }
 }

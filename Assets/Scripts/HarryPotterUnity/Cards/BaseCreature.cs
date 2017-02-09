@@ -20,62 +20,62 @@ namespace HarryPotterUnity.Cards
         private Text _healthLabel;
         protected Text _attackLabel;
         
-        public int DamagePerTurn { get { return _damagePerTurn; } }
+        public int DamagePerTurn { get { return this._damagePerTurn; } }
 
         public int MaxHealth { get; private set; }
 
         protected override void Start()
         {
             base.Start();
-            LoadUiOverlay();
+            this.LoadUiOverlay();
 
-            MaxHealth = _health;
+            this.MaxHealth = this._health;
         }
 
         private void LoadUiOverlay()
         {
             var resource = Resources.Load("CreatureUIOverlay");
-            _uiCanvas = (GameObject) Instantiate(resource);
-            
-            _uiCanvas.transform.position = transform.position - Vector3.back;
-            _uiCanvas.transform.SetParent(transform, true);
-            _uiCanvas.transform.localRotation = Player.IsLocalPlayer ? Quaternion.identity : Quaternion.Euler(0f,0f,180f);
+            this._uiCanvas = (GameObject) Instantiate(resource);
 
-            _healthLabel = _uiCanvas.transform.FindChild("HealthLabel").gameObject.GetComponent<Text>();
-            _attackLabel = _uiCanvas.transform.FindChild("AttackLabel").gameObject.GetComponent<Text>();
+            this._uiCanvas.transform.position = this.transform.position - Vector3.back;
+            this._uiCanvas.transform.SetParent(this.transform, true);
+            this._uiCanvas.transform.localRotation = this.Player.IsLocalPlayer ? Quaternion.identity : Quaternion.Euler(0f,0f,180f);
 
-            _healthLabel.text = _health.ToString();
-            _attackLabel.text = _damagePerTurn.ToString();
+            this._healthLabel = this._uiCanvas.transform.FindChild("HealthLabel").gameObject.GetComponent<Text>();
+            this._attackLabel = this._uiCanvas.transform.FindChild("AttackLabel").gameObject.GetComponent<Text>();
 
-            _uiCanvas.SetActive(false);
+            this._healthLabel.text = this._health.ToString();
+            this._attackLabel.text = this._damagePerTurn.ToString();
+
+            this._uiCanvas.SetActive(false);
         }
         
         public virtual void OnEnterInPlayAction()
         {
-            _uiCanvas.SetActive(true);
+            this._uiCanvas.SetActive(true);
         }
 
         public virtual void OnExitInPlayAction()
         {
-            _uiCanvas.SetActive(false);
+            this._uiCanvas.SetActive(false);
         }
 
         public void TakeDamage(int amount)
         {
-            _health -= amount;
-            _healthLabel.text = Mathf.Clamp(_health, 0, int.MaxValue).ToString();
+            this._health -= amount;
+            this._healthLabel.text = Mathf.Clamp(this._health, 0, int.MaxValue).ToString();
 
-            if (_health <= 0)
+            if (this._health <= 0)
             {
-                Player.Discard.Add(this);
+                this.Player.Discard.Add(this);
             }
         }
 
         public void Heal(int amount)
         {
-            _health = Mathf.Clamp(_health + amount, 0, MaxHealth);
+            this._health = Mathf.Clamp(this._health + amount, 0, this.MaxHealth);
 
-            _healthLabel.text = _health.ToString();
+            this._healthLabel.text = this._health.ToString();
         }
 
         public virtual bool CanPerformInPlayAction() { return false; }

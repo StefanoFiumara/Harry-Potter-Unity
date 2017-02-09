@@ -7,18 +7,18 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
     { 
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() 
-                && Player.Discard.Lessons.Count > 0
-                && Player.IsLocalPlayer;
+            return this.Player.CanUseActions() 
+                && this.Player.Discard.Lessons.Count > 0
+                && this.Player.IsLocalPlayer;
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var lesson = Player.Discard.Lessons.First();
+            var lesson = this.Player.Discard.Lessons.First();
 
-            Player.InPlay.Add(lesson);
-            
-            Player.UseActions();
+            this.Player.InPlay.Add(lesson);
+
+            this.Player.UseActions();
         }
     }
 }

@@ -10,39 +10,39 @@ namespace HarryPotterUnity.UI.Menu
 
         public bool IsOpen
         {
-            get { return _animator.GetBool("IsOpen"); }
+            get { return this._animator.GetBool("IsOpen"); }
             set
             {
                 if (value == false)
                 {
-                    OnHideMenu();
+                    this.OnHideMenu();
                 }
                 else
                 {
-                    OnShowMenu();
+                    this.OnShowMenu();
                 }
-                _animator.SetBool("IsOpen", value);
+                this._animator.SetBool("IsOpen", value);
             }
         }
 
         protected virtual void Awake()
         {
-            _animator = GetComponent<Animator>();
-            _canvasGroup = GetComponent<CanvasGroup>();
+            this._animator = this.GetComponent<Animator>();
+            this._canvasGroup = this.GetComponent<CanvasGroup>();
 
-            var rect = GetComponent<RectTransform>();
+            var rect = this.GetComponent<RectTransform>();
             rect.offsetMax = rect.offsetMin = Vector2.zero;
         }
 
         protected virtual void Update()
         {
-            if (_animator.GetCurrentAnimatorStateInfo(0).IsName("Open") == false)
+            if (this._animator.GetCurrentAnimatorStateInfo(0).IsName("Open") == false)
             {
-                _canvasGroup.blocksRaycasts = _canvasGroup.interactable = false;
+                this._canvasGroup.blocksRaycasts = this._canvasGroup.interactable = false;
             }
             else
             {
-                _canvasGroup.blocksRaycasts = _canvasGroup.interactable = true;
+                this._canvasGroup.blocksRaycasts = this._canvasGroup.interactable = true;
             }
         }
 

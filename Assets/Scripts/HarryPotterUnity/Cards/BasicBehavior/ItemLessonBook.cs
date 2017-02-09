@@ -6,18 +6,18 @@ namespace HarryPotterUnity.Cards.BasicBehavior
     {
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() && Player.IsLocalPlayer;
+            return this.Player.CanUseActions() && this.Player.IsLocalPlayer;
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            Player.Discard.Add(this);
+            this.Player.Discard.Add(this);
 
-            Player.Deck.DrawCard();
-            Player.Deck.DrawCard();
-            Player.Deck.DrawCard();
+            this.Player.Deck.DrawCard();
+            this.Player.Deck.DrawCard();
+            this.Player.Deck.DrawCard();
 
-            Player.UseActions();
+            this.Player.UseActions();
         }
     }
 }

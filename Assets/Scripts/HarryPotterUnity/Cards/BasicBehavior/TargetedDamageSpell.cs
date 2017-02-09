@@ -19,8 +19,8 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
         public int DamageAmount
         {
-            get { return _damageAmount; }
-            set { _damageAmount = value; }
+            get { return this._damageAmount; }
+            set { this._damageAmount = value; }
         }
 
         protected override void SpellAction(List<BaseCard> targets)
@@ -29,11 +29,11 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
             if (target is BaseCreature)
             {
-                (target as BaseCreature).TakeDamage(_damageAmount);
+                (target as BaseCreature).TakeDamage(this._damageAmount);
             }
             else
             {
-                Player.OppositePlayer.TakeDamage(this, _damageAmount);
+                this.Player.OppositePlayer.TakeDamage(this, this._damageAmount);
             }
                 
         }
@@ -42,9 +42,9 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         {
             var targets = new List<BaseCard>();
 
-            if (_canTargetPlayer) targets.Add(Player.OppositePlayer.Deck.StartingCharacter);
+            if (this._canTargetPlayer) targets.Add(this.Player.OppositePlayer.Deck.StartingCharacter);
 
-            targets.AddRange(Player.OppositePlayer.InPlay.Creatures.Concat(Player.InPlay.Creatures));
+            targets.AddRange(this.Player.OppositePlayer.InPlay.Creatures.Concat(this.Player.InPlay.Creatures));
 
             return targets;
         }

@@ -20,8 +20,7 @@ namespace HarryPotterUnity.Cards
 
         public virtual void OnEnterInPlayAction()
         {
-            BaseCard existingLocation =
-                Player.InPlay.Cards.Concat(Player.OppositePlayer.InPlay.Cards)
+            BaseCard existingLocation = this.Player.InPlay.Cards.Concat(this.Player.OppositePlayer.InPlay.Cards)
                     .SingleOrDefault(c => c.Type == Type.Location && c != this);
 
             if (existingLocation != null)

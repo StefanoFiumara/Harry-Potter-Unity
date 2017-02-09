@@ -15,14 +15,14 @@ namespace HarryPotterUnity.Tween
 
         public ShuffleDeckTween(IEnumerable<BaseCard> cards)
         {
-            _cards = cards;
+            this._cards = cards;
         }
 
         public void ExecuteTween()
         {
-            foreach (var card in _cards)
+            foreach (var card in this._cards)
             {
-                int cardIndex = ((IList<BaseCard>) _cards).IndexOf(card);
+                int cardIndex = ((IList<BaseCard>) this._cards).IndexOf(card);
                 var targetPosition = new Vector3( card.transform.position.x, 
                                                   card.transform.position.y, 
                                                  (card.transform.parent.position.z + 16f) - cardIndex * 0.2f);

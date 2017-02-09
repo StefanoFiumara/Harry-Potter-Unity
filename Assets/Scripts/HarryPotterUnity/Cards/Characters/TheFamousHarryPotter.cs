@@ -4,9 +4,9 @@
     {
         public override void OnInPlayBeforeTurnAction()
         {
-            if (Player.Hand.Cards.Count <= 4)
+            if (this.Player.Hand.Cards.Count <= 4)
             {
-                Player.Deck.DrawCard();
+                this.Player.Deck.DrawCard();
             }
         }
     }

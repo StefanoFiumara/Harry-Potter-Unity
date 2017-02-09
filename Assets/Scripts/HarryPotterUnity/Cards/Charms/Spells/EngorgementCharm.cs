@@ -7,7 +7,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            foreach (var creature in Player.InPlay.Creatures.Cast<BaseCreature>())
+            foreach (var creature in this.Player.InPlay.Creatures.Cast<BaseCreature>())
             {
                 creature.Heal(creature.MaxHealth);
             }

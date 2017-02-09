@@ -14,35 +14,35 @@ namespace HarryPotterUnity.Cards.Potions.Spells
         protected override void Start()
         {
             base.Start();
-            LessonTargetCount = 1;
+            this.LessonTargetCount = 1;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            LessonsFound = 0;
+            this.LessonsFound = 0;
 
-            DamageAmount = 0;
+            this.DamageAmount = 0;
 
-            while (LessonsFound < LessonTargetCount)
+            while (this.LessonsFound < this.LessonTargetCount)
             {
-                int cardIndex = (Player.OppositePlayer.Deck.Cards.Count - 1) - DamageAmount;
+                int cardIndex = (this.Player.OppositePlayer.Deck.Cards.Count - 1) - this.DamageAmount;
 
                 if (cardIndex < 0)
                 {
                     break;
                 }
 
-                var card = Player.OppositePlayer.Deck.Cards[cardIndex];
+                var card = this.Player.OppositePlayer.Deck.Cards[cardIndex];
 
                 if (card is BaseLesson)
                 {
-                    LessonsFound++;
+                    this.LessonsFound++;
                 }
 
-                DamageAmount++;
+                this.DamageAmount++;
             }
 
-            Player.OppositePlayer.TakeDamage(this, DamageAmount);
+            this.Player.OppositePlayer.TakeDamage(this, this.DamageAmount);
         }
     }
 }

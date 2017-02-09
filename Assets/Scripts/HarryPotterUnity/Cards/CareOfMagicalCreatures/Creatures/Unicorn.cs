@@ -4,13 +4,13 @@
 
         public override void OnInPlayBeforeTurnAction()
         {
-            Player.AddActions(1);
+            this.Player.AddActions(1);
         }
 
         public override void OnEnterInPlayAction()
         {
             base.OnEnterInPlayAction();
-            Player.AddActions(1);
+            this.Player.AddActions(1);
         }
     }
 }

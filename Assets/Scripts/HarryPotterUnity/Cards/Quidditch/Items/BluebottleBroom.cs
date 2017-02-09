@@ -8,19 +8,19 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
     {
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var card = Player.Discard.NonHealingCards.FirstOrDefault();
+            var card = this.Player.Discard.NonHealingCards.FirstOrDefault();
 
             if (card != null)
             {
-                Player.Deck.Add(card);
+                this.Player.Deck.Add(card);
             }
 
-            Player.UseActions();
+            this.Player.UseActions();
         }
 
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() && Player.IsLocalPlayer;
+            return this.Player.CanUseActions() && this.Player.IsLocalPlayer;
         }
     }
 }

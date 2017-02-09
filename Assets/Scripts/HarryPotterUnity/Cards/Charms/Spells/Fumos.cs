@@ -11,16 +11,16 @@ namespace HarryPotterUnity.Cards.Charms.Spells
         protected override void Start()
         {
             base.Start();
-            DamageAmount = 2;
+            this.DamageAmount = 2;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var allCreatures = Player.InPlay.Creatures.Concat(Player.OppositePlayer.InPlay.Creatures);
+            var allCreatures = this.Player.InPlay.Creatures.Concat(this.Player.OppositePlayer.InPlay.Creatures);
 
             foreach (var creature in allCreatures)
             {
-                ((BaseCreature)creature).TakeDamage(DamageAmount);
+                ((BaseCreature)creature).TakeDamage(this.DamageAmount);
             }
         }
     }

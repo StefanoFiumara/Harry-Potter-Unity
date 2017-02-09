@@ -14,13 +14,13 @@ namespace HarryPotterUnity.Cards {
         private LessonTypes _lessonType;
         #endregion
         
-        public LessonTypes LessonType { get { return _lessonType; } }
+        public LessonTypes LessonType { get { return this._lessonType; } }
         public int AmountLessonsProvided { get; set; }
 
         protected override void Start()
         {
             base.Start();
-            AmountLessonsProvided = 1;
+            this.AmountLessonsProvided = 1;
         }
 
         protected override Type GetCardType() { return Type.Lesson; }
@@ -33,7 +33,7 @@ namespace HarryPotterUnity.Cards {
         public void OnExitInPlayAction()
         {
             //Reset Amount Provided, cards like wand shop may alter this value during play
-            AmountLessonsProvided = 1;
+            this.AmountLessonsProvided = 1;
         }
 
         public void OnInPlayBeforeTurnAction() { }

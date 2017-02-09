@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Cards.Adventures
     {
         protected override void AddConstraints()
         {
-            _constraints.Add(new CannotPlayTypeConstraint(Type.Lesson));
+            this._constraints.Add(new CannotPlayTypeConstraint(Type.Lesson));
         }
 
         protected override bool CanOpponentSolve()
@@ -18,21 +18,21 @@ namespace HarryPotterUnity.Cards.Adventures
 
         protected override void Solve()
         {
-            int handCount = Player.OppositePlayer.Hand.Cards.Count;
+            int handCount = this.Player.OppositePlayer.Hand.Cards.Count;
 
             for (int i = handCount - 1; i >= 0; i--)
             {
-                var card = Player.OppositePlayer.Hand.Cards[i];
+                var card = this.Player.OppositePlayer.Hand.Cards[i];
 
-                Player.OppositePlayer.Discard.Add(card);
+                this.Player.OppositePlayer.Discard.Add(card);
             }
         }
 
         protected override void Reward()
         {
-            Player.OppositePlayer.Deck.DrawCard();
-            Player.OppositePlayer.Deck.DrawCard();
-            Player.OppositePlayer.Deck.DrawCard();
+            this.Player.OppositePlayer.Deck.DrawCard();
+            this.Player.OppositePlayer.Deck.DrawCard();
+            this.Player.OppositePlayer.Deck.DrawCard();
         }
     }
 }

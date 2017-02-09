@@ -19,14 +19,14 @@ namespace HarryPotterUnity.Cards.PlayRequirements
     
         private void Start()
         {
-            _player = GetComponent<BaseCard>().Player;
+            this._player = this.GetComponent<BaseCard>().Player;
         }
 
         public bool MeetsRequirement()
         {
-            return _player.InPlay.Cards
+            return this._player.InPlay.Cards
                 .OfType<ILessonProvider>()
-                .Count(c => c.LessonType == _lessonType) >= _amountProvided;
+                .Count(c => c.LessonType == this._lessonType) >= this._amountProvided;
         }
 
         public void OnRequirementMet() { }

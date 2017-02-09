@@ -10,11 +10,11 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            int handCount = Player.Hand.Cards.Count;
+            int handCount = this.Player.Hand.Cards.Count;
 
-            var hand = Player.Hand.Cards.Select(card => card.gameObject).ToList();
+            var hand = this.Player.Hand.Cards.Select(card => card.gameObject).ToList();
 
-            if (!Player.IsLocalPlayer)
+            if (!this.Player.IsLocalPlayer)
             {
                 var tween = new FlipCardsTween
                 {
@@ -27,16 +27,16 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
               
             for (int i = handCount - 1; i >= 0; i--)
             {
-                var card = Player.Hand.Cards[i];
+                var card = this.Player.Hand.Cards[i];
 
                 if (card.Type != Type.Lesson) continue;
-                
-                Player.InPlay.Add(card);
+
+                this.Player.InPlay.Add(card);
 
                 hand.Remove(card.gameObject);
             }
 
-            if (!Player.IsLocalPlayer)
+            if (!this.Player.IsLocalPlayer)
             {
                 var tween = new FlipCardsTween
                 {

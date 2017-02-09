@@ -9,8 +9,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var cards =
-                Player.Deck.Cards.Where(
+            var cards = this.Player.Deck.Cards.Where(
                     c =>
                         c.Classification == ClassificationTypes.Quidditch ||
                         c is BaseLesson && ((BaseLesson) c).LessonType == LessonTypes.Quidditch).ToList();
@@ -18,10 +17,10 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
             if (cards.Count > 0)
             {
                 var selectedCard = cards.Skip(Random.Range(0, cards.Count)).First();
-                Player.Hand.Add(selectedCard);
+                this.Player.Hand.Add(selectedCard);
             }
-            
-            Player.Deck.Shuffle();
+
+            this.Player.Deck.Shuffle();
         }
     }
 }

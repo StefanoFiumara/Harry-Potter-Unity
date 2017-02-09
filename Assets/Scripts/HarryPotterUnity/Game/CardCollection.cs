@@ -13,52 +13,52 @@ namespace HarryPotterUnity.Game
         #region CardType Shortcuts
         public List<BaseCard> Lessons
         {
-            get { return Cards.Where(c => c.Type == Type.Lesson).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Lesson).ToList(); }
         }
 
         public List<BaseCard> Items
         {
-            get { return Cards.Where(c => c.Type == Type.Item).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Item).ToList(); }
         }
 
         public List<BaseCard> Creatures
         {
-            get { return Cards.Where(c => c.Type == Type.Creature).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Creature).ToList(); }
         }
 
         public List<BaseCard> Spells
         {
-            get { return Cards.Where(c => c.Type == Type.Spell).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Spell).ToList(); }
         }
 
         public List<BaseCard> Locations
         {
-            get { return Cards.Where(c => c.Type == Type.Location).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Location).ToList(); }
         }
 
         public List<BaseCard> Matches
         {
-            get { return Cards.Where(c => c.Type == Type.Match).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Match).ToList(); }
         }
 
         public List<BaseCard> Adventures
         {
-            get { return Cards.Where(c => c.Type == Type.Adventure).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Adventure).ToList(); }
         }
 
         public List<BaseCard> Characters
         {
-            get { return Cards.Where(c => c.Type == Type.Character).ToList(); }
+            get { return this.Cards.Where(c => c.Type == Type.Character).ToList(); }
         }
 
         public List<BaseCard> NonHealingCards
         {
-            get { return Cards.Where(c => c.HasTag(Tag.Healing) == false).ToList(); }
+            get { return this.Cards.Where(c => c.HasTag(Tag.Healing) == false).ToList(); }
         }
 
         public List<BaseCard> CardsExceptStartingCharacter
         {
-            get { return Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
+            get { return this.Cards.Where(c => c != c.Player.Deck.StartingCharacter).ToList(); }
         }
         #endregion
 
@@ -70,7 +70,7 @@ namespace HarryPotterUnity.Game
         
         protected CardCollection()
         {
-            Cards = new List<BaseCard>();
+            this.Cards = new List<BaseCard>();
         }
 
         protected void MoveToThisCollection(BaseCard card)
@@ -109,20 +109,20 @@ namespace HarryPotterUnity.Game
             }
         }
 
-        public BaseCard GetRandomCard()
+        public virtual BaseCard GetRandomCard()
         {
-            return Cards.Skip(Random.Range(0, Cards.Count)).First();
+            return this.Cards.Skip(Random.Range(0, this.Cards.Count)).First();
         }
 
         public BaseCard GetRandomCard(Type ofType)
         {
-            var cardsOfType = Cards.Where(c => c.Type == ofType).ToList();
+            var cardsOfType = this.Cards.Where(c => c.Type == ofType).ToList();
             return cardsOfType.Skip(Random.Range(0, cardsOfType.Count)).First();
         }
 
         private bool Contains(BaseCard card)
         {
-            return Cards.Contains(card);
+            return this.Cards.Contains(card);
         }
     }
 }

@@ -589,11 +589,11 @@ namespace ExitGames.Client.Photon
         /// <returns>If operation could be enqueued for sending. Sent when calling: Service or SendOutgoingCommands.</returns>
         public virtual bool OpRaiseEvent(byte eventCode, object customEventContent, bool sendReliable, RaiseEventOptions raiseEventOptions)
         {
-            opParameters.Clear(); // re-used private variable to avoid many new Dictionary() calls (garbage collection)
-            opParameters[(byte) ParameterCode.Code] = (byte) eventCode;
+            this.opParameters.Clear(); // re-used private variable to avoid many new Dictionary() calls (garbage collection)
+            this.opParameters[(byte) ParameterCode.Code] = (byte) eventCode;
             if (customEventContent != null)
             {
-                opParameters[(byte) ParameterCode.Data] = customEventContent;
+                this.opParameters[(byte) ParameterCode.Data] = customEventContent;
             }
 
             if (raiseEventOptions == null)
@@ -604,27 +604,27 @@ namespace ExitGames.Client.Photon
             {
                 if (raiseEventOptions.CachingOption != EventCaching.DoNotCache)
                 {
-                    opParameters[(byte) ParameterCode.Cache] = (byte) raiseEventOptions.CachingOption;
+                    this.opParameters[(byte) ParameterCode.Cache] = (byte) raiseEventOptions.CachingOption;
                 }
                 if (raiseEventOptions.Receivers != ReceiverGroup.Others)
                 {
-                    opParameters[(byte) ParameterCode.ReceiverGroup] = (byte) raiseEventOptions.Receivers;
+                    this.opParameters[(byte) ParameterCode.ReceiverGroup] = (byte) raiseEventOptions.Receivers;
                 }
                 if (raiseEventOptions.InterestGroup != 0)
                 {
-                    opParameters[(byte) ParameterCode.Group] = (byte) raiseEventOptions.InterestGroup;
+                    this.opParameters[(byte) ParameterCode.Group] = (byte) raiseEventOptions.InterestGroup;
                 }
                 if (raiseEventOptions.TargetActors != null)
                 {
-                    opParameters[(byte) ParameterCode.ActorList] = raiseEventOptions.TargetActors;
+                    this.opParameters[(byte) ParameterCode.ActorList] = raiseEventOptions.TargetActors;
                 }
                 if (raiseEventOptions.ForwardToWebhook)
                 {
-                    opParameters[(byte) ParameterCode.EventForward] = true; //TURNBASED
+                    this.opParameters[(byte) ParameterCode.EventForward] = true; //TURNBASED
                 }
             }
 
-            return this.OpCustom((byte) OperationCode.RaiseEvent, opParameters, sendReliable, raiseEventOptions.SequenceChannel, raiseEventOptions.Encrypt);
+            return this.OpCustom((byte) OperationCode.RaiseEvent, this.opParameters, sendReliable, raiseEventOptions.SequenceChannel, raiseEventOptions.Encrypt);
         }
     }
 
@@ -1464,8 +1464,8 @@ namespace ExitGames.Client.Photon
         /// <summary>The type of custom authentication provider that should be used. Currently only "Custom" or "None" (turns this off).</summary>
         public CustomAuthenticationType AuthType
         {
-            get { return authType; }
-            set { authType = value; }
+            get { return this.authType; }
+            set { this.authType = value; }
         }
 
         /// <summary>This string must contain any (http get) parameters expected by the used authentication service. By default, username and token.</summary>
@@ -1516,7 +1516,7 @@ namespace ExitGames.Client.Photon
         public virtual void AddAuthParameter(string key, string value)
         {
             string ampersand = string.IsNullOrEmpty(this.AuthGetParameters) ? "" : "&";
-            this.AuthGetParameters = string.Format("{0}{1}{2}={3}", this.AuthGetParameters, ampersand, System.Uri.EscapeDataString(key), System.Uri.EscapeDataString(value));
+            this.AuthGetParameters = string.Format("{0}{1}{2}={3}", this.AuthGetParameters, ampersand, Uri.EscapeDataString(key), Uri.EscapeDataString(value));
         }
 
         public override string ToString()

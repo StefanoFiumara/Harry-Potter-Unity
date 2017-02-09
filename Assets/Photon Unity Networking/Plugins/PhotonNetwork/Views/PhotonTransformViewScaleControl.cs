@@ -8,26 +8,26 @@ public class PhotonTransformViewScaleControl
 
     public PhotonTransformViewScaleControl( PhotonTransformViewScaleModel model )
     {
-        m_Model = model;
+        this.m_Model = model;
     }
 
     public Vector3 GetScale( Vector3 currentScale )
     {
-        switch( m_Model.InterpolateOption )
+        switch(this.m_Model.InterpolateOption )
         {
         default:
         case PhotonTransformViewScaleModel.InterpolateOptions.Disabled:
-            return m_NetworkScale;
+            return this.m_NetworkScale;
         case PhotonTransformViewScaleModel.InterpolateOptions.MoveTowards:
-            return Vector3.MoveTowards( currentScale, m_NetworkScale, m_Model.InterpolateMoveTowardsSpeed * Time.deltaTime );
+            return Vector3.MoveTowards( currentScale, this.m_NetworkScale, this.m_Model.InterpolateMoveTowardsSpeed * Time.deltaTime );
         case PhotonTransformViewScaleModel.InterpolateOptions.Lerp:
-            return Vector3.Lerp( currentScale, m_NetworkScale, m_Model.InterpolateLerpSpeed * Time.deltaTime );
+            return Vector3.Lerp( currentScale, this.m_NetworkScale, this.m_Model.InterpolateLerpSpeed * Time.deltaTime );
         }
     }
 
     public void OnPhotonSerializeView( Vector3 currentScale, PhotonStream stream, PhotonMessageInfo info )
     {
-        if( m_Model.SynchronizeEnabled == false )
+        if(this.m_Model.SynchronizeEnabled == false )
         {
             return;
         }
@@ -35,11 +35,11 @@ public class PhotonTransformViewScaleControl
         if( stream.isWriting == true )
         {
             stream.SendNext( currentScale );
-            m_NetworkScale = currentScale;
+            this.m_NetworkScale = currentScale;
         }
         else
         {
-            m_NetworkScale = (Vector3)stream.ReceiveNext();
+            this.m_NetworkScale = (Vector3)stream.ReceiveNext();
         }
     }
 }

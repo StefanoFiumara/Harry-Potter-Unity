@@ -12,8 +12,8 @@ namespace HarryPotterUnity.Cards.Charms.Locations
         {
             get
             {
-                return Player.InPlay.LessonsOfType(LessonTypes.Charms)
-                    .Concat(Player.OppositePlayer.InPlay.LessonsOfType(LessonTypes.Charms))
+                return this.Player.InPlay.LessonsOfType(LessonTypes.Charms)
+                    .Concat(this.Player.OppositePlayer.InPlay.LessonsOfType(LessonTypes.Charms))
                     .Cast<BaseLesson>();
             }
         }
@@ -21,24 +21,24 @@ namespace HarryPotterUnity.Cards.Charms.Locations
         {
             base.OnEnterInPlayAction();
 
-            foreach (var lesson in AllLessons)
+            foreach (var lesson in this.AllLessons)
             {
                 lesson.AmountLessonsProvided = 2;
             }
 
-            Player.OnCardPlayedEvent += DoubleLessonsProvided;
-            Player.OppositePlayer.OnCardPlayedEvent += DoubleLessonsProvided;
+            this.Player.OnCardPlayedEvent += this.DoubleLessonsProvided;
+            this.Player.OppositePlayer.OnCardPlayedEvent += this.DoubleLessonsProvided;
         }
         
         public override void OnExitInPlayAction()
         {
-            foreach (var lesson in AllLessons)
+            foreach (var lesson in this.AllLessons)
             {
                 lesson.AmountLessonsProvided = 1;
             }
 
-            Player.OnCardPlayedEvent -= DoubleLessonsProvided;
-            Player.OppositePlayer.OnCardPlayedEvent -= DoubleLessonsProvided;
+            this.Player.OnCardPlayedEvent -= this.DoubleLessonsProvided;
+            this.Player.OppositePlayer.OnCardPlayedEvent -= this.DoubleLessonsProvided;
         }
 
         private void DoubleLessonsProvided(BaseCard card, List<BaseCard> targets)

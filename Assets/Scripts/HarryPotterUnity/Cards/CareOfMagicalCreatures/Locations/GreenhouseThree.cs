@@ -12,21 +12,21 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Locations
         {
             base.OnEnterInPlayAction();
 
-            Player.OnCardPlayedEvent += AddActionOnPlantPlayedEvent;
-            Player.OppositePlayer.OnCardPlayedEvent += AddActionOnPlantPlayedEvent;
+            this.Player.OnCardPlayedEvent += this.AddActionOnPlantPlayedEvent;
+            this.Player.OppositePlayer.OnCardPlayedEvent += this.AddActionOnPlantPlayedEvent;
         }
 
         private void AddActionOnPlantPlayedEvent(BaseCard card, List<BaseCard> targets)
         {
-            if (HasEffectActivated == false && card.HasTag(Tag.Plant))
+            if (this.HasEffectActivated == false && card.HasTag(Tag.Plant))
             {
-                HasEffectActivated = true;
+                this.HasEffectActivated = true;
 
-                var player = Player.CanUseActions() ? Player : Player.OppositePlayer;
+                var player = this.Player.CanUseActions() ? this.Player : this.Player.OppositePlayer;
 
                 player.AddActions(1);
 
-                player.OppositePlayer.OnNextTurnStartEvent += () => HasEffectActivated = false;
+                player.OppositePlayer.OnNextTurnStartEvent += () => this.HasEffectActivated = false;
             }
         }
 
@@ -34,10 +34,10 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Locations
         {
             base.OnExitInPlayAction();
 
-            HasEffectActivated = false;
+            this.HasEffectActivated = false;
 
-            Player.OnCardPlayedEvent -= AddActionOnPlantPlayedEvent;
-            Player.OppositePlayer.OnCardPlayedEvent -= AddActionOnPlantPlayedEvent;
+            this.Player.OnCardPlayedEvent -= this.AddActionOnPlantPlayedEvent;
+            this.Player.OppositePlayer.OnCardPlayedEvent -= this.AddActionOnPlantPlayedEvent;
         }
     }
 }

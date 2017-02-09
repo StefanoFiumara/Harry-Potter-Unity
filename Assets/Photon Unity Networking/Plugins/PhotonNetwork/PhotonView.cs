@@ -318,26 +318,26 @@ public class PhotonView : Photon.MonoBehaviour
 
     public void SerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        SerializeComponent(this.observed, stream, info);
+        this.SerializeComponent(this.observed, stream, info);
 
         if (this.ObservedComponents != null && this.ObservedComponents.Count > 0)
         {
             for (int i = 0; i < this.ObservedComponents.Count; ++i)
             {
-                SerializeComponent(this.ObservedComponents[i], stream, info);
+                this.SerializeComponent(this.ObservedComponents[i], stream, info);
             }
         }
     }
 
     public void DeserializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        DeserializeComponent(this.observed, stream, info);
+        this.DeserializeComponent(this.observed, stream, info);
 
         if (this.ObservedComponents != null && this.ObservedComponents.Count > 0)
         {
             for (int i = 0; i < this.ObservedComponents.Count; ++i)
             {
-                DeserializeComponent(this.ObservedComponents[i], stream, info);
+                this.DeserializeComponent(this.ObservedComponents[i], stream, info);
             }
         }
     }
@@ -352,7 +352,7 @@ public class PhotonView : Photon.MonoBehaviour
         // Use incoming data according to observed type
         if (component is MonoBehaviour)
         {
-            ExecuteComponentOnSerialize(component, stream, info);
+            this.ExecuteComponentOnSerialize(component, stream, info);
         }
         else if (component is Transform)
         {
@@ -431,7 +431,7 @@ public class PhotonView : Photon.MonoBehaviour
 
         if (component is MonoBehaviour)
         {
-            ExecuteComponentOnSerialize(component, stream, info);
+            this.ExecuteComponentOnSerialize(component, stream, info);
         }
         else if (component is Transform)
         {

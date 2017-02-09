@@ -13,7 +13,7 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
         {
             base.OnEnterInPlayAction();
 
-            Player.OppositePlayer.TakeDamage(this, _battlecryDamage);
+            this.Player.OppositePlayer.TakeDamage(this, this._battlecryDamage);
         }
     }
 }

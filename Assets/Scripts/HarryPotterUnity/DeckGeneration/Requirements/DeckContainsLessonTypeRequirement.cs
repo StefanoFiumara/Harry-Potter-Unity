@@ -13,7 +13,7 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
 
         public bool MeetsRequirement(List<BaseCard> currentDeck)
         {
-            return currentDeck.Exists(c => c is ILessonProvider && ((ILessonProvider)c).LessonType == _type);
+            return currentDeck.Exists(c => c is ILessonProvider && ((ILessonProvider)c).LessonType == this._type);
         }
     }
 }

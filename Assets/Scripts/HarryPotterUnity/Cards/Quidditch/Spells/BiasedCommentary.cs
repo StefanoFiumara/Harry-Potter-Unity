@@ -11,19 +11,19 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            _hasEffectedTriggered = false;
-            Player.OnCardPlayedEvent += AddDamageToQuidditchCards;
+            this._hasEffectedTriggered = false;
+            this.Player.OnCardPlayedEvent += this.AddDamageToQuidditchCards;
 
-            Player.OnNextTurnStartEvent += () => Player.OnCardPlayedEvent -= AddDamageToQuidditchCards;
+            this.Player.OnNextTurnStartEvent += () => this.Player.OnCardPlayedEvent -= this.AddDamageToQuidditchCards;
 
         }
 
         private void AddDamageToQuidditchCards(BaseCard card, List<BaseCard> targets)
         {
             if (card.IsQuidditchDamageCard() == false) return;
-            if (_hasEffectedTriggered) return;
+            if (this._hasEffectedTriggered) return;
 
-            _hasEffectedTriggered = true;
+            this._hasEffectedTriggered = true;
 
             ((IDamageSpell)card).DamageAmount += 5;
         }

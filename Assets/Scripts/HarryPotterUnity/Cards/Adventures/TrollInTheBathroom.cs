@@ -4,12 +4,12 @@
     {
         public override void OnInPlayBeforeTurnAction()
         {
-            Player.OppositePlayer.TakeDamage(this, 2);
+            this.Player.OppositePlayer.TakeDamage(this, 2);
         }
 
         protected override bool CanOpponentSolve()
         {
-            return Player.OppositePlayer.Hand.Cards.Count >= 7;
+            return this.Player.OppositePlayer.Hand.Cards.Count >= 7;
         }
 
         protected override void Solve()
@@ -18,15 +18,15 @@
 
             for (int i = amountToDiscard; i > 0; i--)
             {
-                var card = Player.OppositePlayer.Hand.GetRandomCard();
+                var card = this.Player.OppositePlayer.Hand.GetRandomCard();
 
-                Player.OppositePlayer.Discard.Add(card);
+                this.Player.OppositePlayer.Discard.Add(card);
             }
         }
 
         protected override void Reward()
         {
-            Player.TakeDamage(this, 4);
+            this.Player.TakeDamage(this, 4);
         }
     }
 }

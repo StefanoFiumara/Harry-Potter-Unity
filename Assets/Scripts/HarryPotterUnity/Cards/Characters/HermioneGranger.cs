@@ -7,19 +7,16 @@ namespace HarryPotterUnity.Cards.Characters
     {
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() && 
-                   Player.Hand.Lessons.Count  >= 2 &&
-                   Player.AmountLessonsInPlay >= 2 &&
-                   Player.IsLocalPlayer;
+            return this.Player.CanUseActions() && this.Player.Hand.Lessons.Count  >= 2 && this.Player.AmountLessonsInPlay >= 2 && this.Player.IsLocalPlayer;
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var firstLesson = Player.Hand.Lessons.First();
-            var secondLesson = Player.Hand.Lessons.Last();
+            var firstLesson = this.Player.Hand.Lessons.First();
+            var secondLesson = this.Player.Hand.Lessons.Last();
 
-            Player.InPlay.AddAll(new [] {firstLesson, secondLesson });
-            Player.UseActions();
+            this.Player.InPlay.AddAll(new [] {firstLesson, secondLesson });
+            this.Player.UseActions();
         }
     }
 }

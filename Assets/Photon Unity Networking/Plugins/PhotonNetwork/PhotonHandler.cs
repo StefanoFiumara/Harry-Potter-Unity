@@ -40,7 +40,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
     {
         if (SP != null && SP != this && SP.gameObject != null)
         {
-            GameObject.DestroyImmediate(SP.gameObject);
+            DestroyImmediate(SP.gameObject);
         }
 
         SP = this;
@@ -49,14 +49,14 @@ internal class PhotonHandler : Photon.MonoBehaviour
         this.updateInterval = 1000 / PhotonNetwork.sendRate;
         this.updateIntervalOnSerialize = 1000 / PhotonNetwork.sendRateOnSerialize;
 
-        PhotonHandler.StartFallbackSendAckThread();
+        StartFallbackSendAckThread();
     }
 
     /// <summary>Called by Unity when the application is closed. Disconnects.</summary>
     protected void OnApplicationQuit()
     {
-        PhotonHandler.AppQuits = true;
-        PhotonHandler.StopFallbackSendAckThread();
+        AppQuits = true;
+        StopFallbackSendAckThread();
         PhotonNetwork.Disconnect();
     }
 
@@ -94,7 +94,7 @@ internal class PhotonHandler : Photon.MonoBehaviour
     protected void OnDestroy()
     {
         //Debug.Log("OnDestroy on PhotonHandler.");
-        PhotonHandler.StopFallbackSendAckThread();
+        StopFallbackSendAckThread();
         //PhotonNetwork.Disconnect();
     }
 
@@ -284,8 +284,8 @@ internal class PhotonHandler : Photon.MonoBehaviour
 
 
         Region best = pingManager.BestRegion;
-        PhotonHandler.BestRegionCodeCurrently = best.Code;
-        PhotonHandler.BestRegionCodeInPreferences = best.Code;
+        BestRegionCodeCurrently = best.Code;
+        BestRegionCodeInPreferences = best.Code;
 
         Debug.Log("Found best region: " + best.Code + " ping: " + best.Ping + ". Calling ConnectToRegionMaster() is: " + connectToBest);
 

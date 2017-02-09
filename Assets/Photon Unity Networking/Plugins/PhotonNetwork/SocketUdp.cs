@@ -119,7 +119,7 @@ namespace ExitGames.Client.Photon
 
                 try
                 {
-                    sock.Send(data, 0, length, SocketFlags.None);
+                    this.sock.Send(data, 0, length, SocketFlags.None);
                 }
                 catch (Exception e)
                 {
@@ -148,7 +148,7 @@ namespace ExitGames.Client.Photon
                 {
                     this.sock = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
 
-                    IPAddress ep = IPhotonSocket.GetIpAddress(this.ServerAddress);
+                    IPAddress ep = GetIpAddress(this.ServerAddress);
                     this.sock.Connect(ep, this.ServerPort);
 
                     this.State = PhotonSocketState.Connected;
@@ -175,7 +175,7 @@ namespace ExitGames.Client.Photon
                 return;
             }
 
-            Thread run = new Thread(new ThreadStart(ReceiveLoop));
+            Thread run = new Thread(new ThreadStart(this.ReceiveLoop));
             run.Name = "photon receive thread";
             run.IsBackground = true;
             run.Start();

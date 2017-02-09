@@ -6,13 +6,13 @@ namespace HarryPotterUnity.Cards.Adventures
     {
         public override void OnInPlayAfterTurnAction()
         {
-            Player.TypeImmunity.Add(Type.Creature);
-            Player.OnNextTurnStartEvent += () => Player.TypeImmunity.Remove(Type.Creature);
+            this.Player.TypeImmunity.Add(Type.Creature);
+            this.Player.OnNextTurnStartEvent += () => this.Player.TypeImmunity.Remove(Type.Creature);
         }
 
         protected override bool CanOpponentSolve()
         {
-            return Player.OppositePlayer.InPlay.Cards.Count >= 4;
+            return this.Player.OppositePlayer.InPlay.Cards.Count >= 4;
 
         }
 
@@ -22,15 +22,15 @@ namespace HarryPotterUnity.Cards.Adventures
 
             for (int i = amountToReturn; i > 0; i--)
             {
-                var card = Player.OppositePlayer.InPlay.GetRandomCard();
+                var card = this.Player.OppositePlayer.InPlay.GetRandomCard();
 
-                Player.OppositePlayer.Hand.Add(card);
+                this.Player.OppositePlayer.Hand.Add(card);
             }
         }
 
         protected override void Reward()
         {
-            Player.OppositePlayer.Deck.DrawCard();
+            this.Player.OppositePlayer.Deck.DrawCard();
         }
     }
 }

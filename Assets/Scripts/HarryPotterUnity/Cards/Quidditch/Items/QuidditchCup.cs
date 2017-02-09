@@ -10,29 +10,29 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
 
         public override void OnEnterInPlayAction()
         {
-            Player.OnCardPlayedEvent += AddActionOnQuidditchCardPlayedEvent;
+            this.Player.OnCardPlayedEvent += this.AddActionOnQuidditchCardPlayedEvent;
         }
 
         private void AddActionOnQuidditchCardPlayedEvent(BaseCard card, List<BaseCard> targets)
         {
-            if (HasEffectActivated == false && card.Classification == ClassificationTypes.Quidditch)
+            if (this.HasEffectActivated == false && card.Classification == ClassificationTypes.Quidditch)
             {
-                HasEffectActivated = true;
+                this.HasEffectActivated = true;
 
-                Player.AddActions(1);
+                this.Player.AddActions(1);
             }
         }
 
         public override void OnExitInPlayAction()
         {
-            HasEffectActivated = false;
+            this.HasEffectActivated = false;
 
-            Player.OnCardPlayedEvent -= AddActionOnQuidditchCardPlayedEvent;
+            this.Player.OnCardPlayedEvent -= this.AddActionOnQuidditchCardPlayedEvent;
         }
 
         public override void OnInPlayAfterTurnAction()
         {
-            HasEffectActivated = false;
+            this.HasEffectActivated = false;
         }
     }
 }

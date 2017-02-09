@@ -7,23 +7,23 @@ namespace HarryPotterUnity.Cards.Charms.Items
     {
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var card = Player.Deck.TakeTopCard();
+            var card = this.Player.Deck.TakeTopCard();
 
             if (card is BaseLesson)
             {
-                Player.InPlay.Add(card);
+                this.Player.InPlay.Add(card);
             }
             else
             {
-                Player.Discard.Add(card);
+                this.Player.Discard.Add(card);
             }
 
-            Player.UseActions();
+            this.Player.UseActions();
         }
 
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() && Player.IsLocalPlayer;
+            return this.Player.CanUseActions() && this.Player.IsLocalPlayer;
         }
     }
 }

@@ -6,12 +6,12 @@ namespace HarryPotterUnity.Cards.Potions.Locations
     {
         public override void OnInPlayBeforeTurnAction()
         {
-            CheckCharacter(Player);
+            this.CheckCharacter(this.Player);
         }
 
         public override void OnInPlayAfterTurnAction()
         {
-            CheckCharacter(Player.OppositePlayer);
+            this.CheckCharacter(this.Player.OppositePlayer);
         }
 
         private void CheckCharacter(Player p)

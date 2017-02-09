@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Cards.Potions.Items
     {
         public override void OnEnterInPlayAction()
         {
-            Player.AddActions(1);
+            this.Player.AddActions(1);
         }
     }
 }

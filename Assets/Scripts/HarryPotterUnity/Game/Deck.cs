@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using HarryPotterUnity.Cards;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Tween;
@@ -21,76 +22,76 @@ namespace HarryPotterUnity.Game
 
         private void OnDestroy()
         {
-            OnDeckIsOutOfCardsEvent = null;
+            this.OnDeckIsOutOfCardsEvent = null;
         }
 
         private void Awake()
         {
-            _player = transform.GetComponentInParent<Player>();
+            this._player = this.transform.GetComponentInParent<Player>();
 
-            var col = gameObject.AddComponent<BoxCollider>();
+            var col = this.gameObject.AddComponent<BoxCollider>();
             col.isTrigger = true;
             col.size = new Vector3(50f, 70f, 1f);
-            col.center = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 0f);
+            col.center = new Vector3(this._deckPositionOffset.x, this._deckPositionOffset.y, 0f);
         }
 
         public void Initialize (IEnumerable<BaseCard> cardList, BaseCard startingCharacter)
         {
-            Cards = new List<BaseCard>(cardList);
-            StartingCharacter = startingCharacter;
+            this.Cards = new List<BaseCard>(cardList);
+            this.StartingCharacter = startingCharacter;
             
-            var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y);
+            var cardPos = new Vector3(this._deckPositionOffset.x, this._deckPositionOffset.y);
             
-            for (int i = 0; i < Cards.Count; i++)
+            for (int i = 0; i < this.Cards.Count; i++)
             {
-                Cards[i] = Instantiate( Cards[i] );
+                this.Cards[i] = Instantiate(this.Cards[i] );
 
-                Cards[i].transform.parent = transform;
-                Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
-                Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
-                Cards[i].transform.position += i * Vector3.back * 0.2f;
+                this.Cards[i].transform.parent = this.transform;
+                this.Cards[i].transform.localPosition = cardPos + Vector3.back * -16f;
+                this.Cards[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, this._player.transform.rotation.eulerAngles.z));
+                this.Cards[i].transform.position += i * Vector3.back * 0.2f;
 
-                Cards[i].Player = _player;
+                this.Cards[i].Player = this._player;
 
-                Cards[i].NetworkId = GameManager.NetworkIdCounter++;
+                this.Cards[i].NetworkId = GameManager.NetworkIdCounter++;
                 
-                GameManager.AllCards.Add(Cards[i]);
+                GameManager.AllCards.Add(this.Cards[i]);
 
-                Cards[i].CurrentCollection = this;
+                this.Cards[i].CurrentCollection = this;
             }
         }
 
         public void SpawnStartingCharacter()
         {
-            StartingCharacter = Instantiate(StartingCharacter);
-            StartingCharacter.CurrentCollection = this;
+            this.StartingCharacter = Instantiate(this.StartingCharacter);
+            this.StartingCharacter.CurrentCollection = this;
 
-            StartingCharacter.transform.parent = transform;
-            StartingCharacter.Player = _player;
+            this.StartingCharacter.transform.parent = this.transform;
+            this.StartingCharacter.Player = this._player;
 
-            StartingCharacter.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, _player.transform.rotation.eulerAngles.z));
+            this.StartingCharacter.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, this._player.transform.rotation.eulerAngles.z));
 
-            StartingCharacter.NetworkId = GameManager.NetworkIdCounter++;
+            this.StartingCharacter.NetworkId = GameManager.NetworkIdCounter++;
             
-            GameManager.AllCards.Add(StartingCharacter);
+            GameManager.AllCards.Add(this.StartingCharacter);
 
-            _player.InPlay.Add(StartingCharacter);
+            this._player.InPlay.Add(this.StartingCharacter);
         }
 
         public BaseCard TakeTopCard()
         {
             BaseCard card = null;
 
-            if (Cards.Count > 0)
+            if (this.Cards.Count > 0)
             {
-                card = Cards[Cards.Count - 1];
-                Cards.RemoveAt(Cards.Count - 1);
+                card = this.Cards[this.Cards.Count - 1];
+                this.Cards.RemoveAt(this.Cards.Count - 1);
                 card.RemoveHighlight();
             }
 
-            if (Cards.Count <= 0)
+            if (this.Cards.Count <= 0)
             {
-                GameOver(); //TODO: call OnDeckIsOutOfCards event here
+                this.GameOver(); //TODO: call OnDeckIsOutOfCards event here
             }
             
             return card;
@@ -99,70 +100,70 @@ namespace HarryPotterUnity.Game
         private void GameOver()
         {
             //TODO: Refactor this logic to occur on player class by subscribing to event
-            _player.DisableAllCards();
-            _player.OppositePlayer.DisableAllCards();
+            this._player.DisableAllCards();
+            this._player.OppositePlayer.DisableAllCards();
 
-            if (OnDeckIsOutOfCardsEvent != null)
+            if (this.OnDeckIsOutOfCardsEvent != null)
             {
-                OnDeckIsOutOfCardsEvent(_player);
+                this.OnDeckIsOutOfCardsEvent(this._player);
             }
                 
         }
 
         private void OnMouseUp()
         {
-            if (!CanDrawCard()) return;
+            if (!this.CanDrawCard()) return;
 
-            GameManager.Network.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, _player.NetworkId);
+            GameManager.Network.RPC("ExecuteDrawActionOnPlayer", PhotonTargets.All, this._player.NetworkId);
         }
 
         private void OnMouseOver()
         {
-            if (CanDrawCard())
+            if (this.CanDrawCard())
             {
-                Cards[Cards.Count - 1].SetHighlight();
+                this.Cards[this.Cards.Count - 1].SetHighlight();
             }
         }
 
         private void OnMouseExit()
         {
-            Cards[Cards.Count - 1].RemoveHighlight();
+            if(this.Cards.Any()) this.Cards[this.Cards.Count - 1].RemoveHighlight();
         }
 
         private bool CanDrawCard()
         {
-            if (!_player.IsLocalPlayer) return false;
+            if (!this._player.IsLocalPlayer) return false;
 
-            return Cards.Count > 0 && _player.CanUseActions();
+            return this.Cards.Count > 0 && this._player.CanUseActions();
         }
 
         public void DrawCard()
         {
-            var card = TakeTopCard();
+            var card = this.TakeTopCard();
             if (card != null)
             {
-                _player.Hand.Add(card);
+                this._player.Hand.Add(card);
             }
         }
 
         public void Shuffle()
         {
-            for (int i = Cards.Count-1; i >= 0; i--)
+            for (int i = this.Cards.Count-1; i >= 0; i--)
             {
                 int random = Random.Range(0, i);
 
-                var temp = Cards[i];
-                Cards[i] = Cards[random];
-                Cards[random] = temp;
+                var temp = this.Cards[i];
+                this.Cards[i] = this.Cards[random];
+                this.Cards[random] = temp;
             }
 
-            GameManager.TweenQueue.AddTweenToQueue(new ShuffleDeckTween(Cards));
+            GameManager.TweenQueue.AddTweenToQueue(new ShuffleDeckTween(this.Cards));
             
         }
         
         protected override void Remove(BaseCard card)
         {
-            Cards.Remove(card);
+            this.Cards.Remove(card);
         }
 
         /// <summary>
@@ -170,14 +171,14 @@ namespace HarryPotterUnity.Game
         /// </summary>
         public override void Add(BaseCard card)
         {
-            MoveToThisCollection(card);
+            this.MoveToThisCollection(card);
 
-            Cards.Insert(0, card);
+            this.Cards.Insert(0, card);
 
-            card.transform.parent = transform;
+            card.transform.parent = this.transform;
 
-            var cardPos = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
-            cardPos.z -= Cards.IndexOf(card) * 0.2f;
+            var cardPos = new Vector3(this._deckPositionOffset.x, this._deckPositionOffset.y, 16f);
+            cardPos.z -= this.Cards.IndexOf(card) * 0.2f;
 
             var tween = new MoveTween
             {
@@ -199,42 +200,42 @@ namespace HarryPotterUnity.Game
         {
             foreach (var card in cards)
             {
-                Add(card);
+                this.Add(card);
             }
 
-            AdjustCardSpacing();
+            this.AdjustCardSpacing();
         }
 
         protected override void RemoveAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
             {
-                Remove(card);
+                this.Remove(card);
             }
 
-            AdjustCardSpacing();
+            this.AdjustCardSpacing();
         }
         
         private void AdjustCardSpacing()
         {
             var tween = new AsyncMoveTween
             {
-                Targets = Cards,
-                GetPosition = GetTargetPositionForCard
+                Targets = this.Cards,
+                GetPosition = this.GetTargetPositionForCard
             };
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            if (!Cards.Contains(card))
+            if (!this.Cards.Contains(card))
             {
                 Log.Write("Card not found in CardCollection");
                 return card.transform.localPosition;
             }
 
-            int index = Cards.IndexOf(card);
-            var result = new Vector3(_deckPositionOffset.x, _deckPositionOffset.y, 16f);
+            int index = this.Cards.IndexOf(card);
+            var result = new Vector3(this._deckPositionOffset.x, this._deckPositionOffset.y, 16f);
             result += index * Vector3.back * 0.2f;
 
             return result;

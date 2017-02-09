@@ -8,9 +8,9 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.TypeImmunity.Add(Type.Creature);
+            this.Player.TypeImmunity.Add(Type.Creature);
 
-            Player.OnNextTurnStartEvent += () => Player.TypeImmunity.Remove(Type.Creature);
+            this.Player.OnNextTurnStartEvent += () => this.Player.TypeImmunity.Remove(Type.Creature);
 
         }
     }

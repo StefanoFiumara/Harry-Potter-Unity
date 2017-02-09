@@ -17,14 +17,14 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         protected override void Start()
         {
             base.Start();
-            DamageAmount = _damageAmount;
+            this.DamageAmount = this._damageAmount;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.TakeDamage(this, DamageAmount);
+            this.Player.OppositePlayer.TakeDamage(this, this.DamageAmount);
 
-            DamageAmount = _damageAmount;
+            this.DamageAmount = this._damageAmount;
         }
     }
 }

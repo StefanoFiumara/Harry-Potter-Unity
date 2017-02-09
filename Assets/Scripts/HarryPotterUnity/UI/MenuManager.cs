@@ -19,48 +19,48 @@ namespace HarryPotterUnity.UI
 
         private void Awake()
         {
-            _subMenuManager = GetComponent<SubMenuManager>();
+            this._subMenuManager = this.GetComponent<SubMenuManager>();
 
             var allTextObjects = FindObjectsOfType<Text>();
 
-            _networkStatus = allTextObjects.SingleOrDefault(t => t.name.Contains("NetworkStatusDetailed"));
-            _playersOnline = allTextObjects.SingleOrDefault(t => t.name.Contains("PlayersOnlineLabel"));
+            this._networkStatus = allTextObjects.SingleOrDefault(t => t.name.Contains("NetworkStatusDetailed"));
+            this._playersOnline = allTextObjects.SingleOrDefault(t => t.name.Contains("PlayersOnlineLabel"));
         }
 
         [UsedImplicitly]
         public void OnJoinedLobby()
         {
-            ShowMenu(_currentMenu);
+            this.ShowMenu(this._currentMenu);
         }
 
         public void ShowMenu(BaseMenu menu)
         {
-            if (_currentMenu != null)
+            if (this._currentMenu != null)
             {
-                _currentMenu.IsOpen = false;
+                this._currentMenu.IsOpen = false;
             }
-            
-            _currentMenu = menu;
-            _currentMenu.IsOpen = true;
-            
-            _subMenuManager.HideMenu();
+
+            this._currentMenu = menu;
+            this._currentMenu.IsOpen = true;
+
+            this._subMenuManager.HideMenu();
         }
 
         [UsedImplicitly]
         public void HideMenu()
         {
-            if (_currentMenu != null)
+            if (this._currentMenu != null)
             {
-                _currentMenu.IsOpen = false;
+                this._currentMenu.IsOpen = false;
             }
-            
-            _currentMenu = null;
+
+            this._currentMenu = null;
         }
 
         private void Update()
         {
-            _playersOnline.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
-            _networkStatus.text = string.Format("Network Status: {0}", PhotonNetwork.connectionStateDetailed);
+            this._playersOnline.text = string.Format("Players Online: {0}", PhotonNetwork.countOfPlayers);
+            this._networkStatus.text = string.Format("Network Status: {0}", PhotonNetwork.connectionStateDetailed);
         }
     }
 }

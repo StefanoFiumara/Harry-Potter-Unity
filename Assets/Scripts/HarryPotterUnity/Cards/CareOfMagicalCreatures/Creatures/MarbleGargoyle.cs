@@ -6,20 +6,20 @@
 
         public override void OnInPlayBeforeTurnAction()
         {
-            if (Player.OppositePlayer.InPlay.Creatures.Count != 0) return;
-            
-            _damagePerTurn += 3;
-            _attackLabel.text = _damagePerTurn.ToString();
-            _hasAddedDamage = true;
+            if (this.Player.OppositePlayer.InPlay.Creatures.Count != 0) return;
+
+            this._damagePerTurn += 3;
+            this._attackLabel.text = this._damagePerTurn.ToString();
+            this._hasAddedDamage = true;
         }
 
         public override void OnInPlayAfterTurnAction()
         {
-            if (!_hasAddedDamage) return;
+            if (!this._hasAddedDamage) return;
 
-            _damagePerTurn -= 3;
-            _attackLabel.text = _damagePerTurn.ToString();
-            _hasAddedDamage = false;
+            this._damagePerTurn -= 3;
+            this._attackLabel.text = this._damagePerTurn.ToString();
+            this._hasAddedDamage = false;
         }
     }
 }

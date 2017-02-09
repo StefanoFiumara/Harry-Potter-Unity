@@ -6,9 +6,9 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.Deck.DrawCard();
-            Player.Deck.DrawCard();
-            Player.Deck.DrawCard();
+            this.Player.Deck.DrawCard();
+            this.Player.Deck.DrawCard();
+            this.Player.Deck.DrawCard();
         }
     }
 }

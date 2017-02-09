@@ -7,6 +7,14 @@ using UnityEngine;
 
 namespace HarryPotterUnity.Game
 {
+    public class DebugModeOptions
+    {
+        public List<GameObject> Player1Deck { get; set; }
+        public List<GameObject> Player2Deck { get; set; }
+        public GameObject Player1StartingCharacter { get; set; }
+        public GameObject Player2StartingCharacter { get; set; }
+    }
+
     public static class GameManager
     {
         public const int PREVIEW_LAYER = 9;
@@ -26,38 +34,35 @@ namespace HarryPotterUnity.Game
         public static readonly TweenQueue TweenQueue = new TweenQueue();
 
         public static PhotonView Network { get; set; }
-        
+
+        public static void DisableCards(IEnumerable<BaseCard> cards)
+        {
+            foreach (var card in cards) card.Disable();
+        }
+
         public static bool DebugModeEnabled { get; set; }
 
-        public static List<GameObject> Debug_Player1Deck { private get; set; }
-        public static List<GameObject> Debug_Player2Deck { private get; set; }
-        public static GameObject Debug_Player1StartingCharacter { private get; set; }
-        public static GameObject Debug_Player2StartingCharacter { private get; set; }
+        public static DebugModeOptions DebugModeOptions { get; set; }
+
+        public static void EnableCards(IEnumerable<BaseCard> cards)
+        {
+            foreach (var card in cards) card.Enable();
+        }
 
         public static List<BaseCard> GetPlayerTestDeck(int playerId)
         {
             var prefabList = playerId == 0
-                ? Debug_Player1Deck
-                : Debug_Player2Deck;
+                ? DebugModeOptions.Player1Deck
+                : DebugModeOptions.Player2Deck;
 
             return prefabList.Select(o => o.GetComponent<BaseCard>()).ToList();
-        }
-
-        public static void DisableCards(List<BaseCard> cards)
-        {
-            cards.ForEach(card => card.Disable());
-        }
-
-        public static void EnableCards(List<BaseCard> cards)
-        {
-            cards.ForEach(card => card.Enable());
         }
 
         public static BaseCard GetPlayerTestCharacter(int playerId)
         {
             var obj = playerId == 0
-                ? Debug_Player1StartingCharacter
-                : Debug_Player2StartingCharacter;
+                ? DebugModeOptions.Player1StartingCharacter
+                : DebugModeOptions.Player2StartingCharacter;
 
             return obj.GetComponent<BaseCard>();
         }

@@ -4,7 +4,7 @@
     {
         public override void OnInPlayAfterTurnAction()
         {
-            Heal(MaxHealth);
+            this.Heal(this.MaxHealth);
         }
     }
 }

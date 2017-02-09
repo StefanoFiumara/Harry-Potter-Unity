@@ -7,13 +7,12 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
     {
         public override void OnInPlayBeforeTurnAction()
         {
-            if (Player.OppositePlayer.InPlay.Items.Any())
+            if (this.Player.OppositePlayer.InPlay.Items.Any())
             {
-                var item =
-                    Player.OppositePlayer.InPlay.Items.Skip(Random.Range(0, Player.OppositePlayer.InPlay.Items.Count))
+                var item = this.Player.OppositePlayer.InPlay.Items.Skip(Random.Range(0, this.Player.OppositePlayer.InPlay.Items.Count))
                         .First();
 
-                Player.OppositePlayer.Discard.Add(item);
+                this.Player.OppositePlayer.Discard.Add(item);
             }
         }
     }

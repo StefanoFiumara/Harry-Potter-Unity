@@ -1,9 +1,7 @@
 ﻿using System.Linq;
-using HarryPotterUnity.Cards;
 using HarryPotterUnity.Cards.Interfaces;
 using HarryPotterUnity.Enums;
 using HarryPotterUnity.Game;
-using HarryPotterUnity.Utils;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,57 +16,51 @@ namespace HarryPotterUnity.UI.Menu
 
         public Player LocalPlayer
         {
-            private get { return _localPlayer; }
+            private get { return this._localPlayer; }
             set
             {
-                _localPlayer = value;
+                this._localPlayer = value;
 
-                _localPlayer.OnStartTurnEvent += () =>
+                this._localPlayer.OnStartTurnEvent += () =>
                 {
-                    _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
-                    _skipActionButton.interactable = true;
+                    this._actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", true);
+                    this._skipActionButton.interactable = true;
                 };
 
-                _localPlayer.OnEndTurnEvent += () =>
+                this._localPlayer.OnEndTurnEvent += () =>
                 {
-                    _actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
-                    _skipActionButton.interactable = false;
+                    this._actionsLeftLabelLocal.GetComponent<Animator>().SetBool("IsOpen", false);
+                    this._skipActionButton.interactable = false;
                 };
 
-                _localPlayer.InPlay.OnCardEnteredPlay += card =>
+                this._localPlayer.InPlay.OnCardEnteredPlay += card =>
                 {
-                    if (card is ILessonProvider)
-                    {
-                        UpdateLessonPanel();
-                    }
+                        this.UpdateLessonPanel();
                 };
 
-                _localPlayer.InPlay.OnCardExitedPlay += card =>
+                this._localPlayer.InPlay.OnCardExitedPlay += card =>
                 {
-                    if (card is ILessonProvider)
-                    {
-                        UpdateLessonPanel();
-                    }
+                        this.UpdateLessonPanel();
                 };
 
-                _localPlayer.Deck.OnDeckIsOutOfCardsEvent += ShowGameOverMessage;
+                this._localPlayer.Deck.OnDeckIsOutOfCardsEvent += this.ShowGameOverMessage;
 
-                UpdateLessonPanel();
+                this.UpdateLessonPanel(forceUpdate: true);
             }
         }
 
         public Player RemotePlayer
         {
-            private get { return _remotePlayer; }
+            private get { return this._remotePlayer; }
             set
             {
-                _remotePlayer = value;
-                _remotePlayer.OnStartTurnEvent +=
-                    () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
-                _remotePlayer.OnEndTurnEvent +=
-                    () => _actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
+                this._remotePlayer = value;
+                this._remotePlayer.OnStartTurnEvent +=
+                    () => this._actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", true);
+                this._remotePlayer.OnEndTurnEvent +=
+                    () => this._actionsLeftLabelRemote.GetComponent<Animator>().SetBool("IsOpen", false);
 
-                _remotePlayer.Deck.OnDeckIsOutOfCardsEvent += ShowGameOverMessage;
+                this._remotePlayer.Deck.OnDeckIsOutOfCardsEvent += this.ShowGameOverMessage;
             }
         }
 
@@ -95,41 +87,40 @@ namespace HarryPotterUnity.UI.Menu
         {
             base.Awake();
 
-            var allText = FindObjectsOfType<Text>();
+            var allText   = FindObjectsOfType<Text>();
             var allImages = FindObjectsOfType<Image>();
 
-            _mainMenuBackground = allImages.FirstOrDefault(i => i.name.Contains("MainMenuBackground"));
-            _mainMenuTitle = allText.FirstOrDefault(i => i.name.Contains("MainMenuTitle"));
+            this._mainMenuBackground = allImages.FirstOrDefault(i => i.name.Contains("MainMenuBackground"));
+            this._mainMenuTitle      = allText.FirstOrDefault(i => i.name.Contains("MainMenuTitle"));
 
-            _actionsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Local"));
-            _actionsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Remote"));
+            this._actionsLeftLabelLocal  = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Local"));
+            this._actionsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("ActionsLeftLabel_Remote"));
 
-            _cardsLeftLabelLocal = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Local"));
-            _cardsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Remote"));
+            this._cardsLeftLabelLocal  = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Local"));
+            this._cardsLeftLabelRemote = allText.FirstOrDefault(t => t.name.Contains("CardsLeftLabel_Remote"));
 
-            _skipActionButton = FindObjectsOfType<Button>().FirstOrDefault(b => b.name.Contains("SkipActionButton"));
+            this._skipActionButton = FindObjectsOfType<Button>().FirstOrDefault(b => b.name.Contains("SkipActionButton"));
 
-            _lessonCountLabel = allText.FirstOrDefault(t => t.name.Contains("LessonCountLabel"));
-            _lessonIndicatorCreatures = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Creatures"));
-            _lessonIndicatorCharms = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Charms"));
-            _lessonIndicatorTransfiguration =
-                allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Transfiguration"));
-            _lessonIndicatorPotions = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Potions"));
-            _lessonIndicatorQuidditch = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Quidditch"));
+            this._lessonCountLabel               = allText.FirstOrDefault(t => t.name.Contains("LessonCountLabel"));
+            this._lessonIndicatorCreatures       = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Creatures"));
+            this._lessonIndicatorCharms          = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Charms"));
+            this._lessonIndicatorTransfiguration = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Transfiguration"));
+            this._lessonIndicatorPotions         = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Potions"));
+            this._lessonIndicatorQuidditch       = allImages.FirstOrDefault(i => i.name.Contains("LessonIndicator_Quidditch"));
 
-            if (_actionsLeftLabelLocal == null ||
-                _actionsLeftLabelRemote == null ||
-                _cardsLeftLabelLocal == null ||
-                _cardsLeftLabelRemote == null ||
-                _mainMenuTitle == null ||
-                _mainMenuBackground == null ||
-                _skipActionButton == null ||
-                _lessonCountLabel == null ||
-                _lessonIndicatorCreatures == null ||
-                _lessonIndicatorCharms == null ||
-                _lessonIndicatorTransfiguration == null ||
-                _lessonIndicatorPotions == null ||
-                _lessonIndicatorQuidditch == null)
+            if (this._actionsLeftLabelLocal == null || 
+                this._actionsLeftLabelRemote == null || 
+                this._cardsLeftLabelLocal == null || 
+                this._cardsLeftLabelRemote == null || 
+                this._mainMenuTitle == null || 
+                this._mainMenuBackground == null || 
+                this._skipActionButton == null || 
+                this._lessonCountLabel == null || 
+                this._lessonIndicatorCreatures == null || 
+                this._lessonIndicatorCharms == null || 
+                this._lessonIndicatorTransfiguration == null || 
+                this._lessonIndicatorPotions == null || 
+                this._lessonIndicatorQuidditch == null)
             {
                 Log.Error("Could not find all needed HUD elements in gameplay menu, report this error!");
             }
@@ -137,25 +128,25 @@ namespace HarryPotterUnity.UI.Menu
 
         private void Start()
         {
-            _skipActionButton.interactable = false;
+            this._skipActionButton.interactable = false;
         }
 
         protected override void Update()
         {
             base.Update();
 
-            if (LocalPlayer != null)
+            if (this.LocalPlayer != null)
             {
                 //Update Local Player Properties
-                _actionsLeftLabelLocal.text = string.Format("Actions Left: {0}", LocalPlayer.ActionsAvailable);
-                _cardsLeftLabelLocal.text = string.Format("Cards Left: {0}", LocalPlayer.Deck.Cards.Count);
+                this._actionsLeftLabelLocal.text = string.Format("Actions Left: {0}", this.LocalPlayer.ActionsAvailable);
+                this._cardsLeftLabelLocal.text = string.Format("Cards Left: {0}", this.LocalPlayer.Deck.Cards.Count);
             }
 
-            if (RemotePlayer != null)
+            if (this.RemotePlayer != null)
             {
                 //Update Remote Plater Properties
-                _actionsLeftLabelRemote.text = string.Format("Actions Left: {0}", RemotePlayer.ActionsAvailable);
-                _cardsLeftLabelRemote.text = string.Format("Cards Left: {0}", RemotePlayer.Deck.Cards.Count);
+                this._actionsLeftLabelRemote.text = string.Format("Actions Left: {0}", this.RemotePlayer.ActionsAvailable);
+                this._cardsLeftLabelRemote.text = string.Format("Cards Left: {0}", this.RemotePlayer.Deck.Cards.Count);
             }
         }
 
@@ -166,24 +157,31 @@ namespace HarryPotterUnity.UI.Menu
             Log.Write("Player {0} has lost the game.", loser.NetworkId+1);
         }
 
-        private void UpdateLessonPanel()
+        private void UpdateLessonPanel(bool forceUpdate = false)
         {
-            _lessonCountLabel.text = LocalPlayer.AmountLessonsInPlay <= 0 ? string.Empty : LocalPlayer.AmountLessonsInPlay.ToString();
-            _lessonIndicatorCreatures.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Creatures));
-            _lessonIndicatorCharms.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Charms));
-            _lessonIndicatorTransfiguration.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Transfiguration));
-            _lessonIndicatorPotions.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Potions));
-            _lessonIndicatorQuidditch.gameObject.SetActive(LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Quidditch));
+            int currentAmount;
+            bool parsed = int.TryParse(this._lessonCountLabel.text, out currentAmount);
+
+            if (!parsed) forceUpdate = true;
+
+            if (currentAmount == this.LocalPlayer.AmountLessonsInPlay && !forceUpdate) return;
+
+            this._lessonCountLabel.text = this.LocalPlayer.AmountLessonsInPlay <= 0 ? string.Empty : this.LocalPlayer.AmountLessonsInPlay.ToString();
+            this._lessonIndicatorCreatures.gameObject.SetActive(this.LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Creatures));
+            this._lessonIndicatorCharms.gameObject.SetActive(this.LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Charms));
+            this._lessonIndicatorTransfiguration.gameObject.SetActive(this.LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Transfiguration));
+            this._lessonIndicatorPotions.gameObject.SetActive(this.LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Potions));
+            this._lessonIndicatorQuidditch.gameObject.SetActive(this.LocalPlayer.LessonTypesInPlay.Contains(LessonTypes.Quidditch));
         }
         
         [UsedImplicitly]
         public void SkipAction()
         {
-            var player = LocalPlayer.CanUseActions() ? LocalPlayer : RemotePlayer;
+            var player = this.LocalPlayer.CanUseActions() ? this.LocalPlayer : this.RemotePlayer;
             
             if (player.ActionsAvailable == 1)
             {
-                _skipActionButton.interactable = false;
+                this._skipActionButton.interactable = false;
             }
 
             GameManager.Network.RPC("ExecuteSkipAction", PhotonTargets.All);
@@ -191,14 +189,14 @@ namespace HarryPotterUnity.UI.Menu
 
         public override void OnShowMenu()
         {
-            _mainMenuBackground.GetComponent<Animator>().SetBool("IsVisible", false);
-            _mainMenuTitle.GetComponent<Animator>().SetBool("IsVisible", false);
+            this._mainMenuBackground.GetComponent<Animator>().SetBool("IsVisible", false);
+            this._mainMenuTitle.GetComponent<Animator>().SetBool("IsVisible", false);
         }
 
         public override void OnHideMenu()
         {
-            _mainMenuBackground.GetComponent<Animator>().SetBool("IsVisible", true);
-            _mainMenuTitle.GetComponent<Animator>().SetBool("IsVisible", true);
+            this._mainMenuBackground.GetComponent<Animator>().SetBool("IsVisible", true);
+            this._mainMenuTitle.GetComponent<Animator>().SetBool("IsVisible", true);
         }
     }
 }

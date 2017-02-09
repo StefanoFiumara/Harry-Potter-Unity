@@ -37,53 +37,53 @@ public class PhotonTransformView : MonoBehaviour, IPunObservable
 
     void Awake()
     {
-        m_PhotonView = GetComponent<PhotonView>();
+        this.m_PhotonView = this.GetComponent<PhotonView>();
 
-        m_PositionControl = new PhotonTransformViewPositionControl( m_PositionModel );
-        m_RotationControl = new PhotonTransformViewRotationControl( m_RotationModel );
-        m_ScaleControl = new PhotonTransformViewScaleControl( m_ScaleModel );
+        this.m_PositionControl = new PhotonTransformViewPositionControl(this.m_PositionModel );
+        this.m_RotationControl = new PhotonTransformViewRotationControl(this.m_RotationModel );
+        this.m_ScaleControl = new PhotonTransformViewScaleControl(this.m_ScaleModel );
     }
 
     void Update()
     {
-        if( m_PhotonView == null || m_PhotonView.isMine == true || PhotonNetwork.connected == false )
+        if(this.m_PhotonView == null || this.m_PhotonView.isMine == true || PhotonNetwork.connected == false )
         {
             return;
         }
 
-        UpdatePosition();
-        UpdateRotation();
-        UpdateScale();
+        this.UpdatePosition();
+        this.UpdateRotation();
+        this.UpdateScale();
     }
 
     void UpdatePosition()
     {
-        if( m_PositionModel.SynchronizeEnabled == false || m_ReceivedNetworkUpdate == false )
+        if(this.m_PositionModel.SynchronizeEnabled == false || this.m_ReceivedNetworkUpdate == false )
         {
             return;
         }
 
-        transform.localPosition = m_PositionControl.UpdatePosition( transform.localPosition );
+        this.transform.localPosition = this.m_PositionControl.UpdatePosition(this.transform.localPosition );
     }
 
     void UpdateRotation()
     {
-        if( m_RotationModel.SynchronizeEnabled == false || m_ReceivedNetworkUpdate == false )
+        if(this.m_RotationModel.SynchronizeEnabled == false || this.m_ReceivedNetworkUpdate == false )
         {
             return;
         }
 
-        transform.localRotation = m_RotationControl.GetRotation( transform.localRotation );
+        this.transform.localRotation = this.m_RotationControl.GetRotation(this.transform.localRotation );
     }
 
     void UpdateScale()
     {
-        if( m_ScaleModel.SynchronizeEnabled == false || m_ReceivedNetworkUpdate == false )
+        if(this.m_ScaleModel.SynchronizeEnabled == false || this.m_ReceivedNetworkUpdate == false )
         {
             return;
         }
 
-        transform.localScale = m_ScaleControl.GetScale( transform.localScale );
+        this.transform.localScale = this.m_ScaleControl.GetScale(this.transform.localScale );
     }
 
     /// <summary>
@@ -96,23 +96,23 @@ public class PhotonTransformView : MonoBehaviour, IPunObservable
     /// <param name="turnSpeed">The current turn speed of the object in angles/second.</param>
     public void SetSynchronizedValues( Vector3 speed, float turnSpeed )
     {
-        m_PositionControl.SetSynchronizedValues( speed, turnSpeed );
+        this.m_PositionControl.SetSynchronizedValues( speed, turnSpeed );
     }
 
     public void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info )
     {
-        m_PositionControl.OnPhotonSerializeView( transform.localPosition, stream, info );
-        m_RotationControl.OnPhotonSerializeView( transform.localRotation, stream, info );
-        m_ScaleControl.OnPhotonSerializeView( transform.localScale, stream, info );
+        this.m_PositionControl.OnPhotonSerializeView(this.transform.localPosition, stream, info );
+        this.m_RotationControl.OnPhotonSerializeView(this.transform.localRotation, stream, info );
+        this.m_ScaleControl.OnPhotonSerializeView(this.transform.localScale, stream, info );
 
-        if( m_PhotonView.isMine == false && m_PositionModel.DrawErrorGizmo == true )
+        if(this.m_PhotonView.isMine == false && this.m_PositionModel.DrawErrorGizmo == true )
         {
-            DoDrawEstimatedPositionError();
+            this.DoDrawEstimatedPositionError();
         }
 
         if( stream.isReading == true )
         {
-            m_ReceivedNetworkUpdate = true;
+            this.m_ReceivedNetworkUpdate = true;
         }
     }
 
@@ -129,10 +129,10 @@ public class PhotonTransformView : MonoBehaviour, IPunObservable
 
     void DoDrawEstimatedPositionError()
     {
-        Vector3 targetPosition = m_PositionControl.GetNetworkPosition();
+        Vector3 targetPosition = this.m_PositionControl.GetNetworkPosition();
 
-        Debug.DrawLine( targetPosition, transform.position, Color.red, 2f );
-        Debug.DrawLine( transform.position, transform.position + Vector3.up, Color.green, 2f );
+        Debug.DrawLine( targetPosition, this.transform.position, Color.red, 2f );
+        Debug.DrawLine(this.transform.position, this.transform.position + Vector3.up, Color.green, 2f );
         Debug.DrawLine( targetPosition, targetPosition + Vector3.up, Color.red, 2f );
     }
 

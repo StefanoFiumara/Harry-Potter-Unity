@@ -7,24 +7,24 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
     { 
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() 
-                && Player.Hand.Cards.Count > 0 
-                && Player.IsLocalPlayer;
+            return this.Player.CanUseActions() 
+                && this.Player.Hand.Cards.Count > 0 
+                && this.Player.IsLocalPlayer;
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            var cardsInHand = Player.Hand.Cards.ToList();
+            var cardsInHand = this.Player.Hand.Cards.ToList();
             int cardCount = cardsInHand.Count;
-            
-            Player.Deck.AddAll( cardsInHand );
+
+            this.Player.Deck.AddAll( cardsInHand );
 
             while (cardCount-- > 0)
             {
-                Player.Deck.DrawCard();
+                this.Player.Deck.DrawCard();
             }
 
-            Player.UseActions();
+            this.Player.UseActions();
         }
     }
 }

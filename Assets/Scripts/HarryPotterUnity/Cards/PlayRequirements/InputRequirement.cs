@@ -15,26 +15,26 @@ namespace HarryPotterUnity.Cards.PlayRequirements
         [SerializeField, UsedImplicitly]
         private int _inPlayActionInputRequired;
 
-        public int FromHandActionInputRequired { get { return _fromHandActionInputRequired; } }
-        public int InPlayActionInputRequired { get { return _inPlayActionInputRequired; } }
+        public int FromHandActionInputRequired { get { return this._fromHandActionInputRequired; } }
+        public int InPlayActionInputRequired { get { return this._inPlayActionInputRequired; } }
 
         private void Awake()
         {
-            _cardInfo = GetComponent<BaseCard>();
-            if (GetComponent<InputGatherer>() == null)
+            this._cardInfo = this.GetComponent<BaseCard>();
+            if (this.GetComponent<InputGatherer>() == null)
             {
-                gameObject.AddComponent<InputGatherer>();   
+                this.gameObject.AddComponent<InputGatherer>();   
             }
         }
 
         public bool MeetsRequirement()
         {
-            switch (_cardInfo.State)
+            switch (this._cardInfo.State)
             {
                 case State.InHand:
-                    return _cardInfo.GetFromHandActionTargets().Count >= _fromHandActionInputRequired;
+                    return this._cardInfo.GetFromHandActionTargets().Count >= this._fromHandActionInputRequired;
                 case State.InPlay:
-                    return _cardInfo.GetInPlayActionTargets().Count >= _inPlayActionInputRequired;
+                    return this._cardInfo.GetInPlayActionTargets().Count >= this._inPlayActionInputRequired;
             }
 
             return false;

@@ -10,22 +10,22 @@ namespace HarryPotterUnity.UI.Menu
 
         public string Title
         {
-            get { return _title.text; }
-            set { _title.text = value; }
+            get { return this._title.text; }
+            set { this._title.text = value; }
         }
 
         public string Message
         {
-            get { return _message.text; }
-            set { _message.text = value; }
+            get { return this._message.text; }
+            set { this._message.text = value; }
         }
 
         protected override void Awake()
         {
             base.Awake();
-            var textComponents = GetComponentsInChildren<Text>();
-            _title = textComponents.First(t => t.name.Contains("Title"));
-            _message = textComponents.First(t => t.name.Contains("Message"));
+            var textComponents = this.GetComponentsInChildren<Text>();
+            this._title = textComponents.First(t => t.name.Contains("Title"));
+            this._message = textComponents.First(t => t.name.Contains("Message"));
         }
     }
 }

@@ -6,7 +6,7 @@
         protected override void Start()
         {
             base.Start();
-            _damageAmount = 3;
+            this._damageAmount = 3;
         }
     }
 }

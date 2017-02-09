@@ -16,14 +16,14 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.OppositePlayer.InPlay.LessonsOfType(_lessonType).Any();
+            return this.Player.OppositePlayer.InPlay.LessonsOfType(this._lessonType).Any();
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var lessonsToDiscard = Player.OppositePlayer.InPlay.LessonsOfType(_lessonType).Take(_amount);
+            var lessonsToDiscard = this.Player.OppositePlayer.InPlay.LessonsOfType(this._lessonType).Take(this._amount);
 
-            Player.OppositePlayer.Discard.AddAll(lessonsToDiscard);
+            this.Player.OppositePlayer.Discard.AddAll(lessonsToDiscard);
         }
     }
 }

@@ -8,7 +8,6 @@ namespace HarryPotterUnity.Utils
     {
 
         private static StaticCoroutine _instance;
-
         private static StaticCoroutine Instance
         {
             get
@@ -32,7 +31,7 @@ namespace HarryPotterUnity.Utils
 
         private IEnumerator Perform(IEnumerator coroutine)
         {
-            yield return StartCoroutine(coroutine);
+            yield return this.StartCoroutine(coroutine);
             Die();
         }
 
@@ -56,7 +55,7 @@ namespace HarryPotterUnity.Utils
         }
 
         [UsedImplicitly]
-        void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
             _instance = null;
         }

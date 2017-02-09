@@ -64,7 +64,7 @@ public class PhotonStatsGui : MonoBehaviour
 
     public void OnGUI()
     {
-        if (PhotonNetwork.networkingPeer.TrafficStatsEnabled != statsOn)
+        if (PhotonNetwork.networkingPeer.TrafficStatsEnabled != this.statsOn)
         {
             PhotonNetwork.networkingPeer.TrafficStatsEnabled = this.statsOn;
         }

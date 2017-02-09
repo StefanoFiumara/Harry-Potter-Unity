@@ -11,15 +11,15 @@ namespace HarryPotterUnity.Cards.Potions.Spells
         protected override void Start()
         {
             base.Start();
-            DamageAmount = 5;
+            this.DamageAmount = 5;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            Player.OppositePlayer.TakeDamage(this, DamageAmount);
+            this.Player.OppositePlayer.TakeDamage(this, this.DamageAmount);
 
-            Player.TypeImmunity.Add(Type.Creature);
-            Player.OnNextTurnStartEvent += () => Player.TypeImmunity.Remove(Type.Creature);
+            this.Player.TypeImmunity.Add(Type.Creature);
+            this.Player.OnNextTurnStartEvent += () => this.Player.TypeImmunity.Remove(Type.Creature);
         }
     }
 }

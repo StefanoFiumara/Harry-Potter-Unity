@@ -17,34 +17,33 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public int AmountRequired
         {
-            get { return _amountRequired; }
-            set { _amountRequired = value; }
+            get { return this._amountRequired; }
+            set { this._amountRequired = value; }
         }
 
         public LessonTypes LessonType
         {
-            get { return _lessonType; }
-            set { _lessonType = value; }
+            get { return this._lessonType; }
+            set { this._lessonType = value; }
         }
 
         private int _originalAmountRequired; //Some cards may change how many lessons are required to play a card, this variable holds the "printed" amount.
 
         private void Start()
         {
-            _player = GetComponent<BaseCard>().Player;
-            _originalAmountRequired = _amountRequired;
+            this._player = this.GetComponent<BaseCard>().Player;
+            this._originalAmountRequired = this._amountRequired;
         }
         public bool MeetsRequirement()
         {
-            return _player.AmountLessonsInPlay >= _amountRequired &&
-                   _player.LessonTypesInPlay.Contains(LessonType);
+            return this._player.AmountLessonsInPlay >= this._amountRequired && this._player.LessonTypesInPlay.Contains(this.LessonType);
         }
 
         public void OnRequirementMet() { }
 
         public void ResetRequirement()
         {
-            AmountRequired = _originalAmountRequired;
+            this.AmountRequired = this._originalAmountRequired;
         }
     }
 }

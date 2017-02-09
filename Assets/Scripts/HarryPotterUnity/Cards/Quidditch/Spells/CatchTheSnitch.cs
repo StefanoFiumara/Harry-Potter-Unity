@@ -7,15 +7,15 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.InPlay.Matches.Any() || Player.OppositePlayer.InPlay.Matches.Any();
+            return this.Player.InPlay.Matches.Any() || this.Player.OppositePlayer.InPlay.Matches.Any();
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var match = (BaseMatch) Player.InPlay.Matches.Concat(Player.OppositePlayer.InPlay.Matches).Single();
+            var match = (BaseMatch) this.Player.InPlay.Matches.Concat(this.Player.OppositePlayer.InPlay.Matches).Single();
 
-            Player.Discard.Add(match);
-            match.OnPlayerHasWonMatch(Player, Player.OppositePlayer);
+            this.Player.Discard.Add(match);
+            match.OnPlayerHasWonMatch(this.Player, this.Player.OppositePlayer);
         }
     }
 }

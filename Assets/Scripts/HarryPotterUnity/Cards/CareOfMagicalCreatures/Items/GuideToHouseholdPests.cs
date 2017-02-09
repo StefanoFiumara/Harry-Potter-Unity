@@ -11,25 +11,25 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Items
     {
         public override List<BaseCard> GetInPlayActionTargets()
         {
-            return Player.OppositePlayer.InPlay.Creatures.Concat(Player.InPlay.Creatures).ToList();
+            return this.Player.OppositePlayer.InPlay.Creatures.Concat(this.Player.InPlay.Creatures).ToList();
         }
 
         public override bool CanPerformInPlayAction()
         {
-            return Player.IsLocalPlayer
-                   && Player.CanUseActions();
+            return this.Player.IsLocalPlayer
+                   && this.Player.CanUseActions();
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
             if (targets != null)
             {
-                Player.Discard.Add(this);
+                this.Player.Discard.Add(this);
 
                 var target = targets.First();
                 ((BaseCreature)target).TakeDamage(4);
 
-                Player.UseActions();
+                this.Player.UseActions();
             }
         }
     }

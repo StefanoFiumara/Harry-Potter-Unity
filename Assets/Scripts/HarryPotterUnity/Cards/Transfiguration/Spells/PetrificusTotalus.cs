@@ -11,13 +11,13 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.OppositePlayer.
+            return this.Player.OppositePlayer.
                 Discard.Cards.Any(c => c.Type == Type.Lesson);
         }
 
         public override List<BaseCard> GetFromHandActionTargets()
         {
-            return Player.OppositePlayer.InPlay.Creatures;
+            return this.Player.OppositePlayer.InPlay.Creatures;
         }
 
         protected override void SpellAction(List<BaseCard> targets)

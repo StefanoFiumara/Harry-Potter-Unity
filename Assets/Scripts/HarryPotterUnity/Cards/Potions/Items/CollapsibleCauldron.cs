@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Cards.Potions.Items
     {
         public override void OnExitInPlayAction()
         {
-            Player.Hand.Add(this);
+            this.Player.Hand.Add(this);
         }
     }
 }

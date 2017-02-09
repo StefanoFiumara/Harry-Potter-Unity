@@ -13,31 +13,31 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
         protected override void Start()
         {
             base.Start();
-            _damageAmount = 2;
+            this._damageAmount = 2;
         }
         public override void OnInPlayBeforeTurnAction()
         {
-            _hasEffectedTriggered = false;
+            this._hasEffectedTriggered = false;
         }
 
         public override void OnEnterInPlayAction()
         {
-            Player.OnCardPlayedEvent += AddDamageToQuidditchCards;
+            this.Player.OnCardPlayedEvent += this.AddDamageToQuidditchCards;
         }
 
         private void AddDamageToQuidditchCards(BaseCard cardPlayed, List<BaseCard> targets)
         {
             if (cardPlayed.IsQuidditchDamageCard() == false) return;
-            if (_hasEffectedTriggered) return;
+            if (this._hasEffectedTriggered) return;
 
-            _hasEffectedTriggered = true;
+            this._hasEffectedTriggered = true;
 
-            ((IDamageSpell) cardPlayed).DamageAmount += _damageAmount;
+            ((IDamageSpell) cardPlayed).DamageAmount += this._damageAmount;
         }
         
         public override void OnExitInPlayAction()
         {
-            Player.OnCardPlayedEvent -= AddDamageToQuidditchCards;
+            this.Player.OnCardPlayedEvent -= this.AddDamageToQuidditchCards;
         }
     }
 }

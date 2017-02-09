@@ -14,9 +14,9 @@ namespace HarryPotterUnity.Game
 
         private void Start ()
         {
-            Cards = new List<BaseCard>();
+            this.Cards = new List<BaseCard>();
 
-            var col = gameObject.AddComponent<BoxCollider>();
+            var col = this.gameObject.AddComponent<BoxCollider>();
             col.isTrigger = true;
             col.size = new Vector3(50f, 70f, 1f);
             col.center = new Vector3(_discardPositionOffset.x, _discardPositionOffset.y, 0f);
@@ -24,12 +24,12 @@ namespace HarryPotterUnity.Game
 
         public override void Add(BaseCard card) 
         {
-            Cards.Add(card);
+            this.Cards.Add(card);
             card.Enable();
             
-            card.transform.parent = transform;
+            card.transform.parent = this.transform;
 
-            var cardPos = GetTargetPositionForCard(card);
+            var cardPos = this.GetTargetPositionForCard(card);
 
             Vector3 cardPreviewPos = cardPos;
             cardPreviewPos.z -= 20f;
@@ -57,12 +57,12 @@ namespace HarryPotterUnity.Game
             GameManager.TweenQueue.AddTweenToQueue( previewTween );
             GameManager.TweenQueue.AddTweenToQueue( finalTween );
 
-            MoveToThisCollection(card);
+            this.MoveToThisCollection(card);
         }
 
         protected override void Remove(BaseCard card)
         {
-            Cards.Remove(card);
+            this.Cards.Remove(card);
         }
 
         public override void AddAll(IEnumerable<BaseCard> cards)
@@ -72,37 +72,37 @@ namespace HarryPotterUnity.Game
 
             foreach (var card in cardList)
             {
-                Add(card);
+                this.Add(card);
             }
 
-            AdjustCardSpacing();
+            this.AdjustCardSpacing();
         }
 
         protected override void RemoveAll(IEnumerable<BaseCard> cards)
         {
             foreach (var card in cards)
             {
-                Cards.Remove(card);
+                this.Cards.Remove(card);
             }
 
-            AdjustCardSpacing();
+            this.AdjustCardSpacing();
         }
         
         private void AdjustCardSpacing()
         {
             ITweenObject tween = new AsyncMoveTween
             {
-                Targets = Cards.ToList(),
-                GetPosition = GetTargetPositionForCard
+                Targets = this.Cards.ToList(),
+                GetPosition = this.GetTargetPositionForCard
             };
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            if (!Cards.Contains(card)) return card.transform.localPosition;
+            if (!this.Cards.Contains(card)) return card.transform.localPosition;
 
-            int position = Cards.IndexOf(card);
+            int position = this.Cards.IndexOf(card);
 
             var cardPos = new Vector3(_discardPositionOffset.x, _discardPositionOffset.y, 16f);
             cardPos.z -= position * 0.2f;

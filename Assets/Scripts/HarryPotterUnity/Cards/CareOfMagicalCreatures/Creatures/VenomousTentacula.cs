@@ -9,20 +9,20 @@ namespace HarryPotterUnity.Cards.CareOfMagicalCreatures.Creatures
     {
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions() 
-                && Player.IsLocalPlayer
-                && Player.Discard.LessonsOfType(LessonTypes.Potions).Any();
+            return this.Player.CanUseActions() 
+                && this.Player.IsLocalPlayer
+                && this.Player.Discard.LessonsOfType(LessonTypes.Potions).Any();
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            Player.Discard.Add(this);
+            this.Player.Discard.Add(this);
 
-            var lesson = Player.Discard.LessonsOfType(LessonTypes.Potions).First();
+            var lesson = this.Player.Discard.LessonsOfType(LessonTypes.Potions).First();
 
-            Player.InPlay.Add(lesson);
+            this.Player.InPlay.Add(lesson);
 
-            Player.UseActions();
+            this.Player.UseActions();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Tween
         public void ExecuteTween()
         {
             float targetFlip = 0f;
-            switch (Flip)
+            switch (this.Flip)
             {
                 case FlipState.FaceUp:
                     targetFlip = 0f;
@@ -30,11 +30,11 @@ namespace HarryPotterUnity.Tween
                     break;
             }
 
-            foreach (var target in Targets)
+            foreach (var target in this.Targets)
             {
-                target.GetComponent<BaseCard>().FlipState = Flip;
+                target.GetComponent<BaseCard>().FlipState = this.Flip;
 
-                iTween.RotateTo(target, iTween.Hash("time", CompletionTime,
+                iTween.RotateTo(target, iTween.Hash("time", this.CompletionTime,
                     "y", targetFlip,
                     "easetype", iTween.EaseType.EaseInOutSine,
                     "islocal", true

@@ -16,12 +16,12 @@ namespace HarryPotterUnity.Cards.BasicBehavior
 
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var cards = Player.Discard.NonHealingCards.Take(_healingAmount);
-            
-            Player.Deck.AddAll(cards);
-            if (_shuffleDeckAfterHeal)
+            var cards = this.Player.Discard.NonHealingCards.Take(this._healingAmount);
+
+            this.Player.Deck.AddAll(cards);
+            if (this._shuffleDeckAfterHeal)
             {
-                Player.Deck.Shuffle();
+                this.Player.Deck.Shuffle();
             }
         }
     }

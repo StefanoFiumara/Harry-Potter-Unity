@@ -8,24 +8,24 @@ namespace HarryPotterUnity.Cards.Transfiguration.Items
     {
         public override bool CanPerformInPlayAction()
         {
-            return Player.CanUseActions(2) && Player.IsLocalPlayer;
+            return this.Player.CanUseActions(2) && this.Player.IsLocalPlayer;
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            Player.Discard.Add(this);
+            this.Player.Discard.Add(this);
 
-            var allCards = Player.Discard.NonHealingCards;
+            var allCards = this.Player.Discard.NonHealingCards;
 
             var lessons = allCards.Where(c => c.Type == Type.Lesson);
             var other = allCards.Where(c => c.Type != Type.Lesson);
-            
-            Player.InPlay.AddAll(lessons);
-            Player.Deck.AddAll(other);
 
-            Player.Deck.Shuffle();
+            this.Player.InPlay.AddAll(lessons);
+            this.Player.Deck.AddAll(other);
 
-            Player.UseActions(2);
+            this.Player.Deck.Shuffle();
+
+            this.Player.UseActions(2);
         }
     }
 }

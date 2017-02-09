@@ -16,13 +16,13 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         private int _amountLessonsProvided;
         #endregion
 
-        public LessonTypes LessonType { get {return _lessonType; } }
+        public LessonTypes LessonType { get {return this._lessonType; } }
 
         public int AmountLessonsProvided
         {
             get
             {
-                return _amountLessonsProvided;
+                return this._amountLessonsProvided;
             }
             set
             {

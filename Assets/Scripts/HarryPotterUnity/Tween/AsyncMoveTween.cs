@@ -19,11 +19,11 @@ namespace HarryPotterUnity.Tween
         
         public void ExecuteTween()
         {
-            foreach (var target in Targets)
+            foreach (var target in this.Targets)
             {
                 iTween.MoveTo(target.gameObject, iTween.Hash(
                 "time", 0.2f,
-                "position", GetPosition(target),
+                "position", this.GetPosition(target),
                 "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true
                 ));    

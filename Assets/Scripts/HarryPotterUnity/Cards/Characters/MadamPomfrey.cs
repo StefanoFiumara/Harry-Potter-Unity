@@ -9,20 +9,20 @@ namespace HarryPotterUnity.Cards.Characters
 
         public override bool CanPerformInPlayAction()
         {
-            return HasUsedAbility == false 
-                && Player.CanUseActions()
-                && Player.IsLocalPlayer;
+            return this.HasUsedAbility == false 
+                && this.Player.CanUseActions()
+                && this.Player.IsLocalPlayer;
         }
 
         public override void OnInPlayAction(List<BaseCard> targets = null)
         {
-            HasUsedAbility = true;
+            this.HasUsedAbility = true;
 
-            var cards = Player.Discard.NonHealingCards.Take(12);
+            var cards = this.Player.Discard.NonHealingCards.Take(12);
 
-            Player.Deck.AddAll(cards);
+            this.Player.Deck.AddAll(cards);
 
-            Player.Deck.Shuffle();
+            this.Player.Deck.Shuffle();
         }
     }
 }

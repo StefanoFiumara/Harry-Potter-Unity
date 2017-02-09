@@ -7,15 +7,15 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var card = Player.Deck.TakeTopCard();
+            var card = this.Player.Deck.TakeTopCard();
 
             if (card.Type == Type.Lesson)
             {
-                Player.InPlay.Add(card);
+                this.Player.InPlay.Add(card);
             }
             else
             {
-                Player.Hand.Add(card);
+                this.Player.Hand.Add(card);
             }
         }
     }

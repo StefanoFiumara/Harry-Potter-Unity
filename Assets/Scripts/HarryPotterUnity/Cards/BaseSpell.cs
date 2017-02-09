@@ -12,24 +12,24 @@ namespace HarryPotterUnity.Cards
 
         protected sealed override void OnPlayFromHandAction(List<BaseCard> targets)
         {
-            Enable();
-            PreviewSpell();
-            
-            Player.Discard.Add(this);
+            this.Enable();
+            this.PreviewSpell();
 
-            SpellAction(targets);
+            this.Player.Discard.Add(this);
+
+            this.SpellAction(targets);
         }
 
         protected abstract void SpellAction(List<BaseCard> targets);
 
         private void PreviewSpell()
         {
-            State = State.Discarded;
-            var rotateType = Player.OppositePlayer.IsLocalPlayer ? TweenRotationType.Rotate180 : TweenRotationType.NoRotate;
+            this.State = State.Discarded;
+            var rotateType = this.Player.OppositePlayer.IsLocalPlayer ? TweenRotationType.Rotate180 : TweenRotationType.NoRotate;
 
             var tween = new MoveTween
             {
-                Target = gameObject,
+                Target = this.gameObject,
                 Position = _spellOffset,
                 Time = 0.5f,
                 Flip = FlipState.FaceUp,

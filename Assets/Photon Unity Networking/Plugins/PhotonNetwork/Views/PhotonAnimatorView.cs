@@ -90,10 +90,10 @@ public class PhotonAnimatorView : MonoBehaviour
 
     private void Awake()
     {
-        this.m_PhotonView = GetComponent<PhotonView>();
+        this.m_PhotonView = this.GetComponent<PhotonView>();
         this.m_StreamQueue = new PhotonStreamQueue(120);
 
-        this.m_Animator = GetComponent<Animator>();
+        this.m_Animator = this.GetComponent<Animator>();
     }
 
     private void Update()
@@ -111,11 +111,11 @@ public class PhotonAnimatorView : MonoBehaviour
 
         if (this.m_PhotonView.isMine == true)
         {
-            SerializeDataContinuously();
+            this.SerializeDataContinuously();
         }
         else
         {
-            DeserializeDataContinuously();
+            this.DeserializeDataContinuously();
         }
     }
 
@@ -457,13 +457,13 @@ public class PhotonAnimatorView : MonoBehaviour
             if (this.m_WasSynchronizeTypeChanged == true)
             {
                 this.m_StreamQueue.Reset();
-                SerializeSynchronizationTypeState(stream);
+                this.SerializeSynchronizationTypeState(stream);
 
                 this.m_WasSynchronizeTypeChanged = false;
             }
 
             this.m_StreamQueue.Serialize(stream);
-            SerializeDataDiscretly(stream);
+            this.SerializeDataDiscretly(stream);
         }
         else
         {
@@ -477,11 +477,11 @@ public class PhotonAnimatorView : MonoBehaviour
             {
                 if (stream.PeekNext() is byte[])
                 {
-                    DeserializeSynchronizationTypeState(stream);
+                    this.DeserializeSynchronizationTypeState(stream);
                 }
 
                 this.m_StreamQueue.Deserialize(stream);
-                DeserializeDataDiscretly(stream);
+                this.DeserializeDataDiscretly(stream);
             }
         }
     }

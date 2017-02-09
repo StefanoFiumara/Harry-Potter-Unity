@@ -20,20 +20,20 @@ public class PingMonoEditor : PhotonPing
 
     public override bool StartPing(string ip)
     {
-        base.Init();
+        this.Init();
 
         try
         {
-            sock.ReceiveTimeout = 5000;
-            sock.Connect(ip, 5055);
+            this.sock.ReceiveTimeout = 5000;
+            this.sock.Connect(ip, 5055);
 
-            PingBytes[PingBytes.Length - 1] = PingId;
-            sock.Send(PingBytes);
-            PingBytes[PingBytes.Length - 1] = (byte)(PingId - 1);
+            this.PingBytes[this.PingBytes.Length - 1] = this.PingId;
+            this.sock.Send(this.PingBytes);
+            this.PingBytes[this.PingBytes.Length - 1] = (byte)(this.PingId - 1);
         }
         catch (Exception e)
         {
-            sock = null;
+            this.sock = null;
             Console.WriteLine(e);
         }
 
@@ -42,23 +42,23 @@ public class PingMonoEditor : PhotonPing
 
     public override bool Done()
     {
-        if (this.GotResult || sock == null)
+        if (this.GotResult || this.sock == null)
         {
             return true;
         }
 
-        if (sock.Available <= 0)
+        if (this.sock.Available <= 0)
         {
             return false;
         }
 
-        int read = sock.Receive(PingBytes, SocketFlags.None);
+        int read = this.sock.Receive(this.PingBytes, SocketFlags.None);
         //Debug.Log("Got: " + SupportClass.ByteArrayToString(PingBytes));
-        bool replyMatch = PingBytes[PingBytes.Length - 1] == PingId && read == PingLength;
+        bool replyMatch = this.PingBytes[this.PingBytes.Length - 1] == this.PingId && read == this.PingLength;
         if (!replyMatch) Debug.Log("ReplyMatch is false! ");
 
 
-        this.Successful = read == PingBytes.Length && PingBytes[PingBytes.Length - 1] == PingId;
+        this.Successful = read == this.PingBytes.Length && this.PingBytes[this.PingBytes.Length - 1] == this.PingId;
         this.GotResult = true;
         return true;
     }
@@ -67,12 +67,12 @@ public class PingMonoEditor : PhotonPing
     {
         try
         {
-            sock.Close();
+            this.sock.Close();
         }
         catch
         {
         }
-        sock = null;
+        this.sock = null;
     }
 
 }
@@ -244,7 +244,7 @@ public class PhotonPingManager
                 }
             }
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             Debug.Log("Exception caught! " + e.Source + " Message: " + e.Message);
         }

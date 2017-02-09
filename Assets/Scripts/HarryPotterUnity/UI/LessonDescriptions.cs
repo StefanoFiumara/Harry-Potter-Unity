@@ -59,7 +59,7 @@ namespace HarryPotterUnity.UI
 
         private void Start()
         {
-            _lessonDescription = GetComponent<Text>();
+            this._lessonDescription = this.GetComponent<Text>();
         }
 
         public void SwitchText(string lesson)
@@ -69,26 +69,26 @@ namespace HarryPotterUnity.UI
             switch (type)
             {
                 case LessonTypes.Creatures:
-                    newDescription = _creatures;
+                    newDescription = this._creatures;
                     break;
                 case LessonTypes.Charms:
-                    newDescription = _charms;
+                    newDescription = this._charms;
                     break;
                 case LessonTypes.Transfiguration:
-                    newDescription = _transfiguration;
+                    newDescription = this._transfiguration;
                     break;
                 case LessonTypes.Potions:
-                    newDescription = _potions;
+                    newDescription = this._potions;
                     break;
                 case LessonTypes.Quidditch:
-                    newDescription = _quidditch;
+                    newDescription = this._quidditch;
                     break;
                 default:
                     throw new ArgumentException("Bad Parameter to LessonDescription.SwitchText");
             }
 
-            _lessonDescription.color = newDescription.TextColor;
-            _lessonDescription.text = string.Format("{0}\n{1}\n\n{2}", 
+            this._lessonDescription.color = newDescription.TextColor;
+            this._lessonDescription.text = string.Format("{0}\n{1}\n\n{2}", 
                 newDescription.Title, 
                 newDescription.Style,
                 newDescription.Description);
@@ -96,7 +96,7 @@ namespace HarryPotterUnity.UI
 
         public void ClearText()
         {
-            _lessonDescription.color = Color.clear;
+            this._lessonDescription.color = Color.clear;
         }
     }
 }

@@ -9,7 +9,7 @@ namespace HarryPotterUnity.Cards.Adventures
     {
         protected override void AddConstraints()
         {
-            _constraints.Add(new CannotPlayTypeConstraint(Type.Spell));
+            this._constraints.Add(new CannotPlayTypeConstraint(Type.Spell));
         }
 
         protected override bool CanOpponentSolve()
@@ -19,14 +19,14 @@ namespace HarryPotterUnity.Cards.Adventures
 
         protected override void Solve()
         {
-            Player.OppositePlayer.TakeDamage(this, 7);
+            this.Player.OppositePlayer.TakeDamage(this, 7);
         }
 
         protected override void Reward()
         {
-            var cards = Player.OppositePlayer.Discard.NonHealingCards.Take(2);
+            var cards = this.Player.OppositePlayer.Discard.NonHealingCards.Take(2);
 
-            Player.OppositePlayer.Deck.AddAll(cards);
+            this.Player.OppositePlayer.Deck.AddAll(cards);
         }
     }
 }

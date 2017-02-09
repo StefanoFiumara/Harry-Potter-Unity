@@ -9,17 +9,17 @@ namespace HarryPotterUnity.Cards.Potions.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            int damage = Player.InPlay.LessonsOfType(LessonTypes.Potions).Count();
-            var lesson = Player.InPlay.LessonsOfType(LessonTypes.Potions).First();
+            int damage = this.Player.InPlay.LessonsOfType(LessonTypes.Potions).Count();
+            var lesson = this.Player.InPlay.LessonsOfType(LessonTypes.Potions).First();
 
-            Player.Discard.Add(lesson);
+            this.Player.Discard.Add(lesson);
 
-            Player.OppositePlayer.TakeDamage(this, damage);
+            this.Player.OppositePlayer.TakeDamage(this, damage);
         }
 
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.InPlay.LessonsOfType(LessonTypes.Potions).Any();
+            return this.Player.InPlay.LessonsOfType(LessonTypes.Potions).Any();
         }
     }
 }

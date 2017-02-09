@@ -46,7 +46,7 @@ public class PhotonPlayer
         }
         set
         {
-            if (!isLocal)
+            if (!this.isLocal)
             {
                 Debug.LogError("Error: Cannot change the name of a remote player!");
                 return;
@@ -280,12 +280,12 @@ public class PhotonPlayer
 
     public PhotonPlayer Get(int id)
     {
-        return PhotonPlayer.Find(id);
+        return Find(id);
     }
 
     public PhotonPlayer GetNext()
     {
-        return GetNextFor(this.ID);
+        return this.GetNextFor(this.ID);
     }
 
     public PhotonPlayer GetNextFor(PhotonPlayer currentPlayer)
@@ -294,7 +294,7 @@ public class PhotonPlayer
         {
             return null;
         }
-        return GetNextFor(currentPlayer.ID);
+        return this.GetNextFor(currentPlayer.ID);
     }
 
     public PhotonPlayer GetNextFor(int currentPlayerId)

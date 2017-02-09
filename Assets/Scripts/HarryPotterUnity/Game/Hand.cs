@@ -19,84 +19,84 @@ namespace HarryPotterUnity.Game
 
         private void Awake()
         {
-            _player = transform.GetComponentInParent<Player>();
+            this._player = this.transform.GetComponentInParent<Player>();
         }
 
         public override void Add(BaseCard card)
         {
-            Add(card, preview: true, adjustSpacing: true);
+            this.Add(card, preview: true, adjustSpacing: true);
         }
 
         public void Add(BaseCard card, bool preview, bool adjustSpacing)
         {
-            if (adjustSpacing) AdjustHandSpacing();
+            if (adjustSpacing) this.AdjustHandSpacing();
 
-            card.transform.parent = transform;
-            
-            Cards.Add(card);
+            card.transform.parent = this.transform;
+
+            this.Cards.Add(card);
 
             //TODO: Add option to show the card to both players before putting it into the player's hand
-            var flipState = _player.IsLocalPlayer ? FlipState.FaceUp : FlipState.FaceDown;
-            
-            AnimateCardToHand(card, flipState, preview);
+            var flipState = this._player.IsLocalPlayer ? FlipState.FaceUp : FlipState.FaceDown;
 
-            MoveToThisCollection(card);
+            this.AnimateCardToHand(card, flipState, preview);
+
+            this.MoveToThisCollection(card);
         }
         
         public override void AddAll(IEnumerable<BaseCard> cards)
         {
-            AdjustHandSpacing();
+            this.AdjustHandSpacing();
 
             var cardList = cards as IList<BaseCard> ?? cards.ToList();
 
             foreach (var card in cardList)
             {
-                card.transform.parent = transform;
-                
-                Cards.Add(card);
-                var flipState = _player.IsLocalPlayer ? FlipState.FaceUp : FlipState.FaceDown;
-                AnimateCardToHand(card, flipState);
+                card.transform.parent = this.transform;
+
+                this.Cards.Add(card);
+                var flipState = this._player.IsLocalPlayer ? FlipState.FaceUp : FlipState.FaceDown;
+                this.AnimateCardToHand(card, flipState);
             }
 
-            MoveToThisCollection(cardList);
+            this.MoveToThisCollection(cardList);
 
-            AdjustHandSpacing();
+            this.AdjustHandSpacing();
         }
 
         protected override void RemoveAll(IEnumerable<BaseCard> cardsToRemove)
         {
             foreach (var card in cardsToRemove)
             {
-                Cards.Remove(card);
+                this.Cards.Remove(card);
             }
 
-            AdjustHandSpacing();
+            this.AdjustHandSpacing();
         }
 
         protected override void Remove(BaseCard card)
         {
-            RemoveAll(new[] { card });
+            this.RemoveAll(new[] { card });
         }
 
         public void AdjustHandSpacing()
         {
             var tween = new AsyncMoveTween
             {
-                Targets = Cards.ToList(),
-                GetPosition = GetTargetPositionForCard
+                Targets = this.Cards.ToList(),
+                GetPosition = this.GetTargetPositionForCard
             };
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            if (!Cards.Contains(card)) return card.transform.localPosition;
+            if (!this.Cards.Contains(card)) return card.transform.localPosition;
 
             var cardPosition = _handCardsOffset;
 
-            float shrinkFactor = Cards.Count >= 12 ? 0.5f : 1f;
+            float shrinkFactor = this.Cards.Count >= 12 ? 0.5f : 1f;
             
-            int index = Cards.IndexOf(card);
+            int index = this.Cards.IndexOf(card);
             cardPosition.x += index * SPACING * shrinkFactor;
             cardPosition.z -= index;
 
@@ -105,7 +105,7 @@ namespace HarryPotterUnity.Game
 
         private void AnimateCardToHand(BaseCard card, FlipState flipState, bool preview = true)
         {
-            var cardPosition = GetTargetPositionForCard(card);
+            var cardPosition = this.GetTargetPositionForCard(card);
 
             if (preview)
             {

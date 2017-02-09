@@ -10,11 +10,11 @@ namespace HarryPotterUnity.Cards.PlayerConstraints
 
         public CannotPlayTypeConstraint(Type disallowedType)
         {
-            _disallowedType = disallowedType;
+            this._disallowedType = disallowedType;
         }
         public bool MeetsConstraint(BaseCard cardToPlay)
         {
-            return cardToPlay.Type != _disallowedType;
+            return cardToPlay.Type != this._disallowedType;
         }
     }
 }

@@ -18,18 +18,18 @@ namespace HarryPotterUnity.Cards
 
         public bool CanPerformInPlayAction()
         {
-            var isOppositePlayer = Player.IsLocalPlayer == false;
+            bool isOppositePlayer = this.Player.IsLocalPlayer == false;
 
             return isOppositePlayer 
-                && Player.OppositePlayer.CanUseActions() 
-                && CanOpponentSolve();
+                && this.Player.OppositePlayer.CanUseActions() 
+                && this.CanOpponentSolve();
         }
 
         public void OnInPlayAction(List<BaseCard> targets = null)
         {
-            Solve();
-            Player.Discard.Add(this);
-            Reward();
+            this.Player.Discard.Add(this);
+            this.Solve();
+            this.Reward();
         }
         
         protected override Type GetCardType()

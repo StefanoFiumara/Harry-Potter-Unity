@@ -26,33 +26,33 @@ public class PhotonRigidbodyView : MonoBehaviour
 
     void Awake() 
     {
-        m_Body = GetComponent<Rigidbody>();
+        this.m_Body = this.GetComponent<Rigidbody>();
     }
 
     void OnPhotonSerializeView( PhotonStream stream, PhotonMessageInfo info )
     {
         if( stream.isWriting == true )
         {
-            if( m_SynchronizeVelocity == true )
+            if(this.m_SynchronizeVelocity == true )
             {
-                stream.SendNext( m_Body.velocity );
+                stream.SendNext(this.m_Body.velocity );
             }
 
-            if( m_SynchronizeAngularVelocity == true )
+            if(this.m_SynchronizeAngularVelocity == true )
             {
-                stream.SendNext( m_Body.angularVelocity );
+                stream.SendNext(this.m_Body.angularVelocity );
             }
         }
         else
         {
-            if( m_SynchronizeVelocity == true )
+            if(this.m_SynchronizeVelocity == true )
             {
-                m_Body.velocity = (Vector3)stream.ReceiveNext();
+                this.m_Body.velocity = (Vector3)stream.ReceiveNext();
             }
 
-            if( m_SynchronizeAngularVelocity == true )
+            if(this.m_SynchronizeAngularVelocity == true )
             {
-                m_Body.angularVelocity = (Vector3)stream.ReceiveNext();
+                this.m_Body.angularVelocity = (Vector3)stream.ReceiveNext();
             }
         }
     }

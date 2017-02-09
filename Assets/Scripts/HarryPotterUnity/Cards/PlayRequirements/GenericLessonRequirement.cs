@@ -12,18 +12,18 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public int AmountRequired
         {
-            get { return _amountRequired; }
-            set { _amountRequired = value; }
+            get { return this._amountRequired; }
+            set { this._amountRequired = value; }
         }
 
         private void Start()
         {
-            _player = GetComponent<BaseCard>().Player;
+            this._player = this.GetComponent<BaseCard>().Player;
         }
 
         public bool MeetsRequirement()
         {
-            return _player.AmountLessonsInPlay >= _amountRequired;
+            return this._player.AmountLessonsInPlay >= this._amountRequired;
         }
 
         public void OnRequirementMet()

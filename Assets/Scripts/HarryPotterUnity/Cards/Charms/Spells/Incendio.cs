@@ -12,7 +12,7 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            DamageAmount = Player.InPlay.LessonsOfType(LessonTypes.Charms).Count();
+            this.DamageAmount = this.Player.InPlay.LessonsOfType(LessonTypes.Charms).Count();
 
             base.SpellAction(targets);
         }

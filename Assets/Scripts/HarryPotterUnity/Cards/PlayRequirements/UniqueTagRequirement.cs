@@ -14,7 +14,7 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         private void Start()
         {
-            _player = GetComponent<BaseCard>().Player;
+            this._player = this.GetComponent<BaseCard>().Player;
         }
         public bool MeetsRequirement()
         {
@@ -23,11 +23,11 @@ namespace HarryPotterUnity.Cards.PlayRequirements
 
         public void OnRequirementMet()
         {
-            if (!_player.InPlay.Cards.Exists(c => c.HasTag(_tag))) return;
+            if (!this._player.InPlay.Cards.Exists(c => c.HasTag(this._tag))) return;
 
-            var card =_player.InPlay.Cards.Find(c => c.HasTag(_tag));
+            var card = this._player.InPlay.Cards.Find(c => c.HasTag(this._tag));
 
-            _player.Discard.Add(card);
+            this._player.Discard.Add(card);
         }
     }
 }

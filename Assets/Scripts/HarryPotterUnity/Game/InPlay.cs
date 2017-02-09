@@ -30,34 +30,34 @@ namespace HarryPotterUnity.Game
 
         private void OnDestroy()
         {
-            OnCardEnteredPlay = null;
-            OnCardExitedPlay = null;
+            this.OnCardEnteredPlay = null;
+            this.OnCardExitedPlay = null;
         }
 
         public override void Add(BaseCard card)
         {
-            Cards.Add(card);
+            this.Cards.Add(card);
             
-            card.transform.parent = transform;
+            card.transform.parent = this.transform;
 
-            TweenCardToPosition(card);
+            this.TweenCardToPosition(card);
 
-            MoveToThisCollection(card);
+            this.MoveToThisCollection(card);
 
             ((IPersistentCard) card).OnEnterInPlayAction();
 
-            if (OnCardEnteredPlay != null) OnCardEnteredPlay(card);
+            if (this.OnCardEnteredPlay != null) this.OnCardEnteredPlay(card);
         }
 
         protected override void Remove(BaseCard card)
         {
-            Cards.Remove(card);
+            this.Cards.Remove(card);
 
-            RearrangeCardsOfType(card.Type);
+            this.RearrangeCardsOfType(card.Type);
 
             ((IPersistentCard) card).OnExitInPlayAction();
 
-            if (OnCardExitedPlay != null) OnCardExitedPlay(card);
+            if (this.OnCardExitedPlay != null) this.OnCardExitedPlay(card);
         }
 
         public override void AddAll(IEnumerable<BaseCard> cards)
@@ -66,7 +66,7 @@ namespace HarryPotterUnity.Game
 
             foreach (var card in cardList)
             {
-                Add(card);
+                this.Add(card);
             }
         }
         
@@ -76,25 +76,30 @@ namespace HarryPotterUnity.Game
 
             foreach (var card in cardList)
             {
-                Cards.Remove(card);
+                this.Cards.Remove(card);
 
                 ((IPersistentCard)card).OnExitInPlayAction();
 
-                if (OnCardExitedPlay != null) OnCardExitedPlay(card);
+                if (this.OnCardExitedPlay != null) this.OnCardExitedPlay(card);
             }
 
             foreach (var type in cardList.GroupBy(c => c.Type))
             {
-                RearrangeCardsOfType(type.Key);
+                this.RearrangeCardsOfType(type.Key);
             }
         }
-        
+
+        public override BaseCard GetRandomCard()
+        {
+            return this.CardsExceptStartingCharacter.Skip(Random.Range(0, this.CardsExceptStartingCharacter.Count)).First();
+        }
+
         private void TweenCardToPosition(BaseCard card)
         {
             var tween = new MoveTween
             {
                 Target = card.gameObject,
-                Position = GetTargetPositionForCard(card),
+                Position = this.GetTargetPositionForCard(card),
                 Time = 0.3f,
                 Flip = FlipState.FaceUp,
                 Rotate = TweenRotationType.Rotate90,
@@ -106,23 +111,21 @@ namespace HarryPotterUnity.Game
         private void RearrangeCardsOfType(Type type)
         {
             var targets = 
-                type.IsTopRow() ? 
-                    Cards.FindAll(c => c.Type.IsTopRow()) : 
-                    Cards.FindAll(c => c.Type == type);
+                type.IsTopRow() ? this.Cards.FindAll(c => c.Type.IsTopRow()) : this.Cards.FindAll(c => c.Type == type);
 
             var tween = new AsyncMoveTween
             {
                 Targets = targets,
-                GetPosition = GetTargetPositionForCard
+                GetPosition = this.GetTargetPositionForCard
             };
             GameManager.TweenQueue.AddTweenToQueue(tween);
         }
 
         private Vector3 GetTargetPositionForCard(BaseCard card)
         {
-            if (!Cards.Contains(card)) return card.transform.localPosition;
+            if (!this.Cards.Contains(card)) return card.transform.localPosition;
 
-            int position = Cards.FindAll(c => c.Type == card.Type).IndexOf(card);
+            int position = this.Cards.FindAll(c => c.Type == card.Type).IndexOf(card);
             
             var cardPosition = new Vector3();
 
@@ -157,7 +160,7 @@ namespace HarryPotterUnity.Game
                 case Type.Location:
                 case Type.Adventure:
                 case Type.Match:
-                    int topRowIndex = Cards.FindAll(c => c.Type.IsTopRow()).IndexOf(card);
+                    int topRowIndex = this.Cards.FindAll(c => c.Type.IsTopRow()).IndexOf(card);
                     float shrinkFactor = 0.5f;
                     cardPosition = _topRowPositionOffset;
                     cardPosition.x += topRowIndex * _topRowSpacing.x * shrinkFactor;

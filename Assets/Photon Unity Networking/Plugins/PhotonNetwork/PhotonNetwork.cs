@@ -13,7 +13,7 @@ using ExitGames.Client.Photon;
 using UnityEngine.SceneManagement;
 using Debug = UnityEngine.Debug;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
-
+using Object = UnityEngine.Object;
 #if UNITY_EDITOR
 using UnityEditor;
 using System.IO;
@@ -55,11 +55,11 @@ public static class PhotonNetwork
     internal const string serverSettingsAssetFile = "PhotonServerSettings";
 
     /// <summary>Path to the PhotonServerSettings file (used by PhotonEditor).</summary>
-    internal const string serverSettingsAssetPath = "Assets/Photon Unity Networking/Resources/" + PhotonNetwork.serverSettingsAssetFile + ".asset";
+    internal const string serverSettingsAssetPath = "Assets/Photon Unity Networking/Resources/" + serverSettingsAssetFile + ".asset";
 
 
     /// <summary>Serialized server settings, written by the Setup Wizard for use in ConnectUsingSettings.</summary>
-    public static ServerSettings PhotonServerSettings = (ServerSettings)Resources.Load(PhotonNetwork.serverSettingsAssetFile, typeof(ServerSettings));
+    public static ServerSettings PhotonServerSettings = (ServerSettings)Resources.Load(serverSettingsAssetFile, typeof(ServerSettings));
 
     /// <summary>Currently used server address (no matter if master or game server).</summary>
     public static string ServerAddress { get { return (networkingPeer != null) ? networkingPeer.ServerAddress : "<not connected>"; } }
@@ -189,7 +189,7 @@ public static class PhotonNetwork
 
     /// <summary>The server (type) this client is currently connected or connecting to.</summary>
     /// <remarks>Photon uses 3 different roles of servers: Name Server, Master Server and Game Server.</remarks>
-    public static ServerConnection Server { get { return (PhotonNetwork.networkingPeer != null) ? PhotonNetwork.networkingPeer.server : ServerConnection.NameServer; } }
+    public static ServerConnection Server { get { return (networkingPeer != null) ? networkingPeer.server : ServerConnection.NameServer; } }
 
     /// <summary>
     /// A user's authentication values used during connect for Custom Authentication with Photon (and a custom service/community).
@@ -271,7 +271,7 @@ public static class PhotonNetwork
         {
             if (offlineMode)
             {
-                return PhotonNetwork.player;
+                return player;
             }
 
             if (networkingPeer == null)
@@ -583,11 +583,11 @@ public static class PhotonNetwork
     {
         get
         {
-            return PhotonNetwork.PhotonServerSettings.JoinLobby;
+            return PhotonServerSettings.JoinLobby;
         }
         set
         {
-            PhotonNetwork.PhotonServerSettings.JoinLobby = value;
+            PhotonServerSettings.JoinLobby = value;
         }
     }
 
@@ -608,11 +608,11 @@ public static class PhotonNetwork
     {
         get
         {
-            return PhotonNetwork.PhotonServerSettings.EnableLobbyStatistics;
+            return PhotonServerSettings.EnableLobbyStatistics;
         }
         set
         {
-            PhotonNetwork.PhotonServerSettings.EnableLobbyStatistics = value;
+            PhotonServerSettings.EnableLobbyStatistics = value;
         }
     }
 
@@ -632,9 +632,9 @@ public static class PhotonNetwork
     /// </remarks>
     public static List<TypedLobbyInfo> LobbyStatistics
     {
-        get { return PhotonNetwork.networkingPeer.LobbyStatistics; }
+        get { return networkingPeer.LobbyStatistics; }
         // only available to reset the state conveniently. done by state updates of PUN
-        private set { PhotonNetwork.networkingPeer.LobbyStatistics = value; }
+        private set { networkingPeer.LobbyStatistics = value; }
     }
 
 
@@ -1074,7 +1074,7 @@ public static class PhotonNetwork
 
         // This can happen when you recompile a script IN play made
         // This helps to surpress some errors, but will not fix breaking
-        PhotonHandler[] photonHandlers = GameObject.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
+        PhotonHandler[] photonHandlers = Object.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
         if (photonHandlers != null && photonHandlers.Length > 0)
         {
             Debug.LogWarning("Unity recompiled. Connection gets closed and replaced. You can connect as 'new' client.");
@@ -1082,8 +1082,8 @@ public static class PhotonNetwork
             {
                 //Debug.Log("Handler: " + photonHandler + " photonHandler.gameObject: " + photonHandler.gameObject);
                 photonHandler.gameObject.hideFlags = 0;
-                GameObject.DestroyImmediate(photonHandler.gameObject);
-                Component.DestroyImmediate(photonHandler);
+                Object.DestroyImmediate(photonHandler.gameObject);
+                Object.DestroyImmediate(photonHandler);
             }
         }
         #endif
@@ -1098,7 +1098,7 @@ public static class PhotonNetwork
 
 
         // Set up the NetworkingPeer and use protocol of PhotonServerSettings
-        ConnectionProtocol protocol = PhotonNetwork.PhotonServerSettings.Protocol;
+        ConnectionProtocol protocol = PhotonServerSettings.Protocol;
 #if UNITY_WEBGL
         if (protocol != ConnectionProtocol.WebSocket && protocol != ConnectionProtocol.WebSocketSecure)
         {
@@ -1334,13 +1334,13 @@ public static class PhotonNetwork
 
         if (PhotonServerSettings == null)
         {
-            Debug.LogError("Can't connect: Loading settings failed. ServerSettings asset must be in any 'Resources' folder as: " + PhotonNetwork.serverSettingsAssetFile);
+            Debug.LogError("Can't connect: Loading settings failed. ServerSettings asset must be in any 'Resources' folder as: " + serverSettingsAssetFile);
             return false;
         }
 
         if (PhotonServerSettings.HostType == ServerSettings.HostingOption.OfflineMode)
         {
-            return PhotonNetwork.ConnectUsingSettings(gameVersion);
+            return ConnectUsingSettings(gameVersion);
         }
 
         networkingPeer.IsInitialConnect = true;
@@ -1353,7 +1353,7 @@ public static class PhotonNetwork
             return networkingPeer.ConnectToRegionMaster(bestFromPrefs);
         }
 
-        bool couldConnect = PhotonNetwork.networkingPeer.ConnectToNameServer();
+        bool couldConnect = networkingPeer.ConnectToNameServer();
         return couldConnect;
     }
 
@@ -1371,13 +1371,13 @@ public static class PhotonNetwork
 
         if (PhotonServerSettings == null)
         {
-            Debug.LogError("Can't connect: ServerSettings asset must be in any 'Resources' folder as: " + PhotonNetwork.serverSettingsAssetFile);
+            Debug.LogError("Can't connect: ServerSettings asset must be in any 'Resources' folder as: " + serverSettingsAssetFile);
             return false;
         }
 
         if (PhotonServerSettings.HostType == ServerSettings.HostingOption.OfflineMode)
         {
-            return PhotonNetwork.ConnectUsingSettings(gameVersion);
+            return ConnectUsingSettings(gameVersion);
         }
 
         networkingPeer.IsInitialConnect = true;
@@ -1904,7 +1904,7 @@ public static class PhotonNetwork
     /// <param name="typedLobby">A typed lobby to join (must have name and type).</param>
     public static bool JoinLobby(TypedLobby typedLobby)
     {
-        if (PhotonNetwork.connected && PhotonNetwork.Server == ServerConnection.MasterServer)
+        if (connected && Server == ServerConnection.MasterServer)
         {
             if (typedLobby == null)
             {
@@ -1936,7 +1936,7 @@ public static class PhotonNetwork
     /// </remarks>
     public static bool LeaveLobby()
     {
-        if (PhotonNetwork.connected && PhotonNetwork.Server == ServerConnection.MasterServer)
+        if (connected && Server == ServerConnection.MasterServer)
         {
             return networkingPeer.OpLeaveLobby();
         }
@@ -1962,7 +1962,7 @@ public static class PhotonNetwork
         {
             if (room == null)
             {
-                Debug.LogWarning("PhotonNetwork.room is null. You don't have to call LeaveRoom() when you're not in one. State: " + PhotonNetwork.connectionStateDetailed);
+                Debug.LogWarning("PhotonNetwork.room is null. You don't have to call LeaveRoom() when you're not in one. State: " + connectionStateDetailed);
             }
             return networkingPeer.OpLeave();
         }
@@ -2122,7 +2122,7 @@ public static class PhotonNetwork
     /// <returns>A viewID that can be used for a new PhotonView or -1 in case of an error.</returns>
     public static int AllocateSceneViewID()
     {
-        if (!PhotonNetwork.isMasterClient)
+        if (!isMasterClient)
         {
             Debug.LogError("Only the Master Client can AllocateSceneViewID(). Check PhotonNetwork.isMasterClient!");
             return -1;
@@ -2243,7 +2243,7 @@ public static class PhotonNetwork
     {
         if (!connected || (InstantiateInRoomOnly && !inRoom))
         {
-            Debug.LogError("Failed to Instantiate prefab: " + prefabName + ". Client should be in a room. Current connectionStateDetailed: " + PhotonNetwork.connectionStateDetailed);
+            Debug.LogError("Failed to Instantiate prefab: " + prefabName + ". Client should be in a room. Current connectionStateDetailed: " + connectionStateDetailed);
             return null;
         }
 
@@ -2303,7 +2303,7 @@ public static class PhotonNetwork
     {
         if (!connected || (InstantiateInRoomOnly && !inRoom))
         {
-            Debug.LogError("Failed to InstantiateSceneObject prefab: " + prefabName + ". Client should be in a room. Current connectionStateDetailed: " + PhotonNetwork.connectionStateDetailed);
+            Debug.LogError("Failed to InstantiateSceneObject prefab: " + prefabName + ". Client should be in a room. Current connectionStateDetailed: " + connectionStateDetailed);
             return null;
         }
 
@@ -2586,7 +2586,7 @@ public static class PhotonNetwork
         }
         else
         {
-            Debug.LogError("DestroyPlayerObjects() failed, cause players can only destroy their own GameObjects. A Master Client can destroy anyone's. This is master: " + PhotonNetwork.isMasterClient);
+            Debug.LogError("DestroyPlayerObjects() failed, cause players can only destroy their own GameObjects. A Master Client can destroy anyone's. This is master: " + isMasterClient);
         }
     }
 
@@ -2702,9 +2702,9 @@ public static class PhotonNetwork
 
         if (networkingPeer != null)
         {
-            if (PhotonNetwork.networkingPeer.hasSwitchedMC && target == PhotonTargets.MasterClient)
+            if (networkingPeer.hasSwitchedMC && target == PhotonTargets.MasterClient)
             {
-                networkingPeer.RPC(view, methodName, PhotonNetwork.masterClient, encrypt, parameters);
+                networkingPeer.RPC(view, methodName, masterClient, encrypt, parameters);
             }
             else
             {
@@ -2755,7 +2755,7 @@ public static class PhotonNetwork
     public static void CacheSendMonoMessageTargets(Type type)
     {
         if (type == null) type = SendMonoMessageTargetType;
-        PhotonNetwork.SendMonoMessageTargets = FindGameObjectsWithComponent(type);
+        SendMonoMessageTargets = FindGameObjectsWithComponent(type);
     }
 
     /// <summary>Finds the GameObjects with Components of a specific type (using FindObjectsOfType).</summary>
@@ -2765,7 +2765,7 @@ public static class PhotonNetwork
     {
         HashSet<GameObject> objectsWithComponent = new HashSet<GameObject>();
 
-        Component[] targetComponents = (Component[]) GameObject.FindObjectsOfType(type);
+        Component[] targetComponents = (Component[]) Object.FindObjectsOfType(type);
         for (int index = 0; index < targetComponents.Length; index++)
         {
             objectsWithComponent.Add(targetComponents[index].gameObject);
@@ -2882,7 +2882,7 @@ public static class PhotonNetwork
     {
         networkingPeer.SetLevelInPropsIfSynced(levelNumber);
 
-        PhotonNetwork.isMessageQueueRunning = false;
+        isMessageQueueRunning = false;
         networkingPeer.loadingLevelAndPausedNetwork = true;
         SceneManager.LoadScene(levelNumber);
     }
@@ -2908,7 +2908,7 @@ public static class PhotonNetwork
     {
         networkingPeer.SetLevelInPropsIfSynced(levelName);
 
-        PhotonNetwork.isMessageQueueRunning = false;
+        isMessageQueueRunning = false;
         networkingPeer.loadingLevelAndPausedNetwork = true;
         SceneManager.LoadScene(levelName);
     }
@@ -2958,8 +2958,8 @@ public static class PhotonNetwork
     [Conditional("UNITY_EDITOR")]
     public static void CreateSettings()
     {
-        PhotonNetwork.PhotonServerSettings = (ServerSettings)Resources.Load(PhotonNetwork.serverSettingsAssetFile, typeof(ServerSettings));
-        if (PhotonNetwork.PhotonServerSettings != null)
+        PhotonServerSettings = (ServerSettings)Resources.Load(serverSettingsAssetFile, typeof(ServerSettings));
+        if (PhotonServerSettings != null)
         {
             return;
         }
@@ -2971,23 +2971,23 @@ public static class PhotonNetwork
             Debug.LogError("missing settings script");
             return;
         }
-        UnityEngine.Object.DestroyImmediate(serverSettingTest);
+        Object.DestroyImmediate(serverSettingTest);
 
 
         // if still not loaded, create one
-        if (PhotonNetwork.PhotonServerSettings == null)
+        if (PhotonServerSettings == null)
         {
-            string settingsPath = Path.GetDirectoryName(PhotonNetwork.serverSettingsAssetPath);
+            string settingsPath = Path.GetDirectoryName(serverSettingsAssetPath);
             if (!Directory.Exists(settingsPath))
             {
                 Directory.CreateDirectory(settingsPath);
                 AssetDatabase.ImportAsset(settingsPath);
             }
 
-            PhotonNetwork.PhotonServerSettings = (ServerSettings)ScriptableObject.CreateInstance("ServerSettings");
-            if (PhotonNetwork.PhotonServerSettings != null)
+            PhotonServerSettings = (ServerSettings)ScriptableObject.CreateInstance("ServerSettings");
+            if (PhotonServerSettings != null)
             {
-                AssetDatabase.CreateAsset(PhotonNetwork.PhotonServerSettings, PhotonNetwork.serverSettingsAssetPath);
+                AssetDatabase.CreateAsset(PhotonServerSettings, serverSettingsAssetPath);
             }
             else
             {
@@ -3002,7 +3002,7 @@ public static class PhotonNetwork
     /// </summary>
     public static void InternalCleanPhotonMonoFromSceneIfStuck()
     {
-        PhotonHandler[] photonHandlers = GameObject.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
+        PhotonHandler[] photonHandlers = Object.FindObjectsOfType(typeof(PhotonHandler)) as PhotonHandler[];
         if (photonHandlers != null && photonHandlers.Length > 0)
         {
             Debug.Log("Cleaning up hidden PhotonHandler instances in scene. Please save it. This is not an issue.");
@@ -3013,10 +3013,10 @@ public static class PhotonNetwork
 
                 if (photonHandler.gameObject != null && photonHandler.gameObject.name == "PhotonMono")
                 {
-                    GameObject.DestroyImmediate(photonHandler.gameObject);
+                    Object.DestroyImmediate(photonHandler.gameObject);
                 }
 
-                Component.DestroyImmediate(photonHandler);
+                Object.DestroyImmediate(photonHandler);
             }
         }
     }

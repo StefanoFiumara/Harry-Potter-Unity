@@ -31,66 +31,66 @@ namespace HarryPotterUnity.Cards
         {
             base.Start();
 
-            _player1 = Player;
-            _player2 = Player.OppositePlayer;
-            LoadUiOverlay();
+            this._player1 = this.Player;
+            this._player2 = this.Player.OppositePlayer;
+            this.LoadUiOverlay();
         }
 
         private void LoadUiOverlay()
         {
             //Reuse the CreatureUIOverlay for now
             var resource = Resources.Load("CreatureUIOverlay");
-            _uiCanvas = (GameObject)Instantiate(resource);
+            this._uiCanvas = (GameObject)Instantiate(resource);
 
-            _uiCanvas.transform.position = transform.position - Vector3.back;
-            _uiCanvas.transform.SetParent(transform, true);
-            _uiCanvas.transform.localRotation = Player.IsLocalPlayer ? Quaternion.identity : Quaternion.Euler(0f, 0f, 180f);
+            this._uiCanvas.transform.position = this.transform.position - Vector3.back;
+            this._uiCanvas.transform.SetParent(this.transform, true);
+            this._uiCanvas.transform.localRotation = this.Player.IsLocalPlayer ? Quaternion.identity : Quaternion.Euler(0f, 0f, 180f);
 
             //TODO: Change Match progress label colors based on local/remote value
-            _p1ProgressLabel = _uiCanvas.transform.FindChild("HealthLabel").gameObject.GetComponent<Text>();
-            _p2ProgressLabel = _uiCanvas.transform.FindChild("AttackLabel").gameObject.GetComponent<Text>();
+            this._p1ProgressLabel = this._uiCanvas.transform.FindChild("HealthLabel").gameObject.GetComponent<Text>();
+            this._p2ProgressLabel = this._uiCanvas.transform.FindChild("AttackLabel").gameObject.GetComponent<Text>();
 
-            UpdateProgressLabels();
+            this.UpdateProgressLabels();
 
-            _uiCanvas.SetActive(false);
+            this._uiCanvas.SetActive(false);
         }
 
         private void UpdateProgressLabels()
         {
-            _p1ProgressLabel.text = string.Format("{0}/{1}",_p1Progress, _goal);
-            _p2ProgressLabel.text = string.Format("{0}/{1}", _p2Progress, _goal);
+            this._p1ProgressLabel.text = string.Format("{0}/{1}", this._p1Progress, this._goal);
+            this._p2ProgressLabel.text = string.Format("{0}/{1}", this._p2Progress, this._goal);
         }
 
         //Ensure no other matches are in play
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.InPlay.Cards
-                .Concat(Player.OppositePlayer.InPlay.Cards)
+            return this.Player.InPlay.Cards
+                .Concat(this.Player.OppositePlayer.InPlay.Cards)
                 .Count(c => c.Type == Type.Match) == 0;
         }
 
         public void OnEnterInPlayAction()
         {
-            _uiCanvas.SetActive(true);
-            SubscribeToMatchProgressEvents();
+            this._uiCanvas.SetActive(true);
+            this.SubscribeToMatchProgressEvents();
         }
 
         public void OnExitInPlayAction()
         {
-            _uiCanvas.SetActive(false);
-            UnsubscribeToMatchProgressEvents();
+            this._uiCanvas.SetActive(false);
+            this.UnsubscribeToMatchProgressEvents();
         }
 
         private void SubscribeToMatchProgressEvents()
         {
-            _player1.OnDamageTakenEvent += OnDamageTakenEvent;
-            _player2.OnDamageTakenEvent += OnDamageTakenEvent;
+            this._player1.OnDamageTakenEvent += this.OnDamageTakenEvent;
+            this._player2.OnDamageTakenEvent += this.OnDamageTakenEvent;
         }
 
         private void UnsubscribeToMatchProgressEvents()
         {
-            _player1.OnDamageTakenEvent -= OnDamageTakenEvent;
-            _player2.OnDamageTakenEvent -= OnDamageTakenEvent;
+            this._player1.OnDamageTakenEvent -= this.OnDamageTakenEvent;
+            this._player2.OnDamageTakenEvent -= this.OnDamageTakenEvent;
         }
 
         private void OnDamageTakenEvent(BaseCard sourceCard, int amount)
@@ -98,37 +98,37 @@ namespace HarryPotterUnity.Cards
             //BUG: Causes damage to count towards the enemy player when a player plays a card that causes himself to take damage.
             var cardOwner = sourceCard.Player;
             
-            if (cardOwner == _player1)
+            if (cardOwner == this._player1)
             {
-                IncreasePlayer1Progress(amount);
+                this.IncreasePlayer1Progress(amount);
             }
-            else if (cardOwner == _player2)
+            else if (cardOwner == this._player2)
             {
-                IncreasePlayer2Progress(amount);
+                this.IncreasePlayer2Progress(amount);
             }
         }
 
         private void IncreasePlayer1Progress(int amount)
         {
-            _p1Progress += amount;
-            UpdateProgressLabels();
+            this._p1Progress += amount;
+            this.UpdateProgressLabels();
 
-            if (_p1Progress >= _goal)
+            if (this._p1Progress >= this._goal)
             {
-                Player.Discard.Add(this);
-                OnPlayerHasWonMatch(winner: _player1, loser: _player2);
+                this.Player.Discard.Add(this);
+                this.OnPlayerHasWonMatch(winner: this._player1, loser: this._player2);
             }
         }
 
         private void IncreasePlayer2Progress(int amount)
         {
-            _p2Progress += amount;
-            UpdateProgressLabels();
+            this._p2Progress += amount;
+            this.UpdateProgressLabels();
 
-            if (_p2Progress >= _goal)
+            if (this._p2Progress >= this._goal)
             {
-                Player.Discard.Add(this);
-                OnPlayerHasWonMatch(winner: _player2, loser: _player1);
+                this.Player.Discard.Add(this);
+                this.OnPlayerHasWonMatch(winner: this._player2, loser: this._player1);
             }
         }
         

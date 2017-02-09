@@ -9,29 +9,29 @@ namespace HarryPotterUnity.Cards.Characters
 
         public override void OnEnterInPlayAction()
         {
-            Player.OnCardPlayedEvent += AddActionOnItemPlayedEvent;
+            this.Player.OnCardPlayedEvent += this.AddActionOnItemPlayedEvent;
         }
 
         private void AddActionOnItemPlayedEvent(BaseCard card, List<BaseCard> targets)
         {
-            if (HasEffectActivated == false && card.Type == Type.Item)
+            if (this.HasEffectActivated == false && card.Type == Type.Item)
             {
-                HasEffectActivated = true;
+                this.HasEffectActivated = true;
 
-                Player.AddActions(1);
+                this.Player.AddActions(1);
             }
         }
 
         public override void OnExitInPlayAction()
         {
-            HasEffectActivated = false;
+            this.HasEffectActivated = false;
 
-            Player.OnCardPlayedEvent -= AddActionOnItemPlayedEvent;
+            this.Player.OnCardPlayedEvent -= this.AddActionOnItemPlayedEvent;
         }
 
         public override void OnInPlayAfterTurnAction()
         {
-            HasEffectActivated = false;
+            this.HasEffectActivated = false;
         }
     }
 }

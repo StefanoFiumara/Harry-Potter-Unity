@@ -15,11 +15,11 @@ namespace HarryPotterUnity.Game
 {
     public class NetworkManager : Photon.MonoBehaviour
     {
-        private Player _player1;
-        private Player _player2;
+        private Player Player1 { get; set; }
+        private Player Player2 { get; set; }
 
-        private MenuManager _menuManager;
-        private List<BaseMenu> _allMenuScreens;
+        private MenuManager MenuManager { get; set; }
+        private List<BaseMenu> MenuScreens { get; set; }
 
         private const string LOBBY_VERSION = "v0.2-dev";
 
@@ -28,11 +28,11 @@ namespace HarryPotterUnity.Game
         public void Awake()
         {
             Log.Write("Initialize Log");
-            
-            _menuManager = FindObjectOfType<MenuManager>();
-            _allMenuScreens = FindObjectsOfType<BaseMenu>().ToList();
 
-            GameManager.Network = photonView;
+            this.MenuManager = FindObjectOfType<MenuManager>();
+            this.MenuScreens = FindObjectsOfType<BaseMenu>().ToList();
+
+            GameManager.Network = this.photonView;
 
             PhotonNetwork.ConnectUsingSettings(LOBBY_VERSION);
         }
@@ -46,7 +46,7 @@ namespace HarryPotterUnity.Game
 
         public static void ConnectToPhotonLobby()
         {
-            PhotonNetwork.JoinLobby( _defaultLobby );
+            PhotonNetwork.JoinLobby(_defaultLobby );
         }
 
         [UsedImplicitly]
@@ -62,9 +62,9 @@ namespace HarryPotterUnity.Game
 
             if (PhotonNetwork.room.playerCount == 2)
             {
-                var rotation = Quaternion.Euler(0f, 0f, 180f);
+                var p2Rotation = Quaternion.Euler(0f, 0f, 180f);
 
-                Camera.main.transform.rotation = rotation;
+                Camera.main.transform.rotation = p2Rotation;
                 Camera.main.transform.localPosition = new Vector3
                 {
                     x = Camera.main.transform.localPosition.x,
@@ -72,7 +72,7 @@ namespace HarryPotterUnity.Game
                     z = Camera.main.transform.localPosition.z
                 };
 
-                GameManager.PreviewCamera.transform.rotation = rotation;
+                GameManager.PreviewCamera.transform.rotation = p2Rotation;
             }
             else
             {
@@ -87,7 +87,7 @@ namespace HarryPotterUnity.Game
             int seed = Random.Range(int.MinValue, int.MaxValue);
 
             Log.Write("New Player has Connected, Starting Game...");
-            photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
+            this.photonView.RPC("StartGameRpc", PhotonTargets.All, seed);
         }
         
         [UsedImplicitly]
@@ -113,37 +113,37 @@ namespace HarryPotterUnity.Game
             Log.Write("Player Disconnected, Back to Main Menu");
             
             GameManager.TweenQueue.Reset();
-            DestroyPlayerObjects();
+            this.DestroyPlayerObjects();
 
-            _menuManager.ShowMenu(_allMenuScreens.First(m => m.name.Contains("MainMenuContainer")));
+            this.MenuManager.ShowMenu(this.MenuScreens.First(m => m.name.Contains("MainMenuContainer")));
         }
 
         private void DestroyPlayerObjects()
         {
-            if (_player1 != null) Destroy(_player1.gameObject);
-            if (_player2 != null) Destroy(_player2.gameObject);
+            if (this.Player1 != null) Destroy(this.Player1.gameObject);
+            if (this.Player2 != null) Destroy(this.Player2.gameObject);
         }
 
         [PunRPC, UsedImplicitly]
         public void StartGameRpc(int rngSeed)
         {
             //Synchronize the Random Number Generator for both clients with the given seed
-            Random.seed = rngSeed;
+            Random.InitState(rngSeed);
 
-            SpawnPlayers();
-            SetPlayerProperties();
-            SetUpGameplayHud();
-            InitPlayerDecks();
-            BeginGame();
+            this.SpawnPlayers();
+            this.SetPlayerProperties();
+            this.SetUpGameplayHud();
+            this.InitPlayerDecks();
+            this.BeginGame();
         }
         
         private void SpawnPlayers()
         {
             var playerObject = Resources.Load("Player");
-            _player1 = ( (GameObject) Instantiate(playerObject) ).GetComponent<Player>();
-            _player2 = ( (GameObject) Instantiate(playerObject) ).GetComponent<Player>();
+            this.Player1 = ( (GameObject) Instantiate(playerObject) ).GetComponent<Player>();
+            this.Player2 = ( (GameObject) Instantiate(playerObject) ).GetComponent<Player>();
 
-            if (!_player1 || !_player2)
+            if (!this.Player1 || !this.Player2)
             {
                 Log.Error("One of the players was not properly instantiated, Report this error!");
             }
@@ -151,29 +151,29 @@ namespace HarryPotterUnity.Game
 
         private void SetPlayerProperties()
         {
-            _player1.IsLocalPlayer = PhotonNetwork.player.isMasterClient;
-            _player2.IsLocalPlayer = !_player1.IsLocalPlayer;
+            this.Player1.IsLocalPlayer = PhotonNetwork.player.isMasterClient;
+            this.Player2.IsLocalPlayer = !this.Player1.IsLocalPlayer;
 
-            _player1.OppositePlayer = _player2;
-            _player2.OppositePlayer = _player1;
+            this.Player1.OppositePlayer = this.Player2;
+            this.Player2.OppositePlayer = this.Player1;
 
-            _player1.transform.localRotation = Quaternion.identity;
-            _player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
+            this.Player1.transform.localRotation = Quaternion.identity;
+            this.Player2.transform.localRotation = Quaternion.Euler(0f, 0f, 180f);
 
-            _player1.NetworkId = 0;
-            _player2.NetworkId = 1;
+            this.Player1.NetworkId = 0;
+            this.Player2.NetworkId = 1;
         }
 
         private void SetUpGameplayHud()
         {
-            var gameplayMenu = _allMenuScreens.FirstOrDefault(m => m.name.Contains("GameplayMenuContainer")) as GameplayMenu;
+            var gameplayMenu = this.MenuScreens.FirstOrDefault(m => m.name.Contains("GameplayMenuContainer")) as GameplayMenu;
 
             if (gameplayMenu != null)
             {
-                gameplayMenu.LocalPlayer  = _player1.IsLocalPlayer ? _player1 : _player2;
-                gameplayMenu.RemotePlayer = _player1.IsLocalPlayer ? _player2 : _player1;
+                gameplayMenu.LocalPlayer  = this.Player1.IsLocalPlayer ? this.Player1 : this.Player2;
+                gameplayMenu.RemotePlayer = this.Player1.IsLocalPlayer ? this.Player2 : this.Player1;
 
-                _menuManager.ShowMenu(gameplayMenu);
+                this.MenuManager.ShowMenu(gameplayMenu);
             }
             else
             {
@@ -204,32 +204,33 @@ namespace HarryPotterUnity.Game
             DeckGenerator.ResetStartingCharacterPool();
 
             Log.Write("Generating Player Decks");
-            _player1.InitDeck(p1SelectedLessons);
-            _player2.InitDeck(p2SelectedLessons);
+            this.Player1.InitDeck(p1SelectedLessons);
+            this.Player2.InitDeck(p2SelectedLessons);
         }
 
         private void BeginGame()
         {
             Log.Write("Game setup complete, starting match");
-            _player1.Deck.SpawnStartingCharacter();
-            _player2.Deck.SpawnStartingCharacter();
+            this.Player1.Deck.SpawnStartingCharacter();
+            this.Player2.Deck.SpawnStartingCharacter();
 
             //Shuffle after drawing the initial hand if debug mode is enabled
             if (GameManager.DebugModeEnabled == false)
             {
-                _player1.Deck.Shuffle();
-                _player2.Deck.Shuffle();
+                this.Player1.Deck.Shuffle();
+                this.Player2.Deck.Shuffle();
+                this.Player1.DrawInitialHand();
+                this.Player2.DrawInitialHand();
             }
-            
-            _player1.DrawInitialHand();
-            _player2.DrawInitialHand();
-
-            if (GameManager.DebugModeEnabled)
+            else
             {
-                _player1.Deck.Shuffle();
-                _player2.Deck.Shuffle();
+                this.Player1.DrawInitialHand();
+                this.Player2.DrawInitialHand();
+                this.Player1.Deck.Shuffle();
+                this.Player2.Deck.Shuffle();
             }
-            _player1.BeginTurn();
+
+            this.Player1.BeginTurn();
         }
         
         [PunRPC, UsedImplicitly]
@@ -273,7 +274,7 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecuteDrawActionOnPlayer(byte id)
         {
-            var player = id == 0 ? _player1 : _player2;
+            var player = id == 0 ? this.Player1 : this.Player2;
 
             Log.Write("Player {0} Draws a Card", player.NetworkId + 1);
             player.Deck.DrawCard();
@@ -335,15 +336,15 @@ namespace HarryPotterUnity.Game
         [PunRPC, UsedImplicitly]
         public void ExecuteSkipAction()
         {
-            if (_player1.CanUseActions())
+            if (this.Player1.CanUseActions())
             {
                 Log.Write("Player 1 skipped an action");
-                _player1.UseActions();
+                this.Player1.UseActions();
             }
-            else if (_player2.CanUseActions())
+            else if (this.Player2.CanUseActions())
             {
                 Log.Write("Player 2 skipped an action");
-                _player2.UseActions();
+                this.Player2.UseActions();
             }
             else
             {

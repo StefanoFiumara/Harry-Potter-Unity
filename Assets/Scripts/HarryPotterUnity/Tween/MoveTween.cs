@@ -22,32 +22,32 @@ namespace HarryPotterUnity.Tween
 
         public float CompletionTime
         {
-            get { return Time + Delay; }
+            get { return this.Time + this.Delay; }
         }
         
         public void ExecuteTween()
         {
             var args = iTween.Hash(
-                "time", Time,
-                "delay", Delay,
-                "position", Position,
+                "time", this.Time,
+                "delay", this.Delay,
+                "position", this.Position,
                 "easetype", iTween.EaseType.EaseInOutSine,
                 "islocal", true);
 
-            if (OnCompleteCallback != null)
+            if (this.OnCompleteCallback != null)
             {
-                args["oncomplete"] = OnCompleteCallback;
+                args["oncomplete"] = this.OnCompleteCallback;
             }
 
-            iTween.MoveTo(Target, args);
+            iTween.MoveTo(this.Target, args);
 
-            RotateAndFlipCard();
+            this.RotateAndFlipCard();
         }
 
         private void RotateAndFlipCard()
         {
             float targetRotate = 0f;
-            switch (Rotate)
+            switch (this.Rotate)
             {
                 case TweenRotationType.Rotate90:
                     targetRotate = 270f;
@@ -58,7 +58,7 @@ namespace HarryPotterUnity.Tween
             }
 
             float targetFlip = 0f;
-            switch (Flip)
+            switch (this.Flip)
             {
                     case FlipState.FaceUp:
                         targetFlip = 0f;
@@ -68,9 +68,9 @@ namespace HarryPotterUnity.Tween
                         break;
             }
 
-            Target.GetComponent<BaseCard>().FlipState = Flip;
+            this.Target.GetComponent<BaseCard>().FlipState = this.Flip;
 
-            iTween.RotateTo(Target, iTween.Hash("time", Time,
+            iTween.RotateTo(this.Target, iTween.Hash("time", this.Time,
                 "y", targetFlip,
                 "z", targetRotate,
                 "easetype", iTween.EaseType.EaseInOutSine,

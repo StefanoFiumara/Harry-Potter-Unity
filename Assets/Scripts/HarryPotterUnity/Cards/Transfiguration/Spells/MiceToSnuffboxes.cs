@@ -10,8 +10,8 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         public override List<BaseCard> GetFromHandActionTargets()
         {
-            var validCards = Player.InPlay.Creatures
-                .Concat(Player.OppositePlayer.InPlay.Creatures)
+            var validCards = this.Player.InPlay.Creatures
+                .Concat(this.Player.OppositePlayer.InPlay.Creatures)
                 .ToList();
 
             return validCards;

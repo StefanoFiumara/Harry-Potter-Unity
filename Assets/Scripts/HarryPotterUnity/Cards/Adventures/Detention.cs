@@ -9,24 +9,24 @@ namespace HarryPotterUnity.Cards.Adventures
     {
         protected override void AddConstraints()
         {
-            _constraints.Add(new CannotPlayTypeConstraint(Type.Adventure));
+            this._constraints.Add(new CannotPlayTypeConstraint(Type.Adventure));
         }
 
         protected override bool CanOpponentSolve()
         {
-            return Player.OppositePlayer.Hand.Adventures.Count >= 2;
+            return this.Player.OppositePlayer.Hand.Adventures.Count >= 2;
         }
 
         protected override void Solve()
         {
-            var adventures = Player.OppositePlayer.Hand.Adventures.Take(2);
+            var adventures = this.Player.OppositePlayer.Hand.Adventures.Take(2);
 
-            Player.OppositePlayer.Discard.AddAll(adventures);
+            this.Player.OppositePlayer.Discard.AddAll(adventures);
         }
 
         protected override void Reward()
         {
-            Player.OppositePlayer.Deck.DrawCard();
+            this.Player.OppositePlayer.Deck.DrawCard();
         }
     }
 }

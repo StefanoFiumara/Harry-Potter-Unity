@@ -8,7 +8,7 @@ namespace HarryPotterUnity.Cards.Characters
     {
         public override void OnEnterInPlayAction()
         {
-            var lessonRequirements = Player.AllCards.Where(c => c.Type == Type.Spell)
+            var lessonRequirements = this.Player.AllCards.Where(c => c.Type == Type.Spell)
                 .Select(spell => spell.GetComponent<LessonRequirement>())
                 .Where(req => req.AmountRequired >= 6);
 
@@ -20,7 +20,7 @@ namespace HarryPotterUnity.Cards.Characters
 
         public override void OnExitInPlayAction()
         {
-            var lessonRequirements = Player.AllCards.Where(c => c.Type == Type.Spell)
+            var lessonRequirements = this.Player.AllCards.Where(c => c.Type == Type.Spell)
                 .Select(spell => spell.GetComponent<LessonRequirement>())
                 .Where(req => req.AmountRequired >= 6);
 

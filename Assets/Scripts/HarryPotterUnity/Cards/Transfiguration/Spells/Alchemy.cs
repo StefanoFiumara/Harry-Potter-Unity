@@ -7,10 +7,10 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            var lessons = Player.Deck.Lessons.Take(2);
-            
-            Player.Hand.AddAll(lessons);
-            Player.Deck.Shuffle();
+            var lessons = this.Player.Deck.Lessons.Take(2);
+
+            this.Player.Hand.AddAll(lessons);
+            this.Player.Deck.Shuffle();
         }
     }
 }

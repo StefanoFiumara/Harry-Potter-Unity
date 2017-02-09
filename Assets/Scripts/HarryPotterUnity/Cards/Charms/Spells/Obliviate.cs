@@ -6,13 +6,13 @@ namespace HarryPotterUnity.Cards.Charms.Spells
     {
         protected override void SpellAction(List<BaseCard> targets)
         {
-            int handCount = Player.OppositePlayer.Hand.Cards.Count;
+            int handCount = this.Player.OppositePlayer.Hand.Cards.Count;
             
             for (int i = handCount - 1; i >= 0; i--)
             {
-                var card = Player.OppositePlayer.Hand.Cards[i];
+                var card = this.Player.OppositePlayer.Hand.Cards[i];
 
-                Player.OppositePlayer.Discard.Add(card);
+                this.Player.OppositePlayer.Discard.Add(card);
             }
         }
     }

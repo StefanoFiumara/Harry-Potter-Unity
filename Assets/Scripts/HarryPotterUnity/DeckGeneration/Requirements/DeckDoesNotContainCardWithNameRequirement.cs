@@ -13,7 +13,7 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
 
         public bool MeetsRequirement(List<BaseCard> currentDeck)
         {
-            return !currentDeck.Exists(card => card.CardName.Contains(_cardName));
+            return !currentDeck.Exists(card => card.CardName.Contains(this._cardName));
         }
     }
 }

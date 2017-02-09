@@ -17,32 +17,32 @@ namespace HarryPotterUnity.UI.Camera
         
         private void RotateHorizontal()
         {
-            _renderTexture.anchoredPosition = _horizontalPreviewPosition;
-            _renderTexture.localRotation = Quaternion.Euler(0f,0f,270f);
+            this._renderTexture.anchoredPosition = _horizontalPreviewPosition;
+            this._renderTexture.localRotation = Quaternion.Euler(0f,0f,270f);
         }
 
         private void RotateVertical()
         {
-            _renderTexture.anchoredPosition = _verticalPreviewPosition;
-            _renderTexture.localRotation = Quaternion.Euler(0f, 0f, 0f);
+            this._renderTexture.anchoredPosition = _verticalPreviewPosition;
+            this._renderTexture.localRotation = Quaternion.Euler(0f, 0f, 0f);
         }
 
         public void ShowPreview(BaseCard card)
         {
-            if (card is IPersistentCard) RotateHorizontal();
-            else RotateVertical();
-            
-            transform.rotation = card.transform.rotation;
-            transform.position = card.transform.position + 2 * Vector3.back;
+            if (card is IPersistentCard) this.RotateHorizontal();
+            else this.RotateVertical();
 
-            _renderTexture.gameObject.SetActive(true);
+            this.transform.rotation = card.transform.rotation;
+            this.transform.position = card.transform.position + 2 * Vector3.back;
+
+            this._renderTexture.gameObject.SetActive(true);
         }
 
         public void HidePreview()
         {
-            _renderTexture.gameObject.SetActive(false);
-            RotateVertical();
-            transform.position = _defaultPreviewCameraPosition;
+            this._renderTexture.gameObject.SetActive(false);
+            this.RotateVertical();
+            this.transform.position = _defaultPreviewCameraPosition;
         }
     }
 }

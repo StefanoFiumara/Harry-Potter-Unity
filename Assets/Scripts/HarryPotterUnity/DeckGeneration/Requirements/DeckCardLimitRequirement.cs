@@ -14,19 +14,19 @@ namespace HarryPotterUnity.DeckGeneration.Requirements
 
         public int MaximumAmountAllowed
         {
-            private get { return _maximumAmountAllowed; }
-            set { _maximumAmountAllowed = value; }
+            private get { return this._maximumAmountAllowed; }
+            set { this._maximumAmountAllowed = value; }
         }
 
         [UsedImplicitly]
         private void Start()
         {
-            _cardInfo = GetComponent<BaseCard>();
+            this._cardInfo = this.GetComponent<BaseCard>();
         }
 
         public bool MeetsRequirement(List<BaseCard> currentDeck)
         {
-            return currentDeck.Count(c => c == _cardInfo) < MaximumAmountAllowed;
+            return currentDeck.Count(c => c == this._cardInfo) < this.MaximumAmountAllowed;
         }
     }
 }

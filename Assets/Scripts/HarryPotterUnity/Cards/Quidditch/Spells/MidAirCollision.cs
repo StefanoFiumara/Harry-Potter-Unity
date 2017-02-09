@@ -14,7 +14,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
         protected override void Start()
         {
             base.Start();
-            DamageAmount = 10;
+            this.DamageAmount = 10;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
@@ -23,16 +23,16 @@ namespace HarryPotterUnity.Cards.Quidditch.Spells
 
             target.RemoveHighlight();
 
-            Player.Discard.Add(target);
-            
-            Player.OppositePlayer.TakeDamage(this, DamageAmount);
+            this.Player.Discard.Add(target);
 
-            DamageAmount = 10;
+            this.Player.OppositePlayer.TakeDamage(this, this.DamageAmount);
+
+            this.DamageAmount = 10;
         }
 
         public override List<BaseCard> GetFromHandActionTargets()
         {
-            return Player.InPlay.CardsExceptStartingCharacter;
+            return this.Player.InPlay.CardsExceptStartingCharacter;
         }
     }
 }

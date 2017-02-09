@@ -16,22 +16,22 @@ namespace HarryPotterUnity.Cards.BasicBehavior
         protected override void Start()
         {
             base.Start();
-            AddConstraints();
+            this.AddConstraints();
         }
 
         public override void OnEnterInPlayAction()
         {
-            foreach (var constraint in _constraints)
+            foreach (var constraint in this._constraints)
             {
-                Player.OppositePlayer.Constraints.Add(constraint);
+                this.Player.OppositePlayer.Constraints.Add(constraint);
             }
         }
 
         public override void OnExitInPlayAction()
         {
-            foreach (var constraint in _constraints)
+            foreach (var constraint in this._constraints)
             {
-                Player.OppositePlayer.Constraints.Remove(constraint);
+                this.Player.OppositePlayer.Constraints.Remove(constraint);
             }
         }
     }

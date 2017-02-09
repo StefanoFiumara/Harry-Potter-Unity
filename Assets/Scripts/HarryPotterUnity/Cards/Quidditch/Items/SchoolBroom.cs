@@ -6,7 +6,7 @@ namespace HarryPotterUnity.Cards.Quidditch.Items
     {
         public override void OnEnterInPlayAction()
         {
-            Player.Deck.DrawCard();
+            this.Player.Deck.DrawCard();
         }
     }
 }

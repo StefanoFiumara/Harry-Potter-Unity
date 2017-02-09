@@ -10,20 +10,20 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         public override List<BaseCard> GetFromHandActionTargets()
         {
-            return Player.InPlay.Creatures;
+            return this.Player.InPlay.Creatures;
         }
 
         protected override void SpellAction(List<BaseCard> targets)
         {
             var creature = targets.Single();
 
-            var newCreature = Player.Deck.Creatures.Skip(Random.Range(0, Player.Deck.Creatures.Count)).First();
+            var newCreature = this.Player.Deck.Creatures.Skip(Random.Range(0, this.Player.Deck.Creatures.Count)).First();
 
-            Player.Discard.Add(creature);
+            this.Player.Discard.Add(creature);
 
-            Player.Hand.Add(newCreature);
+            this.Player.Hand.Add(newCreature);
 
-            Player.Deck.Shuffle();
+            this.Player.Deck.Shuffle();
         }
 
         

@@ -10,7 +10,7 @@ namespace HarryPotterUnity.Cards.Transfiguration.Spells
     {
         public override List<BaseCard> GetFromHandActionTargets()
         {
-            return Player.InPlay.Lessons.Concat(Player.OppositePlayer.InPlay.Lessons).ToList();
+            return this.Player.InPlay.Lessons.Concat(this.Player.OppositePlayer.InPlay.Lessons).ToList();
         }
 
         protected override void SpellAction(List<BaseCard> targets)

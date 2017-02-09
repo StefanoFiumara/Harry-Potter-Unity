@@ -17,40 +17,40 @@ namespace HarryPotterUnity.Tween
 
         public TweenQueue()
         {
-            _queue = new Queue<ITweenObject>();
-            _tweenQueueRunning = false;
-            _timeUntilNextTween = 0f;
-            TweenQueueIsEmpty = true;
+            this._queue = new Queue<ITweenObject>();
+            this._tweenQueueRunning = false;
+            this._timeUntilNextTween = 0f;
+            this.TweenQueueIsEmpty = true;
         }
 
         
         public void AddTweenToQueue(ITweenObject tweenObject)
         {
-            _queue.Enqueue(tweenObject);
-            TweenQueueIsEmpty = false;
+            this._queue.Enqueue(tweenObject);
+            this.TweenQueueIsEmpty = false;
 
-            if (_tweenQueueRunning) return;
+            if (this._tweenQueueRunning) return;
 
-            _tweenQueueRunning = true;
-            StaticCoroutine.DoCoroutine(RunTweenQueue());
+            this._tweenQueueRunning = true;
+            StaticCoroutine.DoCoroutine(this.RunTweenQueue());
         }
 
         private IEnumerator RunTweenQueue()
         {
-            while (_tweenQueueRunning)
+            while (this._tweenQueueRunning)
             {
-                if (_queue.Count == 0)
+                if (this._queue.Count == 0)
                 {
-                    TweenQueueIsEmpty = true;
+                    this.TweenQueueIsEmpty = true;
                     yield return null;
                 }
                 else
                 {
-                    yield return new WaitForSeconds(_timeUntilNextTween);
-                    ITweenObject tween = _queue.Dequeue();
+                    yield return new WaitForSeconds(this._timeUntilNextTween);
+                    ITweenObject tween = this._queue.Dequeue();
 
                     tween.ExecuteTween();
-                    _timeUntilNextTween = tween.TimeUntilNextTween;
+                    this._timeUntilNextTween = tween.TimeUntilNextTween;
 
                     yield return new WaitForSeconds(tween.CompletionTime);
                 }
@@ -59,9 +59,9 @@ namespace HarryPotterUnity.Tween
 
         public void Reset()
         {
-            _queue = new Queue<ITweenObject>();
-            _tweenQueueRunning = false;
-            TweenQueueIsEmpty = true;
+            this._queue = new Queue<ITweenObject>();
+            this._tweenQueueRunning = false;
+            this.TweenQueueIsEmpty = true;
 
             iTween.Stop();
 

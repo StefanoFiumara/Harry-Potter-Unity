@@ -7,17 +7,17 @@ namespace HarryPotterUnity.Cards.Adventures
     {
         protected override bool MeetsAdditionalPlayRequirements()
         {
-            return Player.OppositePlayer.InPlay.Creatures.Any();
+            return this.Player.OppositePlayer.InPlay.Creatures.Any();
         }
 
         public override void OnInPlayBeforeTurnAction()
         {
-            Player.OppositePlayer.TakeDamage(this, 4);
+            this.Player.OppositePlayer.TakeDamage(this, 4);
         }
 
         protected override bool CanOpponentSolve()
         {
-            return Player.OppositePlayer.InPlay.Creatures.Count >= 2;
+            return this.Player.OppositePlayer.InPlay.Creatures.Count >= 2;
         }
 
         protected override void Solve()
@@ -26,15 +26,15 @@ namespace HarryPotterUnity.Cards.Adventures
 
             for (int i = 0; i < amountToDiscard; i++)
             {
-                var card = Player.OppositePlayer.InPlay.GetRandomCard(ofType:Type.Creature);
-                
-                Player.Discard.Add(card);
+                var card = this.Player.OppositePlayer.InPlay.GetRandomCard(ofType:Type.Creature);
+
+                this.Player.Discard.Add(card);
             }
         }
 
         protected override void Reward()
         {
-            Player.OppositePlayer.Deck.DrawCard();
+            this.Player.OppositePlayer.Deck.DrawCard();
         }
     }
 }
